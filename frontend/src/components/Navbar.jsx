@@ -47,7 +47,7 @@ const Navbar = ({ children }) => {
     },
 
     {
-      path: "/MyProfile",
+      path: "/Logout",
       name: "Logout",
       icon: <FaUserAlt />,
     },
