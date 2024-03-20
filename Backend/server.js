@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const productRoutes = require("./routes/products");
+const exportRoutes=require('./routes/export')
 
 //express app
 const app = express();
@@ -17,6 +18,7 @@ app.use((req, res, next) => {
 
 //routes
 app.use("/api/products", productRoutes);
+app.use('/api/export', exportRoutes)
 
 //connect to DB
 mongoose
@@ -30,3 +32,10 @@ mongoose
   .catch((error) => {
     console.log(error);
   });
+
+  //middleware-export
+app.use(express.json())
+app.use((req,res,next)=>{
+    console.log(req.path,req.method)
+    next()
+})
