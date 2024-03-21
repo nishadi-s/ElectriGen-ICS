@@ -1,13 +1,20 @@
 require("dotenv").config();
-
 const express = require("express");
 const mongoose = require("mongoose");
+
+//senith
 const productRoutes = require("./routes/products");
 
-//express app
-const app = express();
+//dulari
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const projectRouter = require("./routes/DonationProjects.js");
 
-//middleware
+const app = express(); // Declare 'app' once
+
+app.use("/DonationProject", projectRouter);
+app.use(bodyParser.json());
+app.use(cors());
 app.use(express.json());
 
 app.use((req, res, next) => {
@@ -15,14 +22,11 @@ app.use((req, res, next) => {
   next();
 });
 
-//routes
 app.use("/api/products", productRoutes);
 
-//connect to DB
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    //listen for requests
     app.listen(process.env.PORT, () => {
       console.log("Connected to DB & listening on port", process.env.PORT);
     });
