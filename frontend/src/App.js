@@ -8,6 +8,7 @@ import Products from "./pages/Products.jsx";
 import Materials from "./pages/Materials.jsx";
 import Analytics from "./pages/Analytics.jsx";
 import Production from "./pages/Production.jsx";
+import Logout from "./pages/Logout.jsx";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/Production" element={<Production />} />
           <Route path="/Analytics" element={<Analytics />} />
           <Route path="/MyProfile" element={<MyProfile />} />
+          <Route path="/Logout" element={<Logout />} />
         </Routes>
       </Navbar>
     </BrowserRouter>
