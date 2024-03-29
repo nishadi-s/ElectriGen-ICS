@@ -1,5 +1,6 @@
 require("dotenv").config();
-
+const bodyParser = require("body-parser");
+const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
 const productRoutes = require("./routes/products");
@@ -18,6 +19,10 @@ app.use((req, res, next) => {
 //routes
 app.use("/api/products", productRoutes);
 
+
+app.use(cors());
+app.use(bodyParser.json());
+
 //connect to DB
 mongoose
   .connect(process.env.MONGO_URI)
@@ -30,3 +35,11 @@ mongoose
   .catch((error) => {
     console.log(error);
   });
+
+
+
+//primal route
+const salesRouter = require("./routes/Sales");
+app.use("/sales",salesRouter);
+
+
