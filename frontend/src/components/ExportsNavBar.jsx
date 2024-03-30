@@ -4,13 +4,13 @@ import {
   FaBars,
   FaUserAlt,
   FaRegChartBar,
-  FaShapes,
-  FaIndustry,
   FaDollyFlatbed,
+  FaThList,
+  FaIdBadge,
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
-const Navbar = ({ children }) => {
+const ExportsNavBar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
@@ -21,31 +21,27 @@ const Navbar = ({ children }) => {
     },
 
     {
-      path: "/products",
-      name: "Products",
+      path: "/Importer",
+      name: "Importer",
+      icon: <FaIdBadge />,
+    },
+    {
+      path: "/ExportOrders",
+      name: "Export Orders",
       icon: <FaDollyFlatbed />,
     },
-
     {
-      path: "/Materials",
-      name: "Materials",
-      icon: <FaShapes />,
+      path: "/ExportOrderDetails",
+      name: "Order Details",
+      icon: <FaThList />,
     },
-
     {
-      path: "/Production",
-      name: "Production",
-      icon: <FaIndustry />,
-    },
-
-    {
-      path: "/analytics",
+      path: "/ExportAnalytics",
       name: "Analytics",
       icon: <FaRegChartBar />,
     },
-    
     {
-      path: "/MyProfile",
+      path: "/ExportsProfile",
       name: "My Profile",
       icon: <FaUserAlt />,
     },
@@ -95,4 +91,4 @@ const Navbar = ({ children }) => {
   );
 };
 
-export default Navbar;
+export default ExportsNavBar;
