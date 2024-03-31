@@ -1,4 +1,4 @@
-import React from "react";
+/*import React from "react";
 import "./index.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -20,6 +20,37 @@ const App = () => {
           <Route path="/Materials" element={<Materials />} />
           <Route path="/Production" element={<Production />} />
           <Route path="/Analytics" element={<Analytics />} />
+          <Route path="/MyProfile" element={<MyProfile />} />
+        </Routes>
+      </Navbar>
+    </BrowserRouter>
+  );
+};
+
+export default App;*/
+
+
+import React from "react";
+import "./index.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Navbar from "./components/SupplierOrderNavbar.jsx";
+import Dashboard from "./pages/SupplierOrderDashboard.jsx";
+import MyProfile from "./pages/SupplierOrderProfile.jsx";
+import Orders from "./pages/SupplierOrder_Order.jsx";
+import Suppliers from "./pages/SupplierOrderSuppliers.jsx";
+import Analytics from "./pages/SupplierOrderAnalytics.jsx";
+
+
+const App = () => {
+  return (
+    <BrowserRouter>
+      <Navbar>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/SupplierOrderDashboard" element={<Dashboard />} />
+          <Route path="/Suppliers" element={<Suppliers />} />
+          <Route path="/Order" element={<Orders />} />
+          <Route path="/analytics" element={<Analytics />} />
           <Route path="/MyProfile" element={<MyProfile />} />
         </Routes>
       </Navbar>
