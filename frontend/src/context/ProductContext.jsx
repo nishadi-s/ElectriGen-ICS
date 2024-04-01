@@ -13,6 +13,11 @@ export const productReducer = (state, action) => {
       return {
         products: [action.payload, ...state.products],
       };
+
+    case "DELETE_WORKOUT":
+      return {
+        products: state.products.filter((p) => p._id != action.payload._id),
+      };
     default:
       return state;
   }
