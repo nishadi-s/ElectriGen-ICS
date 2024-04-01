@@ -1,4 +1,19 @@
+import { useProductContext } from "../hooks/useProductsContext";
+
 const ProductDetails = ({ product }) => {
+  const { dispatch } = useProductContext();
+
+  const handleClick = async () => {
+    const response = await fetch("/api/products/" + product._id, {
+      method: "DELETE",
+    });
+    const json = await response.json();
+
+    if (response.ok) {
+      dispatch({ type: "DELETE_WORKOUT", payload: json });
+    }
+  };
+
   return (
     <div className="product-details">
       <table class="table align-middle mb-0 bg-white">
@@ -42,27 +57,25 @@ const ProductDetails = ({ product }) => {
             <td>{product.unitPrice}</td>
             <td>{product.createdAt}</td>
             <td>
-              <button type="button" class="btn btn-link btn-sm btn-rounded">
-                Edit
-              </button>
+              <button onClick={handleClick}>Delete</button>
             </td>
           </tr>
         </tbody>
       </table>
       {/* <table className="productsTable">
         <tr>
-          <th></th>
+        <th></th>
         </tr>
         <tr>
-          <td>{product.itemCode}</td>
-          <td>{product.name}</td>
-          <td>{product.category}</td>
-          <td>{product.color}</td>
-          <td>{product.cost}</td>
-          <td>{product.unitPrice}</td>
-          <td></td>
+        <td>{product.itemCode}</td>
+        <td>{product.name}</td>
+        <td>{product.category}</td>
+        <td>{product.color}</td>
+        <td>{product.cost}</td>
+        <td>{product.unitPrice}</td>
+        <td></td>
         </tr>
-  </table>*/}
+      </table>*/}
     </div>
   );
 };
