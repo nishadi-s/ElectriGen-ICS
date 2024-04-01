@@ -76,24 +76,26 @@ const deleteOrder = async (req,res) => {
 
 
 //update an order
-const updateOrder = async (req,res) => {
-    const { id } = req.params
+const updateOrder = async (req, res) => {
+    const { id } = req.params;
 
-    if(!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(404).json({error:'No such order'})
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'No such order' });
     }
 
-    const updateOrder = await Order.findOneAndUpdate({_id: id},{
-        ...req.body
-    })
+    try {
+        const updatedOrder = await Order.findOneAndUpdate({ _id: id }, {
+            ...req.body
+        }, { new: true }); // Add { new: true } to return the updated document
 
-    if(!updateOrder){
-        return res.status(400).json({error: 'no such order'})
+        if (!updatedOrder) {
+            return res.status(400).json({ error: 'No such order' });
+        }
+
+        res.status(200).json(updatedOrder);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
     }
-
-    res.status(200).json(updateOrder)
-
-
 }
 
 module.exports = {

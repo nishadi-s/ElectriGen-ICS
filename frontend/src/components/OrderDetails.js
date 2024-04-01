@@ -1,5 +1,6 @@
 import { useOrdersContext } from '../hooks/useOrdersContext.js'
-
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 //date fns
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 
@@ -17,6 +18,7 @@ const OrderDetails = ({order}) => {
             dispatch({type: 'DELETE_ORDER', payload: json})
         }
     }
+
     return(
         <div className="order-details">
             <h4>Order ID: {order._id}</h4>
@@ -34,6 +36,7 @@ const OrderDetails = ({order}) => {
             <p><strong>Order Status: </strong>{order.orderStatus}</p>
             <p>{formatDistanceToNow(new Date(order.createdAt), { addSuffix: true })}</p>
             <span className= "material-symbols-outlined" onClick = {handleClick}>Delete</span>
+            <Link to={`/update/${order._id}`}>Edit</Link> {/* Add Link for Edit button */}
         </div>
     )
 }
