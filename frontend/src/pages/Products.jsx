@@ -1,21 +1,23 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../senith.css";
 
 //components
 import ProductDetails from "../components/ProductDetails";
 import ProductForm from "../components/ProductForm";
+import { useProductContext } from "../hooks/useProductsContext";
 
 const Products = () => {
-  const [products, setProducts] = useState(null);
+  const { products, dispatch } = useProductContext();
+
   useEffect(() => {
     const fetchProducts = async () => {
       const response = await fetch("/api/products");
       const json = await response.json();
 
       if (response.ok) {
-        setProducts(json);
+        dispatch({ type: "SET_PRODUCTS", payload: json });
       }
     };
 
