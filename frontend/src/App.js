@@ -1,6 +1,6 @@
 import React from "react";
 import "./index.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Switch } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard.jsx";
 import MyProfile from "./pages/MyProfile.jsx";
@@ -9,6 +9,7 @@ import Materials from "./pages/Materials.jsx";
 import Analytics from "./pages/Analytics.jsx";
 import Production from "./pages/Production.jsx";
 import Logout from "./pages/Logout.jsx";
+import AddProducts from "./pages/AddProducts.jsx";
 
 const App = () => {
   return (
