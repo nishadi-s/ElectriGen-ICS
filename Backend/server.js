@@ -39,7 +39,7 @@ mongoose
 
 
 //primal route
-const salesRouter = require("./routes/Sales");
+const salesRouter = require("./routes/sales");
 app.use("/sales",salesRouter);
 
 
