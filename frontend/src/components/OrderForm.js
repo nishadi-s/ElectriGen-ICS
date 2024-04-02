@@ -6,35 +6,29 @@ const OrderForm = () => {
 
     const[distributorId, setDistributorId] = useState('')
     const[distributorName, setDistributorName] = useState('')
-    const[item1_code, setItem1_code] = useState('')
-    const[item1_name, setItem1_name] = useState('')
-    const[item1_quantity, setItem1_quantity] = useState('')
-    const[item2_code, setItem2_code] = useState('')
-    const[item2_name, setItem2_name] = useState('')
-    const[item2_quantity, setItem2_quantity] = useState('')
-    const[item3_code, setItem3_code] = useState('')
-    const[item3_name, setItem3_name] = useState('')
-    const[item3_quantity, setItem3_quantity] = useState('')
+    const [items, setItems] = useState([
+        { code: "", name: "", quantity: "" },
+        { code: "", name: "", quantity: "" },
+        { code: "", name: "", quantity: "" }
+    ]);
     const[orderStatus, setOrderStatus] = useState('')
 
     const[error, setError] = useState('')
     const[emptyFields, setEmptyFields] = useState([])
+
+    const handleItemChange = (index, field, value) => {
+        const updatedItems = [...items];
+        updatedItems[index][field] = value;
+        setItems(updatedItems);
+    };
 
 const handleSubmit = async (e) => {
     e.preventDefault()
 
     const order = {distributorId,
                    distributorName,
-                  item1_code,
-                  item1_name,
-                  item1_quantity,
-                  item2_code,
-                  item2_name,
-                  item2_quantity,
-                  item3_code,
-                  item3_name,
-                  item3_quantity,
-                  orderStatus}
+                   items,
+                   orderStatus}
 
     const response = await fetch('/api/orders', {
         method: 'POST',
@@ -52,16 +46,12 @@ const handleSubmit = async (e) => {
     if(response.ok){
         setDistributorId('')
         setDistributorName('')
-        setItem1_code('')
-        setItem1_name('')
-        setItem1_quantity('')
-        setItem2_code('')
-        setItem2_name('')
-        setItem2_quantity('')
-        setItem3_code('')
-        setItem3_name('')
-        setItem3_quantity('')
-        setOrderStatus('')
+        setItems([
+            { code: "", name: "", quantity: "" },
+            { code: "", name: "", quantity: "" },
+            { code: "", name: "", quantity: "" }
+        ]);
+        setOrderStatus('');
 
         setError(null)
         setEmptyFields([])
@@ -90,76 +80,30 @@ const handleSubmit = async (e) => {
                 className = {emptyFields.includes('distributorName') ? 'error' : ''}
             />
 
-            <label>Item(1) code</label>
-            <input
-                type = "text"
-                onChange = {(e) => setItem1_code(e.target.value)}
-                value = {item1_code}
-            />
+{items.map((item, index) => (
+                <div key={index}>
+                    <label>Item({index + 1}) code</label>
+                    <input
+                        type="text"
+                        onChange={(e) => handleItemChange(index, 'code', e.target.value)}
+                        value={item.code}
+                    />
 
-            <label>Item(1) Name</label>
-            <input
-                type = "text"
-                onChange = {(e) => setItem1_name(e.target.value)}
-                value = {item1_name}
-            />
+                    <label>Item({index + 1}) Name</label>
+                    <input
+                        type="text"
+                        onChange={(e) => handleItemChange(index, 'name', e.target.value)}
+                        value={item.name}
+                    />
 
-            <label>Item(1) Quantity</label>
-            <input
-                type = "number"
-                onChange = {(e) => setItem1_quantity(e.target.value)}
-                value = {item1_quantity}
-            />
-
-            {item1_code && item1_name && item1_quantity && (
-            <>
-            <label>Item(2) code</label>
-            <input
-                type = "text"
-                onChange = {(e) => setItem2_code(e.target.value)}
-                value = {item2_code}
-            />
-
-            <label>Item(2) Name</label>
-            <input
-                type = "text"
-                onChange = {(e) => setItem2_name(e.target.value)}
-                value = {item2_name}
-            />
-
-            <label>Item(2) Quantity</label>
-            <input
-                type = "number"
-                onChange = {(e) => setItem2_quantity(e.target.value)}
-                value = {item2_quantity}
-            />
-            </>
-            )}
-
-            {item2_code && item2_name && item2_quantity && (
-            <>
-            <label>Item(3) code</label>
-            <input
-                type = "text"
-                onChange = {(e) => setItem3_code(e.target.value)}
-                value = {item3_code}
-            />
-
-            <label>Item(3) Name</label>
-            <input
-                type = "text"
-                onChange = {(e) => setItem3_name(e.target.value)}
-                value = {item3_name}
-            />
-
-            <label>Item(3) Quantity</label>
-            <input
-                type = "number"
-                onChange = {(e) => setItem3_quantity(e.target.value)}
-                value = {item3_quantity}
-            />
-                </>
-            )}
+                    <label>Item({index + 1}) Quantity</label>
+                    <input
+                        type="number"
+                        onChange={(e) => handleItemChange(index, 'quantity', e.target.value)}
+                        value={item.quantity}
+                    />
+                </div>
+            ))}
 
             <label>Order Status</label>
             <input

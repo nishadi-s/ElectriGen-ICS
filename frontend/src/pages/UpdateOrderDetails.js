@@ -31,11 +31,13 @@ const UpdateOrder = () => {
         };
     }, [id]); // Re-run effect when the ID changes
 
-    const handleChange = (e) => {
+    const handleChange = (e, index) => {
         const { name, value } = e.target;
+        const updatedItems = [...updatedOrder.items];
+        updatedItems[index][name] = value;
         setUpdatedOrder(prevState => ({
             ...prevState,
-            [name]: value
+            items: updatedItems
         }));
     }
 
@@ -73,104 +75,58 @@ const UpdateOrder = () => {
         <div className="update-order">
             <h2>Edit Order</h2>
             <form>
-            <label>Distributor ID</label>
+                <label>Distributor ID</label>
                 <input 
                     type="text"
                     name="distributorId" 
                     value={updatedOrder.distributorId} 
-                    onChange={handleChange} />
+                    onChange={(e) => setUpdatedOrder(prevState => ({ ...prevState, distributorId: e.target.value }))} />
 
-            <label>Distributor's Name</label>
+                <label>Distributor's Name</label>
                 <input
                     type="text"
                     name="distributorName"
                     value={updatedOrder.distributorName}
-                    onChange={handleChange}
+                    onChange={(e) => setUpdatedOrder(prevState => ({ ...prevState, distributorName: e.target.value }))}
                 />
 
-            <label>Item(1) code</label>
-                <input
-                    type="text"
-                    name="item1_code"
-                    value={updatedOrder.item1_code}
-                    onChange={handleChange}
-                />
+                {updatedOrder.items.map((item, index) => (
+                    <div key={index}>
+                        <label>{`Item(${index + 1}) code`}</label>
+                        <input
+                            type="text"
+                            name={`code`}
+                            value={item.code}
+                            onChange={(e) => handleChange(e, index)}
+                        />
 
-            <label>Item(1) Name</label>
-                <input
-                    type="text"
-                    name="item1_name"
-                    value={updatedOrder.item1_name}
-                    onChange={handleChange}
-                />
+                        <label>{`Item(${index + 1}) Name`}</label>
+                        <input
+                            type="text"
+                            name={`name`}
+                            value={item.name}
+                            onChange={(e) => handleChange(e, index)}
+                        />
 
-            <label>Item(1) Quantity</label>
-                <input
-                    type="number"
-                    name="item1_quantity"
-                    value={updatedOrder.item1_quantity}
-                    onChange={handleChange}
-                />
+                        <label>{`Item(${index + 1}) Quantity`}</label>
+                        <input
+                            type="number"
+                            name={`quantity`}
+                            value={item.quantity}
+                            onChange={(e) => handleChange(e, index)}
+                        />
+                    </div>
+                ))}
 
-                <label>Item(2) code</label>
-                <input
-                    type="text"
-                    name="item2_code"
-                    value={updatedOrder.item2_code}
-                    onChange={handleChange}
-                />
-
-            <label>Item(2) Name</label>
-                <input
-                    type="text"
-                    name="item2_name"
-                    value={updatedOrder.item2_name}
-                    onChange={handleChange}
-                />
-
-            <label>Item(2) Quantity</label>
-                <input
-                    type="number"
-                    name="item2_quantity"
-                    value={updatedOrder.item2_quantity}
-                    onChange={handleChange}
-                />
-
-                <label>Item(3) code</label>
-                <input
-                    type="text"
-                    name="item3_code"
-                    value={updatedOrder.item3_code}
-                    onChange={handleChange}
-                />
-
-            <label>Item(3) Name</label>
-                <input
-                    type="text"
-                    name="item3_name"
-                    value={updatedOrder.item3_name}
-                    onChange={handleChange}
-                />
-
-            <label>Item(3) Quantity</label>
-                <input
-                    type="number"
-                    name="item3_quantity"
-                    value={updatedOrder.item3_quantity}
-                    onChange={handleChange}
-                />
-
-            
-
-            <label>Order Status</label>
+                <label>Order Status</label>
                 <input
                     type="text"
                     name="orderStatus"
                     value={updatedOrder.orderStatus}
-                    onChange={handleChange}
+                    onChange={(e) => setUpdatedOrder(prevState => ({ ...prevState, orderStatus: e.target.value }))}
                 />
 
-                <button className="custom-button" type="submit" onClick={handleUpdate}>Update</button>
+                <button className="custom-button" type="button" onClick={handleUpdate}>Update</button>
             </form>
         </div>
     );

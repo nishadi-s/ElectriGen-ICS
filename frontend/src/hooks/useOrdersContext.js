@@ -7,6 +7,5 @@ export const useOrdersContext = () => {
     if(!context){
         throw Error('useOrdersContext must be used inside an OrdersContextProvider')
     }
-
     return context
 }

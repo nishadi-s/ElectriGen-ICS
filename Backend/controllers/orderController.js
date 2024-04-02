@@ -29,9 +29,7 @@ const getOrder = async(req,res) => {
 
 //create new order
 const createOrder = async (req,res) => {
-    const {distributorId,distributorName,item1_code,item1_name,item1_quantity,
-           item2_code,item2_name,item2_quantity,
-           item3_code,item3_name,item3_quantity,orderStatus} = req.body
+    const {distributorId,distributorName,items,orderStatus} = req.body
 
     let emptyFields = []
     
@@ -41,6 +39,16 @@ const createOrder = async (req,res) => {
     if(!distributorName) {
         emptyFields.push('distributorName')
     }
+    if (!items || items.length === 0) {
+        emptyFields.push('items');
+    } else {
+        // Check each item in the array
+        items.forEach((item, index) => {
+            if (!item.code || !item.name || !item.quantity) {
+                emptyFields.push(`Item at index ${index} is missing required fields (code, name, quantity)`);
+            }
+        });
+    }
     if(emptyFields.length > 0){
         return res.status(400).json({error: 'Please Fill In All The Fields!', emptyFields })
     }
@@ -48,9 +56,7 @@ const createOrder = async (req,res) => {
 
     //add doc to db
     try{
-        const newOrder = await Order.create({distributorId,distributorName,item1_code,item1_name,item1_quantity,
-                                            item2_code,item2_name,item2_quantity,
-                                            item3_code,item3_name,item3_quantity,orderStatus})
+        const newOrder = await Order.create({distributorId,distributorName,items,orderStatus})
         res.status(200).json(newOrder)
     }catch(error){
         res.status(400).json({error: error.message})

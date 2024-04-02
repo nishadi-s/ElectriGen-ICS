@@ -12,6 +12,52 @@ const orderSchema = new Schema({
         required: true
     },
 
+    //items array
+    items:[
+        {
+            code: {
+                type: String,
+                required: true
+            },
+            name: {
+                type: String,
+                required: true
+            },
+            quantity: {
+                type: Number,
+                required: true
+            }
+        },
+        {
+            code: {
+                type: String,
+                required: true
+            },
+            name: {
+                type: String,
+                required: true
+            },
+            quantity: {
+                type: Number,
+                required: true
+            }
+        },
+        {
+            code: {
+                type: String,
+                required: true
+            },
+            name: {
+                type: String,
+                required: true
+            },
+            quantity: {
+                type: Number,
+                required: true
+            }
+        }
+    ],
+/*
     item1_code: {
         type: String,
         required: true
@@ -50,6 +96,7 @@ const orderSchema = new Schema({
         type: Number,
         required: true
     },
+    */
 
     orderStatus: {
         type: String,
