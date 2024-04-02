@@ -38,8 +38,11 @@ mongoose
 
 
 
-//primal route
+//primal sales route
 const salesRouter = require("./routes/sales");
 app.use("/sales",salesRouter);
 
+//primal sales feedback route
+const feedbackRouter = require("./routes/sfeedback");
+app.use("/sfeedback",feedbackRouter);
 
