@@ -2,35 +2,40 @@ const router = require("express").Router();
 let showroom = require("../models/salesModel");
 
 router.post("/add", async (req, res) => {
-    try {
-      const { billID, bdate, items } = req.body;
-  
-      // Calculate total amount
-      let totalAmount = 0;
-      items.forEach(item => {
-        totalAmount += item.qty * item.price;
-      });
-  
-      // Convert bdate to Date object
-      const convertedBdate = new Date(bdate);
-  
-      // Create a new sales invoice object using the Mongoose model
-      const newSale = new showroom({
-        billID: Number(billID), // Ensure billID is converted to a number
-        bdate: convertedBdate,
-        items,
-        tot: totalAmount // Use the calculated total amount
-      });
-  
-      // Save the new sales invoice to the database
-      await newSale.save();
-  
-      res.status(201).send({ message: 'Sales invoice added successfully' });
-    } catch (error) {
-      console.error('Error adding sales invoice:', error);
-      res.status(500).send({ error: 'Server error' });
-    }
-  });
+  try {
+    const { billID, bdate, items } = req.body;
+
+    // Calculate total amount
+    let totalAmount = 0;
+    let totalQty = 0; // Correct variable name for total quantity
+
+    items.forEach(item => {
+      totalAmount += item.qty * item.price;
+      totalQty += item.qty; // Increment totalQty
+    });
+
+    // Validate and convert bdate to Date object (assuming valid date format)
+    const convertedBdate = new Date(bdate);
+
+    // Create a new sales invoice object using the Mongoose model
+    const newSale = new showroom({
+      billID: Number(billID), // Ensure billID is converted to a number
+      bdate: convertedBdate,
+      items,
+      tot: totalAmount, // Use the calculated total amount
+      totqty: totalQty // Corrected variable name for total quantity
+    });
+
+    // Save the new sales invoice to the database
+    await newSale.save();
+
+    res.status(201).send({ message: 'Sales invoice added successfully' });
+  } catch (error) {
+    console.error('Error adding sales invoice:', error);
+    res.status(500).send({ error: 'Server error' });
+  }
+});
+
   
 
 //gel all

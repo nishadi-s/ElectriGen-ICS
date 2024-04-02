@@ -24,6 +24,11 @@ const salesSchema = new Schema({
     tot : {
         type:Number,
         default:0
+    },
+
+    totqty : {
+        type:Number,
+        default:0
     }
 
 })
