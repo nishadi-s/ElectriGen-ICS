@@ -24,6 +24,7 @@ const App = () => {
           <Route path="/Analytics" element={<Analytics />} />
           <Route path="/MyProfile" element={<MyProfile />} />
           <Route path="/Logout" element={<Logout />} />
+          <Route path="/AddProducts" element={<AddProducts />} />
         </Routes>
       </Navbar>
     </BrowserRouter>

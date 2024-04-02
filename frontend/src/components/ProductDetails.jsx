@@ -4,7 +4,7 @@ const ProductDetails = ({ product }) => {
   const { dispatch } = useProductContext();
 
   const handleClick = async () => {
-    const response = await fetch("/api/products/" + product._id, {
+    const response = await fetch("/api/products" + product._id, {
       method: "DELETE",
     });
     const json = await response.json();
@@ -16,8 +16,10 @@ const ProductDetails = ({ product }) => {
 
   return (
     <div className="product-details">
-      <table class="table align-middle mb-0 bg-white">
-        <thead class="bg-light">
+      {/* Table starts here */}
+
+      <table className="table align-middle mb-0 bg-white">
+        <thead className="bg-light">
           <tr>
             <th>Product Name</th>
             <th>Category</th>
@@ -29,27 +31,28 @@ const ProductDetails = ({ product }) => {
           </tr>
         </thead>
         <tbody>
-          <tr>
+          {/* Table row starts here */}
+          <tr key={product._id}>
             <td>
-              <div class="d-flex align-items-center">
+              <div className="d-flex align-items-center">
                 <img
                   src="https://mdbootstrap.com/img/new/avatars/8.jpg"
                   alt=""
                   style={{ width: "45px", height: "45px" }}
-                  class="rounded-circle"
+                  className="rounded-circle"
                 />
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">{product.name}</p>
-                  <p class="text-muted mb-0">{product.itemCode}</p>
+                <div className="ms-3">
+                  <p className="fw-bold mb-1">{product.name}</p>
+                  <p className="text-muted mb-0">{product.itemCode}</p>
                 </div>
               </div>
             </td>
             <td>
-              <p class="fw-normal mb-1">{product.category}</p>
-              <p class="text-muted mb-0">IT department</p>
+              <p className="fw-normal mb-1">{product.category}</p>
+              <p className="text-muted mb-0">IT department</p>
             </td>
             <td>
-              <span class="badge badge-success rounded-pill d-inline">
+              <span className="badge badge-success rounded-pill d-inline">
                 Color
               </span>
             </td>
@@ -60,22 +63,10 @@ const ProductDetails = ({ product }) => {
               <button onClick={handleClick}>Delete</button>
             </td>
           </tr>
+          {/* Table row ends here */}
         </tbody>
       </table>
-      {/* <table className="productsTable">
-        <tr>
-        <th></th>
-        </tr>
-        <tr>
-        <td>{product.itemCode}</td>
-        <td>{product.name}</td>
-        <td>{product.category}</td>
-        <td>{product.color}</td>
-        <td>{product.cost}</td>
-        <td>{product.unitPrice}</td>
-        <td></td>
-        </tr>
-      </table>*/}
+      {/* Table ends here */}
     </div>
   );
 };
