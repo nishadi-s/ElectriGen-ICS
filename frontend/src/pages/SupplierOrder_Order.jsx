@@ -1,5 +1,7 @@
 import React from "react";
-import {useEffect, useState} from 'react'
+import '../SupplierOrder.css';
+import {useEffect} from 'react'
+import { useSupplierOrderContext } from "../hooks/useSupplierOrderContext";
 
 
 //components
@@ -8,9 +10,9 @@ import SupplierOrderForm from '../components/SupplierOrderForm'
 
 
 
-const Orders = () => {
-  
-    const [supplier_order, setSupplier_order] = useState(null)
+const SupplierOrders = () => {
+  const {orders,dispatch} = useSupplierOrderContext ()
+    
 
 
 useEffect (() => {
@@ -20,28 +22,31 @@ const json = await response.json()
 
 
 if (response.ok){
-    setSupplier_order(json)
+   dispatch({type:'SET_ORDERS',payload:json}) 
 }
 }
 
 fetchSupplier_Order()
-},[]) 
+},[dispatch]) 
 
 
   return (
-    <div claaName ="supplier_order">
+    <div className ="supplier_order">
       <h1> Order</h1>
-      { supplier_order && supplier_order.map((order) => (
+      { orders && orders.map((order) => (
     
-    <SupplierOrderDetails key = {supplier_order._Sup_Ord_id} order ={order}/>
+    <SupplierOrderDetails key={orders._Sup_Ord_id} order={order}/>
       )
       )}
-       <SupplierOrderForm/> 
+     <SupplierOrderForm/> 
+
+     
     </div>
+    
   );
 };
 
   
 
 
-export default Orders;
+export default SupplierOrders;
