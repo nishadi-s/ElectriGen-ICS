@@ -13,6 +13,7 @@ const SupplierOrderForm = () => {
   const [Sup_Ord_sts, setOrderStatus] = useState("");
   const [Sup_rating, setSupplierRating] = useState("");
   const [error, setError] = useState(null);
+  const [emptyFields, setEmptyFields] = useState ([])
 
   const handleSubmit = async (e) => {
     e.preventDefault(); 
@@ -40,6 +41,7 @@ const SupplierOrderForm = () => {
 
     if (!response.ok) {
       setError(json.error);
+      setEmptyFields(json.emptyFields)
     }
     if (response.ok) {
       setOrder_ID("");
@@ -52,6 +54,7 @@ const SupplierOrderForm = () => {
       setOrderStatus("");
       setSupplierRating("");
       setError(null);
+      setEmptyFields ([])
       dispatch({type: 'CREATE_ORDER',payload: json})
     }
   };
@@ -65,6 +68,7 @@ const SupplierOrderForm = () => {
         type="text"
         onChange={(e) => setOrder_ID(e.target.value)}
         value={Sup_Ord_id}
+        className= {emptyFields.includes('Supplier Order id') ? 'error': ''}
       />
 
       <label>Supplier ID:</label>
@@ -72,6 +76,7 @@ const SupplierOrderForm = () => {
         type="text"
         onChange={(e) => setSupplier_ID(e.target.value)}
         value={Sup_ID}
+        className= {emptyFields.includes('Suppplier ID') ? 'error': ''}
       />
 
       <label>Quantity:</label>
@@ -79,6 +84,7 @@ const SupplierOrderForm = () => {
         type="number"
         onChange={(e) => setQuantity(e.target.value)}
         value={Sup_Quant}
+        className= {emptyFields.includes('Supplier Order Quantity') ? 'error': ''}
       />
 
       <label>Cost:</label>
@@ -86,6 +92,7 @@ const SupplierOrderForm = () => {
         type="number"
         onChange={(e) => setCost(e.target.value)}
         value={Sup_Cost}
+        className= {emptyFields.includes('Supplier Order Cost') ? 'error': ''}
       />
 
       <label>Material Code:</label>
@@ -93,6 +100,7 @@ const SupplierOrderForm = () => {
         type="text"
         onChange={(e) => setMaterial_code(e.target.value)}
         value={Sup_matrial_code}
+        className= {emptyFields.includes('Supplier Order Material Code') ? 'error': ''}
       />
 
       <label>Ordered Date:</label>
@@ -100,6 +108,7 @@ const SupplierOrderForm = () => {
         type="date"
         onChange={(e) => setOrderedDate(e.target.value)}
         value={Sup_orded_date}
+        className= {emptyFields.includes('Supplier Order Ordered Date') ? 'error': ''}
       />
 
       <label>Receipt Date:</label>
@@ -107,6 +116,7 @@ const SupplierOrderForm = () => {
         type="date"
         onChange={(e) => setReceiptDate(e.target.value)}
         value={Sup_recpt_date}
+        className= {emptyFields.includes('Supplier Order Receipt Date') ? 'error': ''}
       />
 
       <label>Order Status:</label>
@@ -114,6 +124,7 @@ const SupplierOrderForm = () => {
         type="text"
         onChange={(e) => setOrderStatus(e.target.value)}
         value={Sup_Ord_sts}
+        className= {emptyFields.includes('Supplier Order Status') ? 'error': ''}
       />
 
       <label>Supplier Rating:</label>
@@ -121,6 +132,7 @@ const SupplierOrderForm = () => {
         type="number"
         onChange={(e) => setSupplierRating(e.target.value)}
         value={Sup_rating}
+        className= {emptyFields.includes('Supplier Order  Rating') ? 'error': ''}
       />
 
       <button>Add order details</button>
