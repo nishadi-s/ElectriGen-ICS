@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useSupplierOrderContext } from "../hooks/useSupplierOrderContext";
 
 const SupplierOrderForm = () => {
+  const {dispatch} = useSupplierOrderContext()
   const [Sup_Ord_id, setOrder_ID] = useState("");
   const [Sup_ID, setSupplier_ID] = useState("");
   const [ Sup_Quant, setQuantity] = useState("");
@@ -50,7 +52,7 @@ const SupplierOrderForm = () => {
       setOrderStatus("");
       setSupplierRating("");
       setError(null);
-      console.log("new supplier order added", json);
+      dispatch({type: 'CREATE_ORDER',payload: json})
     }
   };
 
