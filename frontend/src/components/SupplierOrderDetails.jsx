@@ -1,4 +1,19 @@
+import { useSupplierOrderContext } from "../hooks/useSupplierOrderContext";
+
 const SupplierOrderDetails = ({ order }) => {
+const {dispatch} = useSupplierOrderContext()
+
+  const handleClick = async () =>{
+     const response = await fetch ('/api/supplier_order/' + order._id,{
+      method : 'DELETE'
+     })
+const json =  await response.json ()
+
+if (response.ok){
+   dispatch({type:'DELETE_ORDER', payload:json})
+}
+  }
+
     return (
       <div className="Supplier-Order-Details">
         <h6><strong>Order ID:</strong> {order.Sup_Ord_id}</h6>
@@ -11,6 +26,7 @@ const SupplierOrderDetails = ({ order }) => {
         <p><strong>Order Status:</strong> {order.Sup_Ord_sts}</p>
         <p><strong>Supplier Rating:</strong> {order.Sup_rating}</p>
         <p>{order.createdAt}</p>
+        <span onClick={handleClick}> Delete</span>
       </div>
     );
   }

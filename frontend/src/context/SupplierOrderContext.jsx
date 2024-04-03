@@ -12,10 +12,10 @@ export const ordersReducer=(state,action)=>{
             return{
                 orders:[action.payload, ...state.orders]
             }
-        /*case 'DELETE_ORDER':
+        case 'DELETE_ORDER':
             return{
                 orders: state.orders.filter((e)=>e._id!==action.payload._id)
-            }*/
+            }
         default:
             return state
         
