@@ -29,7 +29,7 @@ const getOrder = async(req,res) => {
 
 //create new order
 const createOrder = async (req,res) => {
-    const {distributorId,distributorName,items,orderStatus} = req.body
+    const {distributorId,distributorName,orderStatus,items,totalAmount} = req.body
 
     let emptyFields = []
     
@@ -44,7 +44,7 @@ const createOrder = async (req,res) => {
     } else {
         // Check each item in the array
         items.forEach((item, index) => {
-            if (!item.code || !item.name || !item.quantity) {
+            if (!item.code || !item.name || !item.unit || !item.quantity) {
                 emptyFields.push(`Item at index ${index} is missing required fields (code, name, quantity)`);
             }
         });
@@ -56,7 +56,7 @@ const createOrder = async (req,res) => {
 
     //add doc to db
     try{
-        const newOrder = await Order.create({distributorId,distributorName,items,orderStatus})
+        const newOrder = await Order.create({distributorId,distributorName,orderStatus,items,totalAmount})
         res.status(200).json(newOrder)
     }catch(error){
         res.status(400).json({error: error.message})

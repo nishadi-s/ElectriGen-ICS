@@ -73,7 +73,7 @@ const UpdateOrder = () => {
 
     return (
         <div className="update-order">
-            <h2>Edit Order</h2>
+            <h2>Edit Order Details</h2>
             <form>
                 <label>Distributor ID</label>
                 <input 
@@ -88,6 +88,14 @@ const UpdateOrder = () => {
                     name="distributorName"
                     value={updatedOrder.distributorName}
                     onChange={(e) => setUpdatedOrder(prevState => ({ ...prevState, distributorName: e.target.value }))}
+                />
+
+                <label>Order Status</label>
+                <input
+                    type="text"
+                    name="orderStatus"
+                    value={updatedOrder.orderStatus}
+                    onChange={(e) => setUpdatedOrder(prevState => ({ ...prevState, orderStatus: e.target.value }))}
                 />
 
                 {updatedOrder.items.map((item, index) => (
@@ -108,6 +116,14 @@ const UpdateOrder = () => {
                             onChange={(e) => handleChange(e, index)}
                         />
 
+                        <label>{`Item(${index + 1}) Unit`}</label>
+                        <input
+                            type="number"
+                            name={`unit`}
+                            value={item.unit}
+                            onChange={(e) => handleChange(e, index)}
+                        />
+
                         <label>{`Item(${index + 1}) Quantity`}</label>
                         <input
                             type="number"
@@ -118,12 +134,12 @@ const UpdateOrder = () => {
                     </div>
                 ))}
 
-                <label>Order Status</label>
+                <label>Total amount to pay</label>
                 <input
-                    type="text"
-                    name="orderStatus"
-                    value={updatedOrder.orderStatus}
-                    onChange={(e) => setUpdatedOrder(prevState => ({ ...prevState, orderStatus: e.target.value }))}
+                    type="number"
+                    name="totalAmount"
+                    value={updatedOrder.totalAmount}
+                    onChange={(e) => setUpdatedOrder(prevState => ({ ...prevState, totalAmount: e.target.value }))}
                 />
 
                 <button className="custom-button" type="button" onClick={handleUpdate}>Update</button>

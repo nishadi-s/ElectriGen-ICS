@@ -6,12 +6,13 @@ const OrderForm = () => {
 
     const[distributorId, setDistributorId] = useState('')
     const[distributorName, setDistributorName] = useState('')
-    const [items, setItems] = useState([
-        { code: "", name: "", quantity: "" },
-        { code: "", name: "", quantity: "" },
-        { code: "", name: "", quantity: "" }
-    ]);
     const[orderStatus, setOrderStatus] = useState('')
+    const [items, setItems] = useState([
+        { code: "", name: "" , unit: "", quantity: "" },
+        { code: "", name: "" , unit: "", quantity: "" },
+        { code: "", name: "" , unit: "", quantity: "" },
+    ]);
+    const[totalAmount, setTotalAmount] = useState('')
 
     const[error, setError] = useState('')
     const[emptyFields, setEmptyFields] = useState([])
@@ -27,8 +28,7 @@ const handleSubmit = async (e) => {
 
     const order = {distributorId,
                    distributorName,
-                   items,
-                   orderStatus}
+                   orderStatus,items,totalAmount}
 
     const response = await fetch('/api/orders', {
         method: 'POST',
@@ -46,12 +46,13 @@ const handleSubmit = async (e) => {
     if(response.ok){
         setDistributorId('')
         setDistributorName('')
-        setItems([
-            { code: "", name: "", quantity: "" },
-            { code: "", name: "", quantity: "" },
-            { code: "", name: "", quantity: "" }
-        ]);
         setOrderStatus('');
+        setItems([
+            { code: "", name: "" , unit: "", quantity: "" },
+            { code: "", name: "" , unit: "", quantity: "" },          
+            { code: "", name: "" , unit: "", quantity: "" },
+        ]);
+        setTotalAmount('');
 
         setError(null)
         setEmptyFields([])
@@ -80,7 +81,14 @@ const handleSubmit = async (e) => {
                 className = {emptyFields.includes('distributorName') ? 'error' : ''}
             />
 
-{items.map((item, index) => (
+            <label>Order Status</label>
+            <input
+                type = "text"
+                onChange = {(e) => setOrderStatus(e.target.value)}
+                value = {orderStatus}
+            />
+
+                {items.map((item, index) => (
                 <div key={index}>
                     <label>Item({index + 1}) code</label>
                     <input
@@ -96,6 +104,13 @@ const handleSubmit = async (e) => {
                         value={item.name}
                     />
 
+                   <label>Item({index + 1}) Unit Price</label>
+                    <input
+                        type="number"
+                        onChange={(e) => handleItemChange(index, 'unit', e.target.value)}
+                        value={item.unit}
+                    />
+
                     <label>Item({index + 1}) Quantity</label>
                     <input
                         type="number"
@@ -105,11 +120,11 @@ const handleSubmit = async (e) => {
                 </div>
             ))}
 
-            <label>Order Status</label>
+            <label>Total Amount to Pay</label>
             <input
                 type = "text"
-                onChange = {(e) => setOrderStatus(e.target.value)}
-                value = {orderStatus}
+                onChange = {(e) => setTotalAmount(e.target.value)}
+                value = {totalAmount}
             />
 
             <button onClick={()=>window.location.href='/OrderSuccess'}>Submit</button>

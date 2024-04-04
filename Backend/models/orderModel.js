@@ -11,6 +11,10 @@ const orderSchema = new Schema({
         type: String,
         required: true
     },
+    orderStatus: {
+        type: String,
+        required: true
+    },
 
     //items array
     items:[
@@ -21,6 +25,10 @@ const orderSchema = new Schema({
             },
             name: {
                 type: String,
+                required: true
+            },
+            unit: {
+                type: Number,
                 required: true
             },
             quantity: {
@@ -57,6 +65,11 @@ const orderSchema = new Schema({
             }
         }
     ],
+
+    totalAmount: {
+        type: Number,
+        required: true
+    },
 /*
     item1_code: {
         type: String,
@@ -98,10 +111,7 @@ const orderSchema = new Schema({
     },
     */
 
-    orderStatus: {
-        type: String,
-        required: true
-    }
+    
 },{timestamps:true})
 
 module.exports = mongoose.model('Order', orderSchema)

@@ -203,3 +203,18 @@ nav ul li a:hover {
 .custom-button:active {
   background-color: #0b184d;
 }
+
+.btn-delete {
+  background-color: #EC2026; 
+  color: white; /* White text */
+  font-size: 14px;
+  border: none; /* Remove button border */
+  padding: 2px 5px; /* Padding for better appearance */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.btn-delete:hover {
+  background-color: #d32f2f; /* Darker shade of red on hover */
+}
