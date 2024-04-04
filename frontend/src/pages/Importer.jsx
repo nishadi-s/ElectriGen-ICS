@@ -1,11 +1,17 @@
 import React from "react";
 
-const Importer= () => {
+//components
+import ImporterForm from '../components/ImporterForm' 
+
+const Importers = () => {
   return (
     <div>
-      <h1>Importer</h1>
+      <div>
+      <h1>Importers</h1><br></br>
+      </div>
+      <ImporterForm/>
     </div>
   );
 };
 
-export default Importer;
+export default Importers;
