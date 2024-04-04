@@ -12,10 +12,13 @@ import Logout from "./pages/Logout.jsx";
 import SalesFeedback from "./pages/salesFeedback.jsx";
 import InvoiceCreate from "./pages/invoiceCreate.jsx";
 import SfeedbackFetch from "./components/sfeedbackFetch.jsx";
+import ViewInvoice from "./pages/viewInvoice.jsx";
+import { SalesContextProvider } from "./context/SalesContext.jsx";
 
 const App = () => {
   return (
     <BrowserRouter>
+    <SalesContextProvider>
       <Navbar>
         <Routes>
           <Route path="/" element={<Dashboard />} />
@@ -29,8 +32,10 @@ const App = () => {
           <Route path="/salesFeedback" element={<SalesFeedback />} />
           <Route path="/invoiceCreate" element={<InvoiceCreate />} />
           <Route path="/sfeedbackFetch" element={<SfeedbackFetch />} />
+          <Route path="/viewInvoice" element={<ViewInvoice />} />
         </Routes>
       </Navbar>
+      </SalesContextProvider>
     </BrowserRouter>
   );
 };

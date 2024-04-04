@@ -46,11 +46,11 @@ const Dashboard = () => {
       </div>
 
       <Link to="/invoiceCreate">
-        <button type="button" class="btn btn-primary">Create invoice</button>
+        <button type="button" className="btn btn-primary mr-4">Create Invoice</button>
       </Link>
 
-      <Link to="#">
-        <button type="button" class="btn btn-primary">Modify Invoice</button>
+      <Link to="/viewInvoice">
+        <button type="button" className="btn btn-primary mr-4">View Invoices</button>
       </Link>
 
 
