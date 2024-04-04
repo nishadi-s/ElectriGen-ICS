@@ -19,11 +19,16 @@ const exportSchema=new Schema({
     quantity:{
         type:Number,
         required:true
+    }, 
+    totalCost:{
+        type:Number,
+        required:true
     },
     status:{
         type:String,
         required:true
     }
 },{timestamps:true})
+
 
 module.exports=mongoose.model('Export',exportSchema)

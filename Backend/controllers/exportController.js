@@ -27,18 +27,42 @@ const getExport=async(req,res)=>{
 
 //create new export
 const createExport=async(req,res)=>{
-    const{exportOrderID, importer, itemID, quantity, status}=req.body
+    const{exportOrderID, importer, itemID, quantity, totalCost, status}=req.body
+
+    let emptyFields=[]
+
+    if(!exportOrderID){
+        emptyFields.push('exportOrderID')
+    }
+    if(!importer){
+        emptyFields.push('importer')
+    }
+    if(!itemID){
+        emptyFields.push('itemID')
+    }
+    if(!quantity){
+        emptyFields.push('quantity')
+    }
+    if(!totalCost){
+        emptyFields.push('totalCost')
+    }
+    if(!status){
+        emptyFields.push('status')
+    }
+    if(emptyFields.length>0){
+        return res.status(400).json({error:'Please fill in all the fields',emptyFields})
+    }
 
     //add doc to db
     try{
-        const exportt=await Export.create({exportOrderID, importer, itemID, quantity, status})
+        const exportt=await Export.create({exportOrderID, importer, itemID, quantity, totalCost, status})
         res.status(200).json(exportt)
     }catch(error){
         res.status(400).json({error: error.message})
     }
 }
 
-//delete a export
+//delete an export
 const deleteExport=async(req,res)=>{
     const { id }=req.params
 
@@ -55,7 +79,7 @@ const deleteExport=async(req,res)=>{
     res.status(200).json(exportt)
 }
 
-//update a export
+//update an export
 const updateExport=async(req,res)=>{
     const { id }=req.params
 
@@ -63,16 +87,32 @@ const updateExport=async(req,res)=>{
         return res.status(404).json({error:'No such export'})
     }
 
-    const exportt=await Export.findOneAndUpdate({_id:id},{
-        ...req.body
-    })
+    try {
+        const exportt = await Export.findOneAndUpdate({ _id: id }, {
+            ...req.body
+        }, { new: true }); // Add { new: true } to return the updated document
 
-    if(!exportt){
-        return res.status(404).json({error:'No such export'})
+        if (!exportt) {
+            return res.status(400).json({ error: 'No such order' });
+        }
+
+        res.status(200).json(exportt);
+    } catch (error) {
+        console.error('Error updating export:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
-
-    res.status(200).json(exportt)
 }
+
+//     const exportt=await Export.findOneAndUpdate({_id:id},{
+//         ...req.body
+//     })
+
+//     if(!exportt){
+//         return res.status(404).json({error:'No such export'})
+//     }
+
+//     res.status(200).json(exportt)
+// }
 
 module.exports={
     getExports,

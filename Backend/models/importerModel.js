@@ -7,6 +7,7 @@ const importerSchema=new Schema({
     importerID:{
         type:String,
         required:true
+        
     },
     importerName:{
         type:String,
@@ -25,5 +26,7 @@ const importerSchema=new Schema({
         required:true
     }
 },{timestamps:true})
+
+
 
 module.exports=mongoose.model('Importer',importerSchema)
