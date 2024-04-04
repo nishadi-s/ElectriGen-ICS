@@ -5,7 +5,8 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const productRoutes = require("./routes/products");
-const supplierChain_order = require('./routes/supplier_order'); 
+const supplierChain_order = require('./routes/supplier_order'); //Nishadi
+const supplier = require('./routes/supplier'); //Nishadi
 
 //express app
 const app = express();
@@ -20,7 +21,8 @@ app.use((req, res, next) => {
 
 //routes
 app.use("/api/products", productRoutes);
-app.use("/api/supplier_order",supplierChain_order);
+app.use("/api/supplier_order",supplierChain_order); //Nishadi
+app.use("/api/supplier",supplier); //Nishadi
 
 //connect to DB
 mongoose
