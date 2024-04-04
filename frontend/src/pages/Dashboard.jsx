@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
+import SfeedbackFetch from "../components/sfeedbackFetch";
 
 const Dashboard = () => {
   return (
@@ -58,36 +59,10 @@ const Dashboard = () => {
       </div>
 
       <div>
-      <table class="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">Customer Name</th>
-              <th scope="col">Contact Number</th>
-              <th scope="col">Feedback</th>
-              
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-             
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry the Bird</td>
-              <td>@twitter</td>
-            </tr>
-          </tbody>
-      </table>
+        <SfeedbackFetch />
       </div>
+
+      
 
       <Link to="/salesFeedback">
         <button type="button" class="btn btn-primary">Add Feedback</button>

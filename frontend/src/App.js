@@ -11,6 +11,7 @@ import Production from "./pages/Production.jsx";
 import Logout from "./pages/Logout.jsx";
 import SalesFeedback from "./pages/salesFeedback.jsx";
 import InvoiceCreate from "./pages/invoiceCreate.jsx";
+import SfeedbackFetch from "./components/sfeedbackFetch.jsx";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="/Logout" element={<Logout />} />
           <Route path="/salesFeedback" element={<SalesFeedback />} />
           <Route path="/invoiceCreate" element={<InvoiceCreate />} />
+          <Route path="/sfeedbackFetch" element={<SfeedbackFetch />} />
         </Routes>
       </Navbar>
     </BrowserRouter>

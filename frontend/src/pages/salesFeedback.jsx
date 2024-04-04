@@ -1,23 +1,59 @@
-import React from "react";
+import React, {useState} from "react";
+import axios from "axios";
 
 const SalesFeedback = () =>{
+    const [name, setName] = useState("");
+    const [phone, setPhone] = useState("");
+    const [message, setMessage] = useState("");
+
+    function sendData(e){
+        //alert("Feedback successfully submited!");
+
+        const newFeedback ={
+            name,
+            phone,
+            message
+        }
+
+        axios.post("http://localhost:4000/sfeedback/addf", newFeedback)
+       .then(()=>{
+        alert("Feedback successfully submited!");
+       })
+       .catch((err)=>{
+        alert(err);
+       })
+
+    }
+
     return(
         <div>
             <h1>Sales Feedback</h1>
         
         <div>
-            <form>
+            <form onSubmit={sendData}>
             <div className="mb-3">
-                <label htmlFor="exampleInputEmail1" className="form-label">Name</label>
-                <input type="text" className="form-control" id="exampleInputEmail1" placeholder="Enter Customer name" />
+                <label htmlFor="name" className="form-label">Name</label>
+                <input type="text" className="form-control" id="name" placeholder="Fernando B A P" 
+                onChange={(e)=>{
+                    setName(e.target.value);
+                }}
+                />
             </div>
             <div className="mb-3">
-                <label htmlFor="exampleInputPassword1" className="form-label">Phone</label>
-                <input type="tel" className="form-control" id="exampleInputPassword1" placeholder="Enter Customers' phone" />
+                <label htmlFor="phone" className="form-label">Phone</label>
+                <input type="tel" className="form-control" id="phone" placeholder="07x xxxxxxx" 
+                onChange={(e)=>{
+                    setPhone(e.target.value);
+                }}
+                />
             </div>
             <div className="mb-3">
-                <label htmlFor="exampleTextarea" className="form-label">Description</label>
-                <textarea className="form-control" id="exampleTextarea" rows="3" placeholder="Enter description"></textarea>
+                <label htmlFor="description" className="form-label">Description</label>
+                <textarea className="form-control" id="description" rows="3" placeholder="Feedback message" 
+                onChange={(e)=>{
+                    setMessage(e.target.value);
+                }}
+                ></textarea>
             </div>
             <button type="submit" className="btn btn-primary">Submit</button>
             </form>
