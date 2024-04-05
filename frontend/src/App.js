@@ -17,7 +17,8 @@ import ExportOrderDetails from "./pages/ExportOrderDetails.jsx";
 import ExportOrders from "./pages/ExportOrders.jsx";
 import Importer from "./pages/Importer.jsx";
 import ExportAnalytics from "./pages/ExportAnalytics.jsx";
-
+//import ExportForm from "./components/ExportForm.jsx";
+import UpdateOrder from "./pages/UpdateExports.jsx";
 
 // const App = () => {
 //   return (
@@ -40,8 +41,9 @@ import ExportAnalytics from "./pages/ExportAnalytics.jsx";
 function App(){
   return (
     <BrowserRouter>
+    
        <ExportsNavBar>
-         <Routes>
+       <Routes>
          <Route path="/" element={<ExportsDashboard />} />
          <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
          <Route path="/Importer" element={<Importer />} />
@@ -49,8 +51,10 @@ function App(){
          <Route path="/ExportOrderDetails" element={<ExportOrderDetails />} />
          <Route path="/ExportAnalytics" element={<ExportAnalytics />} />
          <Route path="/ExportsProfile" element={<ExportsProfile />} />
+         <Route path="/update/:id" element={<UpdateOrder />} /> {/* Define route for updating orders */}
          </Routes>
        </ExportsNavBar>
+       
      </BrowserRouter>
   );
 };
