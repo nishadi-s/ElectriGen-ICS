@@ -12,14 +12,22 @@ const exportSchema=new Schema({
         type:String,
         required:true
     },
-    itemID:{
-        type:String,
-        required:true
-    },
-    quantity:{
-        type:Number,
-        required:true
-    }, 
+
+    items:[
+       
+        {
+            itemID:{
+                type:String,
+                required:true
+            },
+            quantity:{
+                type:Number,
+                required:true
+            } 
+        }
+
+    ],
+   
     totalCost:{
         type:Number,
         required:true

@@ -27,7 +27,7 @@ const getExport=async(req,res)=>{
 
 //create new export
 const createExport=async(req,res)=>{
-    const{exportOrderID, importer, itemID, quantity, totalCost, status}=req.body
+    const{exportOrderID, importer, items, totalCost, status}=req.body
 
     let emptyFields=[]
 
@@ -37,11 +37,16 @@ const createExport=async(req,res)=>{
     if(!importer){
         emptyFields.push('importer')
     }
-    if(!itemID){
-        emptyFields.push('itemID')
-    }
-    if(!quantity){
-        emptyFields.push('quantity')
+    if (!items || !items.length) {
+        emptyFields.push('items');
+
+    } else {
+        for (const item of items) {
+            if (!item.itemID || !item.quantity) {
+                emptyFields.push('items');
+                break;
+            }
+        }
     }
     if(!totalCost){
         emptyFields.push('totalCost')
@@ -55,7 +60,7 @@ const createExport=async(req,res)=>{
 
     //add doc to db
     try{
-        const exportt=await Export.create({exportOrderID, importer, itemID, quantity, totalCost, status})
+        const exportt=await Export.create({exportOrderID, importer, items, totalCost, status})
         res.status(200).json(exportt)
     }catch(error){
         res.status(400).json({error: error.message})
