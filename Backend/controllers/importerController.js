@@ -29,6 +29,27 @@ const getImporter=async(req,res)=>{
 const createImporter=async(req,res)=>{
     const{importerID, importerName, address, contactNumber, email}=req.body
 
+    let emptyFields=[]
+
+    if(!importerID){
+        emptyFields.push('importerID')
+    }
+    if(!importerName){
+        emptyFields.push('importerName')
+    }
+    if(!address){
+        emptyFields.push('address')
+    }
+    if(!contactNumber){
+        emptyFields.push('contactNumber')
+    }
+    if(!email){
+        emptyFields.push('email')
+    }
+    if(emptyFields.length>0){
+        return res.status(400).json({error:'Please fill in all the fields!',emptyFields})
+    }
+
     //add doc to db
     try{
         const importer=await Importer.create({importerID, importerName, address, contactNumber, email})

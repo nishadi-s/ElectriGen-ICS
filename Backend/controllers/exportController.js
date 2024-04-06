@@ -55,7 +55,7 @@ const createExport=async(req,res)=>{
         emptyFields.push('status')
     }
     if(emptyFields.length>0){
-        return res.status(400).json({error:'Please fill in all the fields',emptyFields})
+        return res.status(400).json({error:'Please fill in all the fields!',emptyFields})
     }
 
     //add doc to db
