@@ -25,107 +25,106 @@ header a{
   text-decoration: none;
 }
 
-
-/*export*/
 .ex-dashboard{
     display: grid;
     grid-template-columns: 3fr 1fr;
     gap:100px;
-  }
-  .export-details{
-    background: #fff;
-    border-radius: 4px;
-    margin: 20px auto;
-    padding: 20px;
-    position: relative;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
-  }
-  
-  .export-details h4{
-    margin:0 0 10px 0;
-    font-size: 1.2em;
-    color:var(--primary);
-  }
-  
-  .export-details p{
-    margin:0;
-    font-size: 0.9em;
-    color:#555;
-  }
-  
-  .export-details span{
-    position: absolute;
-    top:20px;
-    right:20px;
-    cursor:pointer;
-    background: #f1f1f1;
-    padding: 6px;
-    border-radius:50%;
-    color:#333;
-  }
+}
 
-  .importer-details{
-    background: #fff;
-    border-radius: 4px;
-    margin: 20px auto;
-    padding: 20px;
-    position: relative;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
-  }
+.export-details{
+  background: #fff;
+  border-radius: 4px;
+  margin: 20px auto;
+  padding: 20px;
+  position: relative;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+}
   
-  .importer-details h4{
-    margin:0 0 10px 0;
-    font-size: 1.2em;
-    color:var(--primary);
-  }
+.export-details h4{
+  margin:0 0 10px 0;
+  font-size: 1.2em;
+  color:var(--primary);
+}
   
-  .importer-details p{
-    margin:0;
-    font-size: 0.9em;
-    color:#555;
-  }
+.export-details p{
+  margin:0;
+  font-size: 0.9em;
+  color:#555;
+}
   
-  .importer-details span{
-    position: absolute;
-    top:20px;
-    right:20px;
-    cursor:pointer;
-    background: #f1f1f1;
-    padding: 6px;
-    border-radius:50%;
-    color:#333;
-  }
+.export-details span{
+  position: absolute;
+  top:20px;
+  right:20px;
+  cursor:pointer;
+  background: #f1f1f1;
+  padding: 6px;
+  border-radius:50%;
+  color:#333;
+}
 
-  /*layout*/
-  :root{
-    --primary:#1aac83;
-    --error:#e7195a;
-  }
+.importer-details{
+  background: #fff;
+  border-radius: 4px;
+  margin: 20px auto;
+  padding: 20px;
+  position: relative;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+}
+  
+.importer-details h4{
+  margin:0 0 10px 0;
+  font-size: 1.2em;
+  color:var(--primary);
+}
+  
+.importer-details p{
+  margin:0;
+  font-size: 0.9em;
+  color:#555;
+}
+  
+.importer-details span{
+  position: absolute;
+  top:20px;
+  right:20px;
+  cursor:pointer;
+  background: #f1f1f1;
+  padding: 6px;
+  border-radius:50%;
+  color:#333;
+}
 
-  label,input{
-    display: block;
+/*layout*/
+:root{
+  --primary:#1aac83;
+  --error:#e7195a;
+}
+
+label,input{
+  display: block;
 }
 
 input{
-    padding: 10px;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    width: 100%;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
 
-  div.error{
-    padding: 10px;
-    background: #ffefef;
-    border:1px solid var(--error);
-    color:var(--error);
-    border-radius: 4px;
-    margin:20px 0;
-  }
+div.error{
+  padding: 10px;
+  background: #ffefef;
+  border:1px solid var(--error);
+  color:var(--error);
+  border-radius: 4px;
+  margin:20px 0;
+}
 
-  input.error{
-    border:1px solid var(--error)
-  }
+input.error{
+  border:1px solid var(--error)
+}
