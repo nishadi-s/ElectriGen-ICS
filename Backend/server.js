@@ -2,7 +2,10 @@ require("dotenv").config();
 
 const express = require("express");
 const mongoose = require("mongoose");
+
+//Senith
 const productRoutes = require("./routes/products");
+app.use("/api/products", productRoutes);
 
 //express app
 const app = express();
@@ -14,9 +17,6 @@ app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
-
-//routes
-app.use("/api/products", productRoutes);
 
 //connect to DB
 mongoose
