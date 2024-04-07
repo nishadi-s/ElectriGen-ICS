@@ -31,11 +31,11 @@ const Products = () => {
           products.map((product) => (
             <ProductDetails key={product._id} product={product} />
           ))}
-        {/*<Link to="/pages/AddProducts">
+        {/*<Link to={`/AddProduct`} className="edit-link">
           <button>Add a new Product</button>
-          </Link>*/}
+        </Link>*/}
+        <ProductForm />
       </div>
-      <ProductForm />
     </div>
   );
 };

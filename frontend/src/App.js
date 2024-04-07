@@ -10,6 +10,7 @@ import Analytics from "./pages/Analytics.jsx";
 import Production from "./pages/Production.jsx";
 import Logout from "./pages/Logout.jsx";
 import AddProducts from "./pages/AddProducts.jsx";
+import ProductForm from "./components/ProductForm";
 
 const App = () => {
   return (
@@ -25,7 +26,7 @@ const App = () => {
           <Route path="/MyProfile" element={<MyProfile />} />
           <Route path="/Logout" element={<Logout />} />
           <Route path="/AddProducts" element={<AddProducts />} />
-          <Route exact path="/" component={Products} />
+          <Route path="./components/ProductForm" component={ProductForm} />
         </Routes>
       </Navbar>
     </BrowserRouter>
