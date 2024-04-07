@@ -5,7 +5,6 @@ import "../senith.css";
 
 //components
 import ProductDetails from "../components/ProductDetails";
-import ProductForm from "../components/ProductForm";
 import { useProductContext } from "../hooks/useProductsContext";
 
 const Products = () => {
@@ -25,8 +24,8 @@ const Products = () => {
   }, []);
 
   return (
-    <div className="home">
-      <div className="products">
+    <div className="pr-home">
+      <div className="pr-products">
         {products &&
           products.map((product) => (
             <ProductDetails key={product._id} product={product} />

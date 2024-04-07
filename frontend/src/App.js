@@ -10,6 +10,7 @@ import Analytics from "./pages/Analytics.jsx";
 import Production from "./pages/Production.jsx";
 import Logout from "./pages/Logout.jsx";
 import AddProducts from "./pages/AddProducts.jsx";
+import UpdateProduct from "./pages/EditProduct.jsx";
 
 const App = () => {
   return (
@@ -25,6 +26,8 @@ const App = () => {
           <Route path="/MyProfile" element={<MyProfile />} />
           <Route path="/Logout" element={<Logout />} />
           <Route path="/AddProducts" element={<AddProducts />} />
+          <Route exact path="/" component={Products} />
+          <Route path="/update/:productId" component={UpdateProduct} />
         </Routes>
       </Navbar>
     </BrowserRouter>
