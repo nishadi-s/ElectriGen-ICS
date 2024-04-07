@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config(); // Load environment variables from the .env file
 
 const express = require("express");
 const mongoose = require("mongoose");
@@ -7,26 +7,39 @@ const mongoose = require("mongoose");
 const productRoutes = require("./routes/products");
 app.use("/api/products", productRoutes);
 
-//express app
+//Dinithi
+const orderRoutes = require('./routes/orders.js');
+const distributorRoutes = require('./routes/distributor.js');
+app.use('/api/orders', orderRoutes); // Order routes
+app.use('/api/distributor', distributorRoutes); //distributor route(distributor authentication)
+
+
+// Create an Express app
 const app = express();
 
-//middleware
+// Middleware to parse JSON bodies of requests
 app.use(express.json());
 
+
+// Middleware to log incoming requests
 app.use((req, res, next) => {
-  console.log(req.path, req.method);
-  next();
+  console.log(req.path, req.method); // Log the path and HTTP method of each request
+  next(); // Call the next middleware in the chain
 });
 
-//connect to DB
+
+
+// Connect to MongoDB database
+
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.MONGO_URI) // Connect to the MongoDB URI defined in the environment variables
   .then(() => {
-    //listen for requests
+
+    // Listen for incoming requests
     app.listen(process.env.PORT, () => {
-      console.log("Connected to DB & listening on port", process.env.PORT);
+      console.log("Connected to DB & listening on port", process.env.PORT); // Log that the server is running
     });
   })
   .catch((error) => {
-    console.log(error);
+    console.log(error); // Log any errors that occur during database connection
   });
