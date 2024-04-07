@@ -100,7 +100,7 @@ router.delete("/delete/:billID", async (req, res) => {
   
       if (deletedInvoice) {
         console.log('Invoice deleted:', deletedInvoice);
-        res.status(200).send({ status: 'Invoice deleted', data: deletedInvoice });
+        res.status(200).send({ status: 'Invoice deleted'});
       } else {
         console.log('Invoice not found');
         res.status(404).send({ error: 'Invoice not found' });

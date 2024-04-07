@@ -1,26 +1,47 @@
 import React, { useState } from 'react';
 import { useSalesContext } from '../hook/useSalesContext';
+import Swal from 'sweetalert2';
 
 const InvoiceDetails = ({ invoice }) => {
     const { dispatch } = useSalesContext();
     const [deleted, setDeleted] = useState(false); // State variable to track deletion
 
     const handleClick = async () => {
-        const confirmed = window.confirm('Are you sure you want to delete this invoice? This action cannot be undone.');
-
-        if (confirmed) {
-            const response = await fetch('http://localhost:4000/sales/delete/' + invoice.billID, {
-                method: 'DELETE',
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#233066",
+          cancelButtonColor: "#EC2026",
+          confirmButtonText: "Yes, delete it!",
+        }).then(async (result) => {
+          // Use async to handle asynchronous deletion logic
+          if (result.isConfirmed) {
+            // Perform deletion logic
+            const response = await fetch(`http://localhost:4000/sales/delete/${invoice.billID}`, {
+              method: "DELETE",
             });
-            const data = await response.json();
-
+    
             if (response.ok) {
-                dispatch({ type: 'DELETE_SALES', payload: data });
-                setDeleted(true); // Set the state to trigger re-render
+              const json = await response.json();
+              dispatch({ type: "DELETE_SALES", payload: json });
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              });
+              setDeleted(true); // Update state to hide the component after deletion
+            } else {
+              Swal.fire({
+                title: "Error!",
+                text: "Failed to delete the product.",
+                icon: "error",
+              });
             }
-        }
-    };
-
+          }
+        });
+      };
     // Check if the invoice is deleted and return null to hide the component
     if (deleted) {
         return null;
@@ -36,7 +57,7 @@ const InvoiceDetails = ({ invoice }) => {
             <ul>
                 {invoice.items.map((item, index) => (
                     <li key={index}>
-                        Item {index + 1}: {item.desc}, Quantity: {item.qty}, Price: {item.price}
+                        Item {index + 1}: {item.desc}, Quantity: {item.qty}, Price: {item.price}, Item Amount: {item.iamount}
                     </li>
                 ))}
             </ul>

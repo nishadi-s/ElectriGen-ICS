@@ -3,7 +3,7 @@ import { Form, Button, Row, Col } from 'react-bootstrap';
 import axios from 'axios'; // Import Axios
 
 const InvoiceCreate = () => {
-  const generateBillID = () => {
+  const GenerateBillID = () => {
     const currentDate = new Date();
     const year = currentDate.getFullYear();
     const month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
@@ -12,7 +12,7 @@ const InvoiceCreate = () => {
     return `${year}${month}${day}${randomID}`;
   };
 
-  const [billID, setBillID] = useState(generateBillID());
+  const [billID, setBillID] = useState(GenerateBillID());
   const [items, setItems] = useState([
     { itemNumber: '', itemDescription: '', quantity: '', unitPrice: '', totalAmount: '' },
     { itemNumber: '', itemDescription: '', quantity: '', unitPrice: '', totalAmount: '' },
@@ -21,8 +21,10 @@ const InvoiceCreate = () => {
     { itemNumber: '', itemDescription: '', quantity: '', unitPrice: '', totalAmount: '' },
   ]);
 
+  const [bdate, setBdate] = useState("");
+
   useEffect(() => {
-    setBillID(generateBillID());
+    setBillID(GenerateBillID());
   }, []);
 
   const handleItemChange = (index, field, value) => {
@@ -36,25 +38,27 @@ const InvoiceCreate = () => {
       ...item,
       totalAmount: (parseFloat(item.quantity || 0) * parseFloat(item.unitPrice || 0)).toFixed(2),
     }));
-    setItems(updatedItems);
+    if (JSON.stringify(updatedItems) !== JSON.stringify(items)) {
+      setItems(updatedItems);}
   }, [items]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      const response = await axios.post('http://localhost:4000/sales/add', {
-        billID,
-        items,
-        totalQuantity: items.reduce((total, item) => total + parseFloat(item.quantity || 0), 0),
-        totalAmount: items.reduce((total, item) => total + parseFloat(item.totalAmount || 0), 0).toFixed(2),
-      });
-      console.log('Data sent successfully:', response.data);
-      // Optionally, you can redirect the user or show a success message here
-    } catch (error) {
-      console.error('Error sending data:', error);
-      // Handle error, show error message, etc.
+    
+    const newSale ={
+      billID,
+      bdate,
+      items,
     }
+
+    axios.post('http://localhost:4000/sales/add', newSale)
+    .then(()=>{
+      alert("New Invoice successfully submited!");
+     })
+     .catch((err)=>{
+      console.error('Error submitting invoice:', err);
+      alert("Error submitting invoice. Please try again.");
+     })
   };
 
   return (
@@ -69,7 +73,10 @@ const InvoiceCreate = () => {
 
           <Form.Group as={Col} controlId="formDate">
             <Form.Label>Date</Form.Label>
-            <Form.Control type="text" readOnly value={new Date().toLocaleDateString()} />
+            <Form.Control type="text" readOnly value={new Date().toLocaleDateString()} 
+            onChange={(e)=>{
+              setBdate(e.target.value);
+          }} />
           </Form.Group>
         </Row>
 

@@ -18,7 +18,8 @@ const salesSchema = new Schema({
         ino:String,
         desc:String,
         qty:Number,
-        price:Number
+        price:Number,
+        iamount:Number
     }],
 
     tot : {

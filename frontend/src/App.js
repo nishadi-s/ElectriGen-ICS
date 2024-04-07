@@ -13,6 +13,7 @@ import SalesFeedback from "./pages/salesFeedback.jsx";
 import InvoiceCreate from "./pages/invoiceCreate.jsx";
 import SfeedbackFetch from "./components/sfeedbackFetch.jsx";
 import ViewInvoice from "./pages/viewInvoice.jsx";
+import PinVerification from "./components/PinVerification.jsx";
 import { SalesContextProvider } from "./context/SalesContext.jsx";
 
 const App = () => {
@@ -33,6 +34,7 @@ const App = () => {
           <Route path="/invoiceCreate" element={<InvoiceCreate />} />
           <Route path="/sfeedbackFetch" element={<SfeedbackFetch />} />
           <Route path="/viewInvoice" element={<ViewInvoice />} />
+          <Route path="PinVerification" element={<PinVerification />} />
         </Routes>
       </Navbar>
       </SalesContextProvider>
