@@ -2,9 +2,17 @@ require("dotenv").config(); // Load environment variables from the .env file
 
 const express = require("express");
 const mongoose = require("mongoose");
+
+//Senith
 const productRoutes = require("./routes/products");
+app.use("/api/products", productRoutes);
+
+//Dinithi
 const orderRoutes = require('./routes/orders.js');
 const distributorRoutes = require('./routes/distributor.js');
+app.use('/api/orders', orderRoutes); // Order routes
+app.use('/api/distributor', distributorRoutes); //distributor route(distributor authentication)
+
 
 // Create an Express app
 const app = express();
@@ -19,14 +27,10 @@ app.use((req, res, next) => {
   next(); // Call the next middleware in the chain
 });
 
-// Define routes for products and orders
-app.use("/api/products", productRoutes); // Product routes
 
-//dinithi-routes
-app.use('/api/orders', orderRoutes); // Order routes
-app.use('/api/distributor', distributorRoutes); //distributor route(distributor authentication)
 
 // Connect to MongoDB database
+
 mongoose
   .connect(process.env.MONGO_URI) // Connect to the MongoDB URI defined in the environment variables
   .then(() => {
