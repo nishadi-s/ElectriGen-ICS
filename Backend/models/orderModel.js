@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
+// Define the schema for orders
 const orderSchema = new Schema({
     distributorId: {
         type: String,
@@ -70,48 +71,7 @@ const orderSchema = new Schema({
         type: Number,
         required: true
     },
-/*
-    item1_code: {
-        type: String,
-        required: true
-    },
-    item1_name: {
-        type: String,
-        required: true
-    },
-    item1_quantity: {
-        type: Number,
-        required: true
-    },
 
-    item2_code: {
-        type: String,
-        required: true
-    },
-    item2_name: {
-        type: String,
-        required: true
-    },
-    item2_quantity: {
-        type: Number,
-        required: true
-    },
+},{timestamps:true}) // Add timestamps for createdAt and updatedAt fields
 
-    item3_code: {
-        type: String,
-        required: true
-    },
-    item3_name: {
-        type: String,
-        required: true
-    },
-    item3_quantity: {
-        type: Number,
-        required: true
-    },
-    */
-
-    
-},{timestamps:true})
-
-module.exports = mongoose.model('Order', orderSchema)
+module.exports = mongoose.model('Order', orderSchema) // Export the Order model

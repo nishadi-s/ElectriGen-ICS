@@ -1,6 +1,7 @@
 import React from 'react'
 import { FaSearch } from "react-icons/fa"
 
+// Functional component SearchBar with a prop onChange
 const SearchBar = ({ onChange }) => {
   return (
     <div className="input-search-wrapper">
@@ -15,4 +16,4 @@ const SearchBar = ({ onChange }) => {
   )
 }
 
-export default SearchBar
+export default SearchBar // Export SearchBar component

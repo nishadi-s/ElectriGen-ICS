@@ -4,38 +4,41 @@ import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
+// OrderDetails functional component taking order as prop
 const OrderDetails = ({ order }) => {
-    const { dispatch } = useOrdersContext();
+    const { dispatch } = useOrdersContext(); // Destructure dispatch function from orders context
 
+    // Function to handle delete button click
     const handleClick = async () => {
         const result = await Swal.fire({
-            title: "Do you want to delete this record?",
+            title: "Do you want to delete this record?", // Confirm deletion
             showCancelButton: true,
             confirmButtonText: "Delete",
             cancelButtonText: "Cancel",
         });
 
-        if (result.isConfirmed) {
+        if (result.isConfirmed) { // If user confirms deletion
             try {
-                const response = await fetch('/api/orders/' + order._id, {
+                const response = await fetch('/api/orders/' + order._id, { // Send DELETE request to delete order
                     method: 'DELETE'
                 });
-                const json = await response.json();
+                const json = await response.json(); // Parse response JSON
 
-                if (response.ok) {
-                    dispatch({ type: 'DELETE_ORDER', payload: json });
-                    Swal.fire("Deleted", "", "success");
+                if (response.ok) { // If deletion is successful
+                    dispatch({ type: 'DELETE_ORDER', payload: json }); // Dispatch DELETE_ORDER action
+                    Swal.fire("Deleted", "", "success"); // Show success alert
                 } else {
-                    throw new Error('Failed to delete order');
+                    throw new Error('Failed to delete order'); // Throw error if deletion fails
                 }
             } catch (error) {
-                console.error(error);
+                console.error(error); // Log error to console
                 Swal.fire("Error Occurred", "Failed to delete order. Please try again.", "error");
             }
         }
     };
 
     return (
+        //order details
         <div className="order-details">
             <h4>Order ID: {order._id}</h4>
             <p><strong>Distributor ID: </strong>{order.distributorId}</p>
@@ -57,4 +60,4 @@ const OrderDetails = ({ order }) => {
     );
 };
 
-export default OrderDetails;
+export default OrderDetails; // Export OrderDetails component

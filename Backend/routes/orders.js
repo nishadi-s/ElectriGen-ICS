@@ -6,11 +6,12 @@ const {
     createOrder,
     deleteOrder,
     updateOrder
-} = require('../controllers/orderController.js')
+} = require('../controllers/orderController.js') //controller function are from orderController.js
 
 
 const router = express.Router()
 
+//establishing routes to manage orders
 
 //GET all orders
 router.get('/',getOrders)
