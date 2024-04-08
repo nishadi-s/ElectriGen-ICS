@@ -30,6 +30,12 @@ const Navbar = ({ children }) => {
       name: "Order History",
       icon: <FaShapes />,
     },
+
+    {
+      path: "/Products",
+      name: "Products",
+      icon: <FaDollyFlatbed />,
+    },
     {
       path: "/Production",
       name: "Production",
