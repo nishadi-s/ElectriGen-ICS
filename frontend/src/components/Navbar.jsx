@@ -21,13 +21,13 @@ const Navbar = ({ children }) => {
     },
 
     {
-      path: "/products",
-      name: "Products",
+      path: "/OrderForm",
+      name: "Order Placement",
       icon: <FaDollyFlatbed />,
     },
     {
-      path: "/Materials",
-      name: "Materials",
+      path: "/OrderHistory",
+      name: "Order History",
       icon: <FaShapes />,
     },
     {
