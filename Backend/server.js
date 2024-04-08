@@ -4,22 +4,13 @@ const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
 
-//Senith
-const productRoutes = require("./routes/products");
-
-//Dinithi
-const orderRoutes = require("./routes/orders.js");
-const distributorRoutes = require("./routes/distributor.js");
 
 // Create an Express app
 const app = express();
 
-// Middleware to parse JSON bodies of requests
+app.use(bodyParser.json());
+app.use(cors());
 app.use(express.json());
-
-app.use("/api/products", productRoutes);
-app.use("/api/orders", orderRoutes); // Order routes
-app.use("/api/distributor", distributorRoutes); //distributor route(distributor authentication)
 
 // Middleware to log incoming requests
 app.use((req, res, next) => {
@@ -27,12 +18,7 @@ app.use((req, res, next) => {
   next(); // Call the next middleware in the chain
 });
 
-//Primal
-app.use(cors());
-app.use(bodyParser.json());
-
 // Connect to MongoDB database
-
 mongoose
   .connect(process.env.MONGO_URI) // Connect to the MongoDB URI defined in the environment variables
   .then(() => {
@@ -52,3 +38,20 @@ app.use("/sales", salesRouter);
 //primal sales feedback route
 const feedbackRouter = require("./routes/sfeedback");
 app.use("/sfeedback", feedbackRouter);
+
+//dulari
+app.use("/dFeedback", dFeedbackRouter);
+const projectRouter = require("./routes/DonationProjects.js");
+app.use("/DonationProject", projectRouter);
+const dFeedbackRouter = require("./routes/dFeedback.js");
+
+
+//Dinithi
+const orderRoutes = require("./routes/orders.js");
+const distributorRoutes = require("./routes/distributor.js");
+app.use("/api/orders", orderRoutes); // Order routes
+app.use("/api/distributor", distributorRoutes); //distributor route(distributor authentication)
+
+//Senith
+const productRoutes = require("./routes/products");
+app.use("/api/products", productRoutes);

@@ -15,7 +15,7 @@ const Navbar = ({ children }) => {
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
     {
-      path: "/",
+      path: "/Donation_Dashboard",
       name: "Dashboard",
       icon: <FaTh />,
     },
@@ -25,6 +25,7 @@ const Navbar = ({ children }) => {
       name: "Order Placement",
       icon: <FaDollyFlatbed />,
     },
+    
     {
       path: "/OrderHistory",
       name: "Order History",

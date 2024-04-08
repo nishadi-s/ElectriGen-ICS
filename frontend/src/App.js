@@ -1,12 +1,20 @@
 import React from "react";
 import "./index.css";
 import { BrowserRouter, Route, Routes, Switch } from "react-router-dom";
-
 import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard.jsx";
 import MyProfile from "./pages/MyProfile.jsx";
 import Analytics from "./pages/Analytics.jsx";
 import Logout from "./pages/Logout.jsx";
+
+//Dulari_IT22121110
+import DonationNavbar from "./components/DonationNavbar.jsx";
+import Donation_Dashboard from "./pages/Donation_Dashboard.jsx";
+import New_Projects from "./pages/New_Projects.jsx";
+import Doner_Feedback from "./pages/Doner_Feedback.jsx";
+import MyProfile from "./pages/MyProfile.jsx";
+import Doner_Analystics from "./pages/Doner_Analytics.jsx";
+import DFeedbackFetch from "./components/dFeedbackFetch.jsx";
 
 //Primal
 import SalesFeedback from "./pages/salesFeedback.jsx";
@@ -37,14 +45,22 @@ const App = () => {
       <Navbar>
       <div className="pages">
         <Routes>
+
+      
           <Route path="/" element={<Dashboard />} />
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/Analytics" element={<Analytics />} />
           <Route path="/MyProfile" element={<MyProfile />} />
           <Route path="/Logout" element={<Logout />} />
+            
+          {/* Dulari */}
+          <Route path="/New_Projects" element={<New_Projects />} />
+          <Route path="/Doner_Feedback" element={<Doner_Feedback />} />
+          <Route path="/Doner_Analytics" element={<Doner_Analystics />} />
+          <Route path="/Dashboard" element={<DFeedbackFetch />} />
 
 
-
+          {/* Primal */}
           <Route path="/salesFeedback" element={<SalesFeedback />} />
           <Route path="/invoiceCreate" element={<InvoiceCreate />} />
           <Route path="/sfeedbackFetch" element={<SfeedbackFetch />} />
