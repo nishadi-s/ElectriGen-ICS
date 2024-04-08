@@ -10,6 +10,8 @@ const PinVerification = () => {
     },
     showCancelButton: true,
     confirmButtonText: 'Verify',
+    confirmButtonColor: "#233066",
+    cancelButtonColor: "#EC2026",
     cancelButtonText: 'Cancel',
     inputValidator: (value) => {
       if (!value) {

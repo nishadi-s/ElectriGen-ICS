@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { useSalesContext } from '../hook/useSalesContext';
+import { useSalesContext } from '../hooks/useSalesContext';
 import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
+import InvoiceUpdate from '../pages/InvoiceUpdate';
 
 const InvoiceDetails = ({ invoice }) => {
     const { dispatch } = useSalesContext();
@@ -64,6 +66,9 @@ const InvoiceDetails = ({ invoice }) => {
             <br />
             {/* Add onClick event with the handleClick function */}
             <span onClick={handleClick}><button>Delete</button></span>
+            <Link to="/InvoiceUpdate">
+              <button type="button" className="btn btn-primary btn-lg mr-4">Update</button>
+            </Link>
         </div>
     );
 };
