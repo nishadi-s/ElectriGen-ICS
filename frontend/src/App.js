@@ -12,7 +12,7 @@ import DFeedbackFetch from "./components/dFeedbackFetch.jsx";
 const App = () => {
   return (
     <BrowserRouter>
-      <DonationNavbar>
+      <Navbar>
         <Routes>
           <Route path="/" element={<Donation_Dashboard />} />
           <Route path="/Dashboard" element={<Donation_Dashboard />} />
@@ -24,7 +24,7 @@ const App = () => {
           <Route path="/Dashboard" element={<DFeedbackFetch />} />
 
         </Routes>
-      </DonationNavbar>
+      </Navbar>
     </BrowserRouter>
   );
 };
