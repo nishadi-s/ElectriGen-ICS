@@ -10,35 +10,50 @@ import {
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
-const Navbar = ({ children }) => {
+const DonationNavbar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
     {
-      path: "/Donation_Dashboard",
+      path: "/",
       name: "Dashboard",
       icon: <FaTh />,
     },
 
+
     {
-      path: "/products",
-      name: "Products",
-      icon: <FaDollyFlatbed />,
+        path: "/New_Projects",
+        name: "New Projects",
+        icon: <FaDollyFlatbed />,
     },
-    
+
     {
-      path: "/Materials",
-      name: "Materials",
-      icon: <FaShapes />,
+        path: "/Doner_Feedback",
+        name: "Doner Feedback",
+        icon: <FaShapes />,
     },
+
+    //{
+    //   path: "/products",
+    //    name: "Products",
+    //    icon: <FaDollyFlatbed />,
+    //},
+
+    //{
+    //  path: "/Materials",
+    //  name: "Materials",
+    //  icon: <FaShapes />,
+    //},
+
+    //{
+    //  path: "/Production",
+    //  name: "Production",
+    //  icon: <FaIndustry />,
+    //},
+
     {
-      path: "/Production",
-      name: "Production",
-      icon: <FaIndustry />,
-    },
-    {
-      path: "/analytics",
-      name: "Analytics",
+      path: "/doner_analytics",  
+      name: "Analytics and Report",
       icon: <FaRegChartBar />,
     },
     {
@@ -52,6 +67,12 @@ const Navbar = ({ children }) => {
       name: "Logout",
       icon: <FaUserAlt />,
     },
+
+    
+
+
+
+
   ];
 
   return (
@@ -92,4 +113,4 @@ const Navbar = ({ children }) => {
   );
 };
 
-export default Navbar;
+export default DonationNavbar;
