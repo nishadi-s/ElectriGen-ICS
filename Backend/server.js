@@ -1,5 +1,6 @@
 require("dotenv").config(); // Load environment variables from the .env file
-
+const bodyParser = require("body-parser");
+const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
 
@@ -27,7 +28,9 @@ app.use((req, res, next) => {
   next(); // Call the next middleware in the chain
 });
 
-
+//Primal
+app.use(cors());
+app.use(bodyParser.json());
 
 // Connect to MongoDB database
 
@@ -43,3 +46,14 @@ mongoose
   .catch((error) => {
     console.log(error); // Log any errors that occur during database connection
   });
+
+
+
+//primal sales route
+const salesRouter = require("./routes/sales");
+app.use("/sales",salesRouter);
+
+//primal sales feedback route
+const feedbackRouter = require("./routes/sfeedback");
+app.use("/sfeedback",feedbackRouter);
+
