@@ -53,19 +53,21 @@ router.route("/display").get((req,res)=>{
 router.put("/update/:billID", async (req, res) => {
     try {
       const { billID } = req.params;
-      const { bdate, items } = req.body;
+      const { items } = req.body;
   
       // Calculate total amount based on updated items
       let totalAmount = 0;
+      let totalQty = 0;
       items.forEach(item => {
         totalAmount += item.qty * item.price;
+        totalQty += item.qty;
       });
   
       // Create an object with the updated data and calculated total amount
       const updatedSales = {
-        bdate,
         items,
-        tot: totalAmount
+        tot: totalAmount,
+        totqty: totalQty
       };
   
       // Use findOneAndUpdate to find and update the document based on billID
