@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
+    "date-fns": "^3.6.0",
     "cars": "^1.1.6",
     "date-fns": "^3.6.0",
     "mdb-react-ui-kit": "^7.2.0",

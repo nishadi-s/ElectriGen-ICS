@@ -18,6 +18,7 @@ app.use((req, res, next) => {
   next(); // Call the next middleware in the chain
 });
 
+
 // Connect to MongoDB database
 mongoose
   .connect(process.env.MONGO_URI) // Connect to the MongoDB URI defined in the environment variables
@@ -30,6 +31,13 @@ mongoose
   .catch((error) => {
     console.log(error); // Log any errors that occur during database connection
   });
+
+//middleware-importer
+app.use(express.json())
+app.use((req,res,next)=>{
+    console.log(req.path,req.method)
+    next()
+})
 
 //primal sales route
 const salesRouter = require("./routes/sales");
@@ -55,3 +63,9 @@ app.use("/api/distributor", distributorRoutes); //distributor route(distributor 
 //Senith
 const productRoutes = require("./routes/products");
 app.use("/api/products", productRoutes);
+
+//Shanali
+const exportRoutes=require('./routes/export')
+const importerRoutes=require('./routes/importer')
+app.use('/api/export', exportRoutes)
+app.use('/api/importer', importerRoutes)

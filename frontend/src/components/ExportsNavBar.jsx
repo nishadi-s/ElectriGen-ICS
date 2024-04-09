@@ -4,60 +4,50 @@ import {
   FaBars,
   FaUserAlt,
   FaRegChartBar,
-  FaShapes,
-  FaIndustry,
   FaDollyFlatbed,
+  FaThList,
+  FaIdBadge,
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
-const Navbar = ({ children }) => {
+const ExportsNavBar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
     {
-      path: "/Donation_Dashboard",
+      path: "/",
       name: "Dashboard",
       icon: <FaTh />,
     },
 
     {
-      path: "/OrderForm",
-      name: "Order Placement",
-      icon: <FaDollyFlatbed />,
+      path: "/Importer",
+      name: "Importer",
+      icon: <FaIdBadge />,
     },
-
     {
-      path: "/OrderHistory",
-      name: "Order History",
-      icon: <FaShapes />,
-    },
-
-
-    {
-      path: "/Products",
-      name: "Products",
+      path: "/ExportOrders",
+      name: "Export Orders",
       icon: <FaDollyFlatbed />,
     },
     {
-      path: "/Production",
-      name: "Production",
-      icon: <FaIndustry />,
+      path: "/ExportOrderDetails",
+      name: "Order Details",
+      icon: <FaThList />,
     },
-
     {
-      path: "/analytics",
+      path: "/ExportAnalytics",
       name: "Analytics",
       icon: <FaRegChartBar />,
     },
-    
     {
-      path: "/MyProfile",
+      path: "/ExportsProfile",
       name: "My Profile",
       icon: <FaUserAlt />,
     },
 
     {
-      path: "/Logout",
+      path: "/MyProfile",
       name: "Logout",
       icon: <FaUserAlt />,
     },
@@ -84,7 +74,7 @@ const Navbar = ({ children }) => {
             to={item.path}
             key={index}
             className="link"
-            activeclassName="active"
+            activelassname="active"
           >
             <div className="icon">{item.icon}</div>
             <div
@@ -101,4 +91,4 @@ const Navbar = ({ children }) => {
   );
 };
 
-export default Navbar;
+export default ExportsNavBar;
