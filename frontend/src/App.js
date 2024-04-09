@@ -13,10 +13,13 @@ import Production from "./pages/Production.jsx";
 import Logout from "./pages/Logout.jsx";
 
 //Dinithi
+import DisSignup from "./pages/DisSignup.js";
+import DisLogin from "./pages/DisLogin.js";
 import OrderPlace from './pages/OrderPlacement.js'
 import OrderHistory from './pages/OrderHistory.js';
 import OrderSuccess from './pages/OrderSucess.js';
 import UpdateOrder from './pages/UpdateOrderDetails.js';
+
 
 const App = () => {
   return (
@@ -36,10 +39,13 @@ const App = () => {
           <Route path="/Logout" element={<Logout />} />
 
           {/* Dinithi */}
+          <Route path="/login" element = {<DisLogin />} />
+          <Route path="/signup" element = {<DisSignup />} />
+          
           <Route path="/OrderForm" element = {<OrderPlace />} />
-            <Route path="/OrderHistory" element = {<OrderHistory />} />
-            <Route path="/OrderSuccess" element={<OrderSuccess/>}/>
-            <Route path="/update/:id" element={<UpdateOrder />} /> {/* Define route for updating orders */}
+          <Route path="/OrderHistory" element = {<OrderHistory />} />
+          <Route path="/OrderSuccess" element={<OrderSuccess/>}/>
+          <Route path="/update/:id" element={<UpdateOrder />} /> {/* Define route for updating orders */}
 
         </Routes>
         </div>

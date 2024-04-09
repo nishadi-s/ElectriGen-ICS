@@ -1,136 +1,167 @@
-import { useState } from "react"
-import { useOrdersContext } from "../hooks/useOrdersContext"
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { useOrdersContext } from "../hooks/useOrdersContext";
+import Swal from "sweetalert2";
 
 const OrderForm = () => {
-    const{ dispatch } = useOrdersContext()
+  const { dispatch } = useOrdersContext();
+  const history = useHistory();
 
-    const[distributorId, setDistributorId] = useState('')
-    const[distributorName, setDistributorName] = useState('')
-    const[orderStatus, setOrderStatus] = useState('')
-    const [items, setItems] = useState([
-        { code: "", name: "" , unit: "", quantity: "" },
-        { code: "", name: "" , unit: "", quantity: "" },
-        { code: "", name: "" , unit: "", quantity: "" },
-    ]);
-    const[totalAmount, setTotalAmount] = useState('')
 
-    const[error, setError] = useState('')
-    const[emptyFields, setEmptyFields] = useState([])
+  const [distributorId, setDistributorId] = useState("");
+  const [distributorName, setDistributorName] = useState("");
+  const [orderStatus, setOrderStatus] = useState("");
+  const [items, setItems] = useState([{ code: "", name: "", unit: "", quantity: "" },]);
+  const [totalAmount, setTotalAmount] = useState("");
+  const [error, setError] = useState("");
+  const [emptyFields, setEmptyFields] = useState([]);
 
-    const handleItemChange = (index, field, value) => {
-        const updatedItems = [...items];
-        updatedItems[index][field] = value;
-        setItems(updatedItems);
-    };
+  const handleItemChange = (index, field, value) => {
+    const updatedItems = [...items];
+    updatedItems[index][field] = value;
+    setItems(updatedItems);
+  };
 
-const handleSubmit = async (e) => {
-    e.preventDefault()
+  const addNewItem = () => {
+    setItems([...items, { code: "", name: "", unit: "", quantity: "" }]);
+  };
 
-    const order = {distributorId,
-                   distributorName,
-                   orderStatus,items,totalAmount}
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const response = await fetch('/api/orders', {
-        method: 'POST',
-        body: JSON.stringify(order),
-        headers: {
-            'Content-Type' : 'application/json'
+    // Show confirmation dialog
+    Swal.fire({
+        title: "Submit Order?",
+        text: "Are you sure you want to submit the order?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Yes, submit it!",
+        cancelButtonText: "Cancel",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Proceed with form submission
+          submitForm();
         }
-    })
-    const json = await response.json()
+      });
+    };
+  
+    const submitForm = async () => {
+      const order = {
+        distributorId,
+        distributorName,
+        orderStatus,
+        items,
+        totalAmount,
+      };
 
-    if(!response.ok){
-        setError(json.error)
-        setEmptyFields(json.emptyFields)
+    const response = await fetch("/api/orders", {
+      method: "POST",
+      body: JSON.stringify(order),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const json = await response.json();
+
+    if (!response.ok) {
+        setError(json.error);
+        setEmptyFields(json.emptyFields || []); // Ensure it's not undefined
     }
-    if(response.ok){
-        setDistributorId('')
-        setDistributorName('')
-        setOrderStatus('');
-        setItems([
-            { code: "", name: "" , unit: "", quantity: "" },
-            { code: "", name: "" , unit: "", quantity: "" },          
-            { code: "", name: "" , unit: "", quantity: "" },
-        ]);
-        setTotalAmount('');
 
-        setError(null)
-        setEmptyFields([])
-        console.log('new order added', json)
-        dispatch({type: 'CREATE_ORDER', payload: json})
+    if (response.ok) {
+      setDistributorId("");
+      setDistributorName("");
+      setOrderStatus("");
+      setItems([{ code: "", name: "", unit: "", quantity: "" }]);
+      setTotalAmount("");
+
+      setError(null);
+      setEmptyFields([]);
+      console.log("new order added", json);
+      dispatch({ type: "CREATE_ORDER", payload: json });
+
+      // Navigate to PlacedOrders page
+      history.push("/OrderHistory");
     }
-}
-    
-    return(
-        <form className="create" onSubmit = {handleSubmit}>
-            <h3>Order Placement Form</h3>
+  };
 
-            <label>Distributor ID</label>
-            <input
-                type = "text"
-                onChange = {(e) => setDistributorId(e.target.value)}
-                value = {distributorId}
-                className = {emptyFields.includes('distributorId') ? 'error' : ''}
-            />
+  return (
+    <form className="create" onSubmit={handleSubmit}>
+      <h3>Order Placement Form</h3>
 
-            <label>Distributor's Name</label>
-            <input
-                type = "text"
-                onChange = {(e) => setDistributorName(e.target.value)}
-                value = {distributorName}
-                className = {emptyFields.includes('distributorName') ? 'error' : ''}
-            />
+      <label>Distributor ID</label>
+      <input
+        type="text"
+        onChange={(e) => setDistributorId(e.target.value)}
+        value={distributorId}
+        className={emptyFields.includes("distributorId") ? "error" : ""}
+      />
 
-            <label>Order Status</label>
-            <input
-                type = "text"
-                onChange = {(e) => setOrderStatus(e.target.value)}
-                value = {orderStatus}
-            />
+      <label>Distributor's Name</label>
+      <input
+        type="text"
+        onChange={(e) => setDistributorName(e.target.value)}
+        value={distributorName}
+        className={emptyFields.includes("distributorName") ? "error" : ""}
+      />
 
-                {items.map((item, index) => (
-                <div key={index}>
-                    <label>Item({index + 1}) code</label>
-                    <input
-                        type="text"
-                        onChange={(e) => handleItemChange(index, 'code', e.target.value)}
-                        value={item.code}
-                    />
+      <label>Order Status</label>
+      <input
+        type="text"
+        onChange={(e) => setOrderStatus(e.target.value)}
+        value={orderStatus}
+      />
 
-                    <label>Item({index + 1}) Name</label>
-                    <input
-                        type="text"
-                        onChange={(e) => handleItemChange(index, 'name', e.target.value)}
-                        value={item.name}
-                    />
+      {items.map((item, index) => (
+        <div key={index}>
+          <label>Item({index + 1}) code</label>
+          <input
+            type="text"
+            onChange={(e) => handleItemChange(index, "code", e.target.value)}
+            value={item.code}
+          />
 
-                   <label>Item({index + 1}) Unit Price</label>
-                    <input
-                        type="number"
-                        onChange={(e) => handleItemChange(index, 'unit', e.target.value)}
-                        value={item.unit}
-                    />
+          <label>Item({index + 1}) Name</label>
+          <input
+            type="text"
+            onChange={(e) => handleItemChange(index, "name", e.target.value)}
+            value={item.name}
+          />
 
-                    <label>Item({index + 1}) Quantity</label>
-                    <input
-                        type="number"
-                        onChange={(e) => handleItemChange(index, 'quantity', e.target.value)}
-                        value={item.quantity}
-                    />
-                </div>
-            ))}
+          <label>Item({index + 1}) Unit Price</label>
+          <input
+            type="number"
+            onChange={(e) => handleItemChange(index, "unit", e.target.value)}
+            value={item.unit}
+          />
 
-            <label>Total Amount to Pay</label>
-            <input
-                type = "text"
-                onChange = {(e) => setTotalAmount(e.target.value)}
-                value = {totalAmount}
-            />
+          <label>Item({index + 1}) Quantity</label>
+          <input
+            type="number"
+            onChange={(e) =>
+              handleItemChange(index, "quantity", e.target.value)
+            }
+            value={item.quantity}
+          />
 
-            <button onClick={()=>window.location.href='/OrderSuccess'}>Submit</button>
-            {error && <div className="error">{error}</div>}
-        </form>
-    )
-}
+          <button type="button" onClick={addNewItem}>
+        Add Item
+      </button>
+        </div>
+      ))}
 
-export default OrderForm
+      <label>Total Amount to Pay</label>
+      <input
+        type="text"
+        onChange={(e) => setTotalAmount(e.target.value)}
+        value={totalAmount}
+      />
+
+
+      <button type="submit">Submit</button>
+      {error && <div className="error">{error}</div>}
+    </form>
+  );
+};
+
+export default OrderForm;
