@@ -70,18 +70,23 @@ const updateProduct = async (req, res) => {
     return res.status(404).json({ error: "no such product" });
   }
 
-  const product = await Product.findOneAndUpdate(
-    { _id: id },
-    {
-      ...req.body,
+  try {
+    const updatedProduct = await Product.findOneAndUpdate(
+      { _id: id },
+      {
+        ...req.body,
+      },
+      { new: true }
+    ); // Add { new: true } to return the updated document
+
+    if (!updatedProduct) {
+      return res.status(400).json({ error: "No such Product" });
     }
-  );
 
-  if (!product) {
-    return res.status(404).json({ error: "No such product" });
+    res.status(200).json(updatedProduct);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
   }
-
-  res.status(200).json(product);
 };
 
 module.exports = {
