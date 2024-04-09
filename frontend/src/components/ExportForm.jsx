@@ -2,6 +2,7 @@ import { useState } from "react"
 import '../exports.css';
 import { useExportsContext } from "../hooks/useExportsContext";
 import {  useEffect } from "react";
+import Swal from 'sweetalert2'; // Import SweetAlert
 
 const ExportForm=()=>{
     const {dispatch}=useExportsContext()
@@ -16,8 +17,17 @@ const ExportForm=()=>{
     const[emptyFields,setEmptyFields]=useState([])
     const [successMessage, setSuccessMessage] = useState('');
 
+     // Regular expression for importerID validation (starts with 'I' followed by 3 digits)
+     const exportOrderIDPattern = /^E\d{3}$/;
+
     const handleSubmit=async(e)=>{
         e.preventDefault()
+    
+        // Validate importerID format
+        if (!exportOrderIDPattern.test(exportOrderID)) {
+            setError('Export Order ID should start with "E" followed by 3 digits (e.g., E123)');
+            return;
+        }
 
         const exportt={
             exportOrderID,
@@ -52,6 +62,13 @@ const ExportForm=()=>{
             console.log('New export order added',json)
             setSuccessMessage('New export order added successfully!');
             dispatch({type: 'CREATE_EXPORT',payload:json})
+
+            // Display success message using SweetAlert
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'New export order added successfully!'
+            })
         }
     }
 
@@ -85,7 +102,7 @@ const ExportForm=()=>{
             className={emptyFields.includes('exportOrderID')?'error':''}
         /><br></br>
 
-        <label>Importer: </label><br></br>
+        <label>Dealer ID: </label><br></br>
         <input
             type="text"
             onChange={(e)=>setimporter(e.target.value)}
