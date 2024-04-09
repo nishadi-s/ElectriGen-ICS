@@ -74,7 +74,7 @@ const ExportsNavBar = ({ children }) => {
             to={item.path}
             key={index}
             className="link"
-            activeclassName="active"
+            activelassname="active"
           >
             <div className="icon">{item.icon}</div>
             <div

@@ -40,7 +40,7 @@ const ExportsDashboard=()=>{
 
     return (
       
-      <div className="exdash">
+      <div className="ex-dashboard">
         <div className="exports">
         <h2>Export Orders</h2><br></br>
           {exports && exports.map((exportt)=>(

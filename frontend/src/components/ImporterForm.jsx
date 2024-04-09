@@ -2,6 +2,7 @@ import { useState } from "react"
 import '../exports.css';
 import { useImportersContext } from "../hooks/useImportersContext";
 import {  useEffect } from "react";
+import Swal from 'sweetalert2'; // Import SweetAlert
 
 const ImporterForm=()=>{
     const {dispatch}=useImportersContext()
@@ -14,10 +15,26 @@ const ImporterForm=()=>{
     const[emptyFields,setEmptyFields]=useState([])
     const [successMessage, setSuccessMessage] = useState('');
 
-    
+     // Regular expression for importerID validation (starts with 'I' followed by 3 digits)
+     const importerIDPattern = /^I\d{3}$/;
 
     const handleSubmit=async(e)=>{
         e.preventDefault()
+
+        // Validate importerID format
+        if (!importerIDPattern.test(importerID)) {
+            setError('Importer ID should start with "I" followed by 3 digits (e.g., I123)');
+            return;
+        }
+
+        // Email validation regex pattern
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        // Validate email format
+        if (!emailPattern.test(email)) {
+            setError('Invalid email format');
+            return; // Stop form submission if email is invalid
+        }
 
         const importer={importerID,importerName,address,contactNumber,email}
 
@@ -46,6 +63,13 @@ const ImporterForm=()=>{
             setEmptyFields([])
             console.log('New importer added',json)
             dispatch({type: 'CREATE_IMPORTER',payload:json})
+
+            // Display success message using SweetAlert
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'New importer order added successfully!'
+            });
         }
     }
 
@@ -64,7 +88,7 @@ const ImporterForm=()=>{
 
         {successMessage && <div className="success-message">{successMessage}</div>}
 
-        <label>ImporterID: </label><br></br>
+        <label>Dealer ID: </label><br></br>
         <input
             type="text"
             onChange={(e)=>setimporterID(e.target.value)}
@@ -72,7 +96,7 @@ const ImporterForm=()=>{
             className={emptyFields.includes('importerID')?'error':''}
         /><br></br>
 
-        <label>Importer Name: </label><br></br>
+        <label>Name: </label><br></br>
         <input
             type="text"
             onChange={(e)=>setimporterName(e.target.value)}
@@ -104,7 +128,7 @@ const ImporterForm=()=>{
             className={emptyFields.includes('email')?'error':''}
         /><br></br><br></br>
 
-        <button>Add Importer</button>
+        <button> Add </button>
         {error && <div className="error">{error}</div>}
 
         </form>

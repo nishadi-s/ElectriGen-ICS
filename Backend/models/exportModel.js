@@ -8,6 +8,7 @@ const exportSchema=new Schema({
         type:String,
         required:true
     },
+
     importer:{
         type:String,
         required:true
@@ -32,6 +33,7 @@ const exportSchema=new Schema({
         type:Number,
         required:true
     },
+    
     status:{
         type:String,
         required:true

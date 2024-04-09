@@ -37,7 +37,7 @@ const ExportSearch = () => {
           {filteredExports.map(filteredExport => (
             <div key={filteredExport._id}>
               <h4>Order ID: {filteredExport.exportOrderID}</h4>
-              <p>Importer: {filteredExport.importer}</p>
+              <p>Dealer: {filteredExport.importer}</p>
               <div>
                 {filteredExport.items.map((item, index) => (
                   <div key={index}>
