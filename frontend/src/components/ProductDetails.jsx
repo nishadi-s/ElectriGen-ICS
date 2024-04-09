@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useProductContext } from "../hooks/useProductsContext";
+import { FaRegTrashCan } from "react-icons/fa6";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
 const ProductDetails = ({ product }) => {
   const { dispatch } = useProductContext();
@@ -82,9 +84,15 @@ const ProductDetails = ({ product }) => {
             </td>
             <td>{product.cost}</td>
             <td>{product.unitPrice}</td>
-            <td>{product.createdAt}</td>
             <td>
-              <button onClick={handleDelete}>Delete</button>
+              {formatDistanceToNow(new Date(product.createdAt), {
+                addSuffix: true,
+              })}
+            </td>
+            <td>
+              <button onClick={handleDelete}>
+                <FaRegTrashCan />
+              </button>
               <Link to={`/UpdateProduct/${product._id}`} className="edit-link">
                 <button>Edit</button>
               </Link>

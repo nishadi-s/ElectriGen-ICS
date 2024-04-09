@@ -12,7 +12,6 @@ import Materials from "./pages/Materials.jsx";
 import Production from "./pages/Production.jsx";
 import Products from "./pages/Products.jsx";
 import AddProducts from "./pages/AddProducts.jsx";
-import ProductForm from "./components/ProductForm";
 
 const App = () => {
   return (
@@ -30,7 +29,6 @@ const App = () => {
           <Route path="/Production" element={<Production />} />
           <Route path="/Materials" element={<Materials />} />
           <Route path="/AddProducts" element={<AddProducts />} />
-          <Route path="./components/ProductForm" component={ProductForm} />
         </Routes>
       </Navbar>
     </BrowserRouter>

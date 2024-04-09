@@ -3,10 +3,6 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 
-//Senith
-const productRoutes = require("./routes/products");
-app.use("/api/products", productRoutes);
-
 //express app
 const app = express();
 
@@ -30,3 +26,6 @@ mongoose
   .catch((error) => {
     console.log(error);
   });
+//Senith
+const productRoutes = require("./routes/products");
+app.use("/api/products", productRoutes);

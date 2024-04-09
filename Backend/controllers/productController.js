@@ -29,6 +29,33 @@ const getProduct = async (req, res) => {
 const createProduct = async (req, res) => {
   const { name, itemCode, unitPrice, cost, color, category } = req.body;
 
+  let emptyFields = [];
+
+  if (!name) {
+    emptyFields.push("name");
+  }
+  if (!itemCode) {
+    emptyFields.push("itemCode");
+  }
+  if (!unitPrice) {
+    emptyFields.push("unitPrice");
+  }
+  if (!cost) {
+    emptyFields.push("cost");
+  }
+  if (!color) {
+    emptyFields.push("color");
+  }
+  if (!category) {
+    emptyFields.push("category");
+  }
+
+  if (emptyFields.length > 0) {
+    return res
+      .status(400)
+      .json({ error: "Please fill all the fields", emptyFields });
+  }
+
   //add doc to db
   try {
     const product = await Product.create({
