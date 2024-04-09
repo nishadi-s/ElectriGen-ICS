@@ -1,26 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
-import { useParams } from 'react-router-dom'; // Import useParams
+import { useParams } from 'react-router-dom';
 
 const EditInvoice = () => {
-  const { billID } = useParams(); // Use useParams to get billID
+  const { billID } = useParams();
   const [invoice, setInvoice] = useState(null);
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchInvoice = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/sales/${billID}`); // Use billID from useParams
+        const response = await axios.get(`http://localhost:4000/sales/get/${billID}`);
         setInvoice(response.data);
         setItems(response.data.items);
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching invoice:', error);
+        setLoading(false);
       }
     };
 
     fetchInvoice();
-  }, [billID]); // Include billID in the dependency array
+  }, [billID]);
 
   const handleItemChange = (index, field, value) => {
     const updatedItems = [...items];
@@ -32,7 +35,7 @@ const EditInvoice = () => {
     e.preventDefault();
     try {
       const updatedInvoice = { ...invoice, items };
-      await axios.put(`http://localhost:4000/sales/update/${billID}`, updatedInvoice); // Use billID from useParams
+      await axios.put(`http://localhost:4000/sales/update/${invoice.billID}`, updatedInvoice);
       alert('Invoice updated successfully!');
     } catch (error) {
       console.error('Error updating invoice:', error);
@@ -40,10 +43,13 @@ const EditInvoice = () => {
     }
   };
 
-  if (!invoice) return <div>Loading...</div>;
+  if (loading) return <div>Loading...</div>;
+
+  if (!invoice) return <div>No invoice found</div>;
 
   return (
     <div>
+      <h1>Edit Invoice</h1>
       <Form onSubmit={handleSubmit}>
         <Row className="mb-3">
           <Form.Group as={Col} controlId="formBillID">
@@ -57,7 +63,6 @@ const EditInvoice = () => {
           </Form.Group>
         </Row>
 
-        {/* Update item fields here */}
         {items.map((item, index) => (
           <div key={index}>
             <Row className="mb-3">
