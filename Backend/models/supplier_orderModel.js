@@ -12,19 +12,19 @@ const supplier_orderSchema =  new Schema({
         type:String,
         required:true
     },
-    Sup_Quant:{
-        type:Number,
-        required:true
-    },
-    Sup_Cost:{
-        type:Number,
-        required:true
-    },
+
+    items: [
+        {
+           
+            Sup_Quant:Number,
+            Sup_Cost:Number ,
+            Sup_matrial_code: String
+                
+            
+        }
+    ],
     
-    Sup_matrial_code:{
-        type:String,
-        required:true
-    },
+   
 
     Sup_orded_date:{
         type:Date,

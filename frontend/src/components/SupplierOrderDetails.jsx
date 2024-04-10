@@ -19,15 +19,23 @@ const SupplierOrderDetails = ({ order }) => {
     <div className="Supplier-Order-Details">
       <h6><strong>Order ID:</strong> {order.Sup_Ord_id}</h6>
       <p><strong>Supplier ID:</strong> {order.Sup_ID}</p>
-      <p><strong>Quantity:</strong> {order.Sup_Quant}</p>
-      <p><strong>Cost:</strong> {order.Sup_Cost}</p>
-      <p><strong>Material Code:</strong> {order.Sup_matrial_code}</p>
+
+      {order.items.map((item, index) => (
+        <div key={index}>
+          <p><strong>Item {index + 1} Quantity: </strong>{item.Sup_Quant}</p>
+          <p><strong>Item {index + 1} Cost: </strong>{item.Sup_Cost}</p>
+          <p><strong>Item {index + 1} Code: </strong>{item.Sup_matrial_code}</p>
+        </div>
+      ))}
+
+     
       <p><strong>Ordered Date: </strong>{format(new Date(order.Sup_orded_date), 'yyyy-MM-dd')} </p>
       <p><strong>Receipt Date:</strong> {format(new Date(order.Sup_recpt_date), 'yyyy-MM-dd')}</p>
       <p><strong>Order Status:</strong> {order.Sup_Ord_sts}</p>
       <p><strong>Supplier Rating:</strong> {order.Sup_rating}</p>
       <p>{formatDistanceToNow(new Date(order.createdAt), { addSuffix: true })}</p>
-      <span onClick={handleClick}> Delete</span>
+      
+      <button onClick={handleClick} className="btn-delete">Delete</button>
     </div>
   );
 }

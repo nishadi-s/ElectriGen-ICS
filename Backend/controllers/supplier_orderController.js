@@ -32,7 +32,7 @@ const getOrderById = async (req, res) => {
 
 // Create new order
 const createOrder = async (req, res) => {
-    const { Sup_Ord_id, Sup_ID, Sup_Quant, Sup_Cost, Sup_matrial_code, Sup_orded_date, Sup_recpt_date, Sup_Ord_sts, Sup_rating } = req.body;
+    const { Sup_Ord_id, Sup_ID, items, Sup_orded_date, Sup_recpt_date, Sup_Ord_sts, Sup_rating } = req.body;
     
     let emptyFields = []
 
@@ -44,17 +44,13 @@ const createOrder = async (req, res) => {
         emptyFields.push ('Supplier ID ')
    }
 
-   if(!Sup_Quant){
-    emptyFields.push ('Supplier Order Quantity ')
+   if(!items){
+    emptyFields.push ('Supplier Order items ')
 }
 
-if(!Sup_Cost){
-    emptyFields.push ('Supplier Order Cost ')
-}
 
-if(!Sup_matrial_code){
-    emptyFields.push ('Supplier Order Material Code ')
-}
+
+
 
 if(!Sup_orded_date){
     emptyFields.push ('Supplier Order Ordered Date ')
@@ -75,9 +71,11 @@ if(!Sup_rating){
 if(emptyFields.length > 0){
     return res.status(400).json ({error: 'Please fill in all the fields' , emptyFields})
 }
+
+ 
     //add doc to DataBase
     try {
-        const order = await Supplier_order.create({ Sup_Ord_id, Sup_ID, Sup_Quant, Sup_Cost, Sup_matrial_code, Sup_orded_date, Sup_recpt_date, Sup_Ord_sts, Sup_rating });
+        const order = await Supplier_order.create({ Sup_Ord_id, Sup_ID, items, Sup_orded_date, Sup_recpt_date, Sup_Ord_sts, Sup_rating });
         res.status(201).json(order);
     } catch (error) {
         res.status(400).json({ error: error.message });
