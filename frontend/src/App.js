@@ -79,6 +79,17 @@ const App = () => {
           <Route path="Suppliers/supplieredit" element={<SupplierEdit />} /> {/* Define route for updating orders */}
           <Route path="/Suppliers/supplieredit/Suppliers" element={<Suppliers />} />
   
+
+          {/* Nishadi */}
+          <Route path="/SupplierOrderDashboard" element={<Dashboard />} />
+          <Route path="/Suppliers" element={<Suppliers />} />
+          <Route path="/Order" element={<Orders />} />
+          <Route path="/analytics" element={<Analytics />} />
+          <Route path="/MyProfile" element={<MyProfile />} />
+          <Route path="/update/:id" element={<UpdateOrder />} /> {/* Define route for updating orders */}
+          <Route path="Suppliers/supplieredit" element={<SupplierEdit />} /> {/* Define route for updating orders */}
+          <Route path="/Suppliers/supplieredit/Suppliers" element={<Suppliers />} />
+  
             {/* Shanali */}
             <Route path="/" element={<ExportsDashboard />} />
             <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
