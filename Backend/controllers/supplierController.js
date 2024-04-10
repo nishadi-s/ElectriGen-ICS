@@ -92,7 +92,7 @@ const deleteSupplier = async (req, res) => {
 };
 
 
-// Update the order
+// Update the supplier
 const updateSupplier = async (req, res) => {
     const { id } = req.params; // Extract id from request params
 
