@@ -68,7 +68,7 @@ const ImporterForm=()=>{
             Swal.fire({
                 icon: 'success',
                 title: 'Success!',
-                text: 'New importer order added successfully!'
+                text: 'New importer added successfully!'
             });
         }
     }
