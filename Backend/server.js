@@ -46,11 +46,6 @@ app.use("/sales", salesRouter);
 const feedbackRouter = require("./routes/sfeedback");
 app.use("/sfeedback", feedbackRouter);
 
-//dulari
-const projectRouter = require("./routes/DonationProjects.js");
-app.use("/DonationProject", projectRouter);
-const dFeedbackRouter = require("./routes/dFeedback.js");
-app.use("/dFeedback", dFeedbackRouter);
 
 //Dinithi
 const orderRoutes = require("./routes/orders.js");
@@ -63,13 +58,13 @@ const productRoutes = require("./routes/products");
 app.use("/api/products", productRoutes);
 
 //Shanali
-const exportRoutes = require("./routes/export");
-const importerRoutes = require("./routes/importer");
-app.use("/api/export", exportRoutes);
-app.use("/api/importer", importerRoutes);
+const exportRoutes=require('./routes/export')
+const importerRoutes=require('./routes/importer')
+app.use('/api/export', exportRoutes)
+app.use('/api/importer', importerRoutes)
 
-//Nishadi
-const supplierChain_order = require('./routes/supplier_order'); //Nishadi
-const supplier = require('./routes/supplier'); //Nishadi
-app.use("/api/supplier_order",supplierChain_order); //Nishadi
-app.use("/api/supplier",supplier); //Nishadi
+//dulari
+app.use("/dFeedback", dFeedbackRouter);
+const projectRouter = require("./routes/DonationProjects.js");
+app.use("/DonationProject", projectRouter);
+const dFeedbackRouter = require("./routes/dFeedback.js");

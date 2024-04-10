@@ -50,56 +50,54 @@ const App = () => {
   return (
     <BrowserRouter>
       <SalesContextProvider>
-        <Navbar>
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/Dashboard" element={<Dashboard />} />
-            <Route path="/Analytics" element={<Analytics />} />
-            <Route path="/MyProfile" element={<MyProfile />} />
-            <Route path="/Logout" element={<Logout />} />
-            {/* Shanali */}
-            <Route path="/" element={<ExportsDashboard />} />
-            <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
-            <Route path="/Importer" element={<Importer />} />
-            <Route path="/ExportOrders" element={<ExportOrders />} />
-            <Route
-              path="/ExportOrderDetails"
-              element={<ExportOrderDetails />}
-            />
-            <Route path="/ExportAnalytics" element={<ExportAnalytics />} />
-            <Route path="/ExportsProfile" element={<ExportsProfile />} />
-            <Route path="/update/:id" element={<UpdateExports />} />{" "}
-            {/* Define route for updating orders */}
-            {/* Dulari */}
-            <Route path="/New_Projects" element={<New_Projects />} />
-            <Route path="/Doner_Feedback" element={<Doner_Feedback />} />
-            <Route path="/Doner_Analytics" element={<Doner_Analystics />} />
-            <Route path="/Dashboard" element={<DFeedbackFetch />} />
-            <Route
-              path="/Donation_Dashboard"
-              element={<Donation_Dashboard />}
-            />
-            {/* Primal */}
-            <Route path="/salesFeedback" element={<SalesFeedback />} />
-            <Route path="/invoiceCreate" element={<InvoiceCreate />} />
-            <Route path="/sfeedbackFetch" element={<SfeedbackFetch />} />
-            <Route path="/viewInvoice" element={<ViewInvoice />} />
-            <Route path="/PinVerification" element={<PinVerification />} />
-            <Route path="/InvoiceUpdate" element={InvoiceUpdate} />
-            {/* Dinithi */}
-            <Route path="/OrderForm" element={<OrderPlace />} />
-            <Route path="/OrderHistory" element={<OrderHistory />} />
-            <Route path="/OrderSuccess" element={<OrderSuccess />} />
-            <Route path="/update/:id" element={<UpdateOrder />} />{" "}
-            {/* Define route for updating orders */}
-            {/*Senith */}
-            <Route path="/Products" element={<Products />} />
-            <Route path="/Production" element={<Production />} />
-            <Route path="/Materials" element={<Materials />} />
-            <Route path="/AddProducts" element={<AddProducts />} />
-            <Route path="./components/ProductForm" component={ProductForm} />
-          </Routes>
-        </Navbar>
+       <Navbar>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/Dashboard" element={<Dashboard />} />
+          <Route path="/Analytics" element={<Analytics />} />
+          <Route path="/MyProfile" element={<MyProfile />} />
+          <Route path="/Logout" element={<Logout />} />
+          
+         {/* Shanali */}
+         <Route path="/" element={<ExportsDashboard />} />
+         <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
+         <Route path="/ImporterDescription" element={<ImporterDescription />} />
+         <Route path="/ExportOrders" element={<ExportOrders />} />
+         <Route path="/Importer" element={<Importer />} />
+         <Route path="/ExportAnalytics" element={<ExportAnalytics />} />
+         <Route path="/ExportsProfile" element={<ExportsProfile />} />
+         <Route path="/update/:id" element={<UpdateExports />} /> {/* Define route for updating orders */}
+            
+          {/* Dulari */}
+          <Route path="/New_Projects" element={<New_Projects />} />
+          <Route path="/Doner_Feedback" element={<Doner_Feedback />} />
+          <Route path="/Doner_Analytics" element={<Doner_Analystics />} />
+          <Route path="/Dashboard" element={<DFeedbackFetch />} />
+
+
+          {/* Primal */}
+          <Route path="/salesFeedback" element={<SalesFeedback />} />
+          <Route path="/invoiceCreate" element={<InvoiceCreate />} />
+          <Route path="/sfeedbackFetch" element={<SfeedbackFetch />} />
+          <Route path="/viewInvoice" element={<ViewInvoice />} />
+          <Route path="/PinVerification" element={<PinVerification />} />
+          <Route path="/InvoiceUpdate" element={InvoiceUpdate} />
+
+          {/* Dinithi */}
+          <Route path="/OrderForm" element = {<OrderPlace />} />
+            <Route path="/OrderHistory" element = {<OrderHistory />} />
+            <Route path="/OrderSuccess" element={<OrderSuccess/>}/>
+            <Route path="/update/:id" element={<UpdateOrder />} /> {/* Define route for updating orders */}
+
+          {/*Senith */}
+          <Route path="/Products" element={<Products />} />
+          <Route path="/Production" element={<Production />} />
+          <Route path="/Materials" element={<Materials />} />
+          <Route path="/AddProducts" element={<AddProducts />} />
+          <Route path="./components/ProductForm" component={ProductForm} />
+            
+        </Routes>
+      </Navbar>
       </SalesContextProvider>
     </BrowserRouter>
   );
