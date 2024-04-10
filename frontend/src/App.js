@@ -13,7 +13,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ExportsDashboard from "./pages/ExportsDashboard.jsx"
 import ExportsNavBar from "./components/ExportsNavBar.jsx"
 import ExportsProfile from "./pages/ExportsProfile.jsx";
-import ExportOrderDetails from "./pages/ExportOrderDetails.jsx";
+import ImporterDescription from "./pages/ImporterDescription.jsx";
 import ExportOrders from "./pages/ExportOrders.jsx";
 import Importer from "./pages/Importer.jsx";
 import ExportAnalytics from "./pages/ExportAnalytics.jsx";
@@ -46,9 +46,9 @@ function App(){
        <Routes>
          <Route path="/" element={<ExportsDashboard />} />
          <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
-         <Route path="/Importer" element={<Importer />} />
+         <Route path="/ImporterDescription" element={<ImporterDescription />} />
          <Route path="/ExportOrders" element={<ExportOrders />} />
-         <Route path="/ExportOrderDetails" element={<ExportOrderDetails />} />
+         <Route path="/Importer" element={<Importer />} />
          <Route path="/ExportAnalytics" element={<ExportAnalytics />} />
          <Route path="/ExportsProfile" element={<ExportsProfile />} />
          <Route path="/update/:id" element={<UpdateExports />} /> {/* Define route for updating orders */}
