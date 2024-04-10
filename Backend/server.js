@@ -31,12 +31,7 @@ mongoose
     console.log(error); // Log any errors that occur during database connection
   });
 
-//middleware-importer
-app.use(express.json());
-app.use((req, res, next) => {
-  console.log(req.path, req.method);
-  next();
-});
+
 
 //primal sales route
 const salesRouter = require("./routes/sales");
@@ -64,7 +59,7 @@ app.use('/api/export', exportRoutes)
 app.use('/api/importer', importerRoutes)
 
 //dulari
-app.use("/dFeedback", dFeedbackRouter);
 const projectRouter = require("./routes/DonationProjects.js");
-app.use("/DonationProject", projectRouter);
 const dFeedbackRouter = require("./routes/dFeedback.js");
+app.use("/dFeedback", dFeedbackRouter);
+app.use("/DonationProject", projectRouter);

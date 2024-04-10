@@ -8,13 +8,13 @@ import Analytics from "./pages/Analytics.jsx";
 import Logout from "./pages/Logout.jsx";
 
 //Nishadi
-import Navbar from "./components/SupplierOrderNavbar.jsx";
-import Dashboard from "./pages/SupplierOrderDashboard.jsx";
-import MyProfile from "./pages/SupplierOrderProfile.jsx";
+// import Navbar from "./components/SupplierOrderNavbar.jsx";
+// import Dashboard from "./pages/SupplierOrderDashboard.jsx";
+// import MyProfile from "./pages/SupplierOrderProfile.jsx";
 import Orders from "./pages/SupplierOrder_Order.jsx";
 import Suppliers from "./pages/SupplierOrderSuppliers.jsx";
-import Analytics from "./pages/SupplierOrderAnalytics.jsx";
-import UpdateOrder from "./components/SupplierOrderUpdate.jsx"; // Import the UpdateOrder component
+//import Analytics from "./pages/SupplierOrderAnalytics.jsx";
+//import UpdateOrder from "./components/SupplierOrderUpdate.jsx"; // Import the UpdateOrder component
 import SupplierEdit from "./components/SupplierEdit.jsx"; // Import the UpdateSupplier component
 
 
@@ -51,7 +51,7 @@ import ProductForm from "./components/ProductForm";
 import ExportsDashboard from "./pages/ExportsDashboard.jsx";
 import ExportsNavBar from "./components/ExportsNavBar.jsx";
 import ExportsProfile from "./pages/ExportsProfile.jsx";
-import ImporterDescription from "./pages/ImporterDescription.jsx";
+//import ImporterDescription from "./pages/ImporterDescription.jsx";
 import ImporterDescription from "./pages/ImporterDescription.jsx";
 import ExportOrders from "./pages/ExportOrders.jsx";
 import Importer from "./pages/Importer.jsx";
@@ -85,10 +85,7 @@ const App = () => {
             <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
             <Route path="/Importer" element={<Importer />} />
             <Route path="/ExportOrders" element={<ExportOrders />} />
-            <Route
-              path="/ExportOrderDetails"
-              element={<ExportOrderDetails />}
-            />
+            <Route path="/ImporterDescription" element={<ImporterDescription />}/>
             <Route path="/ExportAnalytics" element={<ExportAnalytics />} />
             <Route path="/ExportsProfile" element={<ExportsProfile />} />
             <Route path="/update/:id" element={<UpdateExports />} />{" "}
