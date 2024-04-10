@@ -15,23 +15,29 @@ const Navbar = ({ children }) => {
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
     {
-      path: "/",
+      path: "/Donation_Dashboard",
       name: "Dashboard",
       icon: <FaTh />,
     },
 
     {
-      path: "/products",
-      name: "Products",
+      path: "/OrderForm",
+      name: "Order Placement",
       icon: <FaDollyFlatbed />,
     },
 
     {
-      path: "/Materials",
-      name: "Materials",
+      path: "/OrderHistory",
+      name: "Order History",
       icon: <FaShapes />,
     },
 
+
+    {
+      path: "/Products",
+      name: "Products",
+      icon: <FaDollyFlatbed />,
+    },
     {
       path: "/Production",
       name: "Production",
@@ -51,7 +57,7 @@ const Navbar = ({ children }) => {
     },
 
     {
-      path: "/MyProfile",
+      path: "/Logout",
       name: "Logout",
       icon: <FaUserAlt />,
     },
