@@ -39,8 +39,12 @@ import MyProfile from "./pages/SupplierOrderProfile.jsx";
 import Orders from "./pages/SupplierOrder_Order.jsx";
 import Suppliers from "./pages/SupplierOrderSuppliers.jsx";
 import Analytics from "./pages/SupplierOrderAnalytics.jsx";
+import UpdateOrder from "./components/SupplierOrderUpdate.jsx"; // Import the UpdateOrder component
+import SupplierEdit from "./components/SupplierEdit.jsx"; // Import the UpdateSupplier component
 
 
+
+//Nishadi
 const App = () => {
   return (
     <BrowserRouter>
@@ -52,6 +56,11 @@ const App = () => {
           <Route path="/Order" element={<Orders />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/MyProfile" element={<MyProfile />} />
+          <Route path="/update/:id" element={<UpdateOrder />} /> {/* Define route for updating orders */}
+          <Route path="Suppliers/supplieredit" element={<SupplierEdit />} /> {/* Define route for updating orders */}
+          <Route path="/Suppliers/supplieredit/Suppliers" element={<Suppliers />} />
+         
+
         </Routes>
       </Navbar>
     </BrowserRouter>
