@@ -12,7 +12,6 @@ import DonationNavbar from "./components/DonationNavbar.jsx";
 import Donation_Dashboard from "./pages/Donation_Dashboard.jsx";
 import New_Projects from "./pages/New_Projects.jsx";
 import Doner_Feedback from "./pages/Doner_Feedback.jsx";
-import MyProfile from "./pages/MyProfile.jsx";
 import Doner_Analystics from "./pages/Doner_Analytics.jsx";
 import DFeedbackFetch from "./components/dFeedbackFetch.jsx";
 

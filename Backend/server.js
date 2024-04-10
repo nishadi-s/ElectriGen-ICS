@@ -47,12 +47,6 @@ app.use("/sales", salesRouter);
 const feedbackRouter = require("./routes/sfeedback");
 app.use("/sfeedback", feedbackRouter);
 
-//dulari
-app.use("/dFeedback", dFeedbackRouter);
-const projectRouter = require("./routes/DonationProjects.js");
-app.use("/DonationProject", projectRouter);
-const dFeedbackRouter = require("./routes/dFeedback.js");
-
 
 //Dinithi
 const orderRoutes = require("./routes/orders.js");
@@ -69,3 +63,9 @@ const exportRoutes=require('./routes/export')
 const importerRoutes=require('./routes/importer')
 app.use('/api/export', exportRoutes)
 app.use('/api/importer', importerRoutes)
+
+//dulari
+app.use("/dFeedback", dFeedbackRouter);
+const projectRouter = require("./routes/DonationProjects.js");
+app.use("/DonationProject", projectRouter);
+const dFeedbackRouter = require("./routes/dFeedback.js");
