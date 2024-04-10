@@ -19,11 +19,10 @@ const ExportsNavBar = ({ children }) => {
       name: "Dashboard",
       icon: <FaTh />,
     },
-
     {
-      path: "/Importer",
-      name: "Importer",
-      icon: <FaIdBadge />,
+      path: "/ImporterDescription",
+      name: "Importer Details",
+      icon: <FaThList />,
     },
     {
       path: "/ExportOrders",
@@ -31,9 +30,9 @@ const ExportsNavBar = ({ children }) => {
       icon: <FaDollyFlatbed />,
     },
     {
-      path: "/ExportOrderDetails",
-      name: "Order Details",
-      icon: <FaThList />,
+      path: "/Importer",
+      name: "Importers",
+      icon: <FaIdBadge />,
     },
     {
       path: "/ExportAnalytics",
