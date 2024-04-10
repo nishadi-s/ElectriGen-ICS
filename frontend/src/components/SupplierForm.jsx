@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSupplierContext } from "../hooks/useSupplierContext";
+import '../SupplierOrder.css';
 
 
 

@@ -17,6 +17,7 @@ const SupplierEdit = ({ supplierToUpdate }) => {
   useEffect(() => {
     if (supplierToUpdate) {
       setSupplierData({
+        ...supplierData,
         Sup_ID: supplierToUpdate.Sup_ID || "",
         Sup_Name: supplierToUpdate.Sup_Name || "",
         Sup_Email: supplierToUpdate.Sup_Email || "",
@@ -27,14 +28,13 @@ const SupplierEdit = ({ supplierToUpdate }) => {
     }
   }, [supplierToUpdate]);
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setSupplierData({ ...supplierData, [name]: value });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Check if supplierToUpdate is defined and has _id property
-    if (!supplierToUpdate || !supplierToUpdate._id) {
-      setError("Supplier data is missing");
-      return;
-    }
 
     const apiUrl = `/api/supplier/${supplierToUpdate._id}`;
     const requestOptions = {
@@ -64,59 +64,69 @@ const SupplierEdit = ({ supplierToUpdate }) => {
     }
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setSupplierData({ ...supplierData, [name]: value });
-  };
-
   return (
     <form className="create" onSubmit={handleSubmit}>
-      {/* Input fields for Supplier ID, Name, Email, Contact, etc. */}
+      {/* Form fields */}
+      <label>Supplier ID:</label>
       <input
         type="text"
         name="Sup_ID"
         value={supplierData.Sup_ID}
-        onChange={handleChange}
-        placeholder="Supplier ID"
+        onChange={handleInputChange}
+        className={emptyFields.includes("Supplier ID") ? "error" : ""}
       />
+
+      {/* Supplier Name */}
+      <label>Supplier Name:</label>
       <input
         type="text"
         name="Sup_Name"
         value={supplierData.Sup_Name}
-        onChange={handleChange}
-        placeholder="Supplier Name"
+        onChange={handleInputChange}
+        className={emptyFields.includes("Supplier Name") ? "error" : ""}
       />
+
+      {/* Supplier Email */}
+      <label>Supplier Email:</label>
       <input
-        type="email"
+        type="text"
         name="Sup_Email"
         value={supplierData.Sup_Email}
-        onChange={handleChange}
-        placeholder="Supplier Email"
+        onChange={handleInputChange}
+        className={emptyFields.includes("Supplier Email") ? "error" : ""}
       />
+
+      {/* Supplier Contact */}
+      <label>Supplier Contact:</label>
       <input
         type="text"
         name="Sup_Contact"
         value={supplierData.Sup_Contact}
-        onChange={handleChange}
-        placeholder="Supplier Contact"
+        onChange={handleInputChange}
+        className={emptyFields.includes("Supplier Contact") ? "error" : ""}
       />
+
+      {/* Supplier Order ID */}
+      <label>Supplier Order ID:</label>
       <input
         type="text"
         name="Sup_Ord_id"
         value={supplierData.Sup_Ord_id}
-        onChange={handleChange}
-        placeholder="Supplier Order ID"
+        onChange={handleInputChange}
+        className={emptyFields.includes("Supplier Order ID") ? "error" : ""}
       />
+
+      {/* Supplier Order Material Code */}
+      <label>Supplier Order Material Code:</label>
       <input
         type="text"
         name="Sup_matrial_code"
         value={supplierData.Sup_matrial_code}
-        onChange={handleChange}
-        placeholder="Supplier Order Material Code"
+        onChange={handleInputChange}
+        className={emptyFields.includes("Supplier Order Material Code") ? "error" : ""}
       />
-      {/* Add more input fields for other supplier data */}
-      
-      <button>Update Supplier</button>
+
+      <button type="submit">Update Supplier</button>
       {error && <div className="error">{error}</div>}
     </form>
   );

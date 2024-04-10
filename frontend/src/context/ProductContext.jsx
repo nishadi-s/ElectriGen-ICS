@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+/*import { createContext, useReducer } from "react";
 
 export const ProductsContext = createContext();
 
@@ -32,4 +32,4 @@ export const ProductsContextProvider = ({ children }) => {
       {children}
     </ProductsContext.Provider>
   );
-};
+};*/
