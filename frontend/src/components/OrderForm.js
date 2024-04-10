@@ -1,17 +1,13 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { useOrdersContext } from "../hooks/useOrdersContext";
-import Swal from "sweetalert2";
 
 const OrderForm = () => {
   const { dispatch } = useOrdersContext();
-  const history = useHistory();
-
 
   const [distributorId, setDistributorId] = useState("");
   const [distributorName, setDistributorName] = useState("");
   const [orderStatus, setOrderStatus] = useState("");
-  const [items, setItems] = useState([{ code: "", name: "", unit: "", quantity: "" },]);
+  const [items, setItems] = useState([{ code: "", name: "", unit: "", quantity: "" }]);
   const [totalAmount, setTotalAmount] = useState("");
   const [error, setError] = useState("");
   const [emptyFields, setEmptyFields] = useState([]);
@@ -29,23 +25,7 @@ const OrderForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Show confirmation dialog
-    Swal.fire({
-        title: "Submit Order?",
-        text: "Are you sure you want to submit the order?",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonText: "Yes, submit it!",
-        cancelButtonText: "Cancel",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // Proceed with form submission
-          submitForm();
-        }
-      });
-    };
-  
-    const submitForm = async () => {
+    try {
       const order = {
         distributorId,
         distributorName,
@@ -54,34 +34,33 @@ const OrderForm = () => {
         totalAmount,
       };
 
-    const response = await fetch("/api/orders", {
-      method: "POST",
-      body: JSON.stringify(order),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const json = await response.json();
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        body: JSON.stringify(order),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const json = await response.json();
 
-    if (!response.ok) {
+      if (!response.ok) {
         setError(json.error);
-        setEmptyFields(json.emptyFields || []); // Ensure it's not undefined
-    }
+        setEmptyFields(json.emptyFields || []);
+      } else {
+        setDistributorId("");
+        setDistributorName("");
+        setOrderStatus("");
+        setItems([{ code: "", name: "", unit: "", quantity: "" }]);
+        setTotalAmount("");
 
-    if (response.ok) {
-      setDistributorId("");
-      setDistributorName("");
-      setOrderStatus("");
-      setItems([{ code: "", name: "", unit: "", quantity: "" }]);
-      setTotalAmount("");
-
-      setError(null);
-      setEmptyFields([]);
-      console.log("new order added", json);
-      dispatch({ type: "CREATE_ORDER", payload: json });
-
-      // Navigate to PlacedOrders page
-      history.push("/OrderHistory");
+        setError(null);
+        setEmptyFields([]);
+        console.log("new order added", json);
+        dispatch({ type: "CREATE_ORDER", payload: json });
+      }
+    } catch (error) {
+      setError("An error occurred while submitting the order.");
+      console.error("Error submitting order:", error);
     }
   };
 
@@ -138,25 +117,22 @@ const OrderForm = () => {
           <label>Item({index + 1}) Quantity</label>
           <input
             type="number"
-            onChange={(e) =>
-              handleItemChange(index, "quantity", e.target.value)
-            }
+            onChange={(e) => handleItemChange(index, "quantity", e.target.value)}
             value={item.quantity}
           />
 
           <button type="button" onClick={addNewItem}>
-        Add Item
-      </button>
+            Add Item
+          </button>
         </div>
       ))}
 
       <label>Total Amount to Pay</label>
       <input
-        type="text"
+        type="number"
         onChange={(e) => setTotalAmount(e.target.value)}
         value={totalAmount}
       />
-
 
       <button type="submit">Submit</button>
       {error && <div className="error">{error}</div>}
