@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useExportsContext } from '../hooks/useExportsContext';
-
+import ExportDetails from './ExportDetails'; // Import ExportDetails component
 const ExportSearch = () => {
   const { exports } = useExportsContext(); // Get exports from context
 
@@ -34,29 +34,14 @@ const ExportSearch = () => {
       {/* Display filtered exports */}
       {filteredExports.length > 0 ? (
         <div>
-          {filteredExports.map(filteredExport => (
-            <div key={filteredExport._id}>
-              <h4>Order ID: {filteredExport.exportOrderID}</h4>
-              <p>Dealer: {filteredExport.importer}</p>
-              <div>
-                {filteredExport.items.map((item, index) => (
-                  <div key={index}>
-                    <p>Product ID: {item.itemID}</p>
-                    <p>Quantity: {item.quantity}</p>
-                  </div>
-                ))}
-              </div>
-              <p>Total Cost: {filteredExport.totalCost}</p>
-              <p>Status: {filteredExport.status}</p>
-              {/* Add more details as needed */}
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p>No exports found.</p>
-      )}
-    </div>
-  );
+        {filteredExports.map(filteredExport => (
+          <ExportDetails key={filteredExport._id} exportt={filteredExport} />
+        ))}
+      </div>
+    ) : (
+      <p>No exports found.</p>
+    )}
+  </div>
+);
 };
-
 export default ExportSearch;

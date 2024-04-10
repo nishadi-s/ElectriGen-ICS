@@ -26,6 +26,7 @@ const ExportDetails=({exportt})=>{
             reverseButtons: true
         }).then(async (result) => {
             if (result.isConfirmed) {
+                try{
                 // If confirmed, proceed with deletion
                 const response = await fetch('/api/export/' + exportt._id, {
                     method: 'DELETE'
@@ -34,10 +35,29 @@ const ExportDetails=({exportt})=>{
 
                 if (response.ok) {
                     dispatch({ type: 'DELETE_EXPORT', payload: json });
-                }
-            }
-        });
-    };
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'Export order has been deleted.',
+                        icon: 'success',
+                      });
+                    } else {
+                        Swal.fire({
+                          title: 'Error!',
+                          text: 'Failed to delete the export order.',
+                          icon: 'error'
+                        });
+                      }
+                    } catch (error) {
+                      console.error('Error deleting export order:', error);
+                      Swal.fire({
+                        title: 'Error!',
+                        text: 'An error occurred while deleting the export order.',
+                        icon: 'error'
+                      });
+                    }
+                  }
+                });
+              };
 
     
 
