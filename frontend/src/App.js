@@ -57,8 +57,8 @@ const App = () => {
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/MyProfile" element={<MyProfile />} />
           <Route path="/update/:id" element={<UpdateOrder />} /> {/* Define route for updating orders */}
-          <Route path="Suppliers/supplieredit" element={<SupplierEdit />} /> {/* Define route for updating orders */}
-          <Route path="/Suppliers/supplieredit/Suppliers" element={<Suppliers />} />
+          <Route path="/Suppliers/SupplierEdit" element={<SupplierEdit />} /> {/* Define route for updating orders */}
+          <Route path="/supplieredit/Suppliers" element={<Suppliers />} />
          
 
         </Routes>
