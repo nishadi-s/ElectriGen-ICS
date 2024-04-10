@@ -6,7 +6,7 @@ const context = useContext (SupplierOrderContext)
 
 
 if(!context){
-    throw Error('useSupplierOrderContext must be used inside an SupplierContextProvider')
+    throw Error('useSupplierOrderContext must be used inside an SupplierOrderContextProvider')
 }
 
 return context
