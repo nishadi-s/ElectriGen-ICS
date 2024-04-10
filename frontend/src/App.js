@@ -1,4 +1,4 @@
-/*import React from "react";
+import React from "react";
 import "./index.css";
 import { BrowserRouter, Route, Routes, Switch } from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -6,6 +6,17 @@ import Dashboard from "./pages/Dashboard.jsx";
 import MyProfile from "./pages/MyProfile.jsx";
 import Analytics from "./pages/Analytics.jsx";
 import Logout from "./pages/Logout.jsx";
+
+//Nishadi
+import Navbar from "./components/SupplierOrderNavbar.jsx";
+import Dashboard from "./pages/SupplierOrderDashboard.jsx";
+import MyProfile from "./pages/SupplierOrderProfile.jsx";
+import Orders from "./pages/SupplierOrder_Order.jsx";
+import Suppliers from "./pages/SupplierOrderSuppliers.jsx";
+import Analytics from "./pages/SupplierOrderAnalytics.jsx";
+import UpdateOrder from "./components/SupplierOrderUpdate.jsx"; // Import the UpdateOrder component
+import SupplierEdit from "./components/SupplierEdit.jsx"; // Import the UpdateSupplier component
+
 
 //Dulari_IT22121110
 import DonationNavbar from "./components/DonationNavbar.jsx";
@@ -57,6 +68,17 @@ const App = () => {
             <Route path="/Analytics" element={<Analytics />} />
             <Route path="/MyProfile" element={<MyProfile />} />
             <Route path="/Logout" element={<Logout />} />
+
+          {/* Nishadi */}
+          <Route path="/SupplierOrderDashboard" element={<Dashboard />} />
+          <Route path="/Suppliers" element={<Suppliers />} />
+          <Route path="/Order" element={<Orders />} />
+          <Route path="/analytics" element={<Analytics />} />
+          <Route path="/MyProfile" element={<MyProfile />} />
+          <Route path="/update/:id" element={<UpdateOrder />} /> {/* Define route for updating orders */}
+          <Route path="Suppliers/supplieredit" element={<SupplierEdit />} /> {/* Define route for updating orders */}
+          <Route path="/Suppliers/supplieredit/Suppliers" element={<Suppliers />} />
+  
             {/* Shanali */}
             <Route path="/" element={<ExportsDashboard />} />
             <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
@@ -105,44 +127,8 @@ const App = () => {
   );
 };
 
-export default App;*/
-
-//Nishadi
-import React from "react";
-import "./index.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Navbar from "./components/SupplierOrderNavbar.jsx";
-import Dashboard from "./pages/SupplierOrderDashboard.jsx";
-import MyProfile from "./pages/SupplierOrderProfile.jsx";
-import Orders from "./pages/SupplierOrder_Order.jsx";
-import Suppliers from "./pages/SupplierOrderSuppliers.jsx";
-import Analytics from "./pages/SupplierOrderAnalytics.jsx";
-import UpdateOrder from "./components/SupplierOrderUpdate.jsx"; // Import the UpdateOrder component
-import SupplierEdit from "./components/SupplierEdit.jsx"; // Import the UpdateSupplier component
-
-
-
-//Nishadi
-const App = () => {
-  return (
-    <BrowserRouter>
-      <Navbar>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/SupplierOrderDashboard" element={<Dashboard />} />
-          <Route path="/Suppliers" element={<Suppliers />} />
-          <Route path="/Order" element={<Orders />} />
-          <Route path="/analytics" element={<Analytics />} />
-          <Route path="/MyProfile" element={<MyProfile />} />
-          <Route path="/update/:id" element={<UpdateOrder />} /> {/* Define route for updating orders */}
-          <Route path="Suppliers/supplieredit" element={<SupplierEdit />} /> {/* Define route for updating orders */}
-          <Route path="/Suppliers/supplieredit/Suppliers" element={<Suppliers />} />
-         
-
-        </Routes>
-      </Navbar>
-    </BrowserRouter>
-  );
-};
-
 export default App;
+
+
+
+
