@@ -4,7 +4,6 @@ const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
 
-
 // Create an Express app
 const app = express();
 
@@ -17,7 +16,6 @@ app.use((req, res, next) => {
   console.log(req.path, req.method); // Log the path and HTTP method of each request
   next(); // Call the next middleware in the chain
 });
-
 
 // Connect to MongoDB database
 mongoose
@@ -33,11 +31,11 @@ mongoose
   });
 
 //middleware-importer
-app.use(express.json())
-app.use((req,res,next)=>{
-    console.log(req.path,req.method)
-    next()
-})
+app.use(express.json());
+app.use((req, res, next) => {
+  console.log(req.path, req.method);
+  next();
+});
 
 //primal sales route
 const salesRouter = require("./routes/sales");
@@ -48,11 +46,10 @@ const feedbackRouter = require("./routes/sfeedback");
 app.use("/sfeedback", feedbackRouter);
 
 //dulari
-app.use("/dFeedback", dFeedbackRouter);
 const projectRouter = require("./routes/DonationProjects.js");
 app.use("/DonationProject", projectRouter);
 const dFeedbackRouter = require("./routes/dFeedback.js");
-
+app.use("/dFeedback", dFeedbackRouter);
 
 //Dinithi
 const orderRoutes = require("./routes/orders.js");
@@ -65,7 +62,7 @@ const productRoutes = require("./routes/products");
 app.use("/api/products", productRoutes);
 
 //Shanali
-const exportRoutes=require('./routes/export')
-const importerRoutes=require('./routes/importer')
-app.use('/api/export', exportRoutes)
-app.use('/api/importer', importerRoutes)
+const exportRoutes = require("./routes/export");
+const importerRoutes = require("./routes/importer");
+app.use("/api/export", exportRoutes);
+app.use("/api/importer", importerRoutes);
