@@ -9,7 +9,7 @@ import {
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
-const Navbar = ({ children }) => {
+const SupplierNavbar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
@@ -86,4 +86,4 @@ const Navbar = ({ children }) => {
   );
 };
 
-export default Navbar;
+export default SupplierNavbar;

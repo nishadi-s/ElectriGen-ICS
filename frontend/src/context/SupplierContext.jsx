@@ -1,8 +1,7 @@
 import React, { createContext, useReducer } from "react";
 
-export const SupplierContext = createContext();
-
-export const suppliersReducer = (state, action) => {
+const SupplierContext = createContext();
+ export const suppliersReducer = (state, action) => {
   switch (action.type) {
     case 'SET_SUPPLIER':
       return {
@@ -24,7 +23,7 @@ export const suppliersReducer = (state, action) => {
   }
 };
 
-export const SupplierContextProvider = ({ children }) => {
+ const SupplierContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(suppliersReducer, {
     suppliers: [], // Initialize suppliers state as an empty array
     selectedSupplier: null,
@@ -37,3 +36,5 @@ export const SupplierContextProvider = ({ children }) => {
     </SupplierContext.Provider>
   );
 };
+
+export { SupplierContext, SupplierContextProvider };

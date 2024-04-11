@@ -7,24 +7,24 @@ import MyProfile from "./pages/MyProfile.jsx";
 import Analytics from "./pages/Analytics.jsx";
 import Logout from "./pages/Logout.jsx";
 
-//Nishadi
-import Navbar from "./components/SupplierOrderNavbar.jsx";
-import Dashboard from "./pages/SupplierOrderDashboard.jsx";
-import MyProfile from "./pages/SupplierOrderProfile.jsx";
-import Orders from "./pages/SupplierOrder_Order.jsx";
-import Suppliers from "./pages/SupplierOrderSuppliers.jsx";
-import Analytics from "./pages/SupplierOrderAnalytics.jsx";
-import UpdateOrder from "./components/SupplierOrderUpdate.jsx"; // Import the UpdateOrder component
-import SupplierEdit from "./components/SupplierEdit.jsx"; // Import the UpdateSupplier component
+/*Nishadi
+import SupplierOrderNavbar from "./components/SupplierOrderNavbar.jsx";
+import SupplierOrderDashboard from "./pages/SupplierOrderDashboard.jsx";
+import SupplierOrderProfile from "./pages/SupplierOrderProfile.jsx";
+import SupplierOrder_Orders from "./pages/SupplierOrder_Order.jsx";
+import SupplierOrderSuppliers from "./pages/SupplierOrderSuppliers.jsx";
+import SupplierOrderAnalytics from "./pages/SupplierOrderAnalytics.jsx";
+//import UpdateOrder from "./components/SupplierOrderUpdate.jsx";  Import the UpdateOrder component
+import SupplierEdit from "./components/SupplierEdit.jsx"; // Import the UpdateSupplier component*/
 
 
-//Dulari_IT22121110
+/*Dulari_IT22121110
 import DonationNavbar from "./components/DonationNavbar.jsx";
 import Donation_Dashboard from "./pages/Donation_Dashboard.jsx";
 import New_Projects from "./pages/New_Projects.jsx";
 import Doner_Feedback from "./pages/Doner_Feedback.jsx";
 import Doner_Analystics from "./pages/Doner_Analytics.jsx";
-import DFeedbackFetch from "./components/dFeedbackFetch.jsx";
+import DFeedbackFetch from "./components/dFeedbackFetch.jsx";*/
 
 //Primal
 import SalesFeedback from "./pages/salesFeedback.jsx";
@@ -47,7 +47,7 @@ import Products from "./pages/Products.jsx";
 import AddProducts from "./pages/AddProducts.jsx";
 import ProductForm from "./components/ProductForm";
 
-//Shanali
+/*Shanali
 import ExportsDashboard from "./pages/ExportsDashboard.jsx";
 import ExportsNavBar from "./components/ExportsNavBar.jsx";
 import ExportsProfile from "./pages/ExportsProfile.jsx";
@@ -55,7 +55,7 @@ import ExportOrderDetails from "./pages/ExportOrderDetails.jsx";
 import ExportOrders from "./pages/ExportOrders.jsx";
 import Importer from "./pages/Importer.jsx";
 import ExportAnalytics from "./pages/ExportAnalytics.jsx";
-import UpdateExports from "./pages/UpdateExports.jsx";
+import UpdateExports from "./pages/UpdateExports.jsx";*/
 
 const App = () => {
   return (
@@ -69,28 +69,17 @@ const App = () => {
             <Route path="/MyProfile" element={<MyProfile />} />
             <Route path="/Logout" element={<Logout />} />
 
-          {/* Nishadi */}
-          <Route path="/SupplierOrderDashboard" element={<Dashboard />} />
-          <Route path="/Suppliers" element={<Suppliers />} />
-          <Route path="/Order" element={<Orders />} />
-          <Route path="/analytics" element={<Analytics />} />
-          <Route path="/MyProfile" element={<MyProfile />} />
-          <Route path="/update/:id" element={<UpdateOrder />} /> {/* Define route for updating orders */}
+          {/* Nishadi 
+          <Route path="/SupplierOrderDashboard" element={<SupplierOrderDashboard />} />
+          <Route path="/Suppliers" element={<SupplierOrderSuppliers />} />
+          <Route path="/Order" element={<SupplierOrder_Orders />} />
+          <Route path="/analytics" element={<SupplierOrderAnalytics />} />
+          <Route path="/MyProfile" element={<SupplierOrderProfile />} />
+          <Route path="/update/:id" element={<UpdateOrder />} /> {/* Define route for updating orders }
           <Route path="Suppliers/supplieredit" element={<SupplierEdit />} /> {/* Define route for updating orders */}
-          <Route path="/Suppliers/supplieredit/Suppliers" element={<Suppliers />} />
+          
   
-
-          {/* Nishadi */}
-          <Route path="/SupplierOrderDashboard" element={<Dashboard />} />
-          <Route path="/Suppliers" element={<Suppliers />} />
-          <Route path="/Order" element={<Orders />} />
-          <Route path="/analytics" element={<Analytics />} />
-          <Route path="/MyProfile" element={<MyProfile />} />
-          <Route path="/update/:id" element={<UpdateOrder />} /> {/* Define route for updating orders */}
-          <Route path="Suppliers/supplieredit" element={<SupplierEdit />} /> {/* Define route for updating orders */}
-          <Route path="/Suppliers/supplieredit/Suppliers" element={<Suppliers />} />
-  
-            {/* Shanali */}
+            {/* Shanali }
             <Route path="/" element={<ExportsDashboard />} />
             <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
             <Route path="/Importer" element={<Importer />} />
@@ -103,7 +92,7 @@ const App = () => {
             <Route path="/ExportsProfile" element={<ExportsProfile />} />
             <Route path="/update/:id" element={<UpdateExports />} />{" "}
             {/* Define route for updating orders */}
-            {/* Dulari */}
+            {/* Dulari }
             <Route path="/New_Projects" element={<New_Projects />} />
             <Route path="/Doner_Feedback" element={<Doner_Feedback />} />
             <Route path="/Doner_Analytics" element={<Doner_Analystics />} />
@@ -139,7 +128,3 @@ const App = () => {
 };
 
 export default App;
-
-
-
-
