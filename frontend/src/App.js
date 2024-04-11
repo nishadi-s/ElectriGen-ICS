@@ -8,13 +8,13 @@ import Analytics from "./pages/Analytics.jsx";
 import Logout from "./pages/Logout.jsx";
 
 //Nishadi
-import Navbar from "./components/SupplierOrderNavbar.jsx";
-import Dashboard from "./pages/SupplierOrderDashboard.jsx";
-import MyProfile from "./pages/SupplierOrderProfile.jsx";
+import NavbarNishadi from "./components/SupplierOrderNavbar.jsx";
+import DashboardN from "./pages/SupplierOrderDashboard.jsx";
+import MyProfileN from "./pages/SupplierOrderProfile.jsx";
 import Orders from "./pages/SupplierOrder_Order.jsx";
 import Suppliers from "./pages/SupplierOrderSuppliers.jsx";
-import Analytics from "./pages/SupplierOrderAnalytics.jsx";
-import UpdateOrder from "./components/SupplierOrderUpdate.jsx"; // Import the UpdateOrder component
+import AnalyticsN from "./pages/SupplierOrderAnalytics.jsx";
+//import UpdateOrderN from "./components/SupplierOrderUpdate.jsx"; // Import the UpdateOrder component
 import SupplierEdit from "./components/SupplierEdit.jsx"; // Import the UpdateSupplier component
 
 
@@ -70,11 +70,11 @@ const App = () => {
             <Route path="/Logout" element={<Logout />} />
 
           {/* Nishadi */}
-          <Route path="/SupplierOrderDashboard" element={<Dashboard />} />
+          <Route path="/SupplierOrderDashboard" element={<DashboardN />} />
           <Route path="/Suppliers" element={<Suppliers />} />
           <Route path="/Order" element={<Orders />} />
-          <Route path="/analytics" element={<Analytics />} />
-          <Route path="/MyProfile" element={<MyProfile />} />
+          <Route path="/analytics" element={<AnalyticsN />} />
+          <Route path="/MyProfile" element={<MyProfileN />} />
           <Route path="/update/:id" element={<UpdateOrder />} /> {/* Define route for updating orders */}
           <Route path="Suppliers/supplieredit" element={<SupplierEdit />} /> {/* Define route for updating orders */}
           <Route path="/Suppliers/supplieredit/Suppliers" element={<Suppliers />} />
