@@ -10,6 +10,7 @@ const ProductForm = () => {
   const [color, setcolor] = useState("");
   const [unitPrice, setunitPrice] = useState("");
   const [cost, setcost] = useState("");
+  const [quantity, setquantity] = useState("");
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
 
@@ -23,6 +24,7 @@ const ProductForm = () => {
       color,
       unitPrice,
       cost,
+      quantity,
     };
 
     const response = await fetch("/api/products", {
@@ -47,6 +49,7 @@ const ProductForm = () => {
       setcolor("");
       setunitPrice("");
       setcost("");
+      setquantity("");
 
       setError(null);
       setEmptyFields([]);
@@ -100,6 +103,13 @@ const ProductForm = () => {
         onChange={(e) => setcost(e.target.value)}
         value={cost}
         className={emptyFields.includes("cost") ? "error" : ""}
+      />
+      <label>Quantity:</label>
+      <input
+        type="number"
+        onChange={(e) => setquantity(e.target.value)}
+        value={quantity}
+        className={emptyFields.includes("quantity") ? "error" : ""}
       />
       <button>Add product</button>
       {error && <div className="error">(error)</div>}

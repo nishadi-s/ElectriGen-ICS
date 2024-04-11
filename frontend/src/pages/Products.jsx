@@ -5,6 +5,7 @@ import "../senith.css";
 import ProductDetails from "../components/ProductDetails";
 import { useProductContext } from "../hooks/useProductsContext";
 import ProductSearch from "../components/ProductSearch"; // Import ProductSearch component
+import ProductDetailsPage from "../components/ProductDetailsPage"; // Import ProductDetailsPage
 
 const Products = () => {
   const { products, dispatch } = useProductContext();
@@ -40,7 +41,10 @@ const Products = () => {
       {/* Render ProductSearch component */}
       <div className="products">
         {filteredProducts.map((product) => (
-          <ProductDetails key={product._id} product={product} />
+          <Link key={product._id} to={`/product/${product._id}`}>
+            <ProductDetailsPage product={product} />{" "}
+            {/* Pass product as props */}
+          </Link>
         ))}
         <Link to="/AddProducts" className="edit-link">
           <button>Add a new Product</button>

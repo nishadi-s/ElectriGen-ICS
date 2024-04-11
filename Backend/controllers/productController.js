@@ -27,7 +27,8 @@ const getProduct = async (req, res) => {
 
 //ceate new product
 const createProduct = async (req, res) => {
-  const { name, itemCode, unitPrice, cost, color, category } = req.body;
+  const { name, itemCode, unitPrice, cost, color, category, quantity } =
+    req.body;
 
   let emptyFields = [];
 
@@ -49,6 +50,9 @@ const createProduct = async (req, res) => {
   if (!category) {
     emptyFields.push("category");
   }
+  if (!quantity) {
+    emptyFields.push("quantity");
+  }
 
   if (emptyFields.length > 0) {
     return res
@@ -65,6 +69,7 @@ const createProduct = async (req, res) => {
       cost,
       color,
       category,
+      quantity,
     });
     res.status(200).json(product);
   } catch (error) {

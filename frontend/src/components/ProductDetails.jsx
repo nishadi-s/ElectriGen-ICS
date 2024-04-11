@@ -61,6 +61,10 @@ const ProductDetails = ({ product }) => {
         {product.unitPrice}
       </p>
       <p>
+        <strong>Available Quantity: </strong>
+        {product.quantity}
+      </p>
+      <p>
         <strong>Created At: </strong>
         {formatDistanceToNow(new Date(product.createdAt), { addSuffix: true })}
       </p>
