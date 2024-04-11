@@ -2,13 +2,15 @@ import React from "react";
 import "./index.css";
 import { BrowserRouter, Route, Routes, Switch } from "react-router-dom";
 
-import Navbar from "./components/Navbar";
+//dinithi
+import HomePage from "./pages/DinHome.js";
+
 import Dashboard from "./pages/Dashboard.jsx";
 import MyProfile from "./pages/MyProfile.jsx";
 import Analytics from "./pages/Analytics.jsx";
 import Logout from "./pages/Logout.jsx";
-
 //Dinithi
+
 import DisSignup from "./pages/DisSignup.js";
 import DisLogin from "./pages/DisLogin.js";
 import OrderPlace from './pages/OrderPlacement.js'
@@ -27,11 +29,13 @@ const App = () => {
   return (
     <div className="App">
     <BrowserRouter>
-      <Navbar>
       <div className="pages">
         <Routes>
+          {/* dinithi */}
+          <Route path="/" element={<HomePage />} />
+
           {/* Senith */}
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/Analytics" element={<Analytics />} />
           <Route path="/MyProfile" element={<MyProfile />} />
@@ -54,8 +58,7 @@ const App = () => {
           <Route path="./components/ProductForm" component={ProductForm} />
         </Routes>
         </div>
-      </Navbar>
-    </BrowserRouter>
+      </BrowserRouter>
     </div>
   );
 };

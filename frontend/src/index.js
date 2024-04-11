@@ -12,11 +12,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <DisDAuthContextProvider>
-    <ProductsContextProvider>
     <OrdersContextProvider>    
-    <App />
+    <App/>
     </OrdersContextProvider>    
-  </ProductsContextProvider>
-  </DisDAuthContextProvider>
+    </DisDAuthContextProvider>
  </React.StrictMode>
 );

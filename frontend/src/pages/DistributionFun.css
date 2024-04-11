@@ -218,3 +218,21 @@ nav ul li a:hover {
 .btn-delete:hover {
   background-color: #d32f2f; /* Darker shade of red on hover */
 }
+
+/* StartDinnavbar */
+nav {
+  display: flex;
+  align-items: center;
+}
+nav a {
+  margin-left: 10px;
+}
+
+/* auth forms */
+form.signup, form.login {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 4px;
+}

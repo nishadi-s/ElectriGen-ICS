@@ -19,7 +19,6 @@ const Navbar = ({ children }) => {
       name: "Dashboard",
       icon: <FaTh />,
     },
-
     {
       path: "/OrderForm",
       name: "Order Placement",
@@ -45,7 +44,11 @@ const Navbar = ({ children }) => {
       name: "My Profile",
       icon: <FaUserAlt />,
     },
-
+    {
+      path: "/MyProfile",
+      name: "My Profile",
+      icon: <FaUserAlt />,
+    },
     {
       path: "/Logout",
       name: "Logout",
