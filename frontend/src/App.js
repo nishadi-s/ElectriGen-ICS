@@ -45,7 +45,9 @@ import Materials from "./pages/Materials.jsx";
 import Production from "./pages/Production.jsx";
 import Products from "./pages/Products.jsx";
 import AddProducts from "./pages/AddProducts.jsx";
-import ProductForm from "./components/ProductForm";
+import ProductionDashboard from "./pages/ProductionDashboard.jsx";
+import SingleProduct from "./components/SingleProduct"; // Import SingleProduct
+import EditProduct from "./components/EditProduct"; // Import EditProduct
 
 //Shanali
 import ExportsDashboard from "./pages/ExportsDashboard.jsx";

@@ -27,7 +27,38 @@ const getProduct = async (req, res) => {
 
 //ceate new product
 const createProduct = async (req, res) => {
-  const { name, itemCode, unitPrice, cost, color, category } = req.body;
+  const { name, itemCode, unitPrice, cost, color, category, quantity } =
+    req.body;
+
+  let emptyFields = [];
+
+  if (!name) {
+    emptyFields.push("name");
+  }
+  if (!itemCode) {
+    emptyFields.push("itemCode");
+  }
+  if (!unitPrice) {
+    emptyFields.push("unitPrice");
+  }
+  if (!cost) {
+    emptyFields.push("cost");
+  }
+  if (!color) {
+    emptyFields.push("color");
+  }
+  if (!category) {
+    emptyFields.push("category");
+  }
+  if (!quantity) {
+    emptyFields.push("quantity");
+  }
+
+  if (emptyFields.length > 0) {
+    return res
+      .status(400)
+      .json({ error: "Please fill all the fields", emptyFields });
+  }
 
   //add doc to db
   try {
@@ -38,6 +69,7 @@ const createProduct = async (req, res) => {
       cost,
       color,
       category,
+      quantity,
     });
     res.status(200).json(product);
   } catch (error) {
@@ -62,25 +94,25 @@ const deleteProduct = async (req, res) => {
   res.status(200).json(product);
 };
 
-//update a product
+// update a product
 const updateProduct = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "no such product" });
+    return res.status(404).json({ error: "There is no such product" });
   }
 
   try {
-    const updatedProduct = await Product.findOneAndUpdate(
+    const updatedProduct = await Product.findByIdAndUpdate(
       { _id: id },
       {
-        ...req.body,
+        ...req.body, // Update with request body
       },
       { new: true }
-    ); // Add { new: true } to return the updated document
+    ); // return the updated document
 
     if (!updatedProduct) {
-      return res.status(400).json({ error: "No such Product" });
+      return res.status(404).json({ error: "No such Product" });
     }
 
     res.status(200).json(updatedProduct);

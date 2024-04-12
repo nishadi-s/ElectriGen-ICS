@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useProductContext } from "../hooks/useProductsContext";
+import { FaRegTrashCan } from "react-icons/fa6";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
 const ProductDetails = ({ product }) => {
   const { dispatch } = useProductContext();
@@ -41,57 +43,33 @@ const ProductDetails = ({ product }) => {
 
   return (
     <div className="product-details">
-      <table className="table align-middle mb-0 bg-white">
-        <thead className="bg-light">
-          <tr>
-            <th>Product Name</th>
-            <th>Category</th>
-            <th>Color</th>
-            <th>Product cost</th>
-            <th>Unit Price</th>
-            <th>Created At</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr key={product._id}>
-            <td>
-              <Link to={`/products/${product._id}`} className="product-link">
-                <div className="d-flex align-items-center">
-                  <img
-                    src="https://mdbootstrap.com/img/new/avatars/8.jpg"
-                    alt=""
-                    style={{ width: "45px", height: "45px" }}
-                    className="rounded-circle"
-                  />
-                  <div className="ms-3">
-                    <p className="fw-bold mb-1">{product.name}</p>
-                    <p className="text-muted mb-0">{product.itemCode}</p>
-                  </div>
-                </div>
-              </Link>
-            </td>
-            <td>
-              <p className="fw-normal mb-1">{product.category}</p>
-              <p className="text-muted mb-0">IT department</p>
-            </td>
-            <td>
-              <span className="badge badge-success rounded-pill d-inline">
-                Color
-              </span>
-            </td>
-            <td>{product.cost}</td>
-            <td>{product.unitPrice}</td>
-            <td>{product.createdAt}</td>
-            <td>
-              <button onClick={handleDelete}>Delete</button>
-              <Link to={`/UpdateProduct/${product._id}`} className="edit-link">
-                <button>Edit</button>
-              </Link>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <Link key={product._id} to={`/product/${product._id}`}>
+        <h4>Product Name: {product.name}</h4>
+      </Link>
+      <p>
+        <strong>Category: </strong>
+        {product.category}
+      </p>
+      <p>
+        <strong>Color: </strong>
+        {product.color}
+      </p>
+      <p>
+        <strong>Product cost: </strong>
+        {product.cost}
+      </p>
+      <p>
+        <strong>Unit Price: </strong>
+        {product.unitPrice}
+      </p>
+      <p>
+        <strong>Available Quantity: </strong>
+        {product.quantity}
+      </p>
+      <p>
+        <strong>Created At: </strong>
+        {formatDistanceToNow(new Date(product.createdAt), { addSuffix: true })}
+      </p>
     </div>
   );
 };

@@ -1,14 +1,14 @@
 import React from "react";
 import ProductionNavbar from "../components/ProductionNavbar";
 
-const Materials = () => {
+const ProductionDashboard = () => {
   return (
     <ProductionNavbar>
       <div>
-        <h1>Materials</h1>
+        <h1>Dashboard page</h1>
       </div>
     </ProductionNavbar>
   );
 };
 
-export default Materials;
+export default ProductionDashboard;
