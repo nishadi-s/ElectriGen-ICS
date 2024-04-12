@@ -17,7 +17,6 @@ import AnalyticsN from "./pages/SupplierOrderAnalytics.jsx";
 //import UpdateOrderN from "./components/SupplierOrderUpdate.jsx"; // Import the UpdateOrder component
 import SupplierEdit from "./components/SupplierEdit.jsx"; // Import the UpdateSupplier component
 
-
 //Dulari_IT22121110
 import DonationNavbar from "./components/DonationNavbar.jsx";
 import Donation_Dashboard from "./pages/Donation_Dashboard.jsx";
@@ -48,6 +47,7 @@ import AddProducts from "./pages/AddProducts.jsx";
 import ProductionDashboard from "./pages/ProductionDashboard.jsx";
 import SingleProduct from "./components/SingleProduct"; // Import SingleProduct
 import EditProduct from "./components/EditProduct"; // Import EditProduct
+import ProductForm from "./components/ProductForm";
 
 //Shanali
 import ExportsDashboard from "./pages/ExportsDashboard.jsx";
@@ -70,17 +70,23 @@ const App = () => {
             <Route path="/Analytics" element={<Analytics />} />
             <Route path="/MyProfile" element={<MyProfile />} />
             <Route path="/Logout" element={<Logout />} />
-
-          {/* Nishadi */}
-          <Route path="/SupplierOrderDashboard" element={<DashboardN />} />
-          <Route path="/Suppliers" element={<Suppliers />} />
-          <Route path="/Order" element={<Orders />} />
-          <Route path="/analytics" element={<AnalyticsN />} />
-          <Route path="/MyProfile" element={<MyProfileN />} />
-          <Route path="/update/:id" element={<UpdateOrder />} /> {/* Define route for updating orders */}
-          <Route path="Suppliers/supplieredit" element={<SupplierEdit />} /> {/* Define route for updating orders */}
-          <Route path="/Suppliers/supplieredit/Suppliers" element={<Suppliers />} />
-  
+            {/* Nishadi */}
+            <Route path="/SupplierOrderDashboard" element={<DashboardN />} />
+            <Route path="/Suppliers" element={<Suppliers />} />
+            <Route path="/Order" element={<Orders />} />
+            <Route path="/analytics" element={<AnalyticsN />} />
+            <Route path="/MyProfile" element={<MyProfileN />} />
+            <Route path="/update/:id" element={<UpdateOrder />} />{" "}
+            {/* Define route for updating orders */}
+            <Route
+              path="Suppliers/supplieredit"
+              element={<SupplierEdit />}
+            />{" "}
+            {/* Define route for updating orders */}
+            <Route
+              path="/Suppliers/supplieredit/Suppliers"
+              element={<Suppliers />}
+            />
             {/* Shanali */}
             <Route path="/" element={<ExportsDashboard />} />
             <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
@@ -130,7 +136,3 @@ const App = () => {
 };
 
 export default App;
-
-
-
-
