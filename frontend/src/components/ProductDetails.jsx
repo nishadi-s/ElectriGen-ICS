@@ -43,7 +43,9 @@ const ProductDetails = ({ product }) => {
 
   return (
     <div className="product-details">
-      <h4>Product Name: {product.name}</h4>
+      <Link key={product._id} to={`/product/${product._id}`}>
+        <h4>Product Name: {product.name}</h4>
+      </Link>
       <p>
         <strong>Category: </strong>
         {product.category}
@@ -68,12 +70,6 @@ const ProductDetails = ({ product }) => {
         <strong>Created At: </strong>
         {formatDistanceToNow(new Date(product.createdAt), { addSuffix: true })}
       </p>
-      <button onClick={handleDelete}>
-        <FaRegTrashCan />
-      </button>
-      <Link to={`/UpdateProduct/${product._id}`} className="edit-link">
-        <button>Edit</button>
-      </Link>
     </div>
   );
 };
