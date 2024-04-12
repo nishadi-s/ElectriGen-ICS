@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useOrdersContext } from "../hooks/useOrdersContext";
+import { useDisDAuthContext } from "../hooks/useDisDAuthContext";
 
 const OrderForm = () => {
   const { dispatch } = useOrdersContext();
+  const { distributor } = useDisDAuthContext();
 
   const [distributorId, setDistributorId] = useState("");
   const [distributorName, setDistributorName] = useState("");
@@ -25,6 +27,11 @@ const OrderForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if(!distributor){
+      setError('You must be logged in')
+      return
+    }
+
     try {
       const order = {
         distributorId,
@@ -39,6 +46,7 @@ const OrderForm = () => {
         body: JSON.stringify(order),
         headers: {
           "Content-Type": "application/json",
+          'Authorization': `Bearer ${distributor.token}`
         },
       });
       const json = await response.json();

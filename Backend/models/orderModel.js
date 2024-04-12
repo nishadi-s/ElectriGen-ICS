@@ -43,6 +43,11 @@ const orderSchema = new Schema({
         type: Number,
         required: true
     },
+    //distributor authentication
+    distributor_id: {
+        type:String,
+        required: true
+    }
 
 },{timestamps:true}) // Add timestamps for createdAt and updatedAt fields
 

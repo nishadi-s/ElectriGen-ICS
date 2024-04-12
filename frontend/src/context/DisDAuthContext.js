@@ -1,4 +1,5 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useEffect} from "react";
+
 
 export const DisDAuthContext = createContext()
 
@@ -19,6 +20,14 @@ export const DisDAuthContextProvider = ({ children })=>{
     const [state, dispatch] = useReducer(disDAuthReducer,{
         distributor: null
     })
+
+    useEffect(() => {
+        const distributor = JSON.parse(localStorage.getItem('distributor'))
+
+        if(distributor){
+            dispatch({type: 'LOGIN', payload: distributor})
+        }
+    }, [])
 
     console.log('DisDAuthContext state:' , state)
 

@@ -1,16 +1,22 @@
 import { useEffect } from 'react'
 import { useOrdersContext } from '../hooks/useOrdersContext.js'
+import { useDisDAuthContext } from '../hooks/useDisDAuthContext.js'
 import OrderForm from '../components/OrderForm.js' //components
-
+import NavbarDini1 from '../components/DisNavbar.jsx'
 
 const OrderPlace = () => {
     const {orders,dispatch} = useOrdersContext()
+    const { distributor } = useDisDAuthContext()
 
     //fetch data
     //fetching data from the backend API
     useEffect(() => {
         const fetchOrders = async () => {
-            const response = await fetch('/api/orders')
+            const response = await fetch('/api/orders', {
+                headers: {
+                    'Authorization': `Bearer ${distributor.token}`
+                }
+            })
             const json = await response.json()
 
             if(response.ok){
@@ -18,15 +24,18 @@ const OrderPlace = () => {
             }
         }
 
-        //method calling
-        fetchOrders()  
-    }, [dispatch])
+        if(distributor){
+            fetchOrders()
+        }
+    }, [dispatch, distributor])
 
 
     return (
         <div className="OrderPlace">
+            <NavbarDini1/>
             <OrderForm/>
             </div>
+            
     )
 }
 export default OrderPlace

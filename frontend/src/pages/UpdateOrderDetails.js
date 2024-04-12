@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import NavbarDini1 from '../components/DisNavbar';
 
 const UpdateOrder = () => {
     const { id } = useParams(); // Get the order ID from the URL params
@@ -73,6 +74,7 @@ const UpdateOrder = () => {
 
     return (
         <div className="update-order">
+            <NavbarDini1/>
             <h2>Edit Order Details</h2>
             <form>
                 <label>Distributor ID</label>

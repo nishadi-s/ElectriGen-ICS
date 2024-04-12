@@ -58,7 +58,9 @@ const createOrder = async (req,res) => {
 
     // Add new order document to the database
     try{
-        const newOrder = await Order.create({distributorId,distributorName,orderStatus,items,totalAmount})
+        //distributor authentication
+        const distributor_id = req.distributor._id
+        const newOrder = await Order.create({distributorId,distributorName,orderStatus,items,totalAmount, distributor_id})
         res.status(200).json(newOrder) // Return the new order
     }catch(error){
         res.status(400).json({error: error.message}) // Return error if creation fails

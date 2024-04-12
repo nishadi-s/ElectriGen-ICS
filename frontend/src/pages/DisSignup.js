@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useDisSignup } from "../hooks/useDisSignup";
+import NavbarStart from "../components/NavbarStart";
+
 
 const DisSignup = () => {
   const [email, setEmail] = useState("");
@@ -16,6 +18,8 @@ const DisSignup = () => {
   };
 
   return (
+    <div>
+            <NavbarStart/>
     <form className="signup" onSubmit={handleSubmit}>
       <h3>Distributor Sign up</h3>
 
@@ -36,6 +40,7 @@ const DisSignup = () => {
       <button disabled={isLoading}>Sign up</button>
       {error && <div className="error">{error}</div>}
     </form>
+    </div>
   );
 };
 
