@@ -3,7 +3,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useExportsContext } from "../hooks/useExportsContext";
 import ExportSearch from '../components/ExportSearch'; 
-
+import ExportsNavBar from "../components/ExportsNavBar.jsx";
 
 const ExportsDashboard=()=>{
   const {dispatch:exportsDispatch} = useExportsContext()
@@ -26,6 +26,7 @@ const ExportsDashboard=()=>{
 
 
   return (
+    <ExportsNavBar>
     <div className="ex-dashboard">
       
       <div className="exports">
@@ -33,6 +34,7 @@ const ExportsDashboard=()=>{
         <ExportSearch />
       </div>
     </div>
+    </ExportsNavBar>
   );
 };
 

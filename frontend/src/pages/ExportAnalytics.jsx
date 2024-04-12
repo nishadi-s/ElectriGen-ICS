@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ExportsNavBar from "../components/ExportsNavBar.jsx";
 
 const ExportsAnalytics = () => {
   const [mostSoldProduct, setMostSoldProduct] = useState(null);
@@ -21,6 +22,7 @@ const ExportsAnalytics = () => {
   }, []);
 
   return (
+    <ExportsNavBar>
     <div>
       <h1>Most Sold Product</h1>
       {mostSoldProduct && (
@@ -30,6 +32,7 @@ const ExportsAnalytics = () => {
         </div>
       )}
     </div>
+    </ExportsNavBar>
   );
 };
 

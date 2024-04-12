@@ -3,7 +3,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useImportersContext } from "../hooks/useImportersContext";
 import ImporterSearch from '../components/ImporterSearch'; 
-
+import ExportsNavBar from "../components/ExportsNavBar.jsx";
 //components
 //import ImporterDetails from '../components/ImporterDetails'
 
@@ -27,6 +27,7 @@ const ImporterDescription=()=>{
 
 
   return (
+    <ExportsNavBar>
     <div className="im-dashboard">
       
       <div className="importers">
@@ -34,6 +35,7 @@ const ImporterDescription=()=>{
         <ImporterSearch />
       </div>
     </div>
+    </ExportsNavBar>
   );
 };
 

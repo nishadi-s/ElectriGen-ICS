@@ -61,11 +61,11 @@ import UpdateExports from "./pages/UpdateExports.jsx";
 const App = () => {
   return (
     <BrowserRouter>
-      <SalesContextProvider>
-        <Navbar>
+      
+        
           <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/Dashboard" element={<Dashboard />} />
+            {/* <Route path="/" element={<Dashboard />} />
+            <Route path="/Dashboard" element={<Dashboard />} /> */}
             <Route path="/Analytics" element={<Analytics />} />
             <Route path="/MyProfile" element={<MyProfile />} />
             <Route path="/Logout" element={<Logout />} />
@@ -88,7 +88,7 @@ const App = () => {
             <Route path="/ImporterDescription" element={<ImporterDescription />}/>
             <Route path="/ExportAnalytics" element={<ExportAnalytics />} />
             <Route path="/ExportsProfile" element={<ExportsProfile />} />
-            <Route path="/update/:id" element={<UpdateExports />} />{" "}
+            <Route path="/UpdateExports/:id" element={<UpdateExports />} />
             {/* Define route for updating orders */}
             {/* Dulari */}
             <Route path="/New_Projects" element={<New_Projects />} />
@@ -119,8 +119,8 @@ const App = () => {
             <Route path="/AddProducts" element={<AddProducts />} />
             <Route path="./components/ProductForm" component={ProductForm} />
           </Routes>
-        </Navbar>
-      </SalesContextProvider>
+        
+      
     </BrowserRouter>
   );
 };

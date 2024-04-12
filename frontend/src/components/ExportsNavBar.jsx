@@ -15,7 +15,7 @@ const ExportsNavBar = ({ children }) => {
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
     {
-      path: "/",
+      path: "/ExportsDashboard",
       name: "Dashboard",
       icon: <FaTh />,
     },

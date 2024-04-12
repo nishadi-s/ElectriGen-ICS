@@ -1,24 +1,46 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 //import { findOne } from '../../../Backend/models/exportModel.js';
 //import { findOne } from '../../../Backend/models/exportModel.js';
+import ExportsNavBar from "../components/ExportsNavBar.jsx";
 
-const UpdateOrder = () => {
+const UpdateExport = () => {
     const { id } = useParams(); // Get the order ID from the URL params
-    const [order, setOrder] = useState(null);
-    const [updatedOrder, setUpdatedOrder] = useState(null);
+    const navigate=useNavigate();
+    const [exportOrderID,setexportOrderID]=useState("");
+    const [importer,setimporter]=useState("");
+    const [items,setitems]=useState("");
+    const [totalCost,settotalCost]=useState("");
+    const [status,setstatus]=useState("");
+    const [error, setError] = useState(null);
+    const [emptyFields, setEmptyFields] = useState([]);
+  
+    
+    const [updatedExport, setupdatedExport] = useState({
+        exportOrderID: '',
+        importer: '',
+        items: [],
+        totalCost: '',
+        status: ''
+    });
 
     useEffect(() => {
         // Fetch the order details based on the ID when the component mounts
         const fetchOrder = async () => {
+
             try {
-                const response = await fetch(`/api/export/${order._id}`);
+                // Check if exportt is null before fetching
+                if (!exportt) {
+                    return;
+                }
+            
+                const response = await fetch(`/api/export/${exportt._id}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch order');
                 }
                 const data = await response.json();
-                setOrder(data);
-                setUpdatedOrder(data); // Set updatedOrder with fetched order data
+                setExport(data);
+                setupdatedExport(data); // Set updatedOrder with fetched order data
             } catch (error) {
                 console.error(error);
             }
@@ -28,27 +50,37 @@ const UpdateOrder = () => {
 
         // Cleanup function to clear state if component unmounts
         return () => {
-            setOrder(null);
-            setUpdatedOrder(null);
+            setExport(null);
+            setupdatedExport(null);
         };
     }, [id]); // Re-run effect when the ID changes
 
-    const handleChange = (e) => {
+    const handleChange = (e, index) => {
         const { name, value } = e.target;
-        setUpdatedOrder(prevState => ({
+        setupdatedExport(prevState => ({
             ...prevState,
-            [name]: value
+            items: prevState.items.map((item, idx) => {
+                if (idx === index) {
+                    return {
+                        ...item,
+                        [name]: value
+                    };
+                }
+                return item;
+            })
         }));
     }
+    
+    
 
     const handleUpdate = async () => {
         try {
-            const response = await fetch(`/api/export/${id}`, {
+            const response = await fetch(`/api/export/${exportt._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(updatedOrder)
+                body: JSON.stringify(updatedExport)
             });
 
             if (response.ok) {
@@ -67,11 +99,12 @@ const UpdateOrder = () => {
         }
     }
 
-    if (!order) {
+    if (!exportt) {
         return <div>Loading...</div>; // Render loading state while fetching order
     }
 
     return (
+        <ExportsNavBar>
         <div className="update-export">
             <h2>Edit Order</h2>
             <form>
@@ -79,22 +112,46 @@ const UpdateOrder = () => {
                 <input 
                     type="text"
                     name="exportOrderID" 
-                    value={updatedOrder.exportOrderID} 
+                    value={updatedExport.exportOrderID} 
                     onChange={handleChange} />
 
             <label>Importer: </label>
                 <input
                     type="text"
                     name="importer"
-                    value={updatedOrder.importer}
+                    value={updatedExport.importer}
                     onChange={handleChange}
                 />
 
+            
+
+            {updatedExport.items.map((item, index) => (
+                    <div key={index}>
+                        <label>{`Item(${index + 1}) Item ID`}</label>
+                        <input
+                            type="text"
+                            name={`itemID`}
+                            value={item.name}
+                            onChange={(e) => handleChange(e, index)}
+                        />
+
+                        <label>{`Item(${index + 1}) Quantity`}</label>
+                        <input
+                            type="number"
+                            name={`quantity`}
+                            value={item.unit}
+                            onChange={(e) => handleChange(e, index)}
+                        />
+
+                    </div>
+                ))}
+
+{/* 
             <label>Item ID: </label>
                 <input
                     type="text"
                     name="itemID"
-                    value={updatedOrder.itemID}
+                    value={updatedExport.itemID}
                     onChange={handleChange}
                 />
 
@@ -102,15 +159,15 @@ const UpdateOrder = () => {
                 <input
                     type="number"
                     name="quantity"
-                    value={updatedOrder.quantity}
+                    value={updatedExport.quantity}
                     onChange={handleChange}
-                />
+                /> */}
 
             <label>Total Cost: </label>
                 <input
                     type="number"
                     name="totalCost"
-                    value={updatedOrder.totalCost}
+                    value={updatedExport.totalCost}
                     onChange={handleChange}
                 />
 
@@ -118,7 +175,7 @@ const UpdateOrder = () => {
                 <input
                     type="text"
                     name="status"
-                    value={updatedOrder.status}
+                    value={updatedExport.status}
                     onChange={handleChange}
                 />
 
@@ -127,7 +184,8 @@ const UpdateOrder = () => {
                 <button className="custom-button" type="submit" onClick={handleUpdate}>Update</button>
             </form>
         </div>
+        </ExportsNavBar>
     );
 };
 
-export default UpdateOrder;
+export default UpdateExport;

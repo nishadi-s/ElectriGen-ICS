@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useExportsContext } from '../hooks/useExportsContext';
 import ExportDetails from './ExportDetails'; // Import ExportDetails component
+
 const ExportSearch = () => {
   const { exports } = useExportsContext(); // Get exports from context
 
@@ -22,6 +23,7 @@ const ExportSearch = () => {
   };
 
   return (
+    
     <div>
       {/* Search input field */}
       <input
@@ -42,6 +44,7 @@ const ExportSearch = () => {
       <p>No exports found.</p>
     )}
   </div>
+  
 );
 };
 export default ExportSearch;

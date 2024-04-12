@@ -62,6 +62,7 @@ const ExportDetails=({exportt})=>{
     
 
     return(
+      
         <div className="export-details">
             <h4>{exportt.exportOrderID}</h4>
             <p><strong>Importer: </strong>{exportt.importer}</p>
@@ -79,9 +80,10 @@ const ExportDetails=({exportt})=>{
             <p><strong>Created: </strong>{formatDistanceToNow(new Date(exportt.createdAt),{addSuffix:true})}</p>
             <p><strong>Updated: </strong>{formatDistanceToNow(new Date(exportt.createdAt),{addSuffix:true})}</p>
             <span className="material-symbols-outlined" onClick={handleClick}>Delete</span><br></br>
-            <Link to={`/update/${exportt._id}`}>Edit</Link> {/* Add Link for Edit button */}
+            <Link to={`/UpdateExports/${exportt._id}`}>Edit</Link> {/* Add Link for Edit button */}
             <br></br><br></br>
         </div>
+        
     )
 }
 

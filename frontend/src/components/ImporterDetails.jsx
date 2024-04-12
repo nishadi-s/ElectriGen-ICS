@@ -1,5 +1,4 @@
 import '../exports.css';
-
 //import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 //import { useState, useEffect } from 'react';
 
@@ -11,6 +10,7 @@ const ImporterDetails=({importer})=>{
    
 
     return(
+        
         <div className="importer-details">
             <h4>{importer.importerID}</h4>
             
@@ -23,6 +23,7 @@ const ImporterDetails=({importer})=>{
             <br></br>
             
         </div>
+    
     )
 }
 
