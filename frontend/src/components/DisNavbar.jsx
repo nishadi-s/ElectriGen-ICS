@@ -1,20 +1,15 @@
 import React, { useState } from "react";
-import NavbarStart from "./NavbarStart";
-
-import {
-  FaTh,
-  FaBars,
-  FaUserAlt,
-  FaRegChartBar,
-  FaShapes,
-  FaIndustry,
-  FaDollyFlatbed,
-} from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { FaTh, FaBars, FaUserAlt, FaRegChartBar, FaShapes, FaIndustry, FaDollyFlatbed, FaSignOutAlt } from "react-icons/fa";
+import { NavLink, useNavigate } from "react-router-dom"; // Import useNavigate hook
+import { useDisLogout } from '../hooks/useDisLogout'; // Import useDisLogout
+import '../disNavbar.css'
 
 const NavbarDini1 = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const { disLogout } = useDisLogout(); // Initialize useDisLogout hook
+  const navigate = useNavigate(); // Initialize useNavigate hook
+
   const menuItem = [
     {
       path: "/DisDashboard",
@@ -41,11 +36,20 @@ const NavbarDini1 = ({ children }) => {
       name: "My Profile",
       icon: <FaUserAlt />,
     },
+    {
+      path: "/login", // Logout route
+      name: "Logout",
+      icon: <FaSignOutAlt />,
+    },
   ];
+
+  const handleLogout = () => {
+    disLogout(); // Call logout function
+    navigate('/login'); // Navigate to the login page
+  };
 
   return (
     <div className="container">
-      <NavbarStart/>
       <div style={{ width: isOpen ? "350px" : "50px" }} className="sidebar">
         <div className="top_section">
           <img
@@ -66,6 +70,7 @@ const NavbarDini1 = ({ children }) => {
             key={index}
             className="link"
             activeclassName="active"
+            onClick={item.path === '/login' ? handleLogout : undefined} // Handle logout click
           >
             <div className="icon">{item.icon}</div>
             <div

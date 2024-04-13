@@ -1,13 +1,15 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDisLogout } from '../hooks/useDisLogout'
 import { useDisDAuthContext } from '../hooks/useDisDAuthContext'
 
 const NavbarStart = () => {
   const { disLogout } = useDisLogout()
   const { distributor } = useDisDAuthContext()
+  const navigate = useNavigate();
 
   const handleClick = () => {
       disLogout()
+      navigate('/login');
   }
 
   return (

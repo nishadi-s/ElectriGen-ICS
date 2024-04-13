@@ -31,10 +31,11 @@ const OrderPlace = () => {
 
 
     return (
+        <NavbarDini1>
         <div className="OrderPlace">
-            <NavbarDini1/>
             <OrderForm/>
-            </div>
+        </div>
+        </NavbarDini1>
             
     )
 }

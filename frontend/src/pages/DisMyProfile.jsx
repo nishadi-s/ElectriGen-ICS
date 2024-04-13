@@ -3,10 +3,11 @@ import NavbarDini1 from "../components/DisNavbar";
 
 const DisMyProfile = () => {
   return (
+    <NavbarDini1>
     <div>
-      <NavbarDini1/>
       <h1>My profile page</h1>
     </div>
+    </NavbarDini1>
   );
 };
 
