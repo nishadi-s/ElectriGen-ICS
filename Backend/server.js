@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const express = require("express");
+
 const mongoose = require("mongoose");
 
 //express app
@@ -29,3 +30,7 @@ mongoose
 //Senith
 const productRoutes = require("./routes/products");
 app.use("/api/products", productRoutes);
+
+//uvindya
+const salaryRoutes = require('./routes/salaries');
+app.use('/api/salaries', salaryRoutes);

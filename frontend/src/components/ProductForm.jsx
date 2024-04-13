@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useProductContext } from "../hooks/useProductsContext";
-import "../senith.css";
+
 
 const ProductForm = () => {
   const { disptach } = useProductContext();
