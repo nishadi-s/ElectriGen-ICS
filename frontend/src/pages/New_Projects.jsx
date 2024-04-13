@@ -1,225 +1,188 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Table } from "react-bootstrap"; // Import Table component from react-bootstrap
 
-export default function ProjectDetails() {
-  const [project_id, setID] = useState("");
-  const [description, setDescription] = useState("");
-  const [estimate_date, setDate] = useState("");
-  const [total_amount, setAmount] = useState("");
+export default function New_Projects() {
+  const [projectData, setProjectData] = useState({
+    project_id: "",
+    estimate_date: "",
+    description: "",
+    total_amount: 0,
+    items: [], // Initialize items array
+  });
 
-  // Function to send project data
-  function sendData(e) {
-    e.preventDefault(); // Prevents the default form submission behavior
+  async function sendData(e) {
+    e.preventDefault();
 
-    const newProject = {
-      project_id,
-      description,
-      estimate_date,
-      total_amount,
-    };
-
-    // Add new project
-    axios.post("http://localhost:4000/DonationProject/add", newProject)
-      .then(() => {
-        alert("Project added successfully");
-        setID("");
-        setDescription("");
-        setDate("");
-        setAmount(""); // Clearing totalAmount as well
-      })
-      .catch((err) => {
-        alert(err);
+    try {
+      // Send data to backend
+      await axios.post("http://localhost:4000/DonationProject/add", projectData);
+      alert("Project added successfully!");
+      // Reset the form fields after successful submission
+      setProjectData({
+        project_id: "",
+        estimate_date: "",
+        description: "",
+        total_amount: 0,
+        items: [],
       });
-
-    // Update the project
-    axios.put(`http://localhost:4000/DonationProject/update/${project_id}`, newProject)
-      .then(() => {
-        alert("Project updated successfully");
-        setID("");
-        setDescription("");
-        setDate("");
-        setAmount(""); // Clearing totalAmount as well
-      })
-      .catch((err) => {
-        alert(err);
-      });
-
-    // Delete the project
-    axios.delete(`http://localhost:4000/DonationProject/delete/${project_id}`)
-      .then(() => {
-        alert("Project deleted successfully");
-        setID("");
-        setDescription("");
-        setDate("");
-        setAmount(""); // Clearing totalAmount as well
-      })
-      .catch((err) => {
-        alert(err);
-      });
-
-    // Fetch the project
-    axios.get(`http://localhost:4000/DonationProject/get/${project_id}`)
-      .then((response) => {
-        // Handle the fetched project data
-        const fetchedProject = response.data.project;
-        // Do something with the fetched project data
-      })
-      .catch((err) => {
-        alert(err);
-      });
+    } catch (error) {
+      console.error("Error adding project:", error);
+      alert("Error adding project. Please try again.");
+    }
   }
 
-  const [rows, setRows] = useState([]);
+  function handleAddRow() {
+    setProjectData((prevData) => ({
+      ...prevData,
+      items: [
+        ...prevData.items,
+        {
+          item: "",
+          qty: 0,
+          unitPrice: 0,
+          price: 0,
+        },
+      ],
+    }));
+  }
 
-  const handleAddRow = () => {
-    setRows((prevRows) => [
-      ...prevRows,
-      { project_id: "", description: "", estimate_date: "", total_amount: "" }
-    ]);
-  };
+  function handleInputChange(e, index, field) {
+    const updatedItems = [...projectData.items];
+    updatedItems[index][field] = e.target.value;
+    setProjectData((prevData) => ({
+      ...prevData,
+      items: updatedItems,
+    }));
+    updateTotalAmount(updatedItems);
+  }
 
-  const handleInputChange = (index, name, value) => {
-    const updatedRows = [...rows];
-    updatedRows[index][name] = value;
-    setRows(updatedRows);
-  };
-
-  const handleDeleteRow = (index) => {
-    const updatedRows = [...rows];
-    updatedRows.splice(index, 1);
-    setRows(updatedRows);
-  };
-
-  const handleEditRow = (index) => {
-    const updatedRows = [...rows];
-    updatedRows[index].isEditing = true;
-    setRows(updatedRows);
-  };
-
-  const handleCancelEdit = (index) => {
-    const updatedRows = [...rows];
-    updatedRows[index].isEditing = false;
-    setRows(updatedRows);
-  };
+  function updateTotalAmount(updatedItems) {
+    let total = 0;
+    updatedItems.forEach((item) => {
+      total += item.qty * item.unitPrice;
+    });
+    setProjectData((prevData) => ({
+      ...prevData,
+      total_amount: total,
+    }));
+  }
 
   return (
-    <div className="container">
-      <div className="table-wrapper">
-        <div className="table-title">
-          <div className="row">
-            <div className="col-sm-8">
-              <h2><b>Projects Details</b></h2>
-            </div>
-            <div className="col-sm-4">
-              <button
-                type="button"
-                className="btn btn-info add-new"
-                onClick={handleAddRow}
-              >
-                <i className="fa fa-plus"></i> Add New
-              </button>
-            </div>
-          </div>
+    <div>
+      <form onSubmit={sendData}>
+        <div className="form-group">
+          <label htmlFor="projectID">Project ID</label>
+          <input
+            type="text"
+            className="form-control"
+            id="projectID"
+            placeholder="Enter Project ID"
+            value={projectData.project_id}
+            onChange={(e) =>
+              setProjectData((prevData) => ({
+                ...prevData,
+                project_id: e.target.value,
+              }))
+            }
+          />
         </div>
-        <table className="table table-bordered">
+        <div className="form-group">
+          <label htmlFor="description">Description</label>
+          <textarea
+            className="form-control"
+            id="description"
+            rows="3"
+            placeholder="Enter Description"
+            value={projectData.description}
+            onChange={(e) =>
+              setProjectData((prevData) => ({
+                ...prevData,
+                description: e.target.value,
+              }))
+            }
+          ></textarea>
+        </div>
+        <div className="form-group">
+          <label htmlFor="estimateDate">Estimate Date</label>
+          <input
+            type="date"
+            className="form-control"
+            id="estimateDate"
+            value={projectData.estimate_date}
+            onChange={(e) =>
+              setProjectData((prevData) => ({
+                ...prevData,
+                estimate_date: e.target.value,
+              }))
+            }
+          />
+        </div>
+        <Table striped bordered hover>
           <thead>
             <tr>
-              <th>Project ID</th>
-              <th>Description</th>
-              <th>Estimate Date</th>
-              <th>Total Amount</th>
-              <th>Actions</th>
+              <th colSpan={3} className="text-center">
+                Description
+              </th>
+              <th className="text-right">Price</th>
+            </tr>
+            <tr>
+              <th>Item</th>
+              <th className="text-right">Qty.</th>
+              <th className="text-right">Unit Price</th>
+              <th className="text-right">Sum</th>
             </tr>
           </thead>
           <tbody>
-            {rows.map((row, index) => (
+            {projectData.items.map((item, index) => (
               <tr key={index}>
                 <td>
                   <input
                     type="text"
-                    className="form-control"
-                    value={row.project_id}
-                    onChange={(e) =>
-                      handleInputChange(index, "project_id", e.target.value)
-                    }
+                    value={item.item}
+                    onChange={(e) => handleInputChange(e, index, "item")}
                   />
                 </td>
-                <td>
+                <td className="text-right">
                   <input
-                    type="text"
-                    className="form-control"
-                    value={row.description}
-                    onChange={(e) =>
-                      handleInputChange(index, "description", e.target.value)
-                    }
+                    type="number"
+                    value={item.qty}
+                    onChange={(e) => handleInputChange(e, index, "qty")}
                   />
                 </td>
-                <td>
+                <td className="text-right">
                   <input
-                    type="date"
-                    className="form-control"
-                    value={row.estimate_date}
+                    type="number"
+                    value={item.unitPrice}
                     onChange={(e) =>
-                      handleInputChange(index, "estimate_date", e.target.value)
+                      handleInputChange(e, index, "unitPrice")
                     }
                   />
                 </td>
-                <td>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={row.total_amount}
-                    onChange={(e) =>
-                      handleInputChange(index, "total_amount", e.target.value)
-                    }
-                  />
-                </td>
-                <td>
-                  {row.isEditing ? (
-                    <>
-                      <button
-                        className="btn btn-success"
-                        onClick={() => {
-                          console.log("Saving changes for row:", index);
-                          handleCancelEdit(index);
-                        }}
-                      >
-                        Save
-                      </button>
-                      <button
-                        className="btn btn-secondary ml-2"
-                        onClick={() => handleCancelEdit(index)}
-                      >
-                        Cancel
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <button
-                        className="btn btn-dark"
-                      >
-                        Add
-                      </button>
-                      <button
-                        className="btn btn-dark ml-2"
-                        onClick={() => handleEditRow(index)}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="btn btn-dark ml-2"
-                        onClick={() => handleDeleteRow(index)}
-                      >
-                        Delete
-                      </button>
-                    </>
-                  )}
-                </td>
+                <td className="text-right">{item.qty * item.unitPrice}</td>
               </tr>
             ))}
+            <tr>
+              <td colSpan={3}>Total Amount</td>
+              <td className="text-right">{projectData.total_amount}</td>
+            </tr>
+            <tr>
+              <td colSpan={4}>
+                <button
+                  type="button"
+                  className="btn btn-primary mr-2"
+                  onClick={handleAddRow}
+                >
+                  Add Row
+                </button>
+                <button type="submit" className="btn btn-primary">
+                  Submit
+                </button>
+              </td>
+            </tr>
           </tbody>
-        </table>
-      </div>
+        </Table>
+      </form>
     </div>
   );
 }

@@ -7,7 +7,7 @@ const Donation_Dashboard = () => {
 
   useEffect(() => {
     // Fetch projects data
-    axios.get("http://localhost:4000/projects")
+    axios.get("http://localhost:4000/DonationProject/")
       .then(response => {
         setProjects(response.data); // Assuming response.data contains project data
       })
@@ -34,62 +34,36 @@ const Donation_Dashboard = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Past Projects</h1>
-      <table className="table">
-        <thead className="thead-light">
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Description</th>
-            <th scope="col">Owner</th>
-          </tr>
-        </thead>
-        <tbody>
-          {projects.map(project => (
-            <tr key={project.id}>
-              <td>{project.id}</td>
-              <td>{project.name}</td>
-              <td>{project.description}</td>
-              <td>{project.owner}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="container">
+      <div>
+        
+      <h1>Donation Projects</h1>
+       
+        <button type="button" className="btn btn-dark">
+          <a href="/New_Projects">Add New Project</a>
+        </button>
 
-      <button type="button" className="btn btn-dark">
-        <a href="/New_Projects">Add New Project</a>
-      </button>
+
+        <button type="button" className="btn btn-dark">
+        <a href="/DProjectDetails">View Projects</a>
+        </button>
+
+      </div>
 
       <div>
-    <h1>Donation Feedback</h1>
-    <table className="table">
-      <thead className="thead-light">
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Name</th>
-          <th scope="col">Phone</th>
-          <th scope="col">Message</th>
-        </tr>
-      </thead>
-      <tbody>
-        {feedback.map(item => (
-          <tr key={item.id}>
-            <td>{item.id}</td>
-            <td>{item.name}</td>
-            <td>{item.phone}</td>
-            <td>{item.message}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+        <h1>Donation Feedback</h1>
+        
 
-    <button type="button" className="btn btn-dark">
-      <a href="/Doner_Feedback">Add New Feedback</a>
-    </button>
-  </div>
-</div>
-  
+        <button type="button" className="btn btn-dark">
+          <a href="/Doner_Feedback">Add New Feedback</a>
+        </button>
+
+        <button type="button" className="btn btn-dark">
+        <a href="/dFeedbackFetch">View Feedback</a>
+        </button>
+
+      </div>
+    </div>
   );
 };
 

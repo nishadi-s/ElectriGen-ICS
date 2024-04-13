@@ -9,6 +9,11 @@ import Doner_Analystics from "./pages/Doner_Analytics.jsx";
 import Logout from "./pages/Logout.jsx";
 import DFeedbackFetch from "./components/dFeedbackFetch.jsx";
 
+import DProjectDetails from "./components/DProjectDetails.jsx";
+
+
+
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -21,7 +26,11 @@ const App = () => {
           <Route path="/Doner_Analytics" element={<Doner_Analystics />} />
           <Route path="/MyProfile" element={<MyProfile />} />
           <Route path="/Logout" element={<Logout />} />
-          <Route path="/Dashboard" element={<DFeedbackFetch />} />
+          <Route path="/DFeedbackFetch" element={<DFeedbackFetch />} />
+          
+          <Route path="/DProjectDetails" element={<DProjectDetails />} />
+          
+
 
         </Routes>
       </DonationNavbar>
