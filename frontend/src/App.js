@@ -14,8 +14,9 @@ import MyProfileN from "./pages/SupplierOrderProfile.jsx";
 import Orders from "./pages/SupplierOrder_Order.jsx";
 import Suppliers from "./pages/SupplierOrderSuppliers.jsx";
 import AnalyticsN from "./pages/SupplierOrderAnalytics.jsx";
-//import UpdateOrderN from "./components/SupplierOrderUpdate.jsx"; // Import the UpdateOrder component
+import SupplierUpdateOrder from "./components/SupplierOrderEdit.jsx"; // Import the UpdateOrder component
 import SupplierEdit from "./components/SupplierEdit.jsx"; // Import the UpdateSupplier component
+import SupplierOrderForm from "./components/SupplierOrderForm.jsx"//Import supplier order form component
 
 
 //Dulari_IT22121110
@@ -61,7 +62,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <SalesContextProvider>
-        <Navbar>
+      
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/Dashboard" element={<Dashboard />} />
@@ -73,11 +74,12 @@ const App = () => {
           <Route path="/SupplierOrderDashboard" element={<DashboardN />} />
           <Route path="/Suppliers" element={<Suppliers />} />
           <Route path="/Order" element={<Orders />} />
-          <Route path="/analytics" element={<AnalyticsN />} />
-          <Route path="/MyProfile" element={<MyProfileN />} />
-          <Route path="/update/:id" element={<UpdateOrder />} /> {/* Define route for updating orders */}
-          <Route path="Suppliers/supplieredit" element={<SupplierEdit />} /> {/* Define route for updating orders */}
-          <Route path="/Suppliers/supplieredit/Suppliers" element={<Suppliers />} />
+          <Route path="/analyticsN" element={<AnalyticsN />} />
+          <Route path="/MyProfileN" element={<MyProfileN />} />
+          <Route path="/update/:id" element={<SupplierUpdateOrder />} /> {/* Define route for updating orders */}
+          <Route path="/supplier/:id" element={<SupplierEdit />} /> {/* Define route for updating orders */}
+          <Route path="/supplierorderform" element ={< SupplierOrderForm/>}/> {/*View Supplier Order Form */}
+          
   
             {/* Shanali */}
             <Route path="/" element={<ExportsDashboard />} />
@@ -121,7 +123,7 @@ const App = () => {
             <Route path="/AddProducts" element={<AddProducts />} />
             <Route path="./components/ProductForm" component={ProductForm} />
           </Routes>
-        </Navbar>
+       
       </SalesContextProvider>
     </BrowserRouter>
   );

@@ -15,7 +15,7 @@ const NavbarNishadi = ({ children }) => {
   const menuItem = [
     {
       path: "/SupplierOrderDashboard",
-      name: "DashboardN",
+      name: "Supplier Order Dashboard",
       icon: <FaTh />,
     },
 
@@ -31,7 +31,7 @@ const NavbarNishadi = ({ children }) => {
     },
    
     {
-      path: "/analytics",
+      path: "/analyticsN",
       name: "Analytics",
       icon: <FaRegChartBar />,
     },
