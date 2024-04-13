@@ -1,5 +1,6 @@
 import '../exports.css';
-//import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+
 //import { useState, useEffect } from 'react';
 
 //date fns
@@ -18,8 +19,8 @@ const ImporterDetails=({importer})=>{
             <p><strong>Address: </strong>{importer.address}</p>
             <p><strong>Contact Number: </strong>{importer.contactNumber}</p>
             <p><strong>Email: </strong>{importer.email}</p>
-            <p><strong>Created: </strong>{formatDistanceToNow(new Date(importer.createdAt),{addSuffix:true})}</p>
-            
+            <p><strong>Created: </strong>{formatDistanceToNow(new Date(importer.createdAt),{addSuffix:true})}</p><br></br>
+            <Link to={`/UpdateImporters/${importer._id}`} className="edit-button">Edit</Link> {/* Add Link for Edit button */}
             <br></br>
             
         </div>

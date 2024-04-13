@@ -31,7 +31,7 @@ const ImporterDescription=()=>{
     <div className="im-dashboard">
       
       <div className="importers">
-        <h2>Importers</h2><br />
+        <h1>Importer Details</h1><br />
         <ImporterSearch />
       </div>
     </div>

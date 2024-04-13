@@ -30,7 +30,7 @@ const ExportsDashboard=()=>{
     <div className="ex-dashboard">
       
       <div className="exports">
-        <h2>Export Orders</h2><br />
+        <h1>Export Order Details</h1><br />
         <ExportSearch />
       </div>
     </div>

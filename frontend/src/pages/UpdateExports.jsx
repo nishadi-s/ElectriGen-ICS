@@ -1,189 +1,151 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-//import { findOne } from '../../../Backend/models/exportModel.js';
-//import { findOne } from '../../../Backend/models/exportModel.js';
 import ExportsNavBar from "../components/ExportsNavBar.jsx";
+import Swal from 'sweetalert2';
 
 const UpdateExport = () => {
     const { id } = useParams(); // Get the order ID from the URL params
-    const navigate=useNavigate();
-    const [exportOrderID,setexportOrderID]=useState("");
-    const [importer,setimporter]=useState("");
-    const [items,setitems]=useState("");
-    const [totalCost,settotalCost]=useState("");
-    const [status,setstatus]=useState("");
+    const navigate = useNavigate();
+    const [exportOrderID, setexportOrderID] = useState("");
+    const [importer, setimporter] = useState("");
+    const [items, setItems] = useState([]);
+    const [totalCost, settotalCost] = useState("");
+    const [status, setstatus] = useState("");
     const [error, setError] = useState(null);
     const [emptyFields, setEmptyFields] = useState([]);
-  
-    
-    const [updatedExport, setupdatedExport] = useState({
-        exportOrderID: '',
-        importer: '',
-        items: [],
-        totalCost: '',
-        status: ''
-    });
+    const [successMessage, setSuccessMessage] = useState('');
+    const [updatedItems, setUpdatedItems] = useState([]); // State to store updated items array
 
     useEffect(() => {
         // Fetch the order details based on the ID when the component mounts
-        const fetchOrder = async () => {
-
+        const fetchExports = async () => {
             try {
-                // Check if exportt is null before fetching
-                if (!exportt) {
-                    return;
-                }
-            
-                const response = await fetch(`/api/export/${exportt._id}`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch order');
-                }
-                const data = await response.json();
-                setExport(data);
-                setupdatedExport(data); // Set updatedOrder with fetched order data
+                const response = await fetch(`/api/export/${id}`);
+                const exportData = await response.json();
+                setexportOrderID(exportData.exportOrderID);
+                setimporter(exportData.importer);
+                setItems(exportData.items);
+                setUpdatedItems([...exportData.items]); // Set updatedItems initially with the same value as items
+                settotalCost(exportData.totalCost);
+                setstatus(exportData.status);
             } catch (error) {
-                console.error(error);
+                console.error("Error fetching data", error);
             }
         };
 
-        fetchOrder();
+        fetchExports();
+    }, [id]);
 
-        // Cleanup function to clear state if component unmounts
-        return () => {
-            setExport(null);
-            setupdatedExport(null);
+    const handleItemChange = (index, field, value) => {
+        const updatedItemsCopy = [...updatedItems];
+        updatedItemsCopy[index][field] = value;
+        setUpdatedItems(updatedItemsCopy);
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        const updatedExport = {
+            exportOrderID,
+            importer,
+            items: updatedItems,
+            totalCost,
+            status
         };
-    }, [id]); // Re-run effect when the ID changes
-
-    const handleChange = (e, index) => {
-        const { name, value } = e.target;
-        setupdatedExport(prevState => ({
-            ...prevState,
-            items: prevState.items.map((item, idx) => {
-                if (idx === index) {
-                    return {
-                        ...item,
-                        [name]: value
-                    };
-                }
-                return item;
-            })
-        }));
-    }
     
-    
-
-    const handleUpdate = async () => {
         try {
-            const response = await fetch(`/api/export/${exportt._id}`, {
+            const response = await fetch(`/api/export/${id}`, {
                 method: 'PUT',
+                body: JSON.stringify(updatedExport),
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(updatedExport)
             });
-
+    
             if (response.ok) {
-                // Handle successful update response
-                console.log('Order updated successfully');
-
-                // Navigate to Order Success page
-                //window.location.href = '/OrderHistory';
+                const updatedExportData = await response.json();
+                setexportOrderID(updatedExportData.exportOrderID);
+                setimporter(updatedExportData.importer);
+                setItems(updatedExportData.items);
+                setUpdatedItems([...updatedExportData.items]); // Set updatedItems with the response data
+                settotalCost(updatedExportData.totalCost);
+                setstatus(updatedExportData.status);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Export order updated successfully!'
+                });
+                setTimeout(() => navigate('/ExportsDashboard'), 2000);
             } else {
-                // Handle error response
-                console.error('Failed to update order');
+                const errorData = await response.json();
+                setError(errorData.error, "Error updating product");
+                setEmptyFields(errorData.emptyFields['']);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: errorData.error
+                });
             }
         } catch (error) {
-            console.error('Error updating order:', error);
-            // Handle error
+            console.error("Error:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'An error occurred while updating the export order.'
+            });
         }
-    }
-
-    if (!exportt) {
-        return <div>Loading...</div>; // Render loading state while fetching order
-    }
-
+    };
+    
     return (
         <ExportsNavBar>
-        <div className="update-export">
-            <h2>Edit Order</h2>
-            <form>
-            <label>Order ID:</label>
-                <input 
-                    type="text"
-                    name="exportOrderID" 
-                    value={updatedExport.exportOrderID} 
-                    onChange={handleChange} />
-
-            <label>Importer: </label>
-                <input
-                    type="text"
-                    name="importer"
-                    value={updatedExport.importer}
-                    onChange={handleChange}
-                />
-
-            
-
-            {updatedExport.items.map((item, index) => (
-                    <div key={index}>
-                        <label>{`Item(${index + 1}) Item ID`}</label>
-                        <input
-                            type="text"
-                            name={`itemID`}
-                            value={item.name}
-                            onChange={(e) => handleChange(e, index)}
-                        />
-
-                        <label>{`Item(${index + 1}) Quantity`}</label>
-                        <input
-                            type="number"
-                            name={`quantity`}
-                            value={item.unit}
-                            onChange={(e) => handleChange(e, index)}
-                        />
-
-                    </div>
-                ))}
-
-{/* 
-            <label>Item ID: </label>
-                <input
-                    type="text"
-                    name="itemID"
-                    value={updatedExport.itemID}
-                    onChange={handleChange}
-                />
-
-            <label>Quantity: </label>
-                <input
-                    type="number"
-                    name="quantity"
-                    value={updatedExport.quantity}
-                    onChange={handleChange}
-                /> */}
-
-            <label>Total Cost: </label>
-                <input
-                    type="number"
-                    name="totalCost"
-                    value={updatedExport.totalCost}
-                    onChange={handleChange}
-                />
-
-                <label>Status: </label>
-                <input
-                    type="text"
-                    name="status"
-                    value={updatedExport.status}
-                    onChange={handleChange}
-                />
-
-            
-
-                <button className="custom-button" type="submit" onClick={handleUpdate}>Update</button>
-            </form>
-        </div>
+            <div className="update-export">
+                <h2>Edit Order</h2>
+                <form onSubmit={handleSubmit}>
+                    <label>Order ID:</label>
+                    <input
+                        type="text"
+                        value={exportOrderID}
+                        disabled
+                    />
+                    <label>Importer: </label>
+                    <input
+                        type="text"
+                        value={importer}
+                        onChange={(e) => setimporter(e.target.value)}
+                    />
+                    {updatedItems.map((item, index) => (
+                        <div key={index}>
+                            <label>{`Item(${index + 1}) Item ID`}</label>
+                            <input
+                                type="text"
+                                value={item.itemID}
+                                onChange={(e) => handleItemChange(index, 'itemID', e.target.value)}
+                            />
+                            <label>{`Item(${index + 1}) Quantity`}</label>
+                            <input
+                                type="number"
+                                value={item.quantity}
+                                onChange={(e) => handleItemChange(index, 'quantity', e.target.value)}
+                            />
+                        </div>
+                    ))}
+                    <label>Total Cost: </label>
+                    <input
+                        type="number"
+                        value={totalCost}
+                        onChange={(e) => settotalCost(e.target.value)}
+                    />
+                    <label>Status: </label>
+                    <input
+                        type="text"
+                        value={status}
+                        onChange={(e) => setstatus(e.target.value)}
+                    />
+                    <button type="submit">Update</button>
+                    {error && <div className="error">{error}</div>}
+                    {successMessage && <div className="success-message">{successMessage}</div>}
+                </form>
+            </div>
         </ExportsNavBar>
     );
 };
