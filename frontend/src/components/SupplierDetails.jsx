@@ -1,12 +1,11 @@
-import { useContext } from 'react';
-import { SupplierContext } from "../context/SupplierContext";
-import {useNavigate} from 'react-router-dom'
-
+import React, { useContext } from 'react';
+import { SupplierContext } from '../context/SupplierContext';
+import { useNavigate } from 'react-router-dom';
+import '../SupplierOrder.css';
 
 const SupplierDetails = ({ supplier }) => {
-  const navigate = useNavigate ()
+  const navigate = useNavigate();
   const { dispatch } = useContext(SupplierContext);
-  
 
   const handleClick = async () => {
     const response = await fetch('/api/supplier/' + supplier._id, {
@@ -18,19 +17,38 @@ const SupplierDetails = ({ supplier }) => {
       dispatch({ type: 'DELETE_SUPPLIER', payload: json });
     }
   };
-  
+
   return (
-    <div className="Supplier-Details">
-      <h6><strong>Supplier ID:</strong> {supplier.Sup_ID}</h6>
-      <p><strong>Supplier Name:</strong> {supplier.Sup_Name}</p>
-      <p><strong>Supplier Email:</strong> {supplier.Sup_Email}</p>
-      <p><strong>Supplier Contact:</strong> {supplier.Sup_Contact}</p>
-      <p><strong>Supplier Order ID:</strong> {supplier.Sup_Ord_id}</p>
-      <p><strong>Supplier Order Material Code:</strong> {supplier.Sup_matrial_code}</p>
-      <button onClick={() => navigate ('supplieredit')}>Edit Details</button>
-      <button onClick={handleClick}> Delete</button>
-    </div>
+    <table className='table'>
+      <thead>
+    <tr>
+      <th scope = "col">  ID</th>
+      <th scope = "col">  Name</th>
+      <th scope = "col">  Email</th>
+      <th scope = "col">  Contact</th>
+      <th scope = "col">  Order ID</th>
+      <th scope = "col"> Material Code</th>
+      <th scope = "col"> Edit</th>
+      <th scope = "col"> Delete</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+      <td>{supplier.Sup_ID}</td>
+      <td>{supplier.Sup_Name}</td>
+      <td>{supplier.Sup_Email}</td>
+      <td>{supplier.Sup_Contact}</td>
+      <td>{supplier.Sup_Ord_id}</td>
+      <td>{supplier.Sup_matrial_code}</td>
+      <td>
+        <button className='button1' onClick={() => navigate('/supplier/:id')}>Edit</button> </td>
+       <td> <button className='button2' onClick={handleClick}>Delete</button> </td>
+      
+    </tr>
+    </tbody>
+    </table>
   );
-}
+};
 
 export default SupplierDetails;
+
