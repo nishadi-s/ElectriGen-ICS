@@ -6,6 +6,27 @@ import '../SupplierOrder.css';
 const SupplierDetails = ({ supplier }) => {
   const navigate = useNavigate();
   const { dispatch } = useContext(SupplierContext);
+  //const { id } = useParams();
+  //const [supplier, setSupplier] = useState(null);
+
+
+   /* Fetch product data based on ID
+   useEffect(() => {
+    const fetchSuppliers = async () => {
+      const response = await fetch(/api/supplier/${id});
+      const json = await response.json();
+
+      if (response.ok) {
+        setSupplier(json);
+      }
+    };
+
+    fetchSuppliers();
+  }, [dispatch, id]);*/
+
+  const handleEdit = () => {
+    navigate(`/supplier/${supplier._id}`); // Navigate to the edit form page with supplier ID
+  };
 
   const handleClick = async () => {
     const response = await fetch('/api/supplier/' + supplier._id, {
@@ -41,7 +62,7 @@ const SupplierDetails = ({ supplier }) => {
       <td>{supplier.Sup_Ord_id}</td>
       <td>{supplier.Sup_matrial_code}</td>
       <td>
-        <button className='button1' onClick={() => navigate('/supplier/:id')}>Edit</button> </td>
+        <button className='button1' onClick={handleEdit}>Edit</button> </td>
        <td> <button className='button2' onClick={handleClick}>Delete</button> </td>
       
     </tr>
