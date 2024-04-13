@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./index.css";
 import { BrowserRouter, Route, Routes, Switch } from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -15,8 +15,14 @@ import AddProducts from "./pages/AddProducts.jsx";
 import ProductionDashboard from "./pages/ProductionDashboard.jsx";
 import SingleProduct from "./components/SingleProduct"; // Import SingleProduct
 import EditProduct from "./components/EditProduct"; // Import EditProduct
+import ProductionAnalytics from "./pages/ProductionAnalytics.jsx";
+import ProductionProfile from "./pages/ProductionProfile.jsx";
 
 const App = () => {
+  useEffect(() => {
+    document.title = "ElectriGen";
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -30,7 +36,9 @@ const App = () => {
         <Route path="/Production" element={<Production />} />
         <Route path="/Materials" element={<Materials />} />
         <Route path="/AddProducts" element={<AddProducts />} />
+        <Route path="/ProductionAnalytics" element={<ProductionAnalytics />} />
         <Route path="/ProductionDashboard" element={<ProductionDashboard />} />
+        <Route path="/ProductionProfile" element={<ProductionProfile />} />
         <Route path="/" element={<Products />} />
         <Route path="/product/:id" element={<SingleProduct />} />{" "}
         {/* Define route for single product */}

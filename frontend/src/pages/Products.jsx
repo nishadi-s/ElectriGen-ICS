@@ -6,6 +6,15 @@ import ProductDetails from "../components/ProductDetails";
 import { useProductContext } from "../hooks/useProductsContext";
 import ProductSearch from "../components/ProductSearch"; // Import ProductSearch component
 import ProductionNavbar from "../components/ProductionNavbar";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material";
 
 const Products = () => {
   const { products, dispatch } = useProductContext();
@@ -41,9 +50,26 @@ const Products = () => {
         <ProductSearch onSearch={handleSearch} />{" "}
         {/* Render ProductSearch component */}
         <div className="products">
-          {filteredProducts.map((product) => (
-            <ProductDetails key={product._id} product={product} />
-          ))}
+          <TableContainer component={Paper}>
+            <Table aria-label="customized table">
+              {/* Moved TableHead outside the loop */}
+              <TableHead>
+                <TableRow>
+                  <TableCell>Product Name</TableCell>
+                  <TableCell align="right">Category</TableCell>
+                  <TableCell align="right">Unit Price</TableCell>
+                  <TableCell align="right">Colors</TableCell>
+                  <TableCell align="right">Total Quantity</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {/* Table body with product details remains in ProductDetails */}
+                {filteredProducts.map((product) => (
+                  <ProductDetails key={product._id} product={product} />
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
           <Link to="/AddProducts" className="edit-link">
             <button>Add a new Product</button>
           </Link>

@@ -19,24 +19,24 @@ const productSchema = new Schema(
       required: true,
     },
 
-    cost: {
-      type: Number,
-      required: true,
-    },
-
-    color: {
-      type: String,
-      required: true,
-    },
-
     category: {
       type: String,
       required: true,
     },
-    quantity: {
-      type: Number,
-      required: true,
-    },
+
+    colors: [
+      {
+        color: {
+          type: String,
+          required: true,
+        },
+
+        quantity: {
+          type: Number,
+          required: true,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );

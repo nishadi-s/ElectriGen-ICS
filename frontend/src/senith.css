@@ -1,3 +1,10 @@
+html {
+  background-image: url("../public/26235.jpg");
+  background-size: cover; /* Adjust the background image size */
+  background-repeat: no-repeat; /* Prevent background image from repeating */
+  /*opacity: 0.3;  Set the opacity of the background image */
+}
+
 label,
 input {
   display: block;

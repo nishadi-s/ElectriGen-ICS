@@ -5,6 +5,12 @@
   margin: 0;
   padding: 0;
 }
+/* Set page height and width to fit the device size */
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
 .container {
   display: flex;
 }

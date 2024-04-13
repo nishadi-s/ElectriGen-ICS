@@ -5,6 +5,7 @@ import ProductDetails from "../components/ProductDetails"; // Import existing Pr
 import ProductionNavbar from "../components/ProductionNavbar";
 import Swal from "sweetalert2";
 import { FaRegTrashCan } from "react-icons/fa6";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
 const SingleProduct = () => {
   const { dispatch } = useProductContext();
@@ -66,7 +67,39 @@ const SingleProduct = () => {
       <div className="product-details">
         {product ? (
           <>
-            <ProductDetails product={product} />
+            <h4>Product Name: {product.name}</h4>
+            <p>
+              <strong>Category: </strong>
+              {product.category}
+            </p>
+            <p>
+              <strong>Unit Price: </strong>
+              {product.unitPrice}
+            </p>
+            {product.colors.map((colors) => (
+              <div>
+                <p>
+                  <strong>Color : </strong>
+                  {colors.color}
+                </p>
+                <p>
+                  <strong>Quantity : </strong>
+                  {colors.quantity}
+                </p>
+              </div>
+            ))}
+            <p>
+              <strong>Created: </strong>
+              {formatDistanceToNow(new Date(product.createdAt), {
+                addSuffix: true,
+              })}
+            </p>
+            <p>
+              <strong>Last Updated: </strong>
+              {formatDistanceToNow(new Date(product.updatedAt), {
+                addSuffix: true,
+              })}
+            </p>
             <button onClick={handleDelete}>
               <FaRegTrashCan />
             </button>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ProductionNavbar from "../components/ProductionNavbar";
 
 const Production = () => {
   const [products, setProducts] = useState([]);
@@ -24,31 +25,33 @@ const Production = () => {
   };
 
   return (
-    <div>
-      <h1>Factory Production</h1>
-      <form>
-        <div className="form-group">
-          <label htmlFor="product">Select Product:</label>
-          <select
-            id="product"
-            name="product"
-            className="form-control"
-            value={selectedProduct}
-            onChange={handleChange}
-          >
-            <option value="">Select a product</option>
-            {products.map((product) => (
-              <option key={product._id} value={product._id}>
-                {product.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
-      </form>
-    </div>
+    <ProductionNavbar>
+      <div>
+        <h1>Factory Production</h1>
+        <form>
+          <div className="form-group">
+            <label htmlFor="product">Select Product:</label>
+            <select
+              id="product"
+              name="product"
+              className="form-control"
+              value={selectedProduct}
+              onChange={handleChange}
+            >
+              <option value="">Select a product</option>
+              {products.map((product) => (
+                <option key={product._id} value={product._id}>
+                  {product.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <button type="submit" className="btn btn-primary">
+            Submit
+          </button>
+        </form>
+      </div>
+    </ProductionNavbar>
   );
 };
 

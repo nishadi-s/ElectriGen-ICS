@@ -11,10 +11,8 @@ const EditProduct = () => {
   const [name, setName] = useState("");
   const [itemCode, setItemCode] = useState("");
   const [category, setCategory] = useState("");
-  const [color, setColor] = useState("");
+  const [colors, setColors] = useState([{ color: "", quantity: "" }]);
   const [unitPrice, setUnitPrice] = useState("");
-  const [cost, setCost] = useState("");
-  const [quantity, setQuantity] = useState("");
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
 
@@ -29,10 +27,8 @@ const EditProduct = () => {
         setName(productData.name);
         setItemCode(productData.itemCode);
         setCategory(productData.category);
-        setColor(productData.color);
+        setColors(productData.colors);
         setUnitPrice(productData.unitPrice);
-        setCost(productData.cost);
-        setQuantity(productData.quantity);
       } catch (error) {
         console.error("Error fetching product data:", error);
       }
@@ -48,10 +44,8 @@ const EditProduct = () => {
       name,
       itemCode,
       category,
-      color,
+      colors,
       unitPrice,
-      cost,
-      quantity,
     };
 
     const response = await fetch(`/api/products/${id}`, {
@@ -67,10 +61,8 @@ const EditProduct = () => {
       setName(updatedProductData.name);
       setItemCode(updatedProductData.itemCode);
       setCategory(updatedProductData.category);
-      setColor(updatedProductData.color);
+      setColors(updatedProductData.colors);
       setUnitPrice(updatedProductData.unitPrice);
-      setCost(updatedProductData.cost);
-      setQuantity(updatedProductData.quantity);
 
       navigate(`/products`); // Redirect to single product page
     } else {
@@ -78,6 +70,16 @@ const EditProduct = () => {
       setError(errorData.error || "Error updating product");
       setEmptyFields(errorData.emptyFields || []);
     }
+  };
+
+  const handleColorChange = (index, key, value) => {
+    const updatedColors = [...colors];
+    updatedColors[index][key] = value;
+    setColors(updatedColors);
+  };
+
+  const handleAddColor = () => {
+    setColors([...colors, { color: "", quantity: "" }]);
   };
 
   return (
@@ -93,45 +95,52 @@ const EditProduct = () => {
         <label>Product category:</label>
         <input
           type="text"
-          onChange={(e) => setCategory(e.target.value)} // Use setCategory
+          onChange={(e) => setCategory(e.target.value)}
           value={category}
           className={emptyFields.includes("category") ? "error" : ""}
         />
         <label>Product code:</label>
         <input
           type="text"
-          onChange={(e) => setItemCode(e.target.value)} // Use setItemCode
+          onChange={(e) => setItemCode(e.target.value)}
           value={itemCode}
           className={emptyFields.includes("itemCode") ? "error" : ""}
-        />
-        <label>Color:</label>
-        <input
-          type="text"
-          onChange={(e) => setColor(e.target.value)} // Use setColor
-          value={color}
-          className={emptyFields.includes("color") ? "error" : ""}
         />
         <label>Unit price(in Rs.):</label>
         <input
           type="number"
-          onChange={(e) => setUnitPrice(e.target.value)} // Use setUnitPrice
+          onChange={(e) => setUnitPrice(e.target.value)}
           value={unitPrice}
           className={emptyFields.includes("unitPrice") ? "error" : ""}
         />
-        <label>Cost(in Rs.):</label>
-        <input
-          type="number"
-          onChange={(e) => setCost(e.target.value)} // Use setCost
-          value={cost}
-          className={emptyFields.includes("cost") ? "error" : ""}
-        />
-        <label>Quantity:</label>
-        <input
-          type="number"
-          onChange={(e) => setQuantity(e.target.value)} // Use setQuantity
-          value={quantity}
-          className={emptyFields.includes("quantity") ? "error" : ""}
-        />
+        <label>Colors:</label>
+        {colors.map((colorObject, index) => (
+          <div key={index}>
+            <input
+              type="text"
+              value={colorObject.color}
+              onChange={(e) =>
+                handleColorChange(index, "color", e.target.value)
+              }
+              placeholder="Color"
+              className={emptyFields.includes(`color-${index}`) ? "error" : ""}
+            />
+            <input
+              type="number"
+              value={colorObject.quantity}
+              onChange={(e) =>
+                handleColorChange(index, "quantity", e.target.value)
+              }
+              placeholder="Quantity"
+              className={
+                emptyFields.includes(`quantity-${index}`) ? "error" : ""
+              }
+            />
+          </div>
+        ))}
+        <button type="button" onClick={handleAddColor}>
+          Add Color
+        </button>
 
         <button>Update Product</button>
         {error && <div className="error">{error}</div>}
