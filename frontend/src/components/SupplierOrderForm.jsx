@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSupplierOrderContext } from "../hooks/useSupplierOrderContext";
+import NavbarNishadi from '../components/SupplierOrderNavbar'
 
 const SupplierOrderForm = () => {
   const { dispatch } = useSupplierOrderContext();
@@ -75,6 +76,7 @@ const SupplierOrderForm = () => {
   };
 
   return (
+    <NavbarNishadi>
     <form className="create" onSubmit={handleSubmit}>
       <h3>Add a new Order</h3>
 
@@ -169,6 +171,7 @@ const SupplierOrderForm = () => {
 
       {error && <div className="error">{error}</div>}
     </form>
+    </NavbarNishadi>
   );
 };
 

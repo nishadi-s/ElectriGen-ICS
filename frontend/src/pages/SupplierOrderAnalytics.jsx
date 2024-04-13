@@ -1,11 +1,14 @@
 import React from "react";
+import NavbarNishadi from '../components/SupplierOrderNavbar'
 
-const Analytics = () => {
+const AnalyticsN = () => {
   return (
+<NavbarNishadi>
     <div>
       <h1>Analytics</h1>
     </div>
+    </NavbarNishadi>
   );
 };
 
-export default Analytics;
+export default AnalyticsN;
