@@ -39,6 +39,7 @@ import SalesDashboard from "./pages/SalesDashboard.jsx";
 import SDFeedback from "./pages/SDFeedback";
 import SDView from "./pages/SDView.jsx";
 import Home from "./pages/Home.jsx";
+import DProjectDetails from "./components/DProjectDetails.jsx";
 
 //Dinithi
 import DisSignup from "./pages/DisSignup.js";
@@ -122,6 +123,9 @@ const App = () => {
           <Route path="/Doner_Analytics" element={<Doner_Analystics />} />
           <Route path="/Dashboard" element={<DFeedbackFetch />} />
           <Route path="/Donation_Dashboard" element={<Donation_Dashboard />} />
+          <Route path="/DFeedbackFetch" element={<DFeedbackFetch />} />
+          
+          <Route path="/DProjectDetails" element={<DProjectDetails />} />
           {/* Primal */}
           <Route path="/salesFeedback" element={<SalesFeedback />} />
           <Route path="/invoiceCreate" element={<InvoiceCreate />} />
