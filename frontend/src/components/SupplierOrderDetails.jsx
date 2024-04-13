@@ -1,8 +1,11 @@
 import { useSupplierOrderContext } from "../hooks/useSupplierOrderContext";
 import { format, formatDistanceToNow } from 'date-fns'; // Import format and formatDistanceToNow from date-fns
+import { useNavigate } from 'react-router-dom';
+import '../SupplierOrder.css';
 
 const SupplierOrderDetails = ({ order }) => {
   const { dispatch } = useSupplierOrderContext();
+  const navigate = useNavigate();
 
   const handleClick = async () => {
     const response = await fetch('/api/supplier_order/' + order._id, {
@@ -35,6 +38,7 @@ const SupplierOrderDetails = ({ order }) => {
       <p><strong>Supplier Rating:</strong> {order.Sup_rating}</p>
       <p>{formatDistanceToNow(new Date(order.createdAt), { addSuffix: true })}</p>
       
+      <button className='button1' onClick={() => navigate('/update/:id')}>Edit</button>
       <button onClick={handleClick} className="btn-delete">Delete</button>
     </div>
   );
