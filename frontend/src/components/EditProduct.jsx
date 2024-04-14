@@ -3,6 +3,15 @@ import { useParams, useNavigate } from "react-router-dom";
 import "../senith.css";
 import ProductionNavbar from "../components/ProductionNavbar";
 
+const colorsData = [
+  { name: "White", color: "#ffffff" },
+  { name: "Black", color: "#000000" },
+  { name: "Grey", color: "#808080" },
+  { name: "Orange", color: "#ffA500" },
+  { name: "Green", color: "#008000" },
+  { name: "Blue", color: "#0000ff" },
+];
+
 const EditProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -114,27 +123,35 @@ const EditProduct = () => {
           className={emptyFields.includes("unitPrice") ? "error" : ""}
         />
         <label>Colors:</label>
-        {colors.map((colorObject, index) => (
+        {colors.map((color, index) => (
           <div key={index}>
-            <input
-              type="text"
-              value={colorObject.color}
-              onChange={(e) =>
-                handleColorChange(index, "color", e.target.value)
-              }
-              placeholder="Color"
-              className={emptyFields.includes(`color-${index}`) ? "error" : ""}
-            />
+            <label>Color({index + 1})</label>
+            <div className="color-dropdown">
+              <select
+                value={color.color}
+                onChange={(e) =>
+                  handleColorChange(index, "color", e.target.value)
+                }
+              >
+                <option value="">Select Color</option>
+                {colorsData.map((option, i) => (
+                  <option key={i} value={option.color}>
+                    {option.name}
+                  </option>
+                ))}
+              </select>
+              <div
+                className="color-sample"
+                style={{ backgroundColor: color.color }}
+              ></div>
+            </div>
+            <label>Quantity({index + 1})</label>
             <input
               type="number"
-              value={colorObject.quantity}
               onChange={(e) =>
                 handleColorChange(index, "quantity", e.target.value)
               }
-              placeholder="Quantity"
-              className={
-                emptyFields.includes(`quantity-${index}`) ? "error" : ""
-              }
+              value={color.quantity}
             />
           </div>
         ))}
