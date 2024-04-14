@@ -6,8 +6,6 @@ import { useAuthContext } from '../hooks/useAuthContext';
 // Import Bootstrap CSS for Navbar component
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-// Custom CSS styles for Navbar
-import '../user-Manage.css';
 
 const Navbar = () => {
     const { logout } = useLogout();
@@ -29,11 +27,7 @@ const Navbar = () => {
                             <>
                                 <span className="navbar-user-email">{user.email}</span>
                                 
-                                <Link to="/profile" className="navbar-link">Profile</Link>
-                                <Link to="/distributor" className="navbar-link">Distributors</Link>
-                                
-                                <Link to="/dashboard" className="navbar-link">Dashboard</Link> 
-                                <Link to="/managers" className="navbar-link">Managers</Link> 
+
                                 <Link to="/account-management" className="navbar-link">Account Management</Link> 
                                 <button onClick={handleClick} className="navbar-button">Log out</button>
                             </>
