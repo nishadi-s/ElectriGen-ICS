@@ -22,7 +22,7 @@ function App() {
           <Navbar/>
           <Routes>
             <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} />
-            <Route path="/salary-detail" element={<SalaryDetailsPage />} />
+            <Route path="/salary-details" element={<SalaryDetailsPage />} />
             <Route path="/updateSalary/:id" element={<UpdateSalaryPage />} />
             <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
             <Route path="/forgotPassword" element={<ForgotPassword/>}></Route>

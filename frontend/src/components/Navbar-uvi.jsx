@@ -1,67 +1,135 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useLogout } from '../hooks/useLogout';
+import React, { useState } from "react";
+import {
+  FaTh,
+  FaBars,
+  FaUserAlt,
+  FaRegChartBar,
+  FaShapes,
+  FaIndustry,
+  FaDollyFlatbed,
+} from "react-icons/fa";
+import { NavLink, Link } from "react-router-dom";
 import { useAuthContext } from '../hooks/useAuthContext';
-import { AppBar, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem, ListItemText } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import { FaTh, FaRegMoneyBillAlt } from 'react-icons/fa';
+import { useLogout } from '../hooks/useLogout';
+import { Button } from '@mui/material'; // Add this import
 
-const Navbar = () => {
-    const { logout } = useLogout();
-    const { user } = useAuthContext();
-    const [isDrawerOpen, setIsDrawerOpen] = useState(false); // State for controlling drawer open/close
+const Navbar = ({ children }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => setIsOpen(!isOpen);
+  const { user } = useAuthContext();
+  const { logout } = useLogout();
+  const menuItem = [
+    {
+      path: "/",
+      name: "Dashboard",
+      icon: <FaTh />,
+    },
 
-    const toggleDrawer = (open) => (event) => {
-        if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-            return;
-        }
-        setIsDrawerOpen(open);
-    };
+    {
+      path: "/SalaryDetailsPage",
+      name: "Payroll Management",
+      icon: <FaShapes />,
+    },
+    {
+      path: "/",
+      name: "Payroll Form",
+      icon: <FaIndustry />,
+    },
+    {
+      path: "/analytics",
+      name: "Analytics",
+      icon: <FaRegChartBar />,
+    },
+    {
+      path: "/MyProfile",
+      name: "My Profile",
+      icon: <FaUserAlt />,
+    },
 
-    return (
-        <>
-            <AppBar position="static">
-                <Toolbar>
-                    <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer(true)}>
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" component={Link} to="/" sx={{ flexGrow: 1 }}>
-                        ElectricGen
-                    </Typography>
-                    <div>
-                        {user ? (
-                            <>
-                                <Typography variant="body1" className="navbar-user-email" sx={{ mr: 2 }}>
-                                    {user.email}
-                                </Typography>
-                                <Button component={Link} to="/salary-details" color="inherit">Salary Management</Button>
-                                <Button onClick={logout} color="inherit">Log out</Button>
-                            </>
-                        ) : (
-                            <>
-                                <Button component={Link} to="/login" color="inherit">Login</Button>
-                                <Button component={Link} to="/signup" color="inherit">Signup</Button>
-                            </>
-                        )}
-                    </div>
-                </Toolbar>
-            </AppBar>
-            <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer(false)}>
-                <List>
-                    <ListItem button component={Link} to="/">
-                        <FaTh />
-                        <ListItemText primary="Dashboard" />
-                    </ListItem>
-                    <ListItem button component={Link} to="/salary-details"> 
-                        <FaRegMoneyBillAlt />
-                        <ListItemText primary="Payroll Management" />
-                    </ListItem>
-                    {/* Add more sidebar items as needed */}
-                </List>
-            </Drawer>
-        </>
-    );
-}
+    {
+      path: "/Logout",
+      name: "Logout",
+      icon: <FaUserAlt />,
+    },
+  ];
+
+  return (
+    <div className="container">
+      <div style={{ width: isOpen ? "350px" : "50px" }} className="sidebar">
+        <div className="top_section">
+          <img
+            src="logo1.png"
+            style={{ display: isOpen ? "block" : "none" }}
+            className="logo"
+            width="220"
+            height="42"
+            alt="Company Logo"
+          ></img>
+          <div style={{ marginLeft: isOpen ? "50px" : "0px" }} className="bars">
+            <FaBars onClick={toggle} />
+          </div>
+        </div>
+        {menuItem.map((item, index) => (
+          <NavLink
+            to={item.path}
+            key={index}
+            className="link"
+            activeclassName="active"
+          >
+            <div className="icon">{item.icon}</div>
+            <div
+              style={{ display: isOpen ? "block" : "none" }}
+              className="link_text"
+            >
+              {item.name}
+            </div>
+          </NavLink>
+        ))}
+        {user && (
+          <div
+            style={{ display: isOpen ? "block" : "none" }}
+            className="link_text"
+          >
+            <div className="icon">
+              <FaUserAlt />
+            </div>
+            <div className="link_text">{user.email}</div>
+          </div>
+        )}
+        {user ? (
+          <div
+            style={{ display: isOpen ? "block" : "none" }}
+            className="link_text"
+          >
+            <div className="icon">
+              <FaUserAlt />
+            </div>
+            <div className="link_text">
+              <Button onClick={logout} color="inherit">Log out</Button>
+            </div>
+          </div>
+        ) : (
+          <NavLink
+            to="/Login"
+            key="login"
+            className="link"
+            activeclassName="active"
+          >
+            <div className="icon">
+              <FaUserAlt />
+            </div>
+            <div
+              style={{ display: isOpen ? "block" : "none" }}
+              className="link_text"
+            >
+              Login
+            </div>
+          </NavLink>
+        )}
+      </div>
+      <main>{children}</main>{" "}
+    </div>
+  );
+};
 
 export default Navbar;
-

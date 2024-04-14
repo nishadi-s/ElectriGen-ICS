@@ -44,7 +44,10 @@ const UpdateSalary = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
+        // Calculate final salary
+        const calculatedFinalSalary = Number(base) + (Number(otRate) * Number(otHours)) + Number(bonus);
+    
         const updatedSalary = {
             fname,
             lname,
@@ -55,9 +58,19 @@ const UpdateSalary = () => {
             otHours,
             bonus,
             reason,
-            finalSal,
+            finalSal: calculatedFinalSalary, // Assign calculated final salary
         };
 
+        // Check if the user tries to update the final salary
+        if (finalSal !== calculatedFinalSalary) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'You cannot update the final salary directly.',
+            });
+            return; // Exit the function to prevent further execution
+        }
+    
         try {
             const response = await fetch(`/api/salaries/${id}`, {
                 method: 'PUT',
@@ -66,7 +79,7 @@ const UpdateSalary = () => {
                     'Content-Type': 'application/json'
                 },
             });
-
+    
             if (response.ok) {
                 Swal.fire({
                     icon: 'success',
@@ -92,7 +105,7 @@ const UpdateSalary = () => {
             });
         }
     };
-
+    
     return (
         <Container>
             <Box sx={{ mt: 4 }}>
@@ -190,7 +203,7 @@ const UpdateSalary = () => {
                                 label="Final Salary"
                                 type="number"
                                 value={finalSal}
-                                onChange={(e) => setFinalSal(e.target.value)}
+                                disabled // Disable the input field for final salary
                                 fullWidth
                                 required
                             />

@@ -15,8 +15,9 @@ export const salaryReducer = (state, action) => {
       };
 
     case "DELETE_SALARY":
+      // Filter out the deleted salary from the state
       return {
-        salaries: state.salaries.filter((s) => s._id !== action.payload._id),
+        salaries: state.salaries.filter((s) => s._id !== action.payload),
       };
 
     default:

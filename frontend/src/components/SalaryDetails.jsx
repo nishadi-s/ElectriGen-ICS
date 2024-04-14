@@ -1,13 +1,13 @@
 import React from "react";
 import { Table, TableCell, TableRow, Button } from '@mui/material';
 import Swal from 'sweetalert2';
-import {useSalaryContext} from '../hooks/useSalaryContext';
+import { useSalaryContext } from '../hooks/useSalaryContext';
 import { Link } from 'react-router-dom';
 
 const SalaryDetails = ({ salary }) => {
-  const {dispatch}=useSalaryContext();
+  const { dispatch } = useSalaryContext();
 
-  const handleDelete = async() => {
+  const handleDelete = async () => {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -22,9 +22,10 @@ const SalaryDetails = ({ salary }) => {
           const response = await fetch(`/api/salaries/${salary._id}`, {
             method: 'DELETE',
           });
-  
+
           if (response.ok) {
-            dispatch({ type: 'DELETE_SALARY', payload: salary._id});
+            // Dispatch delete action without refreshing
+            dispatch({ type: 'DELETE_SALARY', payload: salary._id });
             Swal.fire({
               title: 'Deleted!',
               text: 'Your salary record has been deleted.',
@@ -100,6 +101,5 @@ const SalaryDetails = ({ salary }) => {
 };
 
 export default SalaryDetails;
-
 
 

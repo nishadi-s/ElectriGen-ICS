@@ -1,5 +1,27 @@
 import React, { useState } from 'react';
-import { TextField, Button, Typography, Grid } from '@mui/material';
+import { TextField, Button, Typography, Grid, MenuItem } from '@mui/material';
+
+const roles = [
+  'Inventory Manager',
+  'Distributor Manager',
+  'Showroom Manager',
+  'Donation Manager',
+  'Export Manager',
+  'Supplier Manager',
+  'User Manager'
+];
+
+const bonusReasons = [
+  'Exceptional performance',
+  'Meeting sales targets',
+  'Completion of special project',
+  'Customer satisfaction',
+  'Years of service',
+  'Recognition of achievements',
+  'Team performance',
+  'Innovation and creativity',
+  'No bonus added'
+];
 
 const SalaryForm = () => {
   const [fname, setFname] = useState('');
@@ -108,12 +130,19 @@ const SalaryForm = () => {
         {/* Role */}
         <Grid item xs={12} sm={6}>
           <TextField
+            select
             label="Role"
             variant="outlined"
             value={role}
             onChange={(e) => setRole(e.target.value)}
             fullWidth
-          />
+          >
+            {roles.map((role) => (
+              <MenuItem key={role} value={role}>
+                {role}
+              </MenuItem>
+            ))}
+          </TextField>
         </Grid>
 
         {/* Base Salary */}
@@ -153,7 +182,7 @@ const SalaryForm = () => {
         </Grid>
 
         {/* Bonus */}
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6}>
           <TextField
             label="Bonus"
             variant="outlined"
@@ -165,18 +194,25 @@ const SalaryForm = () => {
         </Grid>
 
         {/* Reason */}
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6}>
           <TextField
-            label="Reason"
+            select
+            label="Reason for Bonus"
             variant="outlined"
             value={reason}
             onChange={(e) => setReason(e.target.value)}
             fullWidth
-          />
+          >
+            {bonusReasons.map((reason) => (
+              <MenuItem key={reason} value={reason}>
+                {reason}
+              </MenuItem>
+            ))}
+          </TextField>
         </Grid>
 
         {/* Final Salary */}
-        <Grid item xs={12}>
+       {/* <Grid item xs={12}>
           <TextField
             label="Final Salary"
             variant="outlined"
@@ -185,7 +221,7 @@ const SalaryForm = () => {
             disabled // Disable editing final salary
             fullWidth
           />
-        </Grid>
+        </Grid>*/}
 
         {/* Submit button */}
         <Grid item xs={12}>
