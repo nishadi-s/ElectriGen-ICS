@@ -1,114 +1,169 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { useParams } from 'react-router-dom';
 
-const UpdateSalaryPage = () => {
-  const { id } = useParams(); // Get the salary ID from the URL
-  const [salary, setSalary] = useState(() => {
-    const savedSalary = JSON.parse(localStorage.getItem('updatedSalary')) || {
-      fname: '',
-      lname: '',
-      email: '',
-      role: '',
-      base: '',
-      otRate: '',
-      otHours: '',
-      bonus: '',
-      reason: '',
-      finalSal: ''
-    };
-    return savedSalary;
-  });
+const UpdateSalary = () => {
+    const { id } = useParams(); // Get the salary ID from the URL params
+    const navigate = useNavigate();
+    const [fname, setFname] = useState("");
+    const [lname, setLname] = useState("");
+    const [email, setEmail] = useState("");
+    const [role, setRole] = useState("");
+    const [base, setBase] = useState("");
+    const [otRate, setOtRate] = useState("");
+    const [otHours, setOtHours] = useState("");
+    const [bonus, setBonus] = useState("");
+    const [reason, setReason] = useState("");
+    const [finalSal, setFinalSal] = useState("");
+    const [error, setError] = useState(null);
+    const [successMessage, setSuccessMessage] = useState('');
 
-  useEffect(() => {
-    // Fetch the current salary details based on the ID
-    const fetchSalary = async () => {
-      try {
-        const response = await axios.get(`/api/salaries/${id}`); // Adjust the URL as per your API endpoint
-        if (response.status === 200) {
-          setSalary(response.data);
-        } else {
-          console.error('Failed to fetch salary details');
+    useEffect(() => {
+        const fetchSalary = async () => {
+            try {
+                const response = await fetch(`/api/salaries/${id}`);
+                const salaryData = await response.json();
+                setFname(salaryData.fname);
+                setLname(salaryData.lname);
+                setEmail(salaryData.email);
+                setRole(salaryData.role);
+                setBase(salaryData.base);
+                setOtRate(salaryData.otRate);
+                setOtHours(salaryData.otHours);
+                setBonus(salaryData.bonus);
+                setReason(salaryData.reason);
+                setFinalSal(salaryData.finalSal);
+            } catch (error) {
+                console.error("Error fetching data", error);
+            }
+        };
+
+        fetchSalary();
+    }, [id]);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const updatedSalary = {
+            fname,
+            lname,
+            email,
+            role,
+            base,
+            otRate,
+            otHours,
+            bonus,
+            reason,
+            finalSal,
+        };
+
+        try {
+            const response = await fetch(`/api/salaries/${id}`, {
+                method: 'PUT',
+                body: JSON.stringify(updatedSalary),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+
+            if (response.ok) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Salary details updated successfully!'
+                });
+                setTimeout(() => navigate('/SalaryDescription'), 2000);
+            } else {
+                const errorData = await response.json();
+                setError(errorData.error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: errorData.error
+                });
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'An error occurred while updating the salary details.'
+            });
         }
-      } catch (error) {
-        console.error('Error fetching salary details:', error);
-      }
     };
 
-    fetchSalary();
-  }, [id]);
-
-  // Handle form submission for updating salary details
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await axios.put(`/api/salaries/update/${id}`, salary); // Adjust the URL as per your API endpoint
-      if (response.status === 200) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Successful',
-          text: 'Salary details have been updated!',
-          background: '#fff',
-          showConfirmButton: true,
-          confirmButtonText: 'Okay',
-          confirmButtonColor: '#0712e0',
-          iconColor: '#60e004',
-        });
-      } else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Error in updating salary details!',
-          background: '#fff',
-          showConfirmButton: true,
-          confirmButtonText: 'Okay',
-          confirmButtonColor: '#f2220f',
-          iconColor: '#60e004',
-        });
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Error in updating salary details!',
-        background: '#fff',
-        showConfirmButton: true,
-        confirmButtonText: 'Okay',
-        confirmButtonColor: '#f2220f',
-        iconColor: '#60e004',
-      });
-    }
-  };
-
-  // Handle input change and update local storage
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setSalary(prevState => {
-      const updatedSalary = {
-        ...prevState,
-        [name]: value
-      };
-      localStorage.setItem('updatedSalary', JSON.stringify(updatedSalary));
-      return updatedSalary;
-    });
-  };
-
-  return (
-    <div>
-      <h2>Update Salary</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="fname">First Name:</label>
-          <input type="text" id="fname" name="fname" value={salary.fname} onChange={handleChange} />
-        </div>
-        {/* Add other input fields similarly */}
-        <button type="submit">Update</button>
-      </form>
-    </div>
-  );
+    return (
+        
+            <div className="update-salary">
+                <h2>Edit Salary Details</h2>
+                <form onSubmit={handleSubmit}>
+                    <label>First Name:</label>
+                    <input
+                        type="text"
+                        value={fname}
+                        onChange={(e) => setFname(e.target.value)}
+                    />
+                    <label>Last Name:</label>
+                    <input
+                        type="text"
+                        value={lname}
+                        onChange={(e) => setLname(e.target.value)}
+                    />
+                    <label>Email:</label>
+                    <input
+                        type="text"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <label>Role:</label>
+                    <input
+                        type="text"
+                        value={role}
+                        onChange={(e) => setRole(e.target.value)}
+                    />
+                    <label>Base Salary:</label>
+                    <input
+                        type="text"
+                        value={base}
+                        onChange={(e) => setBase(e.target.value)}
+                    />
+                    <label>Overtime Rate:</label>
+                    <input
+                        type="text"
+                        value={otRate}
+                        onChange={(e) => setOtRate(e.target.value)}
+                    />
+                    <label>Overtime Hours:</label>
+                    <input
+                        type="text"
+                        value={otHours}
+                        onChange={(e) => setOtHours(e.target.value)}
+                    />
+                    <label>Bonus:</label>
+                    <input
+                        type="text"
+                        value={bonus}
+                        onChange={(e) => setBonus(e.target.value)}
+                    />
+                    <label>Reason:</label>
+                    <input
+                        type="text"
+                        value={reason}
+                        onChange={(e) => setReason(e.target.value)}
+                    />
+                    <label>Final Salary:</label>
+                    <input
+                        type="text"
+                        value={finalSal}
+                        onChange={(e) => setFinalSal(e.target.value)}
+                    />
+                    <button type="submit">Update</button>
+                    {error && <div className="error">{error}</div>}
+                    {successMessage && <div className="success-message">{successMessage}</div>}
+                </form>
+            </div>
+        
+    );
 };
 
-export default UpdateSalaryPage;
-
+export default UpdateSalary;
