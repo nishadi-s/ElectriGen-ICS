@@ -34,3 +34,5 @@ app.use("/api/products", productRoutes);
 //uvindya
 const salaryRoutes = require('./routes/salaries');
 app.use('/api/salaries', salaryRoutes);
+const userRoutes=require('./routes/user')
+app.use('/api/user',userRoutes)

@@ -1,33 +1,34 @@
-import React from "react";
-import "./index.css";
-import { BrowserRouter, Route, Routes, Switch } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Navbar from './components/Navbar-uvi.jsx';
+import { useAuthContext } from './hooks/useAuthContext';
 import Home from './pages/Home-Salary.jsx'
-import SalaryDetails from './components/SalaryDetails';
-import SalaryForm from './components/SalaryForm';
 
-//import Navbar from "./components/Navbar";
-import Dashboard from "./pages/Dashboard.jsx";
-import MyProfile from "./pages/MyProfile.jsx";
-import Analytics from "./pages/Analytics.jsx";
-import Logout from "./pages/Logout.jsx";
+import Login from './pages/Login.jsx';
+import Signup from './pages/Signup.jsx';
 
-import Navbar from './components/Navbar-uvi.jsx'
-import UpdateSalaryPage from "./components/UpdateSalary.jsx";
-
+import ForgotPassword from './components/ForgotPassword.jsx';
+import UserDetails from './components/UserDetails'; // Import the UserDetails component
+import SalaryDetails from './components/SalaryDetails.jsx';
+import UpdateSalaryPage from './components/UpdateSalary.jsx'
 
 function App() {
-
+  const { user } = useAuthContext();
+  
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
         <div className="pages">
+          <Navbar/>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route  path="/update"  element={<UpdateSalaryPage />} />
-             
-              
-           
+            <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} />
+            <Route path="/salary-details/:id" element={<SalaryDetails />} />
+            <Route path="/updateSalary/:id" element={<UpdateSalaryPage />} />
+            <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
+            <Route path="/forgotPassword" element={<ForgotPassword/>}></Route>
+            <Route path="/resetPassword/:token" element={<ForgotPassword/>}></Route>
+            <Route path="/signup" element={!user ? <Signup /> : <Navigate to="/" />} />
+            <Route path="/user-details/:id" element={<UserDetails />} /> {/* Add Route for UserDetails */}
           </Routes>
         </div>
       </BrowserRouter>
@@ -41,7 +42,11 @@ export default App;
 import Production from "./pages/Production.jsx";
 import Products from "./pages/Products.jsx";
 import AddProducts from "./pages/AddProducts.jsx";
-
+//import Navbar from "./components/Navbar";
+import Dashboard from "./pages/Dashboard.jsx";
+import MyProfile from "./pages/MyProfile.jsx";
+import Analytics from "./pages/Analytics.jsx";
+import Logout from "./pages/Logout.jsx";
 const App = () => {
   return (
     <BrowserRouter>
