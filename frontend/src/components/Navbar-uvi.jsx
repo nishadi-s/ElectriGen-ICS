@@ -2,10 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
-
-// Import Bootstrap CSS for Navbar component
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { AppBar, Toolbar, Typography, Button, IconButton } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const Navbar = () => {
     const { logout } = useLogout();
@@ -16,33 +14,33 @@ const Navbar = () => {
     }
 
     return (
-        <header className="navbar-container">
-            <div className="container">
-                <Link to="/" className="navbar-logo">
+        <AppBar position="static">
+            <Toolbar>
+                <IconButton edge="start" color="inherit" aria-label="menu">
+                    <MenuIcon />
+                </IconButton>
+                <Typography variant="h6" component={Link} to="/" sx={{ flexGrow: 1 }}>
                     ElectricGen
-                </Link>
-                <nav className="navbar-links">
-                    <div className="navbar-links-inner">
-                        {user ? (
-                            <>
-                                <span className="navbar-user-email">{user.email}</span>
-                                
-
-                                <Link to="/account-management" className="navbar-link">Account Management</Link> 
-                                <button onClick={handleClick} className="navbar-button">Log out</button>
-                            </>
-                        ) : (
-                            <>
-                                <Link to="/login" className="navbar-link">Login</Link>
-                                <Link to="/signup" className="navbar-link">Signup</Link>
-                            </>
-                        )}
-                    </div>
-                </nav>
-            </div>
-        </header>
+                </Typography>
+                <div>
+                    {user ? (
+                        <>
+                            <Typography variant="body1" className="navbar-user-email" sx={{ mr: 2 }}>
+                                {user.email}
+                            </Typography>
+                            <Button component={Link} to="/salary-details" color="inherit">Salar Management</Button>
+                            <Button onClick={handleClick} color="inherit">Log out</Button>
+                        </>
+                    ) : (
+                        <>
+                            <Button component={Link} to="/login" color="inherit">Login</Button>
+                            <Button component={Link} to="/signup" color="inherit">Signup</Button>
+                        </>
+                    )}
+                </div>
+            </Toolbar>
+        </AppBar>
     );
 }
 
 export default Navbar;
-

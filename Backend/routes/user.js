@@ -14,18 +14,6 @@ router.post('/login',loginUser)
 //signup router
 router.post('/signup',signupUser)
 
-// Route to get user accounts
-router.get('/user-accounts', async (req, res) => {
-  try {
-    // Fetch all user accounts from the database
-    const users = await User.find({}, '-password'); // Exclude the password field
-    res.json(users);
-  } catch (error) {
-    console.error('Error fetching user accounts:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
-
 router.post('/forgot-password',async(req,res)=>{
     const {email}=req.body;
 try{
