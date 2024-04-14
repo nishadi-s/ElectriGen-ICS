@@ -10,6 +10,7 @@ import Signup from './pages/Signup.jsx';
 import ForgotPassword from './components/ForgotPassword.jsx';
 import SalaryDetails from './components/SalaryDetails.jsx';
 import UpdateSalaryPage from './components/UpdateSalary.jsx'
+import SalaryDetailsPage from './pages/SalaryDetailsPage.jsx';
 
 function App() {
   const { user } = useAuthContext();
@@ -21,7 +22,7 @@ function App() {
           <Navbar/>
           <Routes>
             <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} />
-            <Route path="/salary-details/:id" element={<SalaryDetails />} />
+            <Route path="/salary-detail" element={<SalaryDetailsPage />} />
             <Route path="/updateSalary/:id" element={<UpdateSalaryPage />} />
             <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
             <Route path="/forgotPassword" element={<ForgotPassword/>}></Route>

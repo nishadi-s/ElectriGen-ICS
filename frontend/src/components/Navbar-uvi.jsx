@@ -4,6 +4,7 @@ import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { AppBar, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem, ListItemText } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import { FaTh, FaRegMoneyBillAlt } from 'react-icons/fa';
 
 const Navbar = () => {
     const { logout } = useLogout();
@@ -48,10 +49,12 @@ const Navbar = () => {
             <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer(false)}>
                 <List>
                     <ListItem button component={Link} to="/">
+                        <FaTh />
                         <ListItemText primary="Dashboard" />
                     </ListItem>
-                    <ListItem button component={Link} to="/salary-details"> {/* Change the route to "/salary-details" */}
-                        <ListItemText primary="Salary Management" />
+                    <ListItem button component={Link} to="/salary-details"> 
+                        <FaRegMoneyBillAlt />
+                        <ListItemText primary="Payroll Management" />
                     </ListItem>
                     {/* Add more sidebar items as needed */}
                 </List>
@@ -61,3 +64,4 @@ const Navbar = () => {
 }
 
 export default Navbar;
+

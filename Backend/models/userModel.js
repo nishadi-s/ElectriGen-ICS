@@ -22,14 +22,19 @@ const userSchema = new Schema({
   contactNumber: {
     type: String,
     required: true
+  },
+  role: {
+    type: String,
+    required: true,
+    enum: ['Inventory Manager', 'Distributor Manager', 'Showroom Manager', 'Donation Manager', 'Export Manager', 'Supplier Manager', 'User Manager']
   }
 });
 
 // static signup method
-userSchema.statics.signup = async function(email, password, employeeId, contactNumber) {
+userSchema.statics.signup = async function(email, password, employeeId, contactNumber, role) {
 
   // validation
-  if (!email || !password || !employeeId || !contactNumber) {
+  if (!email || !password || !employeeId || !contactNumber || !role) {
     throw Error('All fields must be filled');
   }
   if (!validator.isEmail(email)) {
@@ -49,7 +54,7 @@ userSchema.statics.signup = async function(email, password, employeeId, contactN
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
 
-  const user = await this.create({ email, password: hash, employeeId, contactNumber });
+  const user = await this.create({ email, password: hash, employeeId, contactNumber, role });
 
   return user;
 };

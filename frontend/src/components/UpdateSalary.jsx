@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { TextField, Button, Typography, Container, Box, Grid } from '@mui/material';
 
 const UpdateSalary = () => {
     const { id } = useParams(); // Get the salary ID from the URL params
@@ -72,7 +73,7 @@ const UpdateSalary = () => {
                     title: 'Success!',
                     text: 'Salary details updated successfully!'
                 });
-                setTimeout(() => navigate('/SalaryDescription'), 2000);
+                setTimeout(() => navigate('/'), 2000);
             } else {
                 const errorData = await response.json();
                 setError(errorData.error);
@@ -93,77 +94,120 @@ const UpdateSalary = () => {
     };
 
     return (
-        
-            <div className="update-salary">
-                <h2>Edit Salary Details</h2>
+        <Container>
+            <Box sx={{ mt: 4 }}>
+                <Typography variant="h4" gutterBottom>Edit Salary Details</Typography>
                 <form onSubmit={handleSubmit}>
-                    <label>First Name:</label>
-                    <input
-                        type="text"
-                        value={fname}
-                        onChange={(e) => setFname(e.target.value)}
-                    />
-                    <label>Last Name:</label>
-                    <input
-                        type="text"
-                        value={lname}
-                        onChange={(e) => setLname(e.target.value)}
-                    />
-                    <label>Email:</label>
-                    <input
-                        type="text"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <label>Role:</label>
-                    <input
-                        type="text"
-                        value={role}
-                        onChange={(e) => setRole(e.target.value)}
-                    />
-                    <label>Base Salary:</label>
-                    <input
-                        type="text"
-                        value={base}
-                        onChange={(e) => setBase(e.target.value)}
-                    />
-                    <label>Overtime Rate:</label>
-                    <input
-                        type="text"
-                        value={otRate}
-                        onChange={(e) => setOtRate(e.target.value)}
-                    />
-                    <label>Overtime Hours:</label>
-                    <input
-                        type="text"
-                        value={otHours}
-                        onChange={(e) => setOtHours(e.target.value)}
-                    />
-                    <label>Bonus:</label>
-                    <input
-                        type="text"
-                        value={bonus}
-                        onChange={(e) => setBonus(e.target.value)}
-                    />
-                    <label>Reason:</label>
-                    <input
-                        type="text"
-                        value={reason}
-                        onChange={(e) => setReason(e.target.value)}
-                    />
-                    <label>Final Salary:</label>
-                    <input
-                        type="text"
-                        value={finalSal}
-                        onChange={(e) => setFinalSal(e.target.value)}
-                    />
-                    <button type="submit">Update</button>
-                    {error && <div className="error">{error}</div>}
-                    {successMessage && <div className="success-message">{successMessage}</div>}
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                label="First Name"
+                                value={fname}
+                                onChange={(e) => setFname(e.target.value)}
+                                fullWidth
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                label="Last Name"
+                                value={lname}
+                                onChange={(e) => setLname(e.target.value)}
+                                fullWidth
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                label="Email"
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                fullWidth
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                label="Role"
+                                value={role}
+                                onChange={(e) => setRole(e.target.value)}
+                                fullWidth
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                label="Base Salary"
+                                type="number"
+                                value={base}
+                                onChange={(e) => setBase(e.target.value)}
+                                fullWidth
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                label="Overtime Rate"
+                                type="number"
+                                value={otRate}
+                                onChange={(e) => setOtRate(e.target.value)}
+                                fullWidth
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                label="Overtime Hours"
+                                type="number"
+                                value={otHours}
+                                onChange={(e) => setOtHours(e.target.value)}
+                                fullWidth
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                label="Bonus"
+                                type="number"
+                                value={bonus}
+                                onChange={(e) => setBonus(e.target.value)}
+                                fullWidth
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                label="Reason"
+                                value={reason}
+                                onChange={(e) => setReason(e.target.value)}
+                                fullWidth
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                label="Final Salary"
+                                type="number"
+                                value={finalSal}
+                                onChange={(e) => setFinalSal(e.target.value)}
+                                fullWidth
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button type="submit" variant="contained" color="primary">
+                                Update
+                            </Button>
+                            {error && <Typography variant="body2" color="error">{error}</Typography>}
+                            {successMessage && <Typography variant="body2" color="success">{successMessage}</Typography>}
+                        </Grid>
+                    </Grid>
                 </form>
-            </div>
-        
+            </Box>
+        </Container>
     );
 };
 
 export default UpdateSalary;
+

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSignup } from "../hooks/useSignup";
-import { Button, Grid, TextField, Typography } from '@mui/material';
+import { Button, Grid, TextField, Typography, MenuItem } from '@mui/material';
 import Swal from 'sweetalert2';
 
 const Signup = () => {
@@ -8,13 +8,14 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [employeeId, setEmployeeId] = useState('');
   const [contactNumber, setContactNumber] = useState('');
+  const [role, setRole] = useState('Employee'); // Default role is 'Employee'
   const { signup, error, isLoading } = useSignup();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Call the signup function with email, password, employeeId, and contactNumber
-    await signup(email, password, employeeId, contactNumber);
+    // Call the signup function with email, password, employeeId, contactNumber, and role
+    await signup(email, password, employeeId, contactNumber, role);
 
     // Display SweetAlert after successful sign-up
     if (!error) {
@@ -69,7 +70,26 @@ const Signup = () => {
             required
             margin="normal"
           />
-
+          <TextField
+            select
+            label="Role"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            fullWidth
+            required
+            margin="normal"
+          >
+            <MenuItem value="Employee">Employee</MenuItem>
+            <MenuItem value="Manager">Manager</MenuItem>
+            <MenuItem value="Admin">Admin</MenuItem>
+            <MenuItem value="Inventory Manager">Inventory Manager</MenuItem>
+            <MenuItem value="Distributor Manager">Distributor Manager</MenuItem>
+            <MenuItem value="Showroom Manager">Showroom Manager</MenuItem>
+            <MenuItem value="Donation Manager">Donation Manager</MenuItem>
+            <MenuItem value="Export Manager">Export Manager</MenuItem>
+            <MenuItem value="Supplier Manager">Supplier Manager</MenuItem>
+            <MenuItem value="User Manager">User Manager</MenuItem>
+          </TextField>
           <Button
             type="submit"
             variant="contained"
