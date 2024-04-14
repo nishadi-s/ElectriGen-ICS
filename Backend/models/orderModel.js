@@ -36,41 +36,18 @@ const orderSchema = new Schema({
                 type: Number,
                 required: true
             }
-        },
-        {
-            code: {
-                type: String,
-                required: true
-            },
-            name: {
-                type: String,
-                required: true
-            },
-            quantity: {
-                type: Number,
-                required: true
-            }
-        },
-        {
-            code: {
-                type: String,
-                required: true
-            },
-            name: {
-                type: String,
-                required: true
-            },
-            quantity: {
-                type: Number,
-                required: true
-            }
-        }
+        },     
     ],
 
     totalAmount: {
         type: Number,
         required: true
     },
+    //distributor authentication
+    distributor_id: {
+        type:String,
+        required: true
+    }
 
 },{timestamps:true}) // Add timestamps for createdAt and updatedAt fields
 

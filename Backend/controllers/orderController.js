@@ -5,7 +5,9 @@ const mongoose = require('mongoose') //data is coming from mongoDB
 
 //get all orders
 const getOrders = async(req,res) => {
-        const orders = await Order.find({}).sort({ createdAt: -1 }); // Fetch all orders and sort by createdAt
+        const distributor_id = req.distributor._id
+
+        const orders = await Order.find({distributor_id}).sort({ createdAt: -1 }); // Fetch all orders and sort by createdAt
 
         return res.status(200).json(orders); // Return the orders
 }
@@ -58,7 +60,9 @@ const createOrder = async (req,res) => {
 
     // Add new order document to the database
     try{
-        const newOrder = await Order.create({distributorId,distributorName,orderStatus,items,totalAmount})
+        //distributor authentication
+        const distributor_id = req.distributor._id
+        const newOrder = await Order.create({distributorId,distributorName,orderStatus,items,totalAmount, distributor_id})
         res.status(200).json(newOrder) // Return the new order
     }catch(error){
         res.status(400).json({error: error.message}) // Return error if creation fails
@@ -92,19 +96,27 @@ const updateOrder = async (req, res) => {
     }
 
     try {
-        const updatedOrder = await Order.findOneAndUpdate({ _id: id }, {
-            ...req.body // Update with request body
-        }, { new: true }); // return the updated document
+        // Ensure that the distributor ID from the request matches the distributor ID in the order
+        const distributorIdFromToken = req.distributor._id.toString();
+        const order = await Order.findById(id);
 
-        if (!updatedOrder) { // If order not found
-            return res.status(400).json({ error: 'No such order' });
+        if (!order) {
+            return res.status(404).json({ error: 'No such order' });
         }
+
+        if (order.distributor_id.toString() !== distributorIdFromToken) {
+            return res.status(401).json({ error: 'Unauthorized access' });
+        }
+
+        // Update the order with the data from the request body
+        const updatedOrder = await Order.findByIdAndUpdate(id, req.body, { new: true });
 
         res.status(200).json(updatedOrder);
     } catch (error) {
+        console.error('Error updating order:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-}
+};
 
 module.exports = {
     getOrders,

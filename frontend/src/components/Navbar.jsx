@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import {
   FaTh,
   FaBars,
@@ -31,7 +32,6 @@ const Navbar = ({ children }) => {
       name: "Exports Dashboard",
       icon: <FaTh />,
     },
-
     {
       path: "/OrderForm",
       name: "Order Placement",
@@ -86,7 +86,11 @@ const Navbar = ({ children }) => {
       name: "My Profile",
       icon: <FaUserAlt />,
     },
-
+    {
+      path: "/MyProfile",
+      name: "My Profile",
+      icon: <FaUserAlt />,
+    },
     {
       path: "/New_Projects",
       name: "New Projects",

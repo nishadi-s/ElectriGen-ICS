@@ -4,7 +4,10 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
+// Create an Express app
+const app = express();
 
+app.use(express.json());
 
 // Create an Express app
 const app = express();
@@ -27,6 +30,7 @@ mongoose
     app.listen(process.env.PORT, () => {
       console.log("Connected to DB & listening on port", process.env.PORT); // Log that the server is running
     });
+    
   })
   .catch((error) => {
     console.log(error); // Log any errors that occur during database connection

@@ -3,11 +3,13 @@ import "./DistributionFun.css";
 import React, { useState } from 'react';
 import { useOrdersContext } from '../hooks/useOrdersContext.js'
 //components
+import './DistributionFun.css'
+import NavbarDini1 from '../components/DisNavbar.jsx'
 import OrderDetails from '../components/OrderDetails.js'
 import SearchBar from '../components/Distributor_Search.jsx'
 
 const OrderHistory = () => {
-    const {orders,dispatch} = useOrdersContext()
+  const { orders, dispatch } = useOrdersContext();
 
     // State for search term and filtered orders
   const [searchTerm, setSearchTerm] = useState('');
@@ -57,6 +59,7 @@ const OrderHistory = () => {
 
 
     return (
+      <NavbarDini1>
         <div className="OrderPlace">
       <SearchBar onChange={handleFilter} />
       <div className="orders">
@@ -73,6 +76,7 @@ const OrderHistory = () => {
         )}
       </div>
     </div>
+    </NavbarDini1>
     )
 }
 export default OrderHistory

@@ -1,6 +1,7 @@
 import React from "react";
 import "./index.css";
-import { BrowserRouter, Route, Routes, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Switch, Navigate } from "react-router-dom";
+
 import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard.jsx";
 import MyProfile from "./pages/MyProfile.jsx";
@@ -35,10 +36,22 @@ import { SalesContextProvider } from "./context/SalesContext.jsx";
 import InvoiceUpdate from "./pages/InvoiceUpdate.jsx";
 
 //Dinithi
+import DisSignup from "./pages/DisSignup.js";
+import DisLogin from "./pages/DisLogin.js";
+import DisDashboard from "./pages/DisDashboard.jsx";
+import DisMyProfile from "./pages/DisMyProfile.jsx";
+import DisAnalytics from "./pages/DisAnalytics";
+import OrderPlace from './pages/OrderPlacement.js'
+import OrderHistory from './pages/OrderHistory.js';
+import OrderSuccess from './pages/OrderSucess.js';
+import UpdateOrder from './pages/UpdateOrderDetails.js';
+import { useDisDAuthContext } from "./hooks/useDisDAuthContext.js";
+import HomePage from "./pages/DinHome.js";
 import OrderPlace from "./pages/OrderPlacement.js";
 import OrderHistory from "./pages/OrderHistory.js";
 import OrderSuccess from "./pages/OrderSucess.js";
 import UpdateOrder from "./pages/UpdateOrderDetails.js";
+
 //Senith
 import Materials from "./pages/Materials.jsx";
 import Production from "./pages/Production.jsx";
@@ -48,6 +61,7 @@ import ProductionDashboard from "./pages/ProductionDashboard.jsx";
 import SingleProduct from "./components/SingleProduct"; // Import SingleProduct
 import EditProduct from "./components/EditProduct"; // Import EditProduct
 import ProductForm from "./components/ProductForm";
+
 
 //Shanali
 import ExportsDashboard from "./pages/ExportsDashboard.jsx";
@@ -60,10 +74,15 @@ import ExportAnalytics from "./pages/ExportAnalytics.jsx";
 import UpdateExports from "./pages/UpdateExports.jsx";
 
 const App = () => {
+
+  const { distributor } = useDisDAuthContext()
+
   return (
     <BrowserRouter>
       <SalesContextProvider>
-        <Routes>
+    <div className="pages">
+        <Routes>    
+
           <Route path="/" element={<Dashboard />} />
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/Analytics" element={<Analytics />} />
@@ -109,12 +128,24 @@ const App = () => {
           <Route path="/viewInvoice" element={<ViewInvoice />} />
           <Route path="/PinVerification" element={<PinVerification />} />
           <Route path="/InvoiceUpdate" element={InvoiceUpdate} />
+            
           {/* Dinithi */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element = {!distributor ? <DisLogin /> : <Navigate to= "/DisDashboard"/>} />
+          <Route path="/signup" element = {!distributor ? <DisSignup /> : <Navigate to= "/DisDashboard"/>} />
+          <Route path="/DisDashboard" element = {distributor ? <DisDashboard /> : <Navigate to="/login" />}/>
+          <Route path="/DisMyProfile" element = {<DisMyProfile />} />
+          <Route path="/DisAnalytics" element = {<DisAnalytics />} />
+          <Route path="/OrderForm" element = {<OrderPlace />} />
+          <Route path="/OrderHistory" element = {<OrderHistory />} />
+          <Route path="/OrderSuccess" element={<OrderSuccess/>}/>
+          <Route path="/update/:id" element={<UpdateOrder />} /> {/* Define route for updating orders */}
           <Route path="/OrderForm" element={<OrderPlace />} />
           <Route path="/OrderHistory" element={<OrderHistory />} />
           <Route path="/OrderSuccess" element={<OrderSuccess />} />
           <Route path="/update/:id" element={<UpdateOrder />} />{" "}
           {/* Define route for updating orders */}
+
           {/*Senith */}
           <Route path="/Products" element={<Products />} />
           <Route path="/Production" element={<Production />} />
@@ -128,6 +159,7 @@ const App = () => {
           <Route path="/EditProduct" element={<EditProduct />} />
           <Route path="/SingleProduct" element={<SingleProduct />} />
         </Routes>
+        </div>
       </SalesContextProvider>
     </BrowserRouter>
   );

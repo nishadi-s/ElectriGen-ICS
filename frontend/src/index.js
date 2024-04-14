@@ -16,18 +16,22 @@ import { OrdersContextProvider } from './context/OrderContext';
 
 //Senith
 import { ProductsContextProvider } from "./context/ProductContext";
+import { DisDAuthContextProvider } from './context/DisDAuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
+
    <SupplierOrderContextProvider>
     <SupplierContextProvider>
     <ExportsContextProvider>
     <ImportersContextProvider>
     <ProductsContextProvider>
+      <DisDAuthContextProvider>
     <OrdersContextProvider>    
     <App />
-    </OrdersContextProvider>    
+    </OrdersContextProvider>  
+      </DisDAuthContextProvider>
   </ProductsContextProvider>
   </ImportersContextProvider> 
   </ExportsContextProvider> 
