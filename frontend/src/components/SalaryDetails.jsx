@@ -21,7 +21,6 @@ const SalaryDetails = ({ salary }) => {
         try {
           const response = await fetch(`/api/salaries/${salary._id}`, {
             method: 'DELETE',
-           
           });
   
           if (response.ok) {
@@ -91,7 +90,7 @@ const SalaryDetails = ({ salary }) => {
         </TableRow>
         <TableRow>
           <TableCell colSpan={2}>
-          <Button variant="contained" color="primary" component={Link} to={`/UpdateSalary/${salary._id}`}>Update</Button>
+            <Button variant="contained" color="primary" component={Link} to={`/UpdateSalary/${salary._id}`}>Update</Button>
             <Button variant="contained" color="primary" onClick={handleDelete}>Delete</Button>
           </TableCell>
         </TableRow>
@@ -101,5 +100,6 @@ const SalaryDetails = ({ salary }) => {
 };
 
 export default SalaryDetails;
+
 
 

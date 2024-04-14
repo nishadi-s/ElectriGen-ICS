@@ -1,5 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useSignup } from "../hooks/useSignup";
+import { Button, Grid, TextField, Typography } from '@mui/material';
 import Swal from 'sweetalert2';
 
 const Signup = () => {
@@ -28,37 +29,61 @@ const Signup = () => {
   };
 
   return (
-    <form className="signup" onSubmit={handleSubmit}>
-      <h3>Sign Up</h3>
-      
-      <label>Email address:</label>
-      <input 
-        type="email" 
-        onChange={(e) => setEmail(e.target.value)} 
-        value={email} 
-      />
-      <label>Password:</label>
-      <input 
-        type="password" 
-        onChange={(e) => setPassword(e.target.value)} 
-        value={password} 
-      />
-      <label>Employee ID:</label>
-      <input 
-        type="text" 
-        onChange={(e) => setEmployeeId(e.target.value)} 
-        value={employeeId} 
-      />
-      <label>Contact Number:</label>
-      <input 
-        type="text" 
-        onChange={(e) => setContactNumber(e.target.value)} 
-        value={contactNumber} 
-      />
+    <Grid container justifyContent="center" alignItems="center" style={{ height: '100vh' }}>
+      <Grid item xs={12} sm={8} md={6} lg={4}>
+        <form className="signup" onSubmit={handleSubmit}>
+          <Typography variant="h5" gutterBottom>Sign Up</Typography>
+          <TextField
+            label="Email Address"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            fullWidth
+            required
+            margin="normal"
+          />
+          <TextField
+            label="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            fullWidth
+            required
+            margin="normal"
+          />
+          <TextField
+            label="Employee ID"
+            type="text"
+            value={employeeId}
+            onChange={(e) => setEmployeeId(e.target.value)}
+            fullWidth
+            required
+            margin="normal"
+          />
+          <TextField
+            label="Contact Number"
+            type="text"
+            value={contactNumber}
+            onChange={(e) => setContactNumber(e.target.value)}
+            fullWidth
+            required
+            margin="normal"
+          />
 
-      <button disabled={isLoading}>Sign up</button>
-      {error && <div className="error">{error}</div>}
-    </form>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={isLoading}
+            fullWidth
+            style={{ marginTop: '1rem' }}
+          >
+            Sign up
+          </Button>
+          {error && <Typography variant="body2" color="error" style={{ marginTop: '0.5rem' }}>{error}</Typography>}
+        </form>
+      </Grid>
+    </Grid>
   );
 };
 
