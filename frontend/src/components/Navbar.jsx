@@ -8,6 +8,8 @@ import {
   FaShapes,
   FaIndustry,
   FaDollyFlatbed,
+  FaIdBadge,
+  FaThList,
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
@@ -16,8 +18,18 @@ const Navbar = ({ children }) => {
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
     {
-      path: "/dashboard",
-      name: "Dashboard",
+      path: "/Donation_Dashboard",
+      name: "Donation Dashboard",
+      icon: <FaTh />,
+    },
+    {
+      path: "/Dashboard",
+      name: "Sales Dashboard",
+      icon: <FaTh />,
+    },
+    {
+      path: "/ExportsDashboard",
+      name: "Exports Dashboard",
       icon: <FaTh />,
     },
     {
@@ -25,23 +37,52 @@ const Navbar = ({ children }) => {
       name: "Order Placement",
       icon: <FaDollyFlatbed />,
     },
+
     {
       path: "/OrderHistory",
       name: "Order History",
       icon: <FaShapes />,
+    },
+
+    {
+      path: "/Products",
+      name: "Products",
+      icon: <FaDollyFlatbed />,
     },
     {
       path: "/Production",
       name: "Production",
       icon: <FaIndustry />,
     },
+
     {
       path: "/analytics",
       name: "Analytics",
       icon: <FaRegChartBar />,
     },
+
     {
-      path: "/MyProfile",
+      path: "/Importer",
+      name: "Importer",
+      icon: <FaIdBadge />,
+    },
+    {
+      path: "/ExportOrders",
+      name: "Export Orders",
+      icon: <FaDollyFlatbed />,
+    },
+    {
+      path: "/ExportOrderDetails",
+      name: "Order Details",
+      icon: <FaThList />,
+    },
+    {
+      path: "/ExportAnalytics",
+      name: "Analytics",
+      icon: <FaRegChartBar />,
+    },
+    {
+      path: "/ExportsProfile",
       name: "My Profile",
       icon: <FaUserAlt />,
     },
@@ -50,6 +91,23 @@ const Navbar = ({ children }) => {
       name: "My Profile",
       icon: <FaUserAlt />,
     },
+    {
+      path: "/New_Projects",
+      name: "New Projects",
+      icon: <FaDollyFlatbed />,
+    },
+
+    {
+      path: "/Doner_Feedback",
+      name: "Doner Feedback",
+      icon: <FaShapes />,
+    },
+    {
+      path: "/doner_analytics",
+      name: "Analytics and Report",
+      icon: <FaRegChartBar />,
+    },
+
     {
       path: "/Logout",
       name: "Logout",
