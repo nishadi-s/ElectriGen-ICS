@@ -1,19 +1,33 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import { useParams } from 'react-router-dom';
 
 const UpdateSalaryPage = () => {
   const { id } = useParams(); // Get the salary ID from the URL
-  const [salary, setSalary] = useState(null);
+  const [salary, setSalary] = useState(() => {
+    const savedSalary = JSON.parse(localStorage.getItem('updatedSalary')) || {
+      fname: '',
+      lname: '',
+      email: '',
+      role: '',
+      base: '',
+      otRate: '',
+      otHours: '',
+      bonus: '',
+      reason: '',
+      finalSal: ''
+    };
+    return savedSalary;
+  });
 
-  // Fetch the current salary details based on the ID
   useEffect(() => {
+    // Fetch the current salary details based on the ID
     const fetchSalary = async () => {
       try {
-        const response = await fetch(`/api/salaries/${id}`); 
-        alert(id)// Adjust the URL as per your API endpoint
-        if (response.ok) {
-          const data = await response.json();
-          setSalary(data);
+        const response = await axios.get(`/api/salaries/${id}`); // Adjust the URL as per your API endpoint
+        if (response.status === 200) {
+          setSalary(response.data);
         } else {
           console.error('Failed to fetch salary details');
         }
@@ -28,57 +42,73 @@ const UpdateSalaryPage = () => {
   // Handle form submission for updating salary details
   const handleSubmit = async (event) => {
     event.preventDefault();
-    alert()
-    // Implement your logic for updating salary details
+    try {
+      const response = await axios.put(`/api/salaries/update/${id}`, salary); // Adjust the URL as per your API endpoint
+      if (response.status === 200) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Successful',
+          text: 'Salary details have been updated!',
+          background: '#fff',
+          showConfirmButton: true,
+          confirmButtonText: 'Okay',
+          confirmButtonColor: '#0712e0',
+          iconColor: '#60e004',
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Error in updating salary details!',
+          background: '#fff',
+          showConfirmButton: true,
+          confirmButtonText: 'Okay',
+          confirmButtonColor: '#f2220f',
+          iconColor: '#60e004',
+        });
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Error in updating salary details!',
+        background: '#fff',
+        showConfirmButton: true,
+        confirmButtonText: 'Okay',
+        confirmButtonColor: '#f2220f',
+        iconColor: '#60e004',
+      });
+    }
   };
 
-  // Render a form to edit salary details
+  // Handle input change and update local storage
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setSalary(prevState => {
+      const updatedSalary = {
+        ...prevState,
+        [name]: value
+      };
+      localStorage.setItem('updatedSalary', JSON.stringify(updatedSalary));
+      return updatedSalary;
+    });
+  };
+
   return (
     <div>
       <h2>Update Salary</h2>
-      {salary && (
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="fname">First Name:</label>
-            <input type="text" id="fname" name="fname" value={salary.fname} />
-          </div>
-          <div>
-            <label htmlFor="lname">Last Name:</label>
-            <input type="text" id="lname" name="lname" value={salary.lname} />
-          </div>
-          <div>
-            <label htmlFor="email">Email:</label>
-            <input type="email" id="email" name="email" value={salary.email} />
-          </div>
-          <div>
-            <label htmlFor="role">Role:</label>
-            <input type="text" id="role" name="role" value={salary.role} />
-          </div>
-          <div>
-            <label htmlFor="base">Base Salary:</label>
-            <input type="number" id="base" name="base" value={salary.base} />
-          </div>
-          <div>
-            <label htmlFor="otRate">Overtime Rate:</label>
-            <input type="number" id="otRate" name="otRate" value={salary.otRate} />
-          </div>
-          <div>
-            <label htmlFor="otHours">Overtime Hours:</label>
-            <input type="number" id="otHours" name="otHours" value={salary.otHours} />
-          </div>
-          <div>
-            <label htmlFor="bonus">Bonus:</label>
-            <input type="number" id="bonus" name="bonus" value={salary.bonus} />
-          </div>
-          <div>
-            <label htmlFor="reason">Reason:</label>
-            <textarea id="reason" name="reason" value={salary.reason}></textarea>
-          </div>
-          <button type="submit">Update</button>
-        </form>
-      )}
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="fname">First Name:</label>
+          <input type="text" id="fname" name="fname" value={salary.fname} onChange={handleChange} />
+        </div>
+        {/* Add other input fields similarly */}
+        <button type="submit">Update</button>
+      </form>
     </div>
   );
 };
 
 export default UpdateSalaryPage;
+

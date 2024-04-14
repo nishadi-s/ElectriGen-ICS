@@ -12,6 +12,7 @@ import Analytics from "./pages/Analytics.jsx";
 import Logout from "./pages/Logout.jsx";
 
 import Navbar from './components/Navbar-uvi.jsx'
+import UpdateSalaryPage from "./components/UpdateSalary.jsx";
 
 
 function App() {
@@ -22,10 +23,11 @@ function App() {
         <Navbar />
         <div className="pages">
           <Routes>
-            <Route 
-              path="/" 
-              element={<Home />} 
-            />
+            <Route path="/" element={<Home />} />
+            <Route  path="/update"  element={<UpdateSalaryPage />} />
+             
+              
+           
           </Routes>
         </div>
       </BrowserRouter>
