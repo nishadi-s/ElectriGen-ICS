@@ -76,7 +76,7 @@ const ExportDetails=({exportt})=>{
                 </div>
             ))}
 
-            <p><strong>Total Cost: </strong>{exportt.totalCost}</p>
+            <p><strong>Total Cost(In Rs.): </strong>{exportt.totalCost}</p>
             <p><strong>Status: </strong>{exportt.status}</p>
             <p><strong>Created: </strong>{formatDistanceToNow(new Date(exportt.createdAt),{addSuffix:true})}</p>           
             <span className="delete-button material-symbols-outlined" onClick={handleClick}>Delete</span><br></br>

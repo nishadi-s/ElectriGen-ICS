@@ -57,6 +57,7 @@ import ExportOrders from "./pages/ExportOrders.jsx";
 import Importer from "./pages/Importer.jsx";
 import ExportAnalytics from "./pages/ExportAnalytics.jsx";
 import UpdateExports from "./pages/UpdateExports.jsx";
+import ImporterUpdate from "./pages/ImporterUpdate.jsx";
 
 const App = () => {
   return (
@@ -89,6 +90,7 @@ const App = () => {
             <Route path="/ExportAnalytics" element={<ExportAnalytics />} />
             <Route path="/ExportsProfile" element={<ExportsProfile />} />
             <Route path="/UpdateExports/:id" element={<UpdateExports />} />
+            <Route path="/ImporterUpdate/:id" element={<ImporterUpdate />} />
             {/* Define route for updating orders */}
             {/* Dulari */}
             <Route path="/New_Projects" element={<New_Projects />} />

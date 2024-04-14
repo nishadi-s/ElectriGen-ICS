@@ -87,11 +87,11 @@ const ExportForm = () => {
   return (
     
     <form className="exportCreate" onSubmit={handleSubmit}>
-      <h3>Add a new Export Order</h3>
+      <h3>Add a new Export Order</h3><br />
       
       {successMessage && <div className="success-message">{successMessage}</div>}
 
-      <label>Order ID: </label><br />
+      <label>Order ID: </label>
       <input
         type="text"
         onChange={(e) => setexportOrderID(e.target.value)}
@@ -99,7 +99,7 @@ const ExportForm = () => {
         className={emptyFields.includes('exportOrderID') ? 'error' : ''}
       /><br />
 
-      <label>Importer: </label><br />
+      <label>Importer: </label>
       <input
         type="text"
         onChange={(e) => setimporter(e.target.value)}
@@ -107,7 +107,7 @@ const ExportForm = () => {
         className={emptyFields.includes('importer') ? 'error' : ''}
       /><br />
 
-      <label>Item ID: </label><br />
+      <label>Item ID: </label>
       <input
         type="text"
         onChange={(e) => setitemID(e.target.value)}
@@ -115,7 +115,7 @@ const ExportForm = () => {
         className={emptyFields.includes('itemID') ? 'error' : ''}
       /><br />
 
-      <label>Quantity: </label><br />
+      <label>Quantity: </label>
       <input
         type="number"
         onChange={(e) => setquantity(e.target.value)}
@@ -123,9 +123,9 @@ const ExportForm = () => {
         className={emptyFields.includes('quantity') ? 'error' : ''}
       /><br />
 
-      <button type="button" onClick={addItem}>Add Item</button><br />
+      <button type="button" onClick={addItem}>Add Item</button><br /><br />
 
-      <label>Total Cost: </label><br />
+      <label>Total Cost(In Rs.): </label>
       <input
         type="number"
         onChange={(e) => settotalCost(e.target.value)}
@@ -133,7 +133,7 @@ const ExportForm = () => {
         className={emptyFields.includes('totalCost') ? 'error' : ''}
       /><br />
 
-      <label>Status: </label><br />
+      <label>Status: </label>
       <input
         type="text"
         onChange={(e) => setstatus(e.target.value)}

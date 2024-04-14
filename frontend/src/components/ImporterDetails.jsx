@@ -20,7 +20,7 @@ const ImporterDetails=({importer})=>{
             <p><strong>Contact Number: </strong>{importer.contactNumber}</p>
             <p><strong>Email: </strong>{importer.email}</p>
             <p><strong>Created: </strong>{formatDistanceToNow(new Date(importer.createdAt),{addSuffix:true})}</p><br></br>
-            <Link to={`/UpdateImporters/${importer._id}`} className="edit-button">Edit</Link> {/* Add Link for Edit button */}
+            <Link to={`/ImporterUpdate/${importer._id}`} className="edit-button">Edit</Link> {/* Add Link for Edit button */}
             <br></br>
             
         </div>

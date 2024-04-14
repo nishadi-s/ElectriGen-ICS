@@ -21,20 +21,23 @@ const ImporterForm=()=>{
     const handleSubmit=async(e)=>{
         e.preventDefault()
 
-        // Validate importerID format
-        if (!importerIDPattern.test(importerID)) {
-            setError('Importer ID should start with "I" followed by 3 digits (e.g., I123)');
-            return;
-        }
+        // Convert the first letter of the email to lowercase
+    const formattedEmail = email.charAt(0).toLowerCase() + email.slice(1);
 
-        // Email validation regex pattern
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Validate importerID format
+    if (!importerIDPattern.test(importerID)) {
+        setError('Importer ID should start with "I" followed by 3 digits (e.g., I123)');
+        return;
+    }
 
-        // Validate email format
-        if (!emailPattern.test(email)) {
-            setError('Invalid email format');
-            return; // Stop form submission if email is invalid
-        }
+    // Email validation regex pattern
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Validate email format
+    if (!emailPattern.test(formattedEmail)) {
+        setError('Invalid email format');
+        return; // Stop form submission if email is invalid
+    }
 
         const importer={importerID,importerName,address,contactNumber,email}
 
@@ -84,11 +87,11 @@ const ImporterForm=()=>{
 
     return(
         <form className="importerCreate" onSubmit={handleSubmit}>
-        <h3>Add a new Importer</h3>
+        <h3>Add a new Importer</h3><br />
 
         {successMessage && <div className="success-message">{successMessage}</div>}
 
-        <label>Dealer ID: </label><br></br>
+        <label>Importer ID: </label>
         <input
             type="text"
             onChange={(e)=>setimporterID(e.target.value)}
@@ -96,7 +99,7 @@ const ImporterForm=()=>{
             className={emptyFields.includes('importerID')?'error':''}
         /><br></br>
 
-        <label>Name: </label><br></br>
+        <label>Name: </label>
         <input
             type="text"
             onChange={(e)=>setimporterName(e.target.value)}
@@ -104,7 +107,7 @@ const ImporterForm=()=>{
             className={emptyFields.includes('importerName')?'error':''}
         /><br></br>
 
-        <label>Address: </label><br></br>
+        <label>Address: </label>
         <input
             type="text"
             onChange={(e)=>setaddress(e.target.value)}
@@ -112,7 +115,7 @@ const ImporterForm=()=>{
             className={emptyFields.includes('address')?'error':''}
         /><br></br>
 
-        <label>Contact Number: </label><br></br>
+        <label>Contact Number: </label>
         <input
             type="number"
             onChange={(e)=>setcontactNumber(e.target.value)}
@@ -120,7 +123,7 @@ const ImporterForm=()=>{
             className={emptyFields.includes('contactNumber')?'error':''}
         /><br></br>
 
-        <label>Email: </label><br></br>
+        <label>Email: </label>
         <input
             type="text"
             onChange={(e)=>setemail(e.target.value)}
@@ -128,7 +131,7 @@ const ImporterForm=()=>{
             className={emptyFields.includes('email')?'error':''}
         /><br></br><br></br>
 
-        <button> Add </button>
+        <button> Add Importer </button>
         {error && <div className="error">{error}</div>}
 
         </form>

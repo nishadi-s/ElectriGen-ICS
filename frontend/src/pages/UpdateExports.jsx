@@ -78,7 +78,7 @@ const UpdateExport = () => {
                 setTimeout(() => navigate('/ExportsDashboard'), 2000);
             } else {
                 const errorData = await response.json();
-                setError(errorData.error, "Error updating product");
+                setError(errorData.error, "Error updating export order");
                 setEmptyFields(errorData.emptyFields['']);
                 Swal.fire({
                     icon: 'error',
@@ -107,7 +107,7 @@ const UpdateExport = () => {
                         value={exportOrderID}
                         disabled
                     />
-                    <label>Importer: </label>
+                    <label>Importer ID: </label>
                     <input
                         type="text"
                         value={importer}
@@ -129,7 +129,7 @@ const UpdateExport = () => {
                             />
                         </div>
                     ))}
-                    <label>Total Cost: </label>
+                    <label>Total Cost(In Rs.): </label>
                     <input
                         type="number"
                         value={totalCost}
