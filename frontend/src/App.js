@@ -8,7 +8,6 @@ import Login from './pages/Login.jsx';
 import Signup from './pages/Signup.jsx';
 
 import ForgotPassword from './components/ForgotPassword.jsx';
-import UserDetails from './components/UserDetails'; // Import the UserDetails component
 import SalaryDetails from './components/SalaryDetails.jsx';
 import UpdateSalaryPage from './components/UpdateSalary.jsx'
 
@@ -28,7 +27,6 @@ function App() {
             <Route path="/forgotPassword" element={<ForgotPassword/>}></Route>
             <Route path="/resetPassword/:token" element={<ForgotPassword/>}></Route>
             <Route path="/signup" element={!user ? <Signup /> : <Navigate to="/" />} />
-            <Route path="/user-details/:id" element={<UserDetails />} /> {/* Add Route for UserDetails */}
           </Routes>
         </div>
       </BrowserRouter>
