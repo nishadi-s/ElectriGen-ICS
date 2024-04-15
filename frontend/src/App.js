@@ -3,7 +3,7 @@ import "./index.css";
 import { BrowserRouter, Route, Routes, Switch, Navigate } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
-import HomePage from "./pages/Home.jsx";
+import Home from "./pages/Home.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import MyProfile from "./pages/MyProfile.jsx";
 import Analytics from "./pages/Analytics.jsx";
@@ -13,14 +13,14 @@ import Home from "./pages/Home.jsx";
 //Uvindya
 import Navbar_Pay from './components/Navbar-uvi.jsx';
 //import { useAuthContext } from './hooks/useAuthContext';
-import Home from './pages/Home-Salary.jsx'
+//import Home from './pages/Home-Salary.jsx'
 //import Login from './pages/Login.jsx';
 //import Signup from './pages/Signup.jsx';
 //import ForgotPassword from './components/ForgotPassword.jsx';
 //import SalaryDetails from './components/SalaryDetails.jsx';
 import UpdateSalaryPage from './components/UpdateSalary.jsx'
 import AddSalaryPage from './pages/AddSalary.jsx';
-import Logout from './pages/Logout.jsx'
+//import Logout from './pages/Logout.jsx'
 import SalaryDetailsPage from './pages/SalaryDetailsPage.jsx';
 
 
