@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSupplierOrderContext } from "../hooks/useSupplierOrderContext";
+import Swal from 'sweetalert2'; // Import SweetAlert2
 import NavbarNishadi from '../components/SupplierOrderNavbar'
 
 const SupplierOrderForm = () => {
+  const navigate = useNavigate();
   const { dispatch } = useSupplierOrderContext();
   const [Sup_Ord_id, setOrder_ID] = useState("");
   const [Sup_ID, setSupplier_ID] = useState("");
@@ -57,6 +60,16 @@ const SupplierOrderForm = () => {
         setError(null);
         setEmptyFields([]);
         dispatch({ type: "CREATE_ORDER", payload: json });
+
+        // Display success message using SweetAlert2
+        Swal.fire({
+          icon: 'success',
+          title: 'Order details have been successfully added',
+          showConfirmButton: false,
+          timer: 2000 // Close after 2 seconds
+        }).then(() => {
+          navigate(`/Order/`); // Navigate to the supplier order page 
+        });
       }
     } catch (error) {
       console.error("Error:", error);

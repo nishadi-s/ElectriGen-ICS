@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSupplierContext } from "../hooks/useSupplierContext";
+import Swal from 'sweetalert2'; // Import SweetAlert2
+import '../SupplierOrder.css';
 
 const SupplierForm = ({ supplierToUpdate }) => {
   const { dispatch } = useSupplierContext();
@@ -87,6 +89,14 @@ const SupplierForm = ({ supplierToUpdate }) => {
       setError(null);
       setEmptyFields([]);
       dispatch({ type: supplierToUpdate ? "UPDATE_SUPPLIER" : "CREATE_SUPPLIER", payload: json });
+
+      // Display success message using SweetAlert2
+      Swal.fire({
+        icon: 'success',
+        title: 'Supplier details have been successfully added',
+        showConfirmButton: false,
+        timer: 2000 // Close after 2 seconds
+      });
     }
   };
 

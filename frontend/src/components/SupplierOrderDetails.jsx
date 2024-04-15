@@ -1,20 +1,44 @@
 import { useSupplierOrderContext } from "../hooks/useSupplierOrderContext";
 import { format, formatDistanceToNow } from 'date-fns'; // Import format and formatDistanceToNow from date-fns
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2'; // Import SweetAlert
 import '../SupplierOrder.css';
 
 const SupplierOrderDetails = ({ order }) => {
   const { dispatch } = useSupplierOrderContext();
   const navigate = useNavigate();
 
-  const handleClick = async () => {
-    const response = await fetch('/api/supplier_order/' + order._id, {
-      method: 'DELETE'
-    });
-    const json = await response.json();
+  const handleEdit = () => {
+    navigate(`/supplierOrder/${order._id}`); // Navigate to the edit form page with supplier order ID
+  };
 
-    if (response.ok) {
-      dispatch({ type: 'DELETE_ORDER', payload: json });
+  const handleClick = async () => {
+    // Show SweetAlert confirmation dialog
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'You are about to delete this order. This action cannot be undone.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6', // Blue color for delete button
+      cancelButtonColor: '#d33', // Red color for cancel button
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel'
+    });
+
+    // If user confirms deletion
+    if (result.isConfirmed) {
+      const response = await fetch('/api/supplier_order/' + order._id, {
+        method: 'DELETE'
+      });
+      const json = await response.json();
+
+      if (response.ok) {
+        dispatch({ type: 'DELETE_ORDER', payload: json });
+        Swal.fire('Deleted!', 'The order has been deleted.', 'success');
+      } else {
+        // If deletion fails
+        Swal.fire('Error!', 'Failed to delete the order.', 'error');
+      }
     }
   };
 
@@ -38,7 +62,7 @@ const SupplierOrderDetails = ({ order }) => {
       <p><strong>Supplier Rating:</strong> {order.Sup_rating}</p>
       <p>{formatDistanceToNow(new Date(order.createdAt), { addSuffix: true })}</p>
       
-      <button className='button1' onClick={() => navigate('/update/:id')}>Edit</button>
+      <button className='button1' onClick={handleEdit}>Edit</button>
       <button onClick={handleClick} className="btn-delete">Delete</button>
     </div>
   );
