@@ -105,7 +105,7 @@ const ExportForm = () => {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <TextField
-                            label="Item ID"
+                            label="Item Name"
                             variant="outlined"
                             fullWidth
                             value={itemID}

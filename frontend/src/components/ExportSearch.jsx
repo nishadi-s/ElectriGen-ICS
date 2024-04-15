@@ -1,18 +1,17 @@
 import React, { useState, useMemo } from 'react';
 import { useExportsContext } from '../hooks/useExportsContext';
-import ExportDetails from './ExportDetails'; // Import ExportDetails component
+import ExportDetails from './ExportDetails';
+import { TextField, Button, Select, MenuItem, FormControl, InputLabel, IconButton } from '@mui/material'; // Import Material-UI components
+import SearchIcon from '@mui/icons-material/Search'; // Import search icon
 
 const ExportSearch = () => {
-  const { exports } = useExportsContext(); // Get exports from context
+  const { exports } = useExportsContext();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedMonth, setSelectedMonth] = useState('');
 
-  const [searchQuery, setSearchQuery] = useState(''); // State to store search query
-  const [selectedMonth, setSelectedMonth] = useState(''); // State to store selected month
-
-  // Memoized filtered exports
   const filteredExports = useMemo(() => {
-    if (!exports) return []; // Return empty array if exports is null or undefined
+    if (!exports) return [];
 
-    // Filter exports based on search query and selected month
     let filtered = exports;
     if (searchQuery) {
       filtered = filtered.filter(exportt =>
@@ -29,26 +28,22 @@ const ExportSearch = () => {
     return filtered;
   }, [exports, searchQuery, selectedMonth]);
 
-  // Function to handle search
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
   };
 
-  // Function to handle filter by month
   const handleFilterByMonth = (e) => {
     setSelectedMonth(e.target.value);
   };
 
   const printOrder = () => {
-    // Hide unnecessary elements before printing
     const buttons = document.querySelectorAll('button');
     buttons.forEach(button => {
         button.style.display = 'none';
     });
 
-    window.print(); // Print the document
+    window.print();
 
-    // Restore button visibility after printing
     buttons.forEach(button => {
         button.style.display = 'block';
     });
@@ -56,31 +51,50 @@ const ExportSearch = () => {
 
   return (
     <div>
-      {/* Search input field */}
-      <input
+      {/* Material-UI Text Field for search input */}
+      <TextField
         type="text"
-        placeholder="Search by order ID"
+        label="Search by order ID"
+        variant="outlined"
         value={searchQuery}
         onChange={handleSearch}
+        fullWidth // Make the TextField take full width
+        size="medium" // Increase the size of the TextField
+        sx={{ mb: 2 }} // Add margin bottom for spacing
+        InputProps={{
+          endAdornment: (
+            <IconButton>
+              <SearchIcon />
+            </IconButton>
+          ) // Add an icon button as an adornment
+        }}
       />
 
-      {/* Filter by month dropdown */}
-      <select value={selectedMonth} onChange={handleFilterByMonth}>
-        <option value="">Filter by month</option>
-        <option value="2024-01-01">January</option>
-        <option value="2024-02-01">February</option>
-        <option value="2024-03-01">March</option>
-        <option value="2024-04-01">April</option>
-        <option value="2024-05-01">May</option>
-        <option value="2024-06-01">June</option>
-        <option value="2024-07-01">July</option>
-        <option value="2024-08-01">August</option>
-        <option value="2024-09-01">September</option>
-        <option value="2024-10-01">October</option>
-        <option value="2024-11-01">November</option>
-        <option value="2024-12-01">December</option>
-        {/* Add more options for other months */}
-      </select>
+      {/* Material-UI Select for filtering by month */}
+      <FormControl variant="outlined" sx={{ width: '20%', mb: 2 }}> {/* Adjust the width and margin bottom */}
+        <InputLabel>Filter by month</InputLabel>
+        <Select
+          value={selectedMonth}
+          onChange={handleFilterByMonth}
+          label="Filter by month"
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value="2024-01-01">January</MenuItem>
+          <MenuItem value="2024-02-01">February</MenuItem>
+          <MenuItem value="2024-03-01">March</MenuItem>
+          <MenuItem value="2024-04-01">April</MenuItem>
+          <MenuItem value="2024-05-01">May</MenuItem>
+          <MenuItem value="2024-06-01">June</MenuItem>
+          <MenuItem value="2024-07-01">July</MenuItem>
+          <MenuItem value="2024-08-01">August</MenuItem>
+          <MenuItem value="2024-09-01">September</MenuItem>
+          <MenuItem value="2024-10-01">October</MenuItem>
+          <MenuItem value="2024-11-01">November</MenuItem>
+          <MenuItem value="2024-12-01">December</MenuItem>
+        </Select>
+      </FormControl>
 
       {/* Display filtered exports */}
       {filteredExports.length > 0 ? (
@@ -93,7 +107,8 @@ const ExportSearch = () => {
         <p>No exports found.</p>
       )}
 
-      <button onClick={printOrder}>Download Report</button>
+      {/* Material-UI Button for downloading report */}
+      <Button variant="contained" onClick={printOrder}>Download Report</Button>
     </div>
   );
 };

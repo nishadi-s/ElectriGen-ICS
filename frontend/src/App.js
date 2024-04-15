@@ -58,6 +58,7 @@ import Importer from "./pages/Importer.jsx";
 import ExportAnalytics from "./pages/ExportAnalytics.jsx";
 import UpdateExports from "./pages/UpdateExports.jsx";
 import ImporterUpdate from "./pages/ImporterUpdate.jsx";
+import Home from "./pages/Home.jsx";
 
 const App = () => {
   return (
@@ -65,8 +66,8 @@ const App = () => {
       
         
           <Routes>
-            {/* <Route path="/" element={<Dashboard />} />
-            <Route path="/Dashboard" element={<Dashboard />} /> */}
+            
+            <Route path="/Dashboard" element={<Dashboard />} /> 
             <Route path="/Analytics" element={<Analytics />} />
             <Route path="/MyProfile" element={<MyProfile />} />
             <Route path="/Logout" element={<Logout />} />
@@ -82,7 +83,8 @@ const App = () => {
           <Route path="/Suppliers/supplieredit/Suppliers" element={<Suppliers />} />
   
             {/* Shanali */}
-            <Route path="/" element={<ExportsDashboard />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/Home" element={<Home />} />            
             <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
             <Route path="/Importer" element={<Importer />} />
             <Route path="/ExportOrders" element={<ExportOrders />} />
