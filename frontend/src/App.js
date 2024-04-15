@@ -38,6 +38,10 @@ import InvoiceReport from "./pages/InvoiceReport.jsx";
 import SalesDashboard from "./pages/SalesDashboard.jsx";
 import SDFeedback from "./pages/SDFeedback";
 import SDView from "./pages/SDView.jsx";
+import InvoiceReport from "./pages/InvoiceReport.jsx";
+import SalesDashboard from "./pages/SalesDashboard.jsx";
+import SDFeedback from "./pages/SDFeedback";
+import SDView from "./pages/SDView.jsx";
 
 //Dinithi
 import DisSignup from "./pages/DisSignup.js";
@@ -131,6 +135,11 @@ const App = () => {
           <Route path="/sfeedbackFetch" element={<SfeedbackFetch />} />
           <Route path="/viewInvoice" element={<ViewInvoice />} />
           <Route path="/PinVerification" element={<PinVerification />} />
+          <Route path="/InvoiceUpdate/:billID" element={<InvoiceUpdate />} />
+          <Route path="/InvoiceReport" element={<InvoiceReport />} />
+          <Route path="/SalesDashboard" element={<SalesDashboard />} />
+          <Route path="/SDFeedback" element={<SDFeedback />} />
+          <Route path="/SDView" element={<SDView />} />
           <Route path="/InvoiceUpdate/:billID" element={<InvoiceUpdate />} />
           <Route path="/InvoiceReport" element={<InvoiceReport />} />
           <Route path="/SalesDashboard" element={<SalesDashboard />} />
