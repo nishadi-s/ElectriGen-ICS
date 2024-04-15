@@ -1,18 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect,  } from "react";
+import { useNavigate } from 'react-router-dom'
 import { useOrdersContext } from "../hooks/useOrdersContext";
 import { useDisDAuthContext } from "../hooks/useDisDAuthContext";
 
 const OrderForm = () => {
   const { dispatch } = useOrdersContext();
   const { distributor } = useDisDAuthContext();
+  const navigate = useNavigate();
 
   const [distributorId, setDistributorId] = useState("");
   const [distributorName, setDistributorName] = useState("");
-  const [orderStatus, setOrderStatus] = useState("");
+  const [orderStatus, setOrderStatus] = useState("Placed");
   const [items, setItems] = useState([{ code: "", name: "", unit: "", quantity: "" }]);
   const [totalAmount, setTotalAmount] = useState("");
   const [error, setError] = useState("");
   const [emptyFields, setEmptyFields] = useState([]);
+
+  // Function to calculate the total amount based on item unit price and quantity
+  const calculateTotalAmount = () => {
+    const total = items.reduce((acc, item) => acc + (item.unit * item.quantity), 0);
+    setTotalAmount(total);
+  };
+
+  useEffect(() => {
+    calculateTotalAmount();
+  }, [items]); // Recalculate total amount whenever items change
 
   const handleItemChange = (index, field, value) => {
     const updatedItems = [...items];
@@ -27,9 +39,23 @@ const OrderForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    
+
     if(!distributor){
       setError('You must be logged in')
       return
+    }
+
+    // Check if any field is empty
+    if (!distributorId || !distributorName || !totalAmount || items.some(item => !item.code || !item.name || !item.unit || !item.quantity)) {
+      setError('Please fill in all fields');
+      return;
+    }
+
+    // Check if item code starts with "IT"
+    if (items.some(item => !item.code.startsWith("IT"))) {
+      setError('Item code should start with "IT"');
+      return;
     }
 
     try {
@@ -57,7 +83,7 @@ const OrderForm = () => {
       } else {
         setDistributorId("");
         setDistributorName("");
-        setOrderStatus("");
+        setOrderStatus("Placed");
         setItems([{ code: "", name: "", unit: "", quantity: "" }]);
         setTotalAmount("");
 
@@ -70,6 +96,8 @@ const OrderForm = () => {
       setError("An error occurred while submitting the order.");
       console.error("Error submitting order:", error);
     }
+
+    navigate('/OrderHistory');
   };
 
   return (
@@ -95,8 +123,8 @@ const OrderForm = () => {
       <label>Order Status</label>
       <input
         type="text"
-        onChange={(e) => setOrderStatus(e.target.value)}
         value={orderStatus}
+        readOnly
       />
 
       {items.map((item, index) => (
@@ -129,6 +157,13 @@ const OrderForm = () => {
             value={item.quantity}
           />
 
+          <label>Item({index + 1}) Total Price</label>
+          <input
+            type="text"
+            value={item.unit * item.quantity}
+            readOnly
+          />
+
           <button type="button" onClick={addNewItem}>
             Add Item
           </button>
@@ -138,8 +173,8 @@ const OrderForm = () => {
       <label>Total Amount to Pay</label>
       <input
         type="number"
-        onChange={(e) => setTotalAmount(e.target.value)}
         value={totalAmount}
+        readOnly
       />
 
       <button type="submit">Submit</button>

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
-import { useOrdersContext } from '../hooks/useOrdersContext.js'
-import { useDisDAuthContext } from '../hooks/useDisDAuthContext.js'
-import OrderForm from '../components/OrderForm.js' //components
+import { useOrdersContext } from '../hooks/useOrdersContext.jsx'
+import { useDisDAuthContext } from '../hooks/useDisDAuthContext.jsx'
+import OrderForm from '../components/OrderForm.jsx' //components
 import NavbarDini1 from '../components/DisNavbar.jsx'
 
 const OrderPlace = () => {
@@ -32,7 +32,7 @@ const OrderPlace = () => {
 
     return (
         <NavbarDini1>
-        <div className="OrderPlace">
+        <div className="OrderPlace" >
             <OrderForm/>
         </div>
         </NavbarDini1>

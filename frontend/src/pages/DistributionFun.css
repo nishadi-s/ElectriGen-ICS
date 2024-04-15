@@ -6,6 +6,13 @@
   --primary: #233066;
   --error: #e7195a;
 }
+
+html{
+  background-image: url("/public/dback1.png") ;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 body {
   background: #f1f1f1;
   margin: 0;
@@ -64,27 +71,81 @@ header a {
 
 
 /* new order form */
-label, input {
-  display: block;
+.create {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-input {
-  padding: 10px;
-  margin-top: 10px;
+
+.create h3 {
+  margin-top: 0;
   margin-bottom: 20px;
+  font-size: 24px;
+  color: #233066;
+}
+
+.create label {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.create input[type="text"],
+.create input[type="number"] {
   width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
   border: 1px solid #ddd;
   border-radius: 4px;
   box-sizing: border-box;
 }
-form button {
-  background: var(--primary);
-  border: 0;
+
+.create input[type="text"]:focus,
+.create input[type="number"]:focus {
+  outline-color: #233066;
+}
+
+.create input.error {
+  border-color: #e7195a;
+}
+
+.create .error {
+  color: #e7195a;
+  margin-top: 8px;
+}
+
+.create button[type="submit"] {
+  background-color: #233066;
   color: #fff;
-  padding: 10px;
-  font-family: "Poppins";
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
+
+.create button[type="submit"]:hover {
+  background-color: #1a2550;
+}
+
+.create button[type="button"] {
+  background-color: #808080;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create button[type="button"]:hover {
+  background-color: #666666;
+}
+
 div.error {
   padding: 10px;
   background: #ffefef;

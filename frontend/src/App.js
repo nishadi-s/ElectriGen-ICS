@@ -36,21 +36,18 @@ import { SalesContextProvider } from "./context/SalesContext.jsx";
 import InvoiceUpdate from "./pages/InvoiceUpdate.jsx";
 
 //Dinithi
-import DisSignup from "./pages/DisSignup.js";
-import DisLogin from "./pages/DisLogin.js";
+import DisSignup from "./pages/DisSignup.jsx";
+import DisLogin from "./pages/DisLogin.jsx";
 import DisDashboard from "./pages/DisDashboard.jsx";
 import DisMyProfile from "./pages/DisMyProfile.jsx";
 import DisAnalytics from "./pages/DisAnalytics";
-import OrderPlace from './pages/OrderPlacement.js'
-import OrderHistory from './pages/OrderHistory.js';
-import OrderSuccess from './pages/OrderSucess.js';
-import UpdateOrder from './pages/UpdateOrderDetails.js';
-import { useDisDAuthContext } from "./hooks/useDisDAuthContext.js";
-import HomePage from "./pages/DinHome.js";
-import OrderPlace from "./pages/OrderPlacement.js";
-import OrderHistory from "./pages/OrderHistory.js";
-import OrderSuccess from "./pages/OrderSucess.js";
-import UpdateOrder from "./pages/UpdateOrderDetails.js";
+import OrderPlace from './pages/OrderPlacement.jsx'
+import OrderHistory from './pages/OrderHistory.jsx';
+import OrderSuccess from './pages/OrderSucess.jsx';
+import UpdateOrder from './pages/UpdateOrderDetails.jsx';
+import { useDisDAuthContext } from "./hooks/useDisDAuthContext.jsx";
+import HomePage from "./pages/DinHome.jsx";
+//distribution managers
 
 //Senith
 import Materials from "./pages/Materials.jsx";
@@ -61,7 +58,6 @@ import ProductionDashboard from "./pages/ProductionDashboard.jsx";
 import SingleProduct from "./components/SingleProduct"; // Import SingleProduct
 import EditProduct from "./components/EditProduct"; // Import EditProduct
 import ProductForm from "./components/ProductForm";
-
 
 //Shanali
 import ExportsDashboard from "./pages/ExportsDashboard.jsx";
@@ -127,7 +123,7 @@ const App = () => {
           <Route path="/sfeedbackFetch" element={<SfeedbackFetch />} />
           <Route path="/viewInvoice" element={<ViewInvoice />} />
           <Route path="/PinVerification" element={<PinVerification />} />
-          <Route path="/InvoiceUpdate" element={InvoiceUpdate} />
+          <Route path="/InvoiceUpdate" element={<InvoiceUpdate/>} />
             
           {/* Dinithi */}
           <Route path="/" element={<HomePage />} />
@@ -140,10 +136,7 @@ const App = () => {
           <Route path="/OrderHistory" element = {<OrderHistory />} />
           <Route path="/OrderSuccess" element={<OrderSuccess/>}/>
           <Route path="/update/:id" element={<UpdateOrder />} /> {/* Define route for updating orders */}
-          <Route path="/OrderForm" element={<OrderPlace />} />
-          <Route path="/OrderHistory" element={<OrderHistory />} />
-          <Route path="/OrderSuccess" element={<OrderSuccess />} />
-          <Route path="/update/:id" element={<UpdateOrder />} />{" "}
+
           {/* Define route for updating orders */}
 
           {/*Senith */}

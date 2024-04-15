@@ -1,4 +1,3 @@
-
 require("dotenv").config(); // Load environment variables from the .env file
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -8,13 +7,8 @@ const mongoose = require("mongoose");
 const app = express();
 
 app.use(express.json());
-
-// Create an Express app
-const app = express();
-
 app.use(bodyParser.json());
 app.use(cors());
-app.use(express.json());
 
 // Middleware to log incoming requests
 app.use((req, res, next) => {
@@ -35,6 +29,7 @@ mongoose
   .catch((error) => {
     console.log(error); // Log any errors that occur during database connection
   });
+
 
 //middleware-importer
 app.use(express.json());
@@ -60,6 +55,7 @@ app.use("/dFeedback", dFeedbackRouter);
 //Dinithi
 const orderRoutes = require("./routes/orders.js");
 const distributorRoutes = require("./routes/distributor.js");
+
 app.use("/api/orders", orderRoutes); // Order routes
 app.use("/api/distributor", distributorRoutes); //distributor route(distributor authentication)
 
