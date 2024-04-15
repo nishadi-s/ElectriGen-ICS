@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, TableCell, TableRow, Button } from '@mui/material';
+import { Table, TableBody, TableCell, TableRow, Button, Typography } from '@mui/material';
 import Swal from 'sweetalert2';
 import { useSalaryContext } from '../hooks/useSalaryContext';
 import { Link } from 'react-router-dom';
@@ -54,53 +54,43 @@ const SalaryDetails = ({ salary }) => {
   return (
     <div className="salary-details">
       <Table>
-        <TableRow>
-          <TableCell><strong>Full Name:</strong></TableCell>
-          <TableCell>{salary.fname} {salary.lname}</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell><strong>Email:</strong></TableCell>
-          <TableCell>{salary.email}</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell><strong>Role:</strong></TableCell>
-          <TableCell>{salary.role}</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell><strong>Base Salary:</strong></TableCell>
-          <TableCell>${salary.base}</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell><strong>Overtime Rate:</strong></TableCell>
-          <TableCell>{salary.otRate}</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell><strong>Overtime Hours:</strong></TableCell>
-          <TableCell>{salary.otHours}</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell><strong>Bonus:</strong></TableCell>
-          <TableCell>${salary.bonus}</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell><strong>Reason:</strong></TableCell>
-          <TableCell>{salary.reason}</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell><strong>Final Salary:</strong></TableCell>
-          <TableCell>${salary.finalSal}</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell colSpan={2}>
-            <Button variant="contained" color="primary" component={Link} to={`/UpdateSalary/${salary._id}`}>Update</Button>
-            <Button variant="contained" color="primary" onClick={handleDelete}>Delete</Button>
-          </TableCell>
-        </TableRow>
+        <TableBody>
+          <TableRow>
+            <TableCell><strong>Full Name:</strong></TableCell>
+            <TableCell><Typography variant="body1">{salary.fname} {salary.lname}</Typography></TableCell>
+            <TableCell><strong>Email:</strong></TableCell>
+            <TableCell><Typography variant="body1">{salary.email}</Typography></TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><strong>Role:</strong></TableCell>
+            <TableCell><Typography variant="body1">{salary.role}</Typography></TableCell>
+            <TableCell><strong>Base Salary:</strong></TableCell>
+            <TableCell><Typography variant="body1">${salary.base}</Typography></TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><strong>Overtime Rate:</strong></TableCell>
+            <TableCell><Typography variant="body1">{salary.otRate}</Typography></TableCell>
+            <TableCell><strong>Overtime Hours:</strong></TableCell>
+            <TableCell><Typography variant="body1">{salary.otHours}</Typography></TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><strong>Bonus:</strong></TableCell>
+            <TableCell><Typography variant="body1">${salary.bonus}</Typography></TableCell>
+            <TableCell><strong>Reason:</strong></TableCell>
+            <TableCell><Typography variant="body1">{salary.reason}</Typography></TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><strong>Final Salary:</strong></TableCell>
+            <TableCell><Typography variant="body1">${salary.finalSal}</Typography></TableCell>
+            <TableCell colSpan={2}>
+              <Button variant="contained" color="primary" component={Link} to={`/UpdateSalary/${salary._id}`}>Update</Button>
+              <Button variant="contained" color="primary" onClick={handleDelete}>Delete</Button>
+            </TableCell>
+          </TableRow>
+        </TableBody>
       </Table>
     </div>
   );
 };
 
 export default SalaryDetails;
-
-
