@@ -8,7 +8,6 @@ const productionSchema = new Schema(
       type: Date,
       required: true,
     },
-
     materials: [
       {
         materialName: {
@@ -25,37 +24,35 @@ const productionSchema = new Schema(
         },
       },
     ],
-
     products: [
       {
-        productName: {
+        name: {
           type: String,
           required: true,
         },
-        productNo: {
+        itemCode: {
           type: String,
           required: true,
         },
-        colors: [
-          {
-            colorName: {
-              type: String,
-              required: true,
-            },
-            usableQty: {
-              type: Number,
-              required: true,
-            },
-            damagedQty: {
-              type: Number,
-              required: true,
-            },
-          },
-        ],
+        unitPrice: {
+          type: Number,
+          required: true,
+        },
+        category: {
+          type: String,
+          required: true,
+        },
+        color: {
+          type: String,
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+        },
       },
     ],
   },
-
   { timestamps: true }
 );
 

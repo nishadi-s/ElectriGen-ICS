@@ -40,6 +40,10 @@ const createProduction = async (req, res) => {
       materials,
       products,
     });
+
+    // Update product quantities based on production
+    await updateProductQuantities(products);
+
     res.status(200).json(production);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -79,6 +83,10 @@ const updateProduction = async (req, res) => {
       { ...req.body },
       { new: true }
     );
+
+    // Update product quantities based on updated production
+    await updateProductQuantities(updatedProduction.products);
+
     if (!updatedProduction) {
       return res.status(404).json({ error: "No such production" });
     }
@@ -86,6 +94,11 @@ const updateProduction = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+};
+
+// Function to update product quantities based on production
+const updateProductQuantities = async (products) => {
+  // Implement logic to update product quantities here
 };
 
 module.exports = {

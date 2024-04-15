@@ -17,15 +17,6 @@ import {
 const ProductDetails = ({ product }) => {
   const { dispatch } = useProductContext();
 
-  // Calculate total number of colors
-  const totalColors = product.colors.length;
-
-  // Calculate total quantity of all colors
-  const totalQuantity = product.colors.reduce(
-    (acc, curr) => acc + curr.quantity,
-    0
-  );
-
   return (
     <TableContainer component={Paper}>
       {/* Moved TableHead outside the loop */}
@@ -39,9 +30,9 @@ const ProductDetails = ({ product }) => {
               </Link>
             </TableCell>
             <TableCell align="right">{product.category}</TableCell>
+            <TableCell align="right">{product.color}</TableCell>
             <TableCell align="right">{product.unitPrice}</TableCell>
-            <TableCell align="right">{totalColors}</TableCell>
-            <TableCell align="right">{totalQuantity}</TableCell>
+            <TableCell align="right">{product.quantity}</TableCell>
           </TableRow>
         </TableBody>
       </Table>

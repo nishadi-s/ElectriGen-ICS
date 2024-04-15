@@ -1,57 +1,77 @@
-const ProducionDetails = ({ production }) => {
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import { useProductionContext } from "../hooks/useProductionContext";
+import { FaRegTrashCan } from "react-icons/fa6";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
+
+const ProductionDetails = ({ production }) => {
+  const { dispatch } = useProductionContext();
+  const [deleted, setDeleted] = useState(false);
+
+  const handleDelete = async () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#233066",
+      cancelButtonColor: "#EC2026",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const response = await fetch("/api/production/" + production._id, {
+          method: "DELETE",
+        });
+        const json = await response.json();
+        if (response.ok) {
+          dispatch({ type: "DELETE_PRODUCTION", payload: json });
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success",
+          }).then(() => {
+            setDeleted(true);
+          });
+        } else {
+          Swal.fire({
+            title: "Error!",
+            text: "Failed to delete the record.",
+            icon: "error",
+          });
+        }
+      }
+    });
+  };
+
+  if (deleted) {
+    return null;
+  }
+
   return (
     <div className="product-details">
-      <table class="table align-middle mb-0 bg-white">
-        <thead class="bg-light">
-          <tr>
-            <th>Date</th>
-            <th>Material name</th>
-            <th>Material code</th>
-            <th>Material quantity</th>
-            <th>Product name</th>
-            <th>Product color</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <img
-                  src="https://mdbootstrap.com/img/new/avatars/8.jpg"
-                  alt=""
-                  style={{ width: "45px", height: "45px" }}
-                  class="rounded-circle"
-                />
-                <div class="ms-3">
-                  <p class="fw-bold mb-1">{production.date}</p>
-                </div>
-              </div>
-            </td>
-            <td>
-              <button type="button" class="btn btn-link btn-sm btn-rounded">
-                Edit
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      {/* <table className="productsTable">
-          <tr>
-            <th></th>
-          </tr>
-          <tr>
-            <td>{product.itemCode}</td>
-            <td>{product.name}</td>
-            <td>{product.category}</td>
-            <td>{product.color}</td>
-            <td>{product.cost}</td>
-            <td>{product.unitPrice}</td>
-            <td></td>
-          </tr>
-    </table>*/}
+      <h4>Date: {production.date}</h4>
+      <h5>Materials:</h5>
+      <ul>
+        {production.materials.map((material, index) => (
+          <li key={index}>
+            {material.materialName} - {material.materialQuantity}
+          </li>
+        ))}
+      </ul>
+      <h5>Products:</h5>
+      <ul>
+        {production.products.map((product, index) => (
+          <li key={index}>
+            {product.name} - {product.quantity}
+          </li>
+        ))}
+      </ul>
+      <button onClick={handleDelete}>
+        <FaRegTrashCan />
+      </button>
     </div>
   );
 };
 
-export default ProducionDetails;
+export default ProductionDetails;

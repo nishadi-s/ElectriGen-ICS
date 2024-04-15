@@ -3,15 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import "../senith.css";
 import ProductionNavbar from "../components/ProductionNavbar";
 
-const colorsData = [
-  { name: "White", color: "#ffffff" },
-  { name: "Black", color: "#000000" },
-  { name: "Grey", color: "#808080" },
-  { name: "Orange", color: "#ffA500" },
-  { name: "Green", color: "#008000" },
-  { name: "Blue", color: "#0000ff" },
-];
-
 const EditProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -20,8 +11,9 @@ const EditProduct = () => {
   const [name, setName] = useState("");
   const [itemCode, setItemCode] = useState("");
   const [category, setCategory] = useState("");
-  const [colors, setColors] = useState([{ color: "", quantity: "" }]);
+  const [color, setColor] = useState("");
   const [unitPrice, setUnitPrice] = useState("");
+  const [quantity, setQuantity] = useState("");
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
 
@@ -36,8 +28,9 @@ const EditProduct = () => {
         setName(productData.name);
         setItemCode(productData.itemCode);
         setCategory(productData.category);
-        setColors(productData.colors);
+        setColor(productData.color);
         setUnitPrice(productData.unitPrice);
+        setQuantity(productData.quantity);
       } catch (error) {
         console.error("Error fetching product data:", error);
       }
@@ -53,8 +46,9 @@ const EditProduct = () => {
       name,
       itemCode,
       category,
-      colors,
+      color,
       unitPrice,
+      quantity,
     };
 
     const response = await fetch(`/api/products/${id}`, {
@@ -70,8 +64,9 @@ const EditProduct = () => {
       setName(updatedProductData.name);
       setItemCode(updatedProductData.itemCode);
       setCategory(updatedProductData.category);
-      setColors(updatedProductData.colors);
+      setColor(updatedProductData.color);
       setUnitPrice(updatedProductData.unitPrice);
+      setQuantity(updatedProductData.quantity);
 
       navigate(`/products`); // Redirect to single product page
     } else {
@@ -79,16 +74,6 @@ const EditProduct = () => {
       setError(errorData.error || "Error updating product");
       setEmptyFields(errorData.emptyFields || []);
     }
-  };
-
-  const handleColorChange = (index, key, value) => {
-    const updatedColors = [...colors];
-    updatedColors[index][key] = value;
-    setColors(updatedColors);
-  };
-
-  const handleAddColor = () => {
-    setColors([...colors, { color: "", quantity: "" }]);
   };
 
   return (
@@ -104,60 +89,38 @@ const EditProduct = () => {
         <label>Product category:</label>
         <input
           type="text"
-          onChange={(e) => setCategory(e.target.value)}
+          onChange={(e) => setCategory(e.target.value)} // Use setCategory
           value={category}
           className={emptyFields.includes("category") ? "error" : ""}
         />
         <label>Product code:</label>
         <input
           type="text"
-          onChange={(e) => setItemCode(e.target.value)}
+          onChange={(e) => setItemCode(e.target.value)} // Use setItemCode
           value={itemCode}
           className={emptyFields.includes("itemCode") ? "error" : ""}
+        />
+        <label>Color:</label>
+        <input
+          type="text"
+          onChange={(e) => setColor(e.target.value)} // Use setColor
+          value={color}
+          className={emptyFields.includes("color") ? "error" : ""}
         />
         <label>Unit price(in Rs.):</label>
         <input
           type="number"
-          onChange={(e) => setUnitPrice(e.target.value)}
+          onChange={(e) => setUnitPrice(e.target.value)} // Use setUnitPrice
           value={unitPrice}
           className={emptyFields.includes("unitPrice") ? "error" : ""}
         />
-        <label>Colors:</label>
-        {colors.map((color, index) => (
-          <div key={index}>
-            <label>Color({index + 1})</label>
-            <div className="color-dropdown">
-              <select
-                value={color.color}
-                onChange={(e) =>
-                  handleColorChange(index, "color", e.target.value)
-                }
-              >
-                <option value="">Select Color</option>
-                {colorsData.map((option, i) => (
-                  <option key={i} value={option.color}>
-                    {option.name}
-                  </option>
-                ))}
-              </select>
-              <div
-                className="color-sample"
-                style={{ backgroundColor: color.color }}
-              ></div>
-            </div>
-            <label>Quantity({index + 1})</label>
-            <input
-              type="number"
-              onChange={(e) =>
-                handleColorChange(index, "quantity", e.target.value)
-              }
-              value={color.quantity}
-            />
-          </div>
-        ))}
-        <button type="button" onClick={handleAddColor}>
-          Add Color
-        </button>
+        <label>Quantity:</label>
+        <input
+          type="number"
+          onChange={(e) => setQuantity(e.target.value)} // Use setQuantity
+          value={quantity}
+          className={emptyFields.includes("quantity") ? "error" : ""}
+        />
 
         <button>Update Product</button>
         {error && <div className="error">{error}</div>}

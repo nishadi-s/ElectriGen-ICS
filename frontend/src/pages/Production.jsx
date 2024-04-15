@@ -1,37 +1,49 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../senith.css";
-
-//components
 import ProductionDetails from "../components/ProductionDetails";
+import { useProductionContext } from "../hooks/useProductionContext";
+import ProductSearch from "../components/ProductSearch"; // Import ProductSearch component
 import ProductionNavbar from "../components/ProductionNavbar";
 
 const Production = () => {
-  const [production, setProduction] = useState(null);
+  const { production, dispatch } = useProductionContext();
+  const [filteredProduction, setFilteredProduction] = useState([]);
+
   useEffect(() => {
     const fetchProduction = async () => {
       const response = await fetch("/api/production");
       const json = await response.json();
 
       if (response.ok) {
-        setProduction(json);
+        dispatch({ type: "SET_PRODUCTION", payload: json });
+        setFilteredProduction(json); // Initialize filteredProducts with all products
       }
     };
 
     fetchProduction();
-  }, []);
+  }, [dispatch]);
+
+  const handleSearch = (term) => {
+    const filtered = production.filter((production) => {
+      const productionDate = production.date.toLowerCase();
+      return productionDate.includes(term);
+    });
+
+    setFilteredProduction(filtered);
+  };
 
   return (
     <ProductionNavbar>
       <div className="home">
-        <div className="production">
-          {production &&
-            production.map((production) => (
-              <ProductionDetails key={production._id} production={production} />
-            ))}
+        <ProductSearch onSearch={handleSearch} />{" "}
+        {/* Render ProductSearch component */}
+        <div className="products">
+          {filteredProduction.map((production) => (
+            <ProductionDetails key={production._id} production={production} />
+          ))}
           <Link to="/AddProduction" className="edit-link">
-            <button>Add a new record</button>
+            <button>Add a new Record</button>
           </Link>
         </div>
       </div>

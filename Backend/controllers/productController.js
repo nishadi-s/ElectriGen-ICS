@@ -27,7 +27,7 @@ const getProduct = async (req, res) => {
 
 //ceate new product
 const createProduct = async (req, res) => {
-  const { name, itemCode, unitPrice, colors, category } = req.body;
+  const { name, itemCode, unitPrice, quantity, color, category } = req.body;
 
   let emptyFields = [];
 
@@ -43,17 +43,13 @@ const createProduct = async (req, res) => {
   if (!category) {
     emptyFields.push("category");
   }
-  if (!colors || colors.length === 0) {
-    emptyFields.push("colors");
-  } else {
-    colors.forEach((colorObject, index) => {
-      if (!colorObject.color || !colorObject.quantity) {
-        emptyFields.push(
-          `Item at index ${index} is missing required fields (color, quantity)`
-        );
-      }
-    });
+  if (!color) {
+    emptyFields.push("color");
   }
+  if (!quantity) {
+    emptyFields.push("quantity");
+  }
+
   if (emptyFields.length > 0) {
     return res
       .status(400)
@@ -66,7 +62,8 @@ const createProduct = async (req, res) => {
       name,
       itemCode,
       unitPrice,
-      colors,
+      quantity,
+      color,
       category,
     });
     res.status(200).json(product);
