@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { TextField, Button, Typography, Container, Box, Grid } from '@mui/material';
+import Navbar_Pay from './Navbar-uvi';
 
 const UpdateSalary = () => {
     const { id } = useParams(); // Get the salary ID from the URL params
@@ -13,7 +14,7 @@ const UpdateSalary = () => {
     const [base, setBase] = useState("");
     const [otRate, setOtRate] = useState("");
     const [otHours, setOtHours] = useState("");
-    const [bonus, setBonus] = useState("");
+    const [bonus, setBonus] = useState(""); 
     const [reason, setReason] = useState("");
     const [finalSal, setFinalSal] = useState("");
     const [error, setError] = useState(null);
@@ -106,7 +107,7 @@ const UpdateSalary = () => {
         }
     };
     
-    return (
+    return (<Navbar_Pay>
         <Container>
             <Box sx={{ mt: 4 }}>
                 <Typography variant="h4" gutterBottom>Edit Salary Details</Typography>
@@ -219,6 +220,7 @@ const UpdateSalary = () => {
                 </form>
             </Box>
         </Container>
+        </Navbar_Pay>
     );
 };
 

@@ -1,53 +1,32 @@
 import React, { useState } from "react";
-import {
-  FaTh,
-  FaBars,
-  FaUserAlt,
-  FaRegChartBar,
-  FaShapes,
-  FaIndustry,
-  FaDollyFlatbed,
-} from "react-icons/fa";
-import { NavLink, Link } from "react-router-dom";
-import { useAuthContext } from '../hooks/useAuthContext';
-import { useLogout } from '../hooks/useLogout';
-import { Button } from '@mui/material'; // Add this import
+import { FaTh, FaBars, FaUserAlt, FaMoneyBillAlt } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
 
-const Navbar = ({ children }) => {
+const Navbar_Pay = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
-  const { user } = useAuthContext();
-  const { logout } = useLogout();
   const menuItem = [
+   
     {
-      path: "/",
-      name: "Dashboard",
-      icon: <FaTh />,
-    },
-
+        path: "/add-salary",
+        name: "Payroll Form",
+        icon: <FaMoneyBillAlt />,
+      },
+     
     {
-      path: "/SalaryDetailsPage",
+      path: "/salary-details",
       name: "Payroll Management",
-      icon: <FaShapes />,
+      icon: <FaMoneyBillAlt />,
     },
+   
+  
     {
-      path: "/",
-      name: "Payroll Form",
-      icon: <FaIndustry />,
-    },
-    {
-      path: "/analytics",
-      name: "Analytics",
-      icon: <FaRegChartBar />,
-    },
-    {
-      path: "/MyProfile",
+      path: "/my-profile",
       name: "My Profile",
       icon: <FaUserAlt />,
     },
-
     {
-      path: "/Logout",
+      path: "/logout",
       name: "Logout",
       icon: <FaUserAlt />,
     },
@@ -64,7 +43,7 @@ const Navbar = ({ children }) => {
             width="220"
             height="42"
             alt="Company Logo"
-          ></img>
+          />
           <div style={{ marginLeft: isOpen ? "50px" : "0px" }} className="bars">
             <FaBars onClick={toggle} />
           </div>
@@ -74,7 +53,7 @@ const Navbar = ({ children }) => {
             to={item.path}
             key={index}
             className="link"
-            activeclassName="active"
+            activeClassName="active"
           >
             <div className="icon">{item.icon}</div>
             <div
@@ -85,51 +64,10 @@ const Navbar = ({ children }) => {
             </div>
           </NavLink>
         ))}
-        {user && (
-          <div
-            style={{ display: isOpen ? "block" : "none" }}
-            className="link_text"
-          >
-            <div className="icon">
-              <FaUserAlt />
-            </div>
-            <div className="link_text">{user.email}</div>
-          </div>
-        )}
-        {user ? (
-          <div
-            style={{ display: isOpen ? "block" : "none" }}
-            className="link_text"
-          >
-            <div className="icon">
-              <FaUserAlt />
-            </div>
-            <div className="link_text">
-              <Button onClick={logout} color="inherit">Log out</Button>
-            </div>
-          </div>
-        ) : (
-          <NavLink
-            to="/Login"
-            key="login"
-            className="link"
-            activeclassName="active"
-          >
-            <div className="icon">
-              <FaUserAlt />
-            </div>
-            <div
-              style={{ display: isOpen ? "block" : "none" }}
-              className="link_text"
-            >
-              Login
-            </div>
-          </NavLink>
-        )}
       </div>
       <main>{children}</main>{" "}
     </div>
   );
 };
 
-export default Navbar;
+export default Navbar_Pay;

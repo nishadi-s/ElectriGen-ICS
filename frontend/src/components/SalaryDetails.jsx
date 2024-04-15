@@ -22,6 +22,7 @@ const SalaryDetails = ({ salary }) => {
           const response = await fetch(`/api/salaries/${salary._id}`, {
             method: 'DELETE',
           });
+          const json =await response.json();
 
           if (response.ok) {
             // Dispatch delete action without refreshing

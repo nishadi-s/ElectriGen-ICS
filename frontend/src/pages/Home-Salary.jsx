@@ -4,6 +4,7 @@ import { useSalaryContext } from "../hooks/useSalaryContext";
 // components
 import SalaryDetails from "../components/SalaryDetails";
 import SalaryForm from "../components/SalaryForm";
+import Navbar_Pay from "../components/Navbar-uvi";
 
 const Home = () => {
   const { salaries, dispatch } = useSalaryContext();
@@ -22,6 +23,7 @@ const Home = () => {
   }, [dispatch]);
 
   return (
+    <Navbar_Pay>
     <div className="home">
       <div className="salaries">
         {salaries && salaries.map(salary => (
@@ -30,6 +32,7 @@ const Home = () => {
       </div>
       <SalaryForm />
     </div>
+    </Navbar_Pay>
   );
 };
 

@@ -1,16 +1,10 @@
 import React, { useState } from "react";
-import { Table, TableCell, TableRow, Button, TextField } from '@mui/material';
-import Swal from 'sweetalert2';
+import { Table, TableCell, TableRow, TextField } from '@mui/material';
 import { useSalaryContext } from '../hooks/useSalaryContext';
-import { Link } from 'react-router-dom';
 
-const SalaryDetails = ({ salary }) => {
+const SalarySearch = ({ salary }) => {
   const { dispatch } = useSalaryContext();
   const [searchQuery, setSearchQuery] = useState('');
-
-  const handleDelete = async () => {
-    // delete functionality remains the same
-  };
 
   const filteredSalary = salary.filter(salaryItem =>
     salaryItem.email.toLowerCase().includes(searchQuery.toLowerCase())
@@ -29,7 +23,9 @@ const SalaryDetails = ({ salary }) => {
           filteredSalary.map((salaryItem) => (
             <TableRow key={salaryItem._id}>
               {/* Render salary details */}
-              {/* ... */}
+              {/* You can render the salary details here */}
+              <TableCell>{salaryItem.email}</TableCell>
+              {/* Add other table cells for other salary details */}
             </TableRow>
           ))
         ) : (
@@ -42,4 +38,4 @@ const SalaryDetails = ({ salary }) => {
   );
 };
 
-export default SalaryDetails;
+export default SalarySearch;
