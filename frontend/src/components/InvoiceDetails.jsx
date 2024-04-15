@@ -65,11 +65,11 @@ const InvoiceDetails = ({ invoice }) => {
             </ul>
             <br />
             {/* Add onClick event with the handleClick function */}
-            <span onClick={handleClick}><button>Delete</button></span>
+            <button className="btn btn-danger" onClick={handleClick}>Delete</button>
 
             {/* Link to the updating page with bill ID */}
             <Link to={`/InvoiceUpdate/${invoice.billID}`}>
-                <button>Update</button>
+                <button className="btn btn-primary">Update</button>
             </Link>
         </div>
     );

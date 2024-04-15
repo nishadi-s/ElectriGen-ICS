@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import InvoiceDetails from '../components/InvoiceDetails';
 import SearchBar from '../components/SearchBar';
+import SalesNavbar from '../components/SalesNavbar';
 
 const ViewInvoice = () => {
   const [invoices, setInvoices] = useState(null);
@@ -30,6 +31,7 @@ const ViewInvoice = () => {
     : [];
 
   return (
+    <SalesNavbar>
     <div>
       <h1>View Invoices</h1>
       <div>
@@ -41,6 +43,7 @@ const ViewInvoice = () => {
         ))}
       </div>
     </div>
+    </SalesNavbar>
   );
 };
 

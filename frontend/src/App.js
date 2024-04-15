@@ -34,6 +34,10 @@ import ViewInvoice from "./pages/viewInvoice.jsx";
 import PinVerification from "./components/PinVerification.jsx";
 import { SalesContextProvider } from "./context/SalesContext.jsx";
 import InvoiceUpdate from "./pages/InvoiceUpdate.jsx";
+import InvoiceReport from "./pages/InvoiceReport.jsx";
+import SalesDashboard from "./pages/SalesDashboard.jsx";
+import SDFeedback from "./pages/SDFeedback";
+import SDView from "./pages/SDView.jsx";
 
 //Dinithi
 import DisSignup from "./pages/DisSignup.js";
@@ -127,8 +131,12 @@ const App = () => {
           <Route path="/sfeedbackFetch" element={<SfeedbackFetch />} />
           <Route path="/viewInvoice" element={<ViewInvoice />} />
           <Route path="/PinVerification" element={<PinVerification />} />
-          <Route path="/InvoiceUpdate" element={InvoiceUpdate} />
-            
+          <Route path="/InvoiceUpdate/:billID" element={<InvoiceUpdate />} />
+          <Route path="/InvoiceReport" element={<InvoiceReport />} />
+          <Route path="/SalesDashboard" element={<SalesDashboard />} />
+          <Route path="/SDFeedback" element={<SDFeedback />} />
+          <Route path="/SDView" element={<SDView />} />
+
           {/* Dinithi */}
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element = {!distributor ? <DisLogin /> : <Navigate to= "/DisDashboard"/>} />

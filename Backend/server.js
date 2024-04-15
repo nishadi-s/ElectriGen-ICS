@@ -9,8 +9,7 @@ const app = express();
 
 app.use(express.json());
 
-// Create an Express app
-const app = express();
+
 
 app.use(bodyParser.json());
 app.use(cors());
