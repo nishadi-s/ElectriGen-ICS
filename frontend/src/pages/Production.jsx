@@ -1,54 +1,53 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import "../senith.css";
+import ProductionDetails from "../components/ProductionDetails";
+import { useProductionContext } from "../hooks/useProductionContext";
+import ProductSearch from "../components/ProductSearch"; // Import ProductSearch component
+import ProductionNavbar from "../components/ProductionNavbar";
 
 const Production = () => {
-  const [products, setProducts] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState("");
+  const { production, dispatch } = useProductionContext();
+  const [filteredProduction, setFilteredProduction] = useState([]);
 
   useEffect(() => {
-    // Fetch products from the database
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch("/api/products");
-        const data = await response.json();
-        setProducts(data); // Assuming data is an array of products
-      } catch (error) {
-        console.error("Error fetching products:", error);
+    const fetchProduction = async () => {
+      const response = await fetch("/api/production");
+      const json = await response.json();
+
+      if (response.ok) {
+        dispatch({ type: "SET_PRODUCTION", payload: json });
+        setFilteredProduction(json); // Initialize filteredProducts with all products
       }
     };
 
-    fetchProducts();
-  }, []);
+    fetchProduction();
+  }, [dispatch]);
 
-  const handleChange = (event) => {
-    setSelectedProduct(event.target.value);
+  const handleSearch = (term) => {
+    const filtered = production.filter((production) => {
+      const productionDate = production.date.toLowerCase();
+      return productionDate.includes(term);
+    });
+
+    setFilteredProduction(filtered);
   };
 
   return (
-    <div>
-      <h1>Factory Production</h1>
-      <form>
-        <div className="form-group">
-          <label htmlFor="product">Select Product:</label>
-          <select
-            id="product"
-            name="product"
-            className="form-control"
-            value={selectedProduct}
-            onChange={handleChange}
-          >
-            <option value="">Select a product</option>
-            {products.map((product) => (
-              <option key={product._id} value={product._id}>
-                {product.name}
-              </option>
-            ))}
-          </select>
+    <ProductionNavbar>
+      <div className="home">
+        <ProductSearch onSearch={handleSearch} />{" "}
+        {/* Render ProductSearch component */}
+        <div className="products">
+          {filteredProduction.map((production) => (
+            <ProductionDetails key={production._id} production={production} />
+          ))}
+          <Link to="/AddProduction" className="edit-link">
+            <button>Add a new Record</button>
+          </Link>
         </div>
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
-      </form>
-    </div>
+      </div>
+    </ProductionNavbar>
   );
 };
 
