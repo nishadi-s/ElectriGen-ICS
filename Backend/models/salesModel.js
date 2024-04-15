@@ -3,15 +3,14 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const salesSchema = new Schema({
     billID : {
-        type: Number,
+        type: String,
         required:true,
         unique:true
     },
     
 
     bdate : {
-        type: Date,
-        default: Date.now
+        type: String,
     },
 
     items : [{

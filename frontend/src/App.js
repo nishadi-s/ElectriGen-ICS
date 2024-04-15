@@ -1,6 +1,6 @@
 import React from "react";
 import "./index.css";
-import { BrowserRouter, Route, Routes, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Routes} from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard.jsx";
@@ -16,6 +16,10 @@ import ViewInvoice from "./pages/viewInvoice.jsx";
 import PinVerification from "./components/PinVerification.jsx";
 import { SalesContextProvider } from "./context/SalesContext.jsx";
 import InvoiceUpdate from "./pages/InvoiceUpdate.jsx";
+import InvoiceReport from "./pages/InvoiceReport.jsx";
+import SalesDashboard from "./pages/SalesDashboard.jsx";
+import SDFeedback from "./pages/SDFeedback";
+import SDView from "./pages/SDView.jsx";
 
 //Dinithi
 import OrderPlace from './pages/OrderPlacement.js'
@@ -34,7 +38,7 @@ const App = () => {
     <div className="App">
     <BrowserRouter>
     <SalesContextProvider>
-      <Navbar>
+      
       <div className="pages">
         <Routes>
           <Route path="/" element={<Dashboard />} />
@@ -50,7 +54,11 @@ const App = () => {
           <Route path="/sfeedbackFetch" element={<SfeedbackFetch />} />
           <Route path="/viewInvoice" element={<ViewInvoice />} />
           <Route path="/PinVerification" element={<PinVerification />} />
-          <Route path="/InvoiceUpdate" element={InvoiceUpdate} />
+          <Route path="/InvoiceUpdate/:billID" element={<InvoiceUpdate />} />
+          <Route path="/InvoiceReport" element={<InvoiceReport />} />
+          <Route path="/SalesDashboard" element={<SalesDashboard />} />
+          <Route path="/SDFeedback" element={<SDFeedback />} />
+          <Route path="/SDView" element={<SDView />} />
 
           {/* Dinithi */}
           <Route path="/OrderForm" element = {<OrderPlace />} />
@@ -67,7 +75,7 @@ const App = () => {
             
         </Routes>
         </div>
-      </Navbar>
+      
       </SalesContextProvider>
     </BrowserRouter>
     </div>

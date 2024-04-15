@@ -4,6 +4,10 @@ const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
 
+// Create an Express app
+const app = express();
+app.use(cors());
+
 //Senith
 const productRoutes = require("./routes/products");
 app.use("/api/products", productRoutes);
@@ -15,8 +19,7 @@ app.use('/api/orders', orderRoutes); // Order routes
 app.use('/api/distributor', distributorRoutes); //distributor route(distributor authentication)
 
 
-// Create an Express app
-const app = express();
+
 
 // Middleware to parse JSON bodies of requests
 app.use(express.json());
