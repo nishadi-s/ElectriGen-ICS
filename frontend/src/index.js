@@ -17,10 +17,10 @@ import { ImportersContextProvider } from "./context/ImporterContext";
 
 //Dinithi
 import { OrdersContextProvider } from './context/OrderContext';
+import { DisDAuthContextProvider } from './context/DisDAuthContext';
 
 //Senith
 import { ProductsContextProvider } from "./context/ProductContext";
-import { DisDAuthContextProvider } from './context/DisDAuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

@@ -1,12 +1,13 @@
 import { useEffect } from 'react'
 import "./DistributionFun.css";
 import React, { useState } from 'react';
-import { useOrdersContext } from '../hooks/useOrdersContext.js'
+import { useOrdersContext } from '../hooks/useOrdersContext.jsx'
 //components
 import './DistributionFun.css'
 import NavbarDini1 from '../components/DisNavbar.jsx'
-import OrderDetails from '../components/OrderDetails.js'
+import OrderDetails from '../components/OrderDetails.jsx'
 import SearchBar from '../components/Distributor_Search.jsx'
+import '../pages/DistributionFun.css'
 
 const OrderHistory = () => {
   const { orders, dispatch } = useOrdersContext();

@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
-import { useDisDAuthContext } from '../hooks/useDisDAuthContext.js';
-import { useOrdersContext } from '../hooks/useOrdersContext.js'; // Import useOrdersContext
+import { useDisDAuthContext } from '../hooks/useDisDAuthContext.jsx';
+import { useOrdersContext } from '../hooks/useOrdersContext.jsx'; // Import useOrdersContext
 
 // OrderDetails functional component taking order as prop
 const OrderDetails = ({ order }) => {
