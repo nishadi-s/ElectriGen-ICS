@@ -1,71 +1,63 @@
-import { useState } from "react"
-import '../exports.css';
+import React, { useState } from "react";
+import { TextField, Button, Typography, Grid, Paper } from "@mui/material"; // Import Material-UI components
 import { useImportersContext } from "../hooks/useImportersContext";
-import {  useEffect } from "react";
 import Swal from 'sweetalert2'; // Import SweetAlert
 
-const ImporterForm=()=>{
-    const {dispatch}=useImportersContext()
-    const [importerID,setimporterID] = useState('')
-    const [importerName,setimporterName] = useState('')
-    const [address,setaddress] = useState('')
-    const [contactNumber,setcontactNumber] = useState('')
-    const [email,setemail] = useState('')
-    const [error,setError]=useState(null)
-    const[emptyFields,setEmptyFields]=useState([])
-    const [successMessage, setSuccessMessage] = useState('');
+const ImporterForm = () => {
+    const { dispatch } = useImportersContext();
+    const [importerID, setImporterID] = useState('');
+    const [importerName, setImporterName] = useState('');
+    const [address, setAddress] = useState('');
+    const [contactNumber, setContactNumber] = useState('');
+    const [email, setEmail] = useState('');
+    const [error, setError] = useState(null);
+    const [emptyFields, setEmptyFields] = useState([]);
 
-     // Regular expression for importerID validation (starts with 'I' followed by 3 digits)
-     const importerIDPattern = /^I\d{3}$/;
+    // Regular expression for importerID validation (starts with 'I' followed by 3 digits)
+    const importerIDPattern = /^I\d{3}$/;
 
-    const handleSubmit=async(e)=>{
-        e.preventDefault()
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-        // Convert the first letter of the email to lowercase
-    const formattedEmail = email.charAt(0).toLowerCase() + email.slice(1);
+        // Validate importerID format
+        if (!importerIDPattern.test(importerID)) {
+            setError('Importer ID should start with "I" followed by 3 digits (e.g., I123)');
+            return;
+        }
 
-    // Validate importerID format
-    if (!importerIDPattern.test(importerID)) {
-        setError('Importer ID should start with "I" followed by 3 digits (e.g., I123)');
-        return;
-    }
+        // Email validation regex pattern
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    // Email validation regex pattern
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        // Validate email format
+        if (!emailPattern.test(email)) {
+            setError('Invalid email format');
+            return; // Stop form submission if email is invalid
+        }
 
-    // Validate email format
-    if (!emailPattern.test(formattedEmail)) {
-        setError('Invalid email format');
-        return; // Stop form submission if email is invalid
-    }
+        const importer = { importerID, importerName, address, contactNumber, email };
 
-        const importer={importerID,importerName,address,contactNumber,email}
-
-        const response=await fetch('/api/importer',{
+        const response = await fetch('/api/importer', {
             method: 'POST',
             body: JSON.stringify(importer),
-            headers:{
-                'Content-Type':'application/json'
+            headers: {
+                'Content-Type': 'application/json'
             }
-        })
+        });
 
-        const json=await response.json()
+        const json = await response.json();
 
-        if(!response.ok){
-            setError(json.error)
-            setEmptyFields(json.emptyFields)
-        }
-        if(response.ok){
-            setimporterID('')
-            setimporterName('')
-            setaddress('')
-            setcontactNumber('')
-            setemail('')
-            setError('')
-            setError(null)
-            setEmptyFields([])
-            console.log('New importer added',json)
-            dispatch({type: 'CREATE_IMPORTER',payload:json})
+        if (!response.ok) {
+            setError(json.error);
+            setEmptyFields(json.emptyFields);
+        } else {
+            setImporterID('');
+            setImporterName('');
+            setAddress('');
+            setContactNumber('');
+            setEmail('');
+            setError('');
+            setEmptyFields([]);
+            dispatch({ type: 'CREATE_IMPORTER', payload: json });
 
             // Display success message using SweetAlert
             Swal.fire({
@@ -76,67 +68,76 @@ const ImporterForm=()=>{
         }
     }
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setSuccessMessage('');
-        }, 3000); // Adjust the delay as needed (e.g., 3000 milliseconds = 3 seconds)
+    return (
+        <Paper elevation={3} style={{ padding: '2rem' }}>
+            <Typography variant="h5" align="center" gutterBottom>Add a New Importer</Typography>
 
-        return () => clearTimeout(timer);
-    }, [successMessage]);
+            <form onSubmit={handleSubmit}>
+                <Grid container spacing={3}>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            label="Importer ID"
+                            variant="outlined"
+                            fullWidth
+                            value={importerID}
+                            onChange={(e) => setImporterID(e.target.value)}
+                            error={emptyFields.includes('importerID')}
+                            helperText={emptyFields.includes('importerID') ? 'Please enter Importer ID' : ''}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            label="Name"
+                            variant="outlined"
+                            fullWidth
+                            value={importerName}
+                            onChange={(e) => setImporterName(e.target.value)}
+                            error={emptyFields.includes('importerName')}
+                            helperText={emptyFields.includes('importerName') ? 'Please enter Name' : ''}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            label="Address"
+                            variant="outlined"
+                            fullWidth
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)}
+                            error={emptyFields.includes('address')}
+                            helperText={emptyFields.includes('address') ? 'Please enter Address' : ''}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            label="Contact Number"
+                            variant="outlined"
+                            fullWidth
+                            type="number"
+                            value={contactNumber}
+                            onChange={(e) => setContactNumber(e.target.value)}
+                            error={emptyFields.includes('contactNumber')}
+                            helperText={emptyFields.includes('contactNumber') ? 'Please enter Contact Number' : ''}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            label="Email"
+                            variant="outlined"
+                            fullWidth
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            error={emptyFields.includes('email')}
+                            helperText={emptyFields.includes('email') ? 'Please enter Email' : ''}
+                        />
+                    </Grid>
+                </Grid>
 
-
-    return(
-        <form className="importerCreate" onSubmit={handleSubmit}>
-        <h3>Add a new Importer</h3><br />
-
-        {successMessage && <div className="success-message">{successMessage}</div>}
-
-        <label>Importer ID: </label>
-        <input
-            type="text"
-            onChange={(e)=>setimporterID(e.target.value)}
-            value={importerID}
-            className={emptyFields.includes('importerID')?'error':''}
-        /><br></br>
-
-        <label>Name: </label>
-        <input
-            type="text"
-            onChange={(e)=>setimporterName(e.target.value)}
-            value={importerName}
-            className={emptyFields.includes('importerName')?'error':''}
-        /><br></br>
-
-        <label>Address: </label>
-        <input
-            type="text"
-            onChange={(e)=>setaddress(e.target.value)}
-            value={address}
-            className={emptyFields.includes('address')?'error':''}
-        /><br></br>
-
-        <label>Contact Number: </label>
-        <input
-            type="number"
-            onChange={(e)=>setcontactNumber(e.target.value)}
-            value={contactNumber}
-            className={emptyFields.includes('contactNumber')?'error':''}
-        /><br></br>
-
-        <label>Email: </label>
-        <input
-            type="text"
-            onChange={(e)=>setemail(e.target.value)}
-            value={email}
-            className={emptyFields.includes('email')?'error':''}
-        /><br></br><br></br>
-
-        <button> Add Importer </button>
-        {error && <div className="error">{error}</div>}
-
-        </form>
-
-    )
+                <Button variant="contained" color="primary" type="submit" style={{ marginTop: '2rem' }}>Add Importer</Button>
+                {error && <Typography variant="body2" color="error" style={{ marginTop: '1rem' }}>{error}</Typography>}
+            </form>
+        </Paper>
+    );
 }
 
-export default ImporterForm
+export default ImporterForm;

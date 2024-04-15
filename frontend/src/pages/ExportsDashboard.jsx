@@ -19,22 +19,23 @@ const ExportsDashboard=()=>{
 
     }
 
-
     fetchExports()
     
   }, [exportsDispatch])
 
-
   return (
+
     <ExportsNavBar>
-    <div className="ex-dashboard">
-      
+    <div className="ex-dashboard">      
       <div className="exports">
         <h1>Export Order Details</h1><br />
+
         <ExportSearch />
-      </div>
+
+      </div>      
     </div>
     </ExportsNavBar>
+    
   );
 };
 
