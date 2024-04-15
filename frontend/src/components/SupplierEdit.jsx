@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert";
 import NavbarNishadi from '../components/SupplierOrderNavbar'
 
 const EditSupplier = () => {
@@ -62,7 +63,14 @@ const EditSupplier = () => {
         setSup_Ord_id(updatedSupplierData.Sup_Ord_id);
         setMaterial_code(updatedSupplierData.Sup_matrial_code);
       
-        navigate('/Suppliers'); // Redirect to suppliers page 
+        Swal({
+          title: "Success",
+          text: "Supplier updated successfully",
+          icon: "success",
+          button: "OK",
+        }).then(() => {
+          navigate('/Suppliers'); // Redirect to suppliers page 
+        });
       } else {
         const errorData = await response.json();
         setError(errorData.error ? errorData.error : "Error updating product");

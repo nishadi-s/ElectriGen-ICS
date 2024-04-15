@@ -14,9 +14,9 @@ import MyProfileN from "./pages/SupplierOrderProfile.jsx";
 import Orders from "./pages/SupplierOrder_Order.jsx";
 import Suppliers from "./pages/SupplierOrderSuppliers.jsx";
 import AnalyticsN from "./pages/SupplierOrderAnalytics.jsx";
-import SupplierUpdateOrder from "./components/SupplierOrderEdit.jsx"; // Import the UpdateOrder component
 import SupplierEdit from "./components/SupplierEdit.jsx"; // Import the UpdateSupplier component
 import SupplierOrderForm from "./components/SupplierOrderForm.jsx"//Import supplier order form component
+import SupplierOrderEdit from "./components/SupplierOrderEdit.jsx" //Import the Update supplier Order component
 
 
 //Dulari_IT22121110
@@ -76,9 +76,9 @@ const App = () => {
           <Route path="/Order" element={<Orders />} />
           <Route path="/analyticsN" element={<AnalyticsN />} />
           <Route path="/MyProfileN" element={<MyProfileN />} />
-          <Route path="/update/:id" element={<SupplierUpdateOrder />} /> {/* Define route for updating orders */}
           <Route path="/supplier/:id" element={<SupplierEdit />} /> {/* Define route for updating orders */}
           <Route path="/supplierorderform" element ={< SupplierOrderForm/>}/> {/*View Supplier Order Form */}
+          <Route path="/supplierOrder/:id" element={<SupplierOrderEdit />} /> {/* Define route for updating orders */}
           
   
             {/* Shanali */}
