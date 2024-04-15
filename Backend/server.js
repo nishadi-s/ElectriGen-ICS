@@ -2,8 +2,10 @@ require("dotenv").config(); // Load environment variables from the .env file
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const express = require("express");
-
 const mongoose = require("mongoose");
+
+
+
 // Create an Express app
 const app = express();
 
@@ -61,8 +63,10 @@ app.use("/api/orders", orderRoutes); // Order routes
 app.use("/api/distributor", distributorRoutes); //distributor route(distributor authentication)
 
 //Senith
-const productRoutes = require("./routes/products");
+const productRoutes = require("./routes/products.js");
+const productionRoutes = require("./routes/production.js");
 app.use("/api/products", productRoutes);
+app.use("/api/production", productionRoutes);
 
 //uvindya
 const salaryRoutes = require('./routes/salaries');
@@ -75,7 +79,7 @@ app.use("/api/export", exportRoutes);
 app.use("/api/importer", importerRoutes);
 
 //Nishadi
-const supplierChain_order = require('./routes/supplier_order'); //Nishadi
-const supplier = require('./routes/supplier'); //Nishadi
-app.use("/api/supplier_order",supplierChain_order); //Nishadi
-app.use("/api/supplier",supplier); //Nishadi
+const supplierChain_order = require("./routes/supplier_order"); //Nishadi
+const supplier = require("./routes/supplier"); //Nishadi
+app.use("/api/supplier_order", supplierChain_order); //Nishadi
+app.use("/api/supplier", supplier); //Nishadi

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./index.css";
 import { BrowserRouter, Route, Routes, Switch, Navigate } from "react-router-dom";
 
@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard.jsx";
 import MyProfile from "./pages/MyProfile.jsx";
 import Analytics from "./pages/Analytics.jsx";
 import Logout from "./pages/Logout.jsx";
+import Home from "./pages/Home.jsx";
 
 //Uvindya
 import Navbar_Pay from './components/Navbar-uvi.jsx';
@@ -51,6 +52,7 @@ import { SalesContextProvider } from "./context/SalesContext.jsx";
 import InvoiceUpdate from "./pages/InvoiceUpdate.jsx";
 
 //Dinithi
+
 import DisSignup from "./pages/DisSignup.jsx";
 import DisLogin from "./pages/DisLogin.jsx";
 import DisDashboard from "./pages/DisDashboard.jsx";
@@ -68,31 +70,40 @@ import Materials from "./pages/Materials.jsx";
 import Production from "./pages/Production.jsx";
 import Products from "./pages/Products.jsx";
 import AddProducts from "./pages/AddProducts.jsx";
+import AddProduction from "./pages/AddProduction.jsx";
 import ProductionDashboard from "./pages/ProductionDashboard.jsx";
 import SingleProduct from "./components/SingleProduct"; // Import SingleProduct
 import EditProduct from "./components/EditProduct"; // Import EditProduct
+import ProductionAnalytics from "./pages/ProductionAnalytics.jsx";
+import ProductionProfile from "./pages/ProductionProfile.jsx";
 import ProductForm from "./components/ProductForm";
 
 //Shanali
 import ExportsDashboard from "./pages/ExportsDashboard.jsx";
 import ExportsNavBar from "./components/ExportsNavBar.jsx";
 import ExportsProfile from "./pages/ExportsProfile.jsx";
-import ExportOrderDetails from "./pages/ExportOrderDetails.jsx";
+/*import ImporterDescription from "./pages/ImporterDescription.jsx";
+import ImporterDescription from "./pages/ImporterDescription.jsx";
 import ExportOrders from "./pages/ExportOrders.jsx";
 import Importer from "./pages/Importer.jsx";
 import ExportAnalytics from "./pages/ExportAnalytics.jsx";
 import UpdateExports from "./pages/UpdateExports.jsx";
+import ImporterUpdate from "./pages/ImporterUpdate.jsx";*/
 
 const App = () => {
+  useEffect(() => {
+    document.title = "ElectriGen";
+  }, []);
 
-  const { distributor } = useDisDAuthContext()
+const { distributor } = useDisDAuthContext()
 
   return (
     <BrowserRouter>
       <SalesContextProvider>
     <div className="pages">
         <Routes>    
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/Home" element={<Home />} />
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/Analytics" element={<Analytics />} />
           <Route path="/MyProfile" element={<MyProfile />} />
@@ -114,6 +125,7 @@ const App = () => {
             path="/Suppliers/supplieredit/Suppliers"
             element={<Suppliers />}
           />
+
           {/* Shanali */}
           <Route path="/" element={<ExportsDashboard />} />
           <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
@@ -124,6 +136,7 @@ const App = () => {
           <Route path="/ExportsProfile" element={<ExportsProfile />} />
           <Route path="/update/:id" element={<UpdateExports />} />{" "}
           {/* Define route for updating orders */}
+
           {/* Dulari */}
           <Route path="/New_Projects" element={<New_Projects />} />
           <Route path="/Doner_Feedback" element={<Doner_Feedback />} />
@@ -135,11 +148,10 @@ const App = () => {
           <Route path="/invoiceCreate" element={<InvoiceCreate />} />
           <Route path="/sfeedbackFetch" element={<SfeedbackFetch />} />
           <Route path="/viewInvoice" element={<ViewInvoice />} />
-          <Route path="/PinVerification" element={<PinVerification />} />
+          <Route path="/PinVerification" element={<PinVerification />} />          
           <Route path="/InvoiceUpdate" element={<InvoiceUpdate/>} />
             
           {/* Dinithi */}
-
           <Route path="/login" element = {!distributor ? <DisLogin /> : <Navigate to= "/DisDashboard"/>} />
           <Route path="/signup" element = {!distributor ? <DisSignup /> : <Navigate to= "/DisDashboard"/>} />
           <Route path="/DisDashboard" element = {distributor ? <DisDashboard /> : <Navigate to="/login" />}/>
@@ -164,11 +176,22 @@ const App = () => {
           <Route path="/Production" element={<Production />} />
           <Route path="/Materials" element={<Materials />} />
           <Route path="/AddProducts" element={<AddProducts />} />
+          <Route path="/AddProduction" element={<AddProduction />} />
+          <Route
+            path="/ProductionAnalytics"
+            element={<ProductionAnalytics />}
+          />
           <Route path="/ProductForm" element={<ProductForm />} />
           <Route
             path="/ProductionDashboard"
             element={<ProductionDashboard />}
           />
+          <Route path="/ProductionProfile" element={<ProductionProfile />} />
+          <Route path="/" element={<Products />} />
+          <Route path="/product/:id" element={<SingleProduct />} />{" "}
+          {/* Define route for single product */}
+          <Route path="/edit-product/:id" element={<EditProduct />} />{" "}
+          {/* Add EditProduct route */}
           <Route path="/EditProduct" element={<EditProduct />} />
           <Route path="/SingleProduct" element={<SingleProduct />} />
         </Routes>
