@@ -3,6 +3,7 @@ import "./index.css";
 import { BrowserRouter, Route, Routes, Switch, Navigate } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
+import HomePage from "./pages/Home.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import MyProfile from "./pages/MyProfile.jsx";
 import Analytics from "./pages/Analytics.jsx";
@@ -46,7 +47,6 @@ import OrderHistory from './pages/OrderHistory.jsx';
 import OrderSuccess from './pages/OrderSucess.jsx';
 import UpdateOrder from './pages/UpdateOrderDetails.jsx';
 import { useDisDAuthContext } from "./hooks/useDisDAuthContext.jsx";
-import HomePage from "./pages/DinHome.jsx";
 //distribution managers
 
 //Senith
@@ -78,8 +78,7 @@ const App = () => {
       <SalesContextProvider>
     <div className="pages">
         <Routes>    
-
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/Analytics" element={<Analytics />} />
           <Route path="/MyProfile" element={<MyProfile />} />
@@ -126,7 +125,7 @@ const App = () => {
           <Route path="/InvoiceUpdate" element={<InvoiceUpdate/>} />
             
           {/* Dinithi */}
-          <Route path="/" element={<HomePage />} />
+
           <Route path="/login" element = {!distributor ? <DisLogin /> : <Navigate to= "/DisDashboard"/>} />
           <Route path="/signup" element = {!distributor ? <DisSignup /> : <Navigate to= "/DisDashboard"/>} />
           <Route path="/DisDashboard" element = {distributor ? <DisDashboard /> : <Navigate to="/login" />}/>

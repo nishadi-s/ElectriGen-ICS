@@ -69,10 +69,9 @@ header a {
   color: #333;
 }
 
-
-/* new order form */
+/* Form Container */
 .create {
-  max-width: 600px;
+  max-width: 1000px; /* Adjust the width as needed */
   margin: 0 auto;
   padding: 30px;
   background-color: #f9f9f9;
@@ -80,6 +79,7 @@ header a {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Form Title */
 .create h3 {
   margin-top: 0;
   margin-bottom: 20px;
@@ -87,14 +87,16 @@ header a {
   color: #233066;
 }
 
+/* Form Labels */
 .create label {
   font-weight: 600;
-  margin-bottom: 8px;
+  margin-bottom: 12px; /* Increase margin-bottom for more space */
 }
 
+/* Form Inputs */
 .create input[type="text"],
 .create input[type="number"] {
-  width: 100%;
+  width: calc(50% - 5px); /* Adjust width as needed */
   padding: 10px;
   margin-bottom: 20px;
   border: 1px solid #ddd;
@@ -102,20 +104,35 @@ header a {
   box-sizing: border-box;
 }
 
+/* Input Focus */
 .create input[type="text"]:focus,
 .create input[type="number"]:focus {
   outline-color: #233066;
 }
 
-.create input.error {
-  border-color: #e7195a;
-}
-
+/* Error Messages */
 .create .error {
   color: #e7195a;
   margin-top: 8px;
 }
 
+/* Add Item Button */
+.create button[type="button"] {
+  background-color: #808080;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create button[type="button"]:hover {
+  background-color: #666666;
+}
+
+/* Submit Button */
 .create button[type="submit"] {
   background-color: #233066;
   color: #fff;
@@ -131,19 +148,30 @@ header a {
   background-color: #1a2550;
 }
 
-.create button[type="button"] {
-  background-color: #808080;
-  color: #fff;
-  border: none;
-  padding: 8px 16px;
-  font-size: 14px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+/* Item Container */
+.item-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px; /* Add spacing between items */
 }
 
-.create button[type="button"]:hover {
-  background-color: #666666;
+/* Item Fields */
+.item-fields {
+  display: flex;
+  flex-wrap: nowrap; /* Ensure fields don't wrap */
+  margin-right: 20px; /* Add spacing between fields */
+}
+
+/* Add margin-bottom to each item field */
+.item-fields > * {
+  margin-bottom: 10px; /* Increase margin-bottom for more space */
+  margin-left: 1%;
+  margin-right: 1%;
+}
+
+.item.label{
+  font-size: small;
+  font-weight: bold;
 }
 
 div.error {
