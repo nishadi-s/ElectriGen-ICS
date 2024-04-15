@@ -94,25 +94,25 @@ const deleteProduct = async (req, res) => {
   res.status(200).json(product);
 };
 
-//update a product
+// update a product
 const updateProduct = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "no such product" });
+    return res.status(404).json({ error: "There is no such product" });
   }
 
   try {
-    const updatedProduct = await Product.findOneAndUpdate(
+    const updatedProduct = await Product.findByIdAndUpdate(
       { _id: id },
       {
-        ...req.body,
+        ...req.body, // Update with request body
       },
       { new: true }
-    ); // Add { new: true } to return the updated document
+    ); // return the updated document
 
     if (!updatedProduct) {
-      return res.status(400).json({ error: "No such Product" });
+      return res.status(404).json({ error: "No such Product" });
     }
 
     res.status(200).json(updatedProduct);

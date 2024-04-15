@@ -5,7 +5,7 @@ import "../senith.css";
 import ProductDetails from "../components/ProductDetails";
 import { useProductContext } from "../hooks/useProductsContext";
 import ProductSearch from "../components/ProductSearch"; // Import ProductSearch component
-import ProductDetailsPage from "../components/ProductDetailsPage"; // Import ProductDetailsPage
+import ProductionNavbar from "../components/ProductionNavbar";
 
 const Products = () => {
   const { products, dispatch } = useProductContext();
@@ -36,21 +36,20 @@ const Products = () => {
   };
 
   return (
-    <div className="home">
-      <ProductSearch onSearch={handleSearch} />{" "}
-      {/* Render ProductSearch component */}
-      <div className="products">
-        {filteredProducts.map((product) => (
-          <Link key={product._id} to={`/product/${product._id}`}>
-            <ProductDetailsPage product={product} />{" "}
-            {/* Pass product as props */}
+    <ProductionNavbar>
+      <div className="home">
+        <ProductSearch onSearch={handleSearch} />{" "}
+        {/* Render ProductSearch component */}
+        <div className="products">
+          {filteredProducts.map((product) => (
+            <ProductDetails key={product._id} product={product} />
+          ))}
+          <Link to="/AddProducts" className="edit-link">
+            <button>Add a new Product</button>
           </Link>
-        ))}
-        <Link to="/AddProducts" className="edit-link">
-          <button>Add a new Product</button>
-        </Link>
+        </div>
       </div>
-    </div>
+    </ProductionNavbar>
   );
 };
 
