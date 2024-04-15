@@ -16,7 +16,6 @@ const InvoiceCreate = () => {
   const [items, setItems] = useState([{ ino: '', desc: '', qty: '', price: '', iamount: '' }]);
   const [bdate, setBdate] = useState('');
   const [products, setProducts] = useState([]);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchProducts();
@@ -29,7 +28,6 @@ const InvoiceCreate = () => {
       setProducts(response.data);
     } catch (error) {
       console.error('Error fetching products:', error);
-      setError('Error fetching products. Please try again later.');
     }
   };
 
@@ -58,11 +56,11 @@ const InvoiceCreate = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     // Calculate total quantity and total amount
     const totalQuantity = items.reduce((total, item) => total + parseFloat(item.qty || 0), 0);
     const totalAmount = items.reduce((total, item) => total + parseFloat(item.iamount || 0), 0).toFixed(2);
-
+  
     const newSale = {
       billID: billID,
       bdate: new Date().toISOString(),
@@ -70,28 +68,45 @@ const InvoiceCreate = () => {
       totqty: totalQuantity,
       tot: totalAmount,
     };
-
+  
     try {
-      const response = await axios.post('http://localhost:4000/sales/add', newSale);
-      if (response.status === 200) {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Successfully Submitted!',
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        setTimeout(() => {
-          window.location.reload();
-        }, 1500);
-      } else {
-        setError('Error submitting invoice. Please try again.');
-      }
-    } catch (error) {
-      console.error('Error submitting invoice:', error);
-      setError('Error submitting invoice. Please try again.');
+      // Submit new sale
+      await axios.post("http://localhost:4000/sales/add", newSale);
+  
+      // Update product quantities
+      items.forEach(async (item) => {
+        const { ino, qty } = item;
+        if (ino && qty) {
+          const product = products.find((p) => p.itemCode === ino);
+          if (product) {
+            const updatedQuantity = product.quantity - parseInt(qty);
+            await axios.put(`http://localhost:4000/api/products/${product._id}`, { quantity: updatedQuantity });
+          }
+        }
+      });
+  
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Successfully Submitted!",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    } catch (err) {
+      console.error('Error submitting invoice:', err);
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Error in Submitting!",
+        showConfirmButton: false,
+        timer: 1500
+      });
     }
   };
+  
 
   const handleRemoveItem = (index) => {
     const updatedItems = [...items];
@@ -107,7 +122,6 @@ const InvoiceCreate = () => {
     <SalesNavbar>
       <div>
         <h1>Create Invoice</h1>
-        {error && <div className="error">{error}</div>}
         <Form onSubmit={handleSubmit}>
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formBillID">
@@ -205,23 +219,21 @@ const InvoiceCreate = () => {
             </Form.Group>
 
             <Form.Group as={Col} controlId="formTotalAmount">
-                <Form.Label>Total Amount</Form.Label>
-                <Form.Control
-                  type="text"
-                  readOnly
-                  value={items.reduce((total, item) => total + parseFloat(item.iamount || 0), 0).toFixed(2)}
-                />
-              </Form.Group>
-            </Row>
+              <Form.Label>Total Amount</Form.Label>
+              <Form.Control
+                type="text"
+                readOnly
+                value={items.reduce((total, item) => total + parseFloat(item.iamount || 0), 0).toFixed(2)}
+              />
+            </Form.Group>
+          </Row>
 
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
-          </Form>
-        </div>
-      </SalesNavbar>
-    );
-  };
-
-  export default InvoiceCreate;
-
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
+        </Form>
+      </div>
+    </SalesNavbar>
+  );
+};
+export default InvoiceCreate;

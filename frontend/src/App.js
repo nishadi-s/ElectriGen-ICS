@@ -38,10 +38,6 @@ import InvoiceReport from "./pages/InvoiceReport.jsx";
 import SalesDashboard from "./pages/SalesDashboard.jsx";
 import SDFeedback from "./pages/SDFeedback";
 import SDView from "./pages/SDView.jsx";
-import InvoiceReport from "./pages/InvoiceReport.jsx";
-import SalesDashboard from "./pages/SalesDashboard.jsx";
-import SDFeedback from "./pages/SDFeedback";
-import SDView from "./pages/SDView.jsx";
 
 //Dinithi
 import DisSignup from "./pages/DisSignup.js";
@@ -55,10 +51,6 @@ import OrderSuccess from './pages/OrderSucess.js';
 import UpdateOrder from './pages/UpdateOrderDetails.js';
 import { useDisDAuthContext } from "./hooks/useDisDAuthContext.js";
 import HomePage from "./pages/DinHome.js";
-import OrderPlace from "./pages/OrderPlacement.js";
-import OrderHistory from "./pages/OrderHistory.js";
-import OrderSuccess from "./pages/OrderSucess.js";
-import UpdateOrder from "./pages/UpdateOrderDetails.js";
 
 //Senith
 import Materials from "./pages/Materials.jsx";
@@ -173,8 +165,11 @@ const App = () => {
             path="/ProductionDashboard"
             element={<ProductionDashboard />}
           />
-          <Route path="/EditProduct" element={<EditProduct />} />
-          <Route path="/SingleProduct" element={<SingleProduct />} />
+          <Route path="/" element={<Products />} />
+          <Route path="/product/:id" element={<SingleProduct />} />{" "}
+          {/* Define route for single product */}
+          <Route path="/edit-product/:id" element={<EditProduct />} />{" "}
+          {/* Add EditProduct route */}
         </Routes>
         </div>
       </SalesContextProvider>

@@ -13,7 +13,6 @@ const EditProduct = () => {
   const [category, setCategory] = useState("");
   const [color, setColor] = useState("");
   const [unitPrice, setUnitPrice] = useState("");
-  const [cost, setCost] = useState("");
   const [quantity, setQuantity] = useState("");
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
@@ -31,7 +30,6 @@ const EditProduct = () => {
         setCategory(productData.category);
         setColor(productData.color);
         setUnitPrice(productData.unitPrice);
-        setCost(productData.cost);
         setQuantity(productData.quantity);
       } catch (error) {
         console.error("Error fetching product data:", error);
@@ -50,7 +48,6 @@ const EditProduct = () => {
       category,
       color,
       unitPrice,
-      cost,
       quantity,
     };
 
@@ -69,13 +66,12 @@ const EditProduct = () => {
       setCategory(updatedProductData.category);
       setColor(updatedProductData.color);
       setUnitPrice(updatedProductData.unitPrice);
-      setCost(updatedProductData.cost);
       setQuantity(updatedProductData.quantity);
 
-      navigate(`/products`); // Redirect to single product page
+      navigate('/products'); 
     } else {
       const errorData = await response.json();
-      setError(errorData.error || "Error updating product");
+      setError("Error updating product",errorData.error);
       setEmptyFields(errorData.emptyFields || []);
     }
   };
@@ -118,13 +114,6 @@ const EditProduct = () => {
           value={unitPrice}
           className={emptyFields.includes("unitPrice") ? "error" : ""}
         />
-        <label>Cost(in Rs.):</label>
-        <input
-          type="number"
-          onChange={(e) => setCost(e.target.value)} // Use setCost
-          value={cost}
-          className={emptyFields.includes("cost") ? "error" : ""}
-        />
         <label>Quantity:</label>
         <input
           type="number"
@@ -139,5 +128,4 @@ const EditProduct = () => {
     </ProductionNavbar>
   );
 };
-
 export default EditProduct;
