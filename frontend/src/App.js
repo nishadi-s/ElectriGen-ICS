@@ -8,7 +8,7 @@ import Dashboard from "./pages/Dashboard.jsx";
 import MyProfile from "./pages/MyProfile.jsx";
 import Analytics from "./pages/Analytics.jsx";
 import Logout from "./pages/Logout.jsx";
-import Home from "./pages/Home.jsx";
+
 
 //Uvindya
 import Navbar_Pay from './components/Navbar-uvi.jsx';
@@ -79,10 +79,9 @@ import ProductionProfile from "./pages/ProductionProfile.jsx";
 import ProductForm from "./components/ProductForm";
 
 //Shanali
-import ExportsDashboard from "./pages/ExportsDashboard.jsx";
+/*import ExportsDashboard from "./pages/ExportsDashboard.jsx";
 import ExportsNavBar from "./components/ExportsNavBar.jsx";
 import ExportsProfile from "./pages/ExportsProfile.jsx";
-/*import ImporterDescription from "./pages/ImporterDescription.jsx";
 import ImporterDescription from "./pages/ImporterDescription.jsx";
 import ExportOrders from "./pages/ExportOrders.jsx";
 import Importer from "./pages/Importer.jsx";
@@ -126,7 +125,7 @@ const { distributor } = useDisDAuthContext()
             element={<Suppliers />}
           />
 
-          {/* Shanali */}
+          {/* Shanali 
           <Route path="/" element={<ExportsDashboard />} />
           <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
           <Route path="/Importer" element={<Importer />} />
