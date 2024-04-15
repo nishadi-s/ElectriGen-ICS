@@ -4,12 +4,14 @@ const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
 
+
+
 // Create an Express app
 const app = express();
 
+app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors());
-app.use(express.json());
 
 // Middleware to log incoming requests
 app.use((req, res, next) => {
@@ -25,10 +27,12 @@ mongoose
     app.listen(process.env.PORT, () => {
       console.log("Connected to DB & listening on port", process.env.PORT); // Log that the server is running
     });
+    
   })
   .catch((error) => {
     console.log(error); // Log any errors that occur during database connection
   });
+
 
 //middleware-importer
 app.use(express.json());
@@ -54,6 +58,7 @@ app.use("/dFeedback", dFeedbackRouter);
 //Dinithi
 const orderRoutes = require("./routes/orders.js");
 const distributorRoutes = require("./routes/distributor.js");
+
 app.use("/api/orders", orderRoutes); // Order routes
 app.use("/api/distributor", distributorRoutes); //distributor route(distributor authentication)
 
@@ -62,6 +67,10 @@ const productRoutes = require("./routes/products.js");
 const productionRoutes = require("./routes/production.js");
 app.use("/api/products", productRoutes);
 app.use("/api/production", productionRoutes);
+
+//uvindya
+const salaryRoutes = require('./routes/salaries');
+app.use('/api/salaries', salaryRoutes);
 
 //Shanali
 const exportRoutes = require("./routes/export");

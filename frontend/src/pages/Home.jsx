@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 const Home = () => {
   return (
     <div>
+      <h1>Welcome to Our Website</h1>
+      <p>Discover amazing products and services!</p>
+    <div>
       <Link to="/ProductionDashboard" className="edit-link">
         <button>Production</button>
       </Link>
@@ -35,3 +38,4 @@ const Home = () => {
 };
 
 export default Home;
+
