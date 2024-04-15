@@ -3,6 +3,7 @@ require("dotenv").config(); // Load environment variables from the .env file
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const express = require("express");
+
 const mongoose = require("mongoose");
 // Create an Express app
 const app = express();
@@ -66,6 +67,10 @@ app.use("/api/distributor", distributorRoutes); //distributor route(distributor 
 //Senith
 const productRoutes = require("./routes/products");
 app.use("/api/products", productRoutes);
+
+//uvindya
+const salaryRoutes = require('./routes/salaries');
+app.use('/api/salaries', salaryRoutes);
 
 //Shanali
 const exportRoutes = require("./routes/export");
