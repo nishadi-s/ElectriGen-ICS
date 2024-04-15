@@ -9,6 +9,20 @@ import MyProfile from "./pages/MyProfile.jsx";
 import Analytics from "./pages/Analytics.jsx";
 import Logout from "./pages/Logout.jsx";
 
+//Uvindya
+import Navbar_Pay from './components/Navbar-uvi.jsx';
+//import { useAuthContext } from './hooks/useAuthContext';
+import Home from './pages/Home-Salary.jsx'
+//import Login from './pages/Login.jsx';
+//import Signup from './pages/Signup.jsx';
+//import ForgotPassword from './components/ForgotPassword.jsx';
+//import SalaryDetails from './components/SalaryDetails.jsx';
+import UpdateSalaryPage from './components/UpdateSalary.jsx'
+import AddSalaryPage from './pages/AddSalary.jsx';
+import Logout from './pages/Logout.jsx'
+import SalaryDetailsPage from './pages/SalaryDetailsPage.jsx';
+
+
 //Nishadi
 import NavbarNishadi from "./components/SupplierOrderNavbar.jsx";
 import DashboardN from "./pages/SupplierOrderDashboard.jsx";
@@ -138,7 +152,14 @@ const App = () => {
 
           {/* Define route for updating orders */}
 
-          {/*Senith */}
+          {/*Uvindya*/}
+          <Route path="/" element={<Home />} />
+          <Route path="/updateSalary/:id" element={<UpdateSalaryPage />} />
+          <Route path="/add-salary" element={<AddSalaryPage />} />
+          <Route path="/salary-details" element={<SalaryDetailsPage />} />
+          <Route path="/Logout" element={<Logout />} />
+
+          {/*Senith*/} 
           <Route path="/Products" element={<Products />} />
           <Route path="/Production" element={<Production />} />
           <Route path="/Materials" element={<Materials />} />
