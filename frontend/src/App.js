@@ -40,6 +40,7 @@ import OrderPlace from "./pages/OrderPlacement.js";
 import OrderHistory from "./pages/OrderHistory.js";
 import OrderSuccess from "./pages/OrderSucess.js";
 import UpdateOrder from "./pages/UpdateOrderDetails.js";
+
 //Senith
 import Materials from "./pages/Materials.jsx";
 import Production from "./pages/Production.jsx";
@@ -51,6 +52,18 @@ import SingleProduct from "./components/SingleProduct"; // Import SingleProduct
 import EditProduct from "./components/EditProduct"; // Import EditProduct
 import ProductionAnalytics from "./pages/ProductionAnalytics.jsx";
 import ProductionProfile from "./pages/ProductionProfile.jsx";
+
+//Shanali
+import ExportsDashboard from "./pages/ExportsDashboard.jsx";
+import ExportsNavBar from "./components/ExportsNavBar.jsx";
+import ExportsProfile from "./pages/ExportsProfile.jsx";
+/*import ImporterDescription from "./pages/ImporterDescription.jsx";
+import ImporterDescription from "./pages/ImporterDescription.jsx";
+import ExportOrders from "./pages/ExportOrders.jsx";
+import Importer from "./pages/Importer.jsx";
+import ExportAnalytics from "./pages/ExportAnalytics.jsx";
+import UpdateExports from "./pages/UpdateExports.jsx";
+import ImporterUpdate from "./pages/ImporterUpdate.jsx";*/
 
 const App = () => {
   useEffect(() => {
@@ -85,18 +98,17 @@ const App = () => {
             element={<Suppliers />}
           />
           {/* Shanali 
-            <Route path="/" element={<ExportsDashboard />} />
-            <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
-            <Route path="/Importer" element={<Importer />} />
-            <Route path="/ExportOrders" element={<ExportOrders />} />
-            <Route
-              path="/ExportOrderDetails"
-              element={<ExportOrderDetails />}
-            />
-            <Route path="/ExportAnalytics" element={<ExportAnalytics />} />
-            <Route path="/ExportsProfile" element={<ExportsProfile />} />
-            <Route path="/update/:id" element={<UpdateExports />} />{" "}
-            {/* Define route for updating orders */}
+          <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
+          <Route path="/Importer" element={<Importer />} />
+          <Route path="/ExportOrders" element={<ExportOrders />} />
+          <Route
+            path="/ImporterDescription"
+            element={<ImporterDescription />}
+          />
+          <Route path="/ExportAnalytics" element={<ExportAnalytics />} />
+          <Route path="/ExportsProfile" element={<ExportsProfile />} />
+          <Route path="/UpdateExports/:id" element={<UpdateExports />} />
+          <Route path="/ImporterUpdate/:id" element={<ImporterUpdate />} />*/}
           {/* Dulari */}
           <Route path="/New_Projects" element={<New_Projects />} />
           <Route path="/Doner_Feedback" element={<Doner_Feedback />} />
