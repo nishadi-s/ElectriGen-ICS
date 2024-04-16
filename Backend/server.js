@@ -40,11 +40,10 @@ const feedbackRouter = require("./routes/sfeedback");
 app.use("/sfeedback", feedbackRouter);
 
 //dulari
-app.use("/dFeedback", dFeedbackRouter);
+const dFeedbackRouter = require("./routes/dFeedback.js");
 const projectRouter = require("./routes/DonationProjects.js");
 app.use("/DonationProject", projectRouter);
-const dFeedbackRouter = require("./routes/dFeedback.js");
-
+app.use("/dFeedback", dFeedbackRouter);
 
 //Dinithi
 const orderRoutes = require("./routes/orders.js");

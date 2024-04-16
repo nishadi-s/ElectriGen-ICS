@@ -7,6 +7,7 @@ import {
   FaShapes,
   FaIndustry,
   FaDollyFlatbed,
+  FaSignLanguage,
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
@@ -30,7 +31,7 @@ const DonationNavbar = ({ children }) => {
     {
         path: "/Doner_Feedback",
         name: "Doner Feedback",
-        icon: <FaShapes />,
+        icon: <FaSignLanguage />,
     },
 
     //{
@@ -52,8 +53,20 @@ const DonationNavbar = ({ children }) => {
     //},
 
     {
-      path: "/doner_analytics",  
+      path: "/DReportCreate",  
       name: "Analytics and Report",
+      icon: <FaRegChartBar />,
+    },
+
+    {
+      path: "/DProjectDetails",  
+      name: "View Past Projects",
+      icon: <FaRegChartBar />,
+    },
+
+    {
+      path: "/dFeedbackFetch",  
+      name: "View Feedbacks",
       icon: <FaRegChartBar />,
     },
     {

@@ -1,70 +1,88 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Table } from 'react-bootstrap';
+import DonationNavbar from '../components/DonationNavbar';
 
-const Donation_Dashboard = () => {
+const DonationDashboard = () => {
   const [projects, setProjects] = useState([]);
-  const [feedback, setFeedback] = useState([]);
+  const [greeting, setGreeting] = useState('');
 
   useEffect(() => {
-    // Fetch projects data
-    axios.get("http://localhost:4000/DonationProject/")
-      .then(response => {
-        setProjects(response.data); // Assuming response.data contains project data
-      })
-      .catch(error => {
-        console.error("Error fetching projects:", error);
-      });
-
-    // Fetch donation feedback data
-    const fetchFeedback = async () => {
-      try {
-        const response = await fetch("http://localhost:4000/dFeedback/getAllf");
-        if (!response.ok) {
-          throw new Error("Failed to fetch feedback data");
-        }
-        const json = await response.json();
-        setFeedback(json);
-      } catch (error) {
-        console.error("Error fetching donation feedback:", error);
-      }
-    };
-
-    fetchFeedback(); // Execute the fetchFeedback function
-
+    fetchData();
+    setGreetingMessage();
   }, []);
 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:4000/DonationProject/');
+      setProjects(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  const setGreetingMessage = () => {
+    const currentHour = new Date().getHours();
+    if (currentHour >= 6 && currentHour < 12) {
+      setGreeting('Good Morning! Have a nice day!');
+    } else if (currentHour >= 12 && currentHour < 18) {
+      setGreeting('Good Afternoon! Have a nice day!');
+    } else {
+      setGreeting('Good Evening! Have a nice day!');
+    }
+  };
+
   return (
-    <div className="container">
+    <DonationNavbar>
       <div>
-        
-      <h1>Donation Projects</h1>
-       
-        <button type="button" className="btn btn-dark">
-          <a href="/New_Projects">Add New Project</a>
-        </button>
+        <h1>Donation Dashboard</h1>
 
+        <div className="mt-5 mb-5">
+          <div className="card">
+            <div className="card-header">
+              Welcome to the Donation Management of ElectriGen.
+            </div>
+            <div className="card-body">
+              <blockquote className="blockquote mb-0">
+                <h2>{greeting}</h2>
+              </blockquote>
+            </div>
+          </div>
+        </div>
 
-        <button type="button" className="btn btn-dark">
-        <a href="/DProjectDetails">View Projects</a>
-        </button>
-
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Project ID</th>
+              <th>Description</th>
+              <th>Estimate Date</th>
+              <th>Total Amount</th>
+              <th>Items</th>
+            </tr>
+          </thead>
+          <tbody>
+            {projects.map((project, index) => (
+              <tr key={index}>
+                <td>{project.project_id}</td>
+                <td>{project.description}</td>
+                <td>{new Date(project.estimate_date).toLocaleDateString()}</td>
+                <td>{project.total_amount}</td>
+                <td>
+                  <ul>
+                    {project.items.map((item, itemIndex) => (
+                      <li key={itemIndex}>
+                        {item.item} - Qty: {item.qty}, Unit Price: {item.unitPrice}
+                      </li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       </div>
-
-      <div>
-        <h1>Donation Feedback</h1>
-        
-
-        <button type="button" className="btn btn-dark">
-          <a href="/Doner_Feedback">Add New Feedback</a>
-        </button>
-
-        <button type="button" className="btn btn-dark">
-        <a href="/dFeedbackFetch">View Feedback</a>
-        </button>
-
-      </div>
-    </div>
+    </DonationNavbar>
   );
 };
 
-export default Donation_Dashboard;
+export default DonationDashboard;
