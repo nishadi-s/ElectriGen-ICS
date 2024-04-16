@@ -24,8 +24,12 @@ import Donation_Dashboard from "./pages/Donation_Dashboard.jsx";
 import New_Projects from "./pages/New_Projects.jsx";
 import Doner_Feedback from "./pages/Doner_Feedback.jsx";
 import DProjectDetails from "./components/DProjectDetails.jsx";
+import DProjectDetails from "./components/DProjectDetails.jsx";
 import Doner_Analystics from "./pages/Doner_Analytics.jsx";
 import DFeedbackFetch from "./components/dFeedbackFetch.jsx";
+import DProjectEdit from "./components/DProjectEdit.jsx";
+import DReportCreate from "./components/DReportCreate.jsx";
+
 import DProjectEdit from "./components/DProjectEdit.jsx";
 import DReportCreate from "./components/DReportCreate.jsx";
 
@@ -85,9 +89,10 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <SalesContextProvider>
-    <div className="pages">
-        <Routes>    
+    <SalesContextProvider>
+      
+      <div className="pages">
+        <Routes>
 
           <Route path="/Home" element={<Home />} />
           <Route path="/Dashboard" element={<Dashboard />} />
@@ -125,11 +130,14 @@ const App = () => {
           <Route path="/New_Projects" element={<New_Projects />} />
           <Route path="/Doner_Feedback" element={<Doner_Feedback />} />
           <Route path="/Doner_Analytics" element={<Doner_Analystics />} />
-          <Route path="/Dashboard" element={<DFeedbackFetch />} />
-          <Route path="/Donation_Dashboard" element={<Donation_Dashboard />} />
           <Route path="/DFeedbackFetch" element={<DFeedbackFetch />} />
           <Route path="/Donation_Dashboard" element={<Donation_Dashboard />} />
           <Route path="/DProjectDetails" element={<DProjectDetails />} />
+          <Route path="/dProjectEdit/:projectId" element={<DProjectEdit/>} />
+          <Route path="/DReportCreate" element={<DReportCreate />} />
+         
+
+
           {/* Primal */}
           <Route path="/salesFeedback" element={<SalesFeedback />} />
           <Route path="/invoiceCreate" element={<InvoiceCreate />} />
@@ -181,6 +189,7 @@ const App = () => {
           {/* Add EditProduct route */}
         </Routes>
         </div>
+      
       </SalesContextProvider>
     </BrowserRouter>
   );
