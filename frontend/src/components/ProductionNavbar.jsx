@@ -36,12 +36,12 @@ const ProductionNavbar = ({ children }) => {
       icon: <FaIndustry />,
     },
     {
-      path: "/analytics",
+      path: "/ProductionAnalytics",
       name: "Analytics",
       icon: <FaRegChartBar />,
     },
     {
-      path: "/MyProfile",
+      path: "/ProductionProfile",
       name: "My Profile",
       icon: <FaUserAlt />,
     },
