@@ -1,34 +1,44 @@
-const express = require('express')
+const express = require("express");
 
 const {
-    getOrders,
-    getOrder,
-    createOrder,
-    deleteOrder,
-    updateOrder
-} = require('../controllers/orderController.js') //controller function are from orderController.js
-const requireDisDAuth = require('../middleware/requireDisDAuth')
+  getOrders,
+  getOrder,
+  createOrder,
+  deleteOrder,
+  updateOrder,
+} = require("../controllers/orderController.js"); //controller function are from orderController.js
+// const requireDisDAuth = require('../middleware/requireDisDAuth')
+const authMiddleware = require("../middleware/authMiddleware");
+const USER_ROLES = require("../constants/roles");
 
-const router = express.Router()
+const router = express.Router();
 
 //require authentication for all order routers
-router.use(requireDisDAuth)
+// router.use(requireDisDAuth)
 
 //establishing routes to manage orders
 
 //GET all orders
-router.get('/',getOrders)
+router.get("/", authMiddleware([USER_ROLES.DISTRIBUTOR_MANAGER]), getOrders);
 
 //GET a single order
-router.get('/:id',getOrder)
+router.get("/:id", authMiddleware([USER_ROLES.DISTRIBUTOR_MANAGER]), getOrder);
 
 //POST a new order
-router.post('/',createOrder)
+router.post("/", authMiddleware([USER_ROLES.DISTRIBUTOR_MANAGER]), createOrder);
 
 //DELETE an order
-router.delete('/:id',deleteOrder)
+router.delete(
+  "/:id",
+  authMiddleware([USER_ROLES.DISTRIBUTOR_MANAGER]),
+  deleteOrder
+);
 
 //UPDATE an order
-router.put('/:id',updateOrder)
+router.put(
+  "/:id",
+  authMiddleware([USER_ROLES.DISTRIBUTOR_MANAGER]),
+  updateOrder
+);
 
-module.exports = router
+module.exports = router;

@@ -5,10 +5,10 @@ const cors = require("cors");
 const express = require("express");
 
 const mongoose = require("mongoose");
-// Create an Express app
-const app = express();
+// // Create an Express app
+// const app = express();
 
-app.use(express.json());
+// app.use(express.json());
 
 // Create an Express app
 const app = express();
@@ -43,6 +43,10 @@ app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
+
+
+const authRoutes = require("./routes/authRoutes");
+app.use("/auth", authRoutes);
 
 //primal sales route
 const salesRouter = require("./routes/sales");
