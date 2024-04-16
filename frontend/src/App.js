@@ -14,12 +14,12 @@ import Dashboard from "./pages/Dashboard.jsx";
 import MyProfile from "./pages/MyProfile.jsx";
 import Analytics from "./pages/Analytics.jsx";
 import Logout from "./pages/Logout.jsx";
-import Home from "./pages/Home.jsx";
+//import Home from "./pages/Home.jsx";
 
 //Uvindya
 import Navbar_Pay from "./components/Navbar-uvi.jsx";
 //import { useAuthContext } from './hooks/useAuthContext';
-import Home from "./pages/Home-Salary.jsx";
+import Home_Pay from "./pages/Home-Salary.jsx";
 //import Home from './pages/Home-Salary.jsx'
 //import Login from './pages/Login.jsx';
 //import Signup from './pages/Signup.jsx';
@@ -29,10 +29,10 @@ import UpdateSalaryPage from "./components/UpdateSalary.jsx";
 import AddSalaryPage from "./pages/AddSalary.jsx";
 // import Logout from './pages/Logout.jsx'
 import SalaryDetailsPage from "./pages/SalaryDetailsPage.jsx";
-import UpdateSalaryPage from './components/UpdateSalary.jsx'
-import AddSalaryPage from './pages/AddSalary.jsx';
+//import UpdateSalaryPage from "./components/UpdateSalary.jsx";
+//import AddSalaryPage from "./pages/AddSalary.jsx";
 //import Logout from './pages/Logout.jsx'
-import SalaryDetailsPage from './pages/SalaryDetailsPage.jsx';
+//import SalaryDetailsPage from "./pages/SalaryDetailsPage.jsx";
 
 //Nishadi
 import NavbarNishadi from "./components/SupplierOrderNavbar.jsx";
@@ -68,10 +68,10 @@ import DisLogin from "./pages/DisLogin.jsx";
 import DisDashboard from "./pages/DisDashboard.jsx";
 import DisMyProfile from "./pages/DisMyProfile.jsx";
 import DisAnalytics from "./pages/DisAnalytics";
-import OrderPlace from './pages/OrderPlacement.jsx'
-import OrderHistory from './pages/OrderHistory.jsx';
-import OrderSuccess from './pages/OrderSucess.jsx';
-import UpdateOrder from './pages/UpdateOrderDetails.jsx';
+import OrderPlace from "./pages/OrderPlacement.jsx";
+import OrderHistory from "./pages/OrderHistory.jsx";
+import OrderSuccess from "./pages/OrderSucess.jsx";
+import UpdateOrder from "./pages/UpdateOrderDetails.jsx";
 import { useDisDAuthContext } from "./hooks/useDisDAuthContext.jsx";
 //distribution managers
 
@@ -88,11 +88,10 @@ import ProductionAnalytics from "./pages/ProductionAnalytics.jsx";
 import ProductionProfile from "./pages/ProductionProfile.jsx";
 import ProductForm from "./components/ProductForm";
 
-//Shanali
+/*Shanali
 import ExportsDashboard from "./pages/ExportsDashboard.jsx";
 import ExportsNavBar from "./components/ExportsNavBar.jsx";
 import ExportsProfile from "./pages/ExportsProfile.jsx";
-/*import ImporterDescription from "./pages/ImporterDescription.jsx";
 import ImporterDescription from "./pages/ImporterDescription.jsx";
 import ExportOrders from "./pages/ExportOrders.jsx";
 import Importer from "./pages/Importer.jsx";
@@ -153,12 +152,12 @@ const App = () => {
                 />
               </Route>
               {/* Shanali - EXPORT_MANAGER */}
-              <Route
+              {/* <Route
                 element={
                   <PrivateRoute permissionLevel={[USER_ROLES.EXPORT_MANAGER]} />
                 }
               >
-                {/* <Route path="/" element={<ExportsDashboard />} /> */}
+                {/* <Route path="/" element={<ExportsDashboard />} /> 
                 <Route path="/export-manager" element={<ExportsDashboard />} />
                 <Route path="/Importer" element={<Importer />} />
                 <Route path="/ExportOrders" element={<ExportOrders />} />
@@ -169,8 +168,8 @@ const App = () => {
                 <Route path="/ExportAnalytics" element={<ExportAnalytics />} />
                 <Route path="/ExportsProfile" element={<ExportsProfile />} />
                 <Route path="/update/:id" element={<UpdateExports />} />{" "}
-                {/* Define route for updating orders */}
-              </Route>
+                {/* Define route for updating orders
+              </Route>*/}
               {/* Dulari - DONATION_MANAGER */}
               <Route
                 element={
@@ -211,8 +210,8 @@ const App = () => {
                   />
                 }
               >
-                <Route path="/distributor-manager" element={<HomePage />} />
-                {/* <Route
+                {/*<Route path="/distributor-manager" element={<HomePage />} />
+                 <Route
                 path="/login"
                 element={
                   !distributor ? <DisLogin /> : <Navigate to="/DisDashboard" />
@@ -251,7 +250,7 @@ const App = () => {
                   <PrivateRoute permissionLevel={[USER_ROLES.USER_MANAGER]} />
                 }
               >
-                <Route path="/user-manager" element={<Home />} />
+                <Route path="/user-manager" element={<Home_Pay />} />
                 <Route
                   path="/updateSalary/:id"
                   element={<UpdateSalaryPage />}
