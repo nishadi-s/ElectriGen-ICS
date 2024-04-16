@@ -10,15 +10,10 @@ import Logout from "./pages/Logout.jsx";
 
 //Uvindya
 import Navbar_Pay from './components/Navbar-uvi.jsx';
-//import { useAuthContext } from './hooks/useAuthContext';
-import Home from './pages/Home-Salary.jsx'
-//import Login from './pages/Login.jsx';
-//import Signup from './pages/Signup.jsx';
-//import ForgotPassword from './components/ForgotPassword.jsx';
-//import SalaryDetails from './components/SalaryDetails.jsx';
+import Home_Pay from './pages/Home-Salary.jsx'
 import UpdateSalaryPage from './components/UpdateSalary.jsx'
 import AddSalaryPage from './pages/AddSalary.jsx';
-import Logout from './pages/Logout.jsx'
+import SalaryReportPage from "./pages/SalaryReport.jsx";
 import SalaryDetailsPage from './pages/SalaryDetailsPage.jsx';
 
 
@@ -61,10 +56,10 @@ import OrderSuccess from './pages/OrderSucess.js';
 import UpdateOrder from './pages/UpdateOrderDetails.js';
 import { useDisDAuthContext } from "./hooks/useDisDAuthContext.js";
 import HomePage from "./pages/DinHome.js";
-import OrderPlace from "./pages/OrderPlacement.js";
+/*import OrderPlace from "./pages/OrderPlacement.js";
 import OrderHistory from "./pages/OrderHistory.js";
 import OrderSuccess from "./pages/OrderSucess.js";
-import UpdateOrder from "./pages/UpdateOrderDetails.js";
+import UpdateOrder from "./pages/UpdateOrderDetails.js";*/
 
 //Senith
 import Materials from "./pages/Materials.jsx";
@@ -102,7 +97,7 @@ const App = () => {
           <Route path="/Analytics" element={<Analytics />} />
           <Route path="/MyProfile" element={<MyProfile />} />
           <Route path="/Logout" element={<Logout />} />
-          {/* Nishadi */}
+          {/* Nishadi -supplier manager*/}
           <Route path="/SupplierOrderDashboard" element={<DashboardN />} />
           <Route path="/Suppliers" element={<Suppliers />} />
           <Route path="/Order" element={<Orders />} />
@@ -119,7 +114,7 @@ const App = () => {
             path="/Suppliers/supplieredit/Suppliers"
             element={<Suppliers />}
           />
-          {/* Shanali */}
+          {/* Shanali -export manager*/}
           <Route path="/" element={<ExportsDashboard />} />
           <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
           <Route path="/Importer" element={<Importer />} />
@@ -129,13 +124,13 @@ const App = () => {
           <Route path="/ExportsProfile" element={<ExportsProfile />} />
           <Route path="/update/:id" element={<UpdateExports />} />{" "}
           {/* Define route for updating orders */}
-          {/* Dulari */}
+          {/* Dulari -donation*/}
           <Route path="/New_Projects" element={<New_Projects />} />
           <Route path="/Doner_Feedback" element={<Doner_Feedback />} />
           <Route path="/Doner_Analytics" element={<Doner_Analystics />} />
           <Route path="/Dashboard" element={<DFeedbackFetch />} />
           <Route path="/Donation_Dashboard" element={<Donation_Dashboard />} />
-          {/* Primal */}
+          {/* Primal -sales and show room manager*/}
           <Route path="/salesFeedback" element={<SalesFeedback />} />
           <Route path="/invoiceCreate" element={<InvoiceCreate />} />
           <Route path="/sfeedbackFetch" element={<SfeedbackFetch />} />
@@ -143,7 +138,7 @@ const App = () => {
           <Route path="/PinVerification" element={<PinVerification />} />
           <Route path="/InvoiceUpdate" element={InvoiceUpdate} />
             
-          {/* Dinithi */}
+          {/* Dinithi -distribution manager*/}
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element = {!distributor ? <DisLogin /> : <Navigate to= "/DisDashboard"/>} />
           <Route path="/signup" element = {!distributor ? <DisSignup /> : <Navigate to= "/DisDashboard"/>} />
@@ -160,14 +155,16 @@ const App = () => {
           <Route path="/update/:id" element={<UpdateOrder />} />{" "}
           {/* Define route for updating orders */}
 
-          {/*Uvindya*/}
-          <Route path="/" element={<Home />} />
+          {/*Uvindya-user*/}
+          <Route path="/" element={<Home_Pay/>} />
           <Route path="/updateSalary/:id" element={<UpdateSalaryPage />} />
           <Route path="/add-salary" element={<AddSalaryPage />} />
           <Route path="/salary-details" element={<SalaryDetailsPage />} />
+          <Route path="/salary-report" element={<SalaryReportPage />} />
+          
           <Route path="/Logout" element={<Logout />} />
 
-          {/*Senith*/} 
+          {/*Senith-inventory manager*/} 
           <Route path="/Products" element={<Products />} />
           <Route path="/Production" element={<Production />} />
           <Route path="/Materials" element={<Materials />} />

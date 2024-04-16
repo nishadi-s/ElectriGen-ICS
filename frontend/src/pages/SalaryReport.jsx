@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Typography } from "@mui/material"; // Import Typography from Material-UI
 import { useSalaryContext } from "../hooks/useSalaryContext";
-import SalaryDetails from "../components/SalaryDetails";
+import SalaryDetails from "../components/SalaryPdf";
 import NavbarPay from "../components/Navbar-uvi";
-import SalarySearch from "../components/SalarySearch"; // Import SalarySearch component
 
-const SalaryDetailsPage = () => {
+const SalaryReportPage = () => {
   const { salaries, dispatch } = useSalaryContext();
-  const [filteredSalaries, setFilteredSalaries] = useState([]);
 
   useEffect(() => {
     const fetchSalaries = async () => {
@@ -27,28 +25,20 @@ const SalaryDetailsPage = () => {
     fetchSalaries();
   }, [dispatch]);
 
-  // Update filtered salaries when the search query changes
-  const handleSearch = (filteredSalaries) => {
-    setFilteredSalaries(filteredSalaries);
-  };
-
   return (
     <div className="salary-details-page">
       <NavbarPay>
         <Typography variant="h3" gutterBottom>
          Payroll Management
         </Typography>
-        {/* Pass the handleSearch function to the SalarySearch component */}
         {salaries && ( // Check if salaries is not null or undefined
-          <SalarySearch salary={salaries} onSearch={handleSearch} />
+          salaries.map((salary) => (
+            <SalaryDetails salary={salary} key={salary._id} />
+          ))
         )}
-        {/* Render SalaryDetails only for filtered salaries */}
-        {filteredSalaries.map((salary) => (
-          <SalaryDetails salary={salary} key={salary._id} />
-        ))}
       </NavbarPay>
     </div>
   );
 };
 
-export default SalaryDetailsPage;
+export default SalaryReportPage;

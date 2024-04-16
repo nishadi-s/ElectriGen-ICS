@@ -5,7 +5,6 @@ import App from "./App";
 
 //Uvindya
 import { SalaryContextProvider } from "./context/SalaryContext";
-//import { AuthContextProvider } from './context/AuthContext';
 
 //Nishadi
  import { SupplierOrderContextProvider } from "./context/SupplierOrderContext";

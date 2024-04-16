@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { FaTh, FaBars, FaUserAlt, FaMoneyBillAlt } from "react-icons/fa";
+import { FaTh, FaBars, FaUserAlt, FaMoneyBillAlt,FaRegChartBar } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
+
 
 const Navbar_Pay = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,6 +18,11 @@ const Navbar_Pay = ({ children }) => {
       path: "/salary-details",
       name: "Payroll Management",
       icon: <FaMoneyBillAlt />,
+    },
+    {
+      path: "/salary-report",
+      name: "Report",
+      icon: <FaRegChartBar />,
     },
    
   

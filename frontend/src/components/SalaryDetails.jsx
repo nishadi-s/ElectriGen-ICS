@@ -1,5 +1,6 @@
 import React from "react";
-import { Table, TableBody, TableCell, TableRow, Button, Typography } from '@mui/material';
+import { TableCell, TableRow, IconButton, Typography } from '@mui/material'; // Import necessary components from Material-UI
+import { Delete as DeleteIcon, Edit as EditIcon } from '@mui/icons-material';
 import Swal from 'sweetalert2';
 import { useSalaryContext } from '../hooks/useSalaryContext';
 import { Link } from 'react-router-dom';
@@ -13,8 +14,8 @@ const SalaryDetails = ({ salary }) => {
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#1976D2',
+      cancelButtonColor: '#F44336',
       confirmButtonText: 'Yes, delete it!'
     }).then(async (result) => {
       if (result.isConfirmed) {
@@ -22,10 +23,8 @@ const SalaryDetails = ({ salary }) => {
           const response = await fetch(`/api/salaries/${salary._id}`, {
             method: 'DELETE',
           });
-          const json =await response.json();
 
           if (response.ok) {
-            // Dispatch delete action without refreshing
             dispatch({ type: 'DELETE_SALARY', payload: salary._id });
             Swal.fire({
               title: 'Deleted!',
@@ -52,44 +51,78 @@ const SalaryDetails = ({ salary }) => {
   };
 
   return (
-    <div className="salary-details">
-      <Table>
-        <TableBody>
-          <TableRow>
-            <TableCell><strong>Full Name:</strong></TableCell>
-            <TableCell><Typography variant="body1">{salary.fname} {salary.lname}</Typography></TableCell>
-            <TableCell><strong>Email:</strong></TableCell>
-            <TableCell><Typography variant="body1">{salary.email}</Typography></TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell><strong>Role:</strong></TableCell>
-            <TableCell><Typography variant="body1">{salary.role}</Typography></TableCell>
-            <TableCell><strong>Base Salary:</strong></TableCell>
-            <TableCell><Typography variant="body1">${salary.base}</Typography></TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell><strong>Overtime Rate:</strong></TableCell>
-            <TableCell><Typography variant="body1">{salary.otRate}</Typography></TableCell>
-            <TableCell><strong>Overtime Hours:</strong></TableCell>
-            <TableCell><Typography variant="body1">{salary.otHours}</Typography></TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell><strong>Bonus:</strong></TableCell>
-            <TableCell><Typography variant="body1">${salary.bonus}</Typography></TableCell>
-            <TableCell><strong>Reason:</strong></TableCell>
-            <TableCell><Typography variant="body1">{salary.reason}</Typography></TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell><strong>Final Salary:</strong></TableCell>
-            <TableCell><Typography variant="body1">${salary.finalSal}</Typography></TableCell>
-            <TableCell colSpan={2}>
-              <Button variant="contained" color="primary" component={Link} to={`/UpdateSalary/${salary._id}`}>Update</Button>
-              <Button variant="contained" color="primary" onClick={handleDelete}>Delete</Button>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </div>
+    <>
+      <TableRow>
+        <TableCell>
+          <Typography variant="body1" color="primary"><strong>Full Name:</strong></Typography>
+        </TableCell>
+        <TableCell>
+          <Typography variant="body1">{salary.fname} {salary.lname}</Typography>
+        </TableCell>
+        <TableCell>
+          <Typography variant="body1" color="primary"><strong>Email:</strong></Typography>
+        </TableCell>
+        <TableCell>
+          <Typography variant="body1">{salary.email}</Typography>
+        </TableCell>
+    
+        <TableCell>
+          <Typography variant="body1" color="primary"><strong>Role:</strong></Typography>
+        </TableCell>
+        <TableCell>
+          <Typography variant="body1">{salary.role}</Typography>
+        </TableCell>
+        <TableCell>
+          <Typography variant="body1" color="primary"><strong>Base Salary:</strong></Typography>
+        </TableCell>
+        <TableCell>
+          <Typography variant="body1">${salary.base}</Typography>
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>
+          <Typography variant="body1" color="primary"><strong>Overtime Rate:</strong></Typography>
+        </TableCell>
+        <TableCell>
+          <Typography variant="body1">{salary.otRate}</Typography>
+        </TableCell>
+        <TableCell>
+          <Typography variant="body1" color="primary"><strong>Overtime Hours:</strong></Typography>
+        </TableCell>
+        <TableCell>
+          <Typography variant="body1">{salary.otHours}</Typography>
+        </TableCell>
+      
+        <TableCell>
+          <Typography variant="body1" color="primary"><strong>Bonus:</strong></Typography>
+        </TableCell>
+        <TableCell>
+          <Typography variant="body1">${salary.bonus}</Typography>
+        </TableCell>
+        <TableCell>
+          <Typography variant="body1" color="primary"><strong>Reason:</strong></Typography>
+        </TableCell>
+        <TableCell>
+          <Typography variant="body1">{salary.reason}</Typography>
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>
+          <Typography variant="body1" color="primary"><strong>Final Salary:</strong></Typography>
+        </TableCell>
+        <TableCell>
+          <Typography variant="body1">${salary.finalSal}</Typography>
+        </TableCell>
+        <TableCell colSpan={2}>
+          <IconButton component={Link} to={`/UpdateSalary/${salary._id}`} aria-label="edit">
+            <EditIcon />
+          </IconButton>
+          <IconButton onClick={handleDelete} aria-label="delete">
+            <DeleteIcon />
+          </IconButton>
+        </TableCell>
+      </TableRow>
+    </>
   );
 };
 
