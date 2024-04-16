@@ -13,6 +13,14 @@ const NavbarNishadi = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
+    
+    /*{
+      path: "/Home",
+      name: "Supplier Order Dashboard",
+      
+    },*/
+    
+    
     {
       path: "/SupplierOrderDashboard",
       name: "Supplier Order Dashboard",

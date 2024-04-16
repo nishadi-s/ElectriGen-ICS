@@ -35,6 +35,11 @@ const SupplierOrders = () => {
     }
   }, [orders, searchQuery]);
 
+  // Handle navigation to report page
+  const handleGenerateReport = () => {
+    navigate("/supplierOrderReport", { state: { orders: searchResults } });
+  };
+
   return (
     <NavbarNishadi>
       <div className="supplier_order">
@@ -57,7 +62,8 @@ const SupplierOrders = () => {
           <p>No search results found</p>
         )}
 
-        <button className='button' onClick={() => navigate('/supplierorderform')}> Add a new Order</button>
+        <button className='button' onClick={() => navigate('/supplierorderform')} style={{ marginRight: '900px' }}> Add a new Order</button>
+        <button className='button' onClick={handleGenerateReport}> Generate the Report</button>
       </div>
     </NavbarNishadi>
   );

@@ -161,32 +161,104 @@ input.error{
     margin: 5px 0;
   }
   
-  .button1 {
-    background-color: #2c2ea2; /* Green */
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-right: 10px;
+ 
+  
+ 
+ 
+  .order-table {
+    width: 100%;
+    border-collapse: collapse;
   }
   
-  .btn-delete {
-    background-color: #f44336; /* Red */
-    border: none;
-    color: white;
-    padding: 10px 20px; /* Adjust padding to match edit button */
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-right: 10px;
+  .order-table th,
+  .order-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
   }
   
+  .order-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+  }
+  
+  .order-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .order-table tbody tr:hover {
+    background-color: #ddd;
+  }
+  
+  .order-table {
+    width: 100%; 
+    border-collapse: collapse;
+  }
+  
+/*supplier_order ORDER page button*/
+.button{
+  background: rgb(4, 4, 68);
+  border: 0;
+  color: #fff;
+  padding: 10px;
+  font-family: "Poppins";
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/*dropdown of the report page*/
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+  appearance: none; /* Remove default arrow icon */
+}
+
+.dropdown select:focus {
+  outline: none;
+  border-color: #007bff; /* Change border color on focus */
+}
+
+.dropdown select option {
+  padding: 10px;
+  background-color: #fff;
+  color: #333;
+}
+
+.dropdown select option:hover {
+  background-color: #f0f0f0; /* Change background color on hover */
+}
+
+/*supplier dashboard*/
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.order-table th, .order-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.order-table th {
+  background-color: #f2f2f2;
+  text-align: left;
+}
+
+.order-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.order-table tbody tr:hover {
+  background-color: #ddd;
+}
+
+
   

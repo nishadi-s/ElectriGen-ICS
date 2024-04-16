@@ -17,6 +17,9 @@ import AnalyticsN from "./pages/SupplierOrderAnalytics.jsx";
 import SupplierEdit from "./components/SupplierEdit.jsx"; // Import the UpdateSupplier component
 import SupplierOrderForm from "./components/SupplierOrderForm.jsx"//Import supplier order form component
 import SupplierOrderEdit from "./components/SupplierOrderEdit.jsx" //Import the Update supplier Order component
+import Home from "./pages/Home.jsx";
+import SupplierOrderReport from "./components/SupplierOrderRepo.jsx";
+
 
 
 //Dulari_IT22121110
@@ -64,7 +67,7 @@ const App = () => {
       <SalesContextProvider>
       
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+           {/* <Route path="/" element={<Dashboard />} />*/}
             <Route path="/Dashboard" element={<Dashboard />} />
             <Route path="/Analytics" element={<Analytics />} />
             <Route path="/MyProfile" element={<MyProfile />} />
@@ -79,10 +82,17 @@ const App = () => {
           <Route path="/supplier/:id" element={<SupplierEdit />} /> {/* Define route for updating orders */}
           <Route path="/supplierorderform" element ={< SupplierOrderForm/>}/> {/*View Supplier Order Form */}
           <Route path="/supplierOrder/:id" element={<SupplierOrderEdit />} /> {/* Define route for updating orders */}
+          <Route path="/" element={<Home />} />
+          <Route path="/Home" element={<Home />} />
+          <Route path="/supplierOrderReport" element ={<SupplierOrderReport/>}/>
+        
+
+        
           
   
             {/* Shanali */}
-            <Route path="/" element={<ExportsDashboard />} />
+           {/* <Route path="/" element={<ExportsDashboard />} />*/}
+
             <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
             <Route path="/Importer" element={<Importer />} />
             <Route path="/ExportOrders" element={<ExportOrders />} />
