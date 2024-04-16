@@ -38,6 +38,7 @@ import InvoiceReport from "./pages/InvoiceReport.jsx";
 import SalesDashboard from "./pages/SalesDashboard.jsx";
 import SDFeedback from "./pages/SDFeedback";
 import SDView from "./pages/SDView.jsx";
+import Home from "./pages/Home.jsx";
 
 //Dinithi
 import DisSignup from "./pages/DisSignup.js";
@@ -83,7 +84,7 @@ const App = () => {
     <div className="pages">
         <Routes>    
 
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/Home" element={<Home />} />
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/Analytics" element={<Analytics />} />
           <Route path="/MyProfile" element={<MyProfile />} />
@@ -106,7 +107,7 @@ const App = () => {
             element={<Suppliers />}
           />
           {/* Shanali */}
-          <Route path="/" element={<ExportsDashboard />} />
+          <Route path="/" element={<Home />} />
           <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
           <Route path="/Importer" element={<Importer />} />
           <Route path="/ExportOrders" element={<ExportOrders />} />
