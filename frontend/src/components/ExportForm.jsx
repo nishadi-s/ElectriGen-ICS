@@ -1,173 +1,196 @@
-import React, { useState } from "react";
-import { TextField, Button, Typography, Grid, Paper } from "@mui/material"; // Import Material-UI components
-import { useExportsContext } from "../hooks/useExportsContext";
-import Swal from 'sweetalert2'; // Import SweetAlert
+import React, { useState, useEffect } from 'react';
+import { Form, Button, Row, Col } from 'react-bootstrap';
+import axios from 'axios';
+import Swal from "sweetalert2";
 
 const ExportForm = () => {
-    const { dispatch } = useExportsContext();
-    const [exportOrderID, setExportOrderID] = useState('');
-    const [importer, setImporter] = useState('');
-    const [itemID, setItemID] = useState('');
-    const [quantity, setQuantity] = useState('');
-    const [items, setItems] = useState([]);
-    const [totalCost, setTotalCost] = useState('');
-    const [status, setStatus] = useState('');
-    const [error, setError] = useState(null);
-    const [emptyFields, setEmptyFields] = useState([]);
-    const [successMessage, setSuccessMessage] = useState('');
+  const [exportOrderID, setExportOrderID] = useState('');
+  const [importer, setImporter] = useState('');
+  const [items, setItems] = useState([{ itemID: '', itemName: '', quantity: '', unitPrice: '' }]);
+  const [totalCost, setTotalCost] = useState('');
+  const [status, setStatus] = useState('');
+  const [products, setProducts] = useState([]);
 
-    const exportOrderIDPattern = /^E\d{3}$/;
+  useEffect(() => {
+    fetchProducts();
+    // Generate export order ID here if needed
+  }, []);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get('http://localhost:4000/api/products');
+      setProducts(response.data);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+  };
 
-        if (!exportOrderIDPattern.test(exportOrderID)) {
-            setError('Export Order ID should start with "E" followed by 3 digits (e.g., E123)');
-            return;
-        }
+  const handleItemChange = async (index, field, value) => {
+    const updatedItems = [...items];
+    updatedItems[index][field] = value;
+    setItems(updatedItems);
 
-        const exportt = {
-            exportOrderID,
-            importer,
-            items,
-            totalCost,
-            status
-        };
+    if (field === 'itemID' && value) {
+      const selectedProduct = products.find((product) => product.itemCode === value);
+      if (selectedProduct) {
+        updatedItems[index].unitPrice = selectedProduct.unitPrice;
+        updatedItems[index].itemName = selectedProduct.name; // Update itemName field
+        setItems(updatedItems);
+      }
+    }
 
-        const response = await fetch('/api/export', {
-            method: 'POST',
-            body: JSON.stringify(exportt),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
+    // Recalculate total cost
+    const total = updatedItems.reduce((acc, item) => acc + (parseFloat(item.quantity) * parseFloat(item.unitPrice)), 0);
+    setTotalCost(total);
+  };
 
-        const json = await response.json();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        if (!response.ok) {
-            setError(json.error);
-            setEmptyFields(json.emptyFields);
-        }
-        if (response.ok) {
-            setExportOrderID('');
-            setImporter('');
-            setItems([]);
-            setTotalCost('');
-            setStatus('');
-            setError('');
-            setEmptyFields([]);
-            setSuccessMessage('New export order added successfully!');
-            dispatch({ type: 'CREATE_EXPORT', payload: json });
-
-            Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: 'New export order added successfully!'
-            });
-        }
+    const newExportOrder = {
+      exportOrderID,
+      importer,
+      items,
+      totalCost,
+      status,
     };
 
-    const addItem = () => {
-        if (itemID && quantity) {
-            setItems([...items, { itemID, quantity }]);
-            setItemID('');
-            setQuantity('');
-        }
-    };
+    try {
+      // Submit new export order
+      await axios.post("http://localhost:4000/api/export/", newExportOrder);
 
-    return (
-        <Paper elevation={3} style={{ padding: '2rem', borderRadius: '12px' }}>
-            <Typography variant="h5" align="center" gutterBottom>Add a New Export Order</Typography>
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Successfully Submitted!",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    } catch (err) {
+      console.error('Error submitting export order:', err);
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Error in Submitting!",
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
+  };
 
-            <form onSubmit={handleSubmit}>
-                <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            label="Order ID"
-                            variant="outlined"
-                            fullWidth
-                            value={exportOrderID}
-                            onChange={(e) => setExportOrderID(e.target.value)}
-                            error={emptyFields.includes('exportOrderID')}
-                            helperText={emptyFields.includes('exportOrderID') ? 'Please enter Export Order ID' : ''}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            label="Importer"
-                            variant="outlined"
-                            fullWidth
-                            value={importer}
-                            onChange={(e) => setImporter(e.target.value)}
-                            error={emptyFields.includes('importer')}
-                            helperText={emptyFields.includes('importer') ? 'Please enter Importer' : ''}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            label="Item Name"
-                            variant="outlined"
-                            fullWidth
-                            value={itemID}
-                            onChange={(e) => setItemID(e.target.value)}
-                            error={emptyFields.includes('itemID')}
-                            helperText={emptyFields.includes('itemID') ? 'Please enter Item ID' : ''}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            label="Quantity"
-                            variant="outlined"
-                            fullWidth
-                            type="number"
-                            value={quantity}
-                            onChange={(e) => setQuantity(e.target.value)}
-                            error={emptyFields.includes('quantity')}
-                            helperText={emptyFields.includes('quantity') ? 'Please enter Quantity' : ''}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button variant="contained" color="primary" onClick={addItem}>Add Item</Button>
-                    </Grid>
-                    <Grid item xs={12}>
-                        {items.map((item, index) => (
-                            <Typography key={index}>{`Item ID: ${item.itemID}, Quantity: ${item.quantity}`}</Typography>
-                        ))}
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            label="Total Cost (In Rs.)"
-                            variant="outlined"
-                            fullWidth
-                            type="number"
-                            value={totalCost}
-                            onChange={(e) => setTotalCost(e.target.value)}
-                            error={emptyFields.includes('totalCost')}
-                            helperText={emptyFields.includes('totalCost') ? 'Please enter Total Cost' : ''}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            label="Status"
-                            variant="outlined"
-                            fullWidth
-                            value={status}
-                            onChange={(e) => setStatus(e.target.value)}
-                            error={emptyFields.includes('status')}
-                            helperText={emptyFields.includes('status') ? 'Please enter Status' : ''}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button variant="contained" color="primary" type="submit" fullWidth>Add Order</Button>
-                    </Grid>
-                    <Grid item xs={12}>
-                        {error && <Typography variant="body2" color="error">{error}</Typography>}
-                        {successMessage && <Typography variant="body2" style={{ color: 'green' }}>{successMessage}</Typography>}
-                    </Grid>
-                </Grid>
-            </form>
-        </Paper>
-    );
+
+  const handleRemoveItem = (index) => {
+    const updatedItems = [...items];
+    updatedItems.splice(index, 1);
+    setItems(updatedItems);
+  };
+
+  const handleAddItem = () => {
+    setItems([...items, { itemID: '', itemName: '', quantity: '', unitPrice: '' }]);
+  };
+
+  return (
+    <div>
+      <h1>Create Export Order</h1>
+      <Form onSubmit={handleSubmit}>
+        <Row className="mb-3">
+          <Form.Group as={Col} controlId="formExportOrderID">
+            <Form.Label>Export Order ID</Form.Label>
+            <Form.Control type="text" value={exportOrderID} onChange={(e) => setExportOrderID(e.target.value)} />
+          </Form.Group>
+
+          <Form.Group as={Col} controlId="formImporter">
+            <Form.Label>Importer</Form.Label>
+            <Form.Control type="text" value={importer} onChange={(e) => setImporter(e.target.value)} />
+          </Form.Group>
+        </Row>
+
+        {items.map((item, index) => (
+          <div key={index}>
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId={`formItemNumber${index}`}>
+                <Form.Label>Item Number</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={item.itemID}
+                  onChange={(e) => handleItemChange(index, 'itemID', e.target.value)}
+                >
+                  <option value="">Select an item</option>
+                  {products.map((product) => (
+                    <option key={product._id} value={product.itemCode}>
+                      {product.itemCode}
+                    </option>
+                  ))}
+                </Form.Control>
+              </Form.Group>
+
+              <Form.Group as={Col} controlId={`formItemName${index}`}>
+                <Form.Label>Item Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={item.itemName}
+                  readOnly
+                />
+              </Form.Group>
+
+              <Form.Group as={Col} controlId={`formQuantity${index}`}>
+                <Form.Label>Quantity</Form.Label>
+                <Form.Control
+                  type="number"
+                  value={item.quantity}
+                  onChange={(e) => handleItemChange(index, 'quantity', e.target.value)}
+                />
+              </Form.Group>
+
+              <Form.Group as={Col} controlId={`formUnitPrice${index}`}>
+                <Form.Label>Unit Price</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={item.unitPrice}
+                  readOnly
+                />
+              </Form.Group>
+
+              <Button variant="danger" size="sm" onClick={() => handleRemoveItem(index)}>
+                Remove
+              </Button>
+            </Row>
+          </div>
+        ))}
+
+        <Row className="mb-3">
+          <Button variant="secondary" onClick={handleAddItem}>
+            Add New Item
+          </Button>
+
+          <Form.Group as={Col} controlId="formTotalCost">
+            <Form.Label>Total Cost</Form.Label>
+            <Form.Control
+              type="text"
+              readOnly
+              value={totalCost}
+            />
+          </Form.Group>
+
+          <Form.Group as={Col} controlId="formStatus">
+            <Form.Label>Status</Form.Label>
+            <Form.Control
+              type="text"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            />
+          </Form.Group>
+        </Row>
+
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+      </Form>
+    </div>
+  );
 };
 
 export default ExportForm;
