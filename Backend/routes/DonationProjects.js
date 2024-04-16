@@ -62,13 +62,13 @@ router.route("/delete/:project_id").delete(async (req, res) => {
 
 router.route("/update/:project_id").put(async (req, res) => {
     const projectId = req.params.project_id;
-    const { description, estimate_date, total_amount, items } = req.body;
+    const { total_amount, items } = req.body;
 
     try {
         // Find the project by its project ID and update its details
         const updatedProject = await Project.findOneAndUpdate(
             { project_id: projectId }, // Query based on project_id
-            { description, estimate_date, total_amount, items }, // Update the project details
+            { total_amount, items }, // Update the project details
             { new: true } // Return the updated document
         );
 
@@ -85,6 +85,25 @@ router.route("/update/:project_id").put(async (req, res) => {
         res.status(500).json({ error: "Failed to update project" });
     }
 });
+
+router.route("/get/:project_id").get(async (req, res) => {
+    const projectId = req.params.project_id;
+    try {
+        const project = await Project.findOne({ project_id: projectId });
+        if (!project) {
+            return res.status(404).json({ error: "Project not found" });
+        }
+        res.status(200).json(project);
+        // res.status(200).json({ status: "Project fetched successfully", project: project });
+        // res.status(200).json(project);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to fetch project" });
+    }
+    // res.status(200).json({ status: "Project fetched successfully", project: project });
+    // res.status(200).json(project);
+});
+
 
 
 

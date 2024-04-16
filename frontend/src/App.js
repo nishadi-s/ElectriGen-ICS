@@ -23,8 +23,12 @@ import DonationNavbar from "./components/DonationNavbar.jsx";
 import Donation_Dashboard from "./pages/Donation_Dashboard.jsx";
 import New_Projects from "./pages/New_Projects.jsx";
 import Doner_Feedback from "./pages/Doner_Feedback.jsx";
+import DProjectDetails from "./components/DProjectDetails.jsx";
 import Doner_Analystics from "./pages/Doner_Analytics.jsx";
 import DFeedbackFetch from "./components/dFeedbackFetch.jsx";
+import DProjectEdit from "./components/DProjectEdit.jsx";
+import DReportCreate from "./components/DReportCreate.jsx";
+
 
 //Primal
 import SalesFeedback from "./pages/salesFeedback.jsx";
@@ -124,7 +128,7 @@ const App = () => {
           <Route path="/Dashboard" element={<DFeedbackFetch />} />
           <Route path="/Donation_Dashboard" element={<Donation_Dashboard />} />
           <Route path="/DFeedbackFetch" element={<DFeedbackFetch />} />
-          
+          <Route path="/Donation_Dashboard" element={<Donation_Dashboard />} />
           <Route path="/DProjectDetails" element={<DProjectDetails />} />
           {/* Primal */}
           <Route path="/salesFeedback" element={<SalesFeedback />} />

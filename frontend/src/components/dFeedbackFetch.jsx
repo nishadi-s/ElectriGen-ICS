@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import DonationNavbar from '../components/DonationNavbar';
 
 function DFeedbackFetch() {
     const [dfeedback, setDFeedback] = useState([]);
@@ -32,6 +33,7 @@ function DFeedbackFetch() {
     };
 
     return (
+        <DonationNavbar>
         <div>
             <h1>All Feedback</h1>
             <table className="table">
@@ -57,6 +59,7 @@ function DFeedbackFetch() {
                 </tbody>
             </table>
         </div>
+        </DonationNavbar>
     );
 }
 

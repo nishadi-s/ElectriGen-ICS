@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import DonationNavbar from './DonationNavbar';
 
 function DProjectDetails() {
     const [projects, setProjects] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
-    const [editedItems, setEditedItems] = useState([]); // State to hold edited items details
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -30,10 +30,6 @@ function DProjectDetails() {
         fetchProjects();
     }, []);
 
-    const handleEdit = (project) => {
-        navigate('/dProjectUpdate');
-    };
-
     const handleDelete = async (projectId) => {
         try {
             await axios.delete(`http://localhost:4000/DonationProject/delete/${projectId}`);
@@ -44,45 +40,9 @@ function DProjectDetails() {
         }
     };
 
-    const handleEditItem = (project) => {
-        setEditedItems(project.items); // Set the edited items details
-        // You can navigate to the edit item page if needed
-    };
-
-    const handleUpdateItem = async () => {
-        try {
-            // Construct the updated projects array with updated items
-            const updatedProjects = projects.map(project => {
-                if (project.items === editedItems) {
-                    return {
-                        ...project,
-                        items: editedItems
-                    };
-                }
-                return project;
-            });
-
-            // Recalculate total amount for each project
-            updatedProjects.forEach(project => {
-                let totalAmount = 0;
-                project.items.forEach(item => {
-                    totalAmount += item.qty * item.unitPrice;
-                });
-                project.total_amount = totalAmount;
-            });
-
-            // Send PUT requests to update each project with the updated items
-            await Promise.all(updatedProjects.map(async (updatedProject) => {
-                await axios.put(`http://localhost:4000/DonationProject/update/${updatedProject.project_id}`, updatedProject);
-            }));
-
-            // Fetch all items after updating
-            const response = await axios.get("http://localhost:4000/DonationProject/");
-            setProjects(response.data);
-            setEditedItems([]); // Reset edited items state
-        } catch (error) {
-            console.error("Error updating item:", error);
-        }
+    const handleEditItem = (projectId) => {
+        // Navigate to DProjectEdit component with the project_id
+        navigate(`/dProjectEdit/${projectId}`);
     };
 
     const handleSearchInputChange = (e) => {
@@ -100,6 +60,7 @@ function DProjectDetails() {
     };
 
     return (
+        <DonationNavbar>
         <div>
             <h1>Projects Details</h1>
             <input
@@ -124,7 +85,7 @@ function DProjectDetails() {
                         <tr key={index}>
                             <td>{project.project_id}</td>
                             <td>{project.description}</td>
-                            <td>{project.estimate_date}</td>
+                            <td>{new Date(project.estimate_date).toLocaleDateString()}</td>
                             <td>{project.total_amount}</td>
                             <td>
                                 <ul>
@@ -136,53 +97,15 @@ function DProjectDetails() {
                                 </ul>
                             </td>
                             <td>
-                                
                                 <button onClick={() => handleDelete(project.project_id)}>Delete</button>
-                                <button onClick={() => handleEditItem(project)}>Edit Item</button>
+                                <button onClick={() => handleEditItem(project.project_id)}>Edit Item</button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-            {editedItems.length > 0 && (
-                <div>
-                    <h2>Edit Items</h2>
-                    {editedItems.map((editedItem, index) => (
-                        <div key={index}>
-                            <h3> Item {index + 1}</h3>
-                            <input
-                                type="text"
-                                value={editedItem.item}
-                                onChange={(e) => {
-                                    const newItems = [...editedItems];
-                                    newItems[index].item = e.target.value;
-                                    setEditedItems(newItems);
-                                }}
-                            />
-                            <input
-                                type="number"
-                                value={editedItem.qty}
-                                onChange={(e) => {
-                                    const newItems = [...editedItems];
-                                    newItems[index].qty = e.target.value;
-                                    setEditedItems(newItems);
-                                }}
-                            />
-                            <input
-                                type="number"
-                                value={editedItem.unitPrice}
-                                onChange={(e) => {
-                                    const newItems = [...editedItems];
-                                    newItems[index].unitPrice = e.target.value;
-                                    setEditedItems(newItems);
-                                }}
-                            />
-                        </div>
-                    ))}
-                    <button onClick={handleUpdateItem}>Update Items</button>
-                </div>
-            )}
         </div>
+        </DonationNavbar>
     );
 }
 

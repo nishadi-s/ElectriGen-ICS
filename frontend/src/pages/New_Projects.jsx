@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Table } from "react-bootstrap"; // Import Table component from react-bootstrap
+import DonationNavbar from "../components/DonationNavbar";
 
 export default function New_Projects() {
   const [projectData, setProjectData] = useState({
@@ -69,6 +70,8 @@ export default function New_Projects() {
   }
 
   return (
+    <DonationNavbar>
+      
     <div>
       <form onSubmit={sendData}>
         <div className="form-group">
@@ -184,5 +187,6 @@ export default function New_Projects() {
         </Table>
       </form>
     </div>
+    </DonationNavbar>
   );
 }
