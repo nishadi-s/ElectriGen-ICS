@@ -1,11 +1,13 @@
 import React from "react";
 import bg001 from "../pages/img/bg001.jpg";
 import logo1 from "../pages/img/logo1.png";
+import invoice from "../pages/img/invoice.jpg";
+import exportM from "../pages/img/exportM.jpg";
 
 const Home = () => {
   return (
       <div className="container-fluid" style={{ backgroundImage: `url(${bg001})`, backgroundSize: 'cover', minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <div style={{ position: "absolute", top: 80 }}>
+        <div style={{ position: "absolute", top: 20 }}>
             <img src={logo1}  className="logo" width="220" height="42" alt="Company Logo"></img>
         </div>
         <div className="row justify-content-center">
@@ -59,11 +61,11 @@ const Home = () => {
           <div className="col-3">
             <div class="card" style={{ width: "18rem" ,  background: "rgba(255, 255, 255, 0.5)",
               backdropFilter: "blur(10px)",}}>
-              <img src="..." class="card-img-top" alt="..." />
+              <img src={exportM} class="card-img-top" alt="..." />
               <div class="card-body">
                 <h5 class="card-title">Expot Managemant</h5>
                 
-                <a href="/SalesDashboard" class="btn btn-primary">
+                <a href="#" class="btn btn-primary">
                   Start
                 </a>
               </div>
@@ -105,11 +107,11 @@ const Home = () => {
           <div className="col-3">
             <div class="card" style={{ width: "18rem" ,  background: "rgba(255, 255, 255, 0.5)",
               backdropFilter: "blur(10px)",}}>
-              <img src="..." class="card-img-top" alt="..." />
+              <img src={invoice} className="card-img-top" alt="Start the Showroom Sales Management system" />
               <div class="card-body">
                 <h5 class="card-title">Showroom Sales Managemant</h5>
                 
-                <a href="#" class="btn btn-primary">
+                <a href="/SalesDashboard" class="btn btn-primary">
                   Start
                 </a>
               </div>

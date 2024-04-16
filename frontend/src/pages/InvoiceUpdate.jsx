@@ -123,6 +123,7 @@ const InvoiceUpdate = () => {
                       name="ino"
                       value={item.ino || ''}
                       onChange={(e) => handleInputChange(e, index)}
+                      readOnly
                     />
                   </td>
                   <td>
@@ -131,6 +132,7 @@ const InvoiceUpdate = () => {
                       name="desc"
                       value={item.desc || ''}
                       onChange={(e) => handleInputChange(e, index)}
+                      readOnly
                     />
                   </td>
                   <td>
@@ -147,6 +149,7 @@ const InvoiceUpdate = () => {
                       name="price"
                       value={item.price || 0} // Use default value 0 for price
                       onChange={(e) => handleInputChange(e, index)}
+                      readOnly
                     />
                   </td>
                   <td>

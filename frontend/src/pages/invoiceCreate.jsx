@@ -122,7 +122,8 @@ const InvoiceCreate = () => {
     <SalesNavbar>
       <div>
         <h1>Create Invoice</h1>
-        <Form onSubmit={handleSubmit}>
+        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Form onSubmit={handleSubmit} >
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formBillID">
               <Form.Label>Bill ID</Form.Label>
@@ -232,6 +233,7 @@ const InvoiceCreate = () => {
             Submit
           </Button>
         </Form>
+        </div>
       </div>
     </SalesNavbar>
   );
