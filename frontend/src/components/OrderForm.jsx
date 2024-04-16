@@ -1,11 +1,13 @@
 import React, { useState, useEffect,  } from "react";
 import { useNavigate } from 'react-router-dom'
 import { useOrdersContext } from "../hooks/useOrdersContext";
-import { useDisDAuthContext } from "../hooks/useDisDAuthContext";
+// import { useDisDAuthContext } from "../hooks/useDisDAuthContext";
+import api from "../api/api";
 
 const OrderForm = () => {
+  //
   const { dispatch } = useOrdersContext();
-  const { distributor } = useDisDAuthContext();
+  // const { distributor } = useDisDAuthContext();
   const navigate = useNavigate();
 
   const [distributorId, setDistributorId] = useState("");
@@ -41,10 +43,10 @@ const OrderForm = () => {
 
     
 
-    if(!distributor){
-      setError('You must be logged in')
-      return
-    }
+    // if(!distributor){
+    //   setError('You must be logged in')
+    //   return
+    // }
 
     // Check if any field is empty
     if (!distributorId || !distributorName || !totalAmount || items.some(item => !item.code || !item.name || !item.unit || !item.quantity)) {
@@ -67,14 +69,18 @@ const OrderForm = () => {
         totalAmount,
       };
 
-      const response = await fetch("/api/orders", {
-        method: "POST",
-        body: JSON.stringify(order),
-        headers: {
-          "Content-Type": "application/json",
-          'Authorization': `Bearer ${distributor.token}`
-        },
-      });
+      // OLD CODE
+      // const response = await fetch("/api/orders", {
+      //   method: "POST",
+      //   body: JSON.stringify(order),
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     'Authorization': `Bearer ${distributor.token}`
+      //   },
+      // });
+      
+      // NEW CODE
+      const response = await api.post("/api/orders", order);
       const json = await response.json();
 
       if (!response.ok) {

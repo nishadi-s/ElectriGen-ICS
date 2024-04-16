@@ -63,8 +63,8 @@ import InvoiceUpdate from "./pages/InvoiceUpdate.jsx";
 
 //Dinithi
 
-import DisSignup from "./pages/DisSignup.jsx";
-import DisLogin from "./pages/DisLogin.jsx";
+// import DisSignup from "./pages/DisSignup.jsx";
+// import DisLogin from "./pages/DisLogin.jsx";
 import DisDashboard from "./pages/DisDashboard.jsx";
 import DisMyProfile from "./pages/DisMyProfile.jsx";
 import DisAnalytics from "./pages/DisAnalytics";

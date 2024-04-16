@@ -21,7 +21,7 @@ const OrderHistory = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       api
-        .get("/orders")
+        .get("/api/orders")
         .then((response) => {
           setFilteredOrders(response.data);
         })
