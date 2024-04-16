@@ -8,7 +8,6 @@ const mongoose = require("mongoose");
 // Create an Express app
 const app = express();
 
-app.use(express.json());
 
 
 

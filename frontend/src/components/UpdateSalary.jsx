@@ -63,15 +63,7 @@ const UpdateSalary = () => {
         };
 
         // Check if the user tries to update the final salary
-        if (finalSal !== calculatedFinalSalary) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error!',
-                text: 'You cannot update the final salary directly.',
-            });
-            return; // Exit the function to prevent further execution
-        }
-    
+       
         try {
             const response = await fetch(`/api/salaries/${id}`, {
                 method: 'PUT',
@@ -87,7 +79,7 @@ const UpdateSalary = () => {
                     title: 'Success!',
                     text: 'Salary details updated successfully!'
                 });
-                setTimeout(() => navigate('/'), 2000);
+                setTimeout(() => navigate('/salary-details'), 2000);
             } else {
                 const errorData = await response.json();
                 setError(errorData.error);
