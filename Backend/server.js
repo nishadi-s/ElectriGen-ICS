@@ -54,7 +54,6 @@ app.use("/sfeedback", feedbackRouter);
 const dFeedbackRouter = require("./routes/dFeedback.js");
 const projectRouter = require("./routes/DonationProjects.js");
 app.use("/DonationProject", projectRouter);
-const dFeedbackRouter = require("./routes/dFeedback.js");
 app.use("/dFeedback", dFeedbackRouter);
 
 //Dinithi

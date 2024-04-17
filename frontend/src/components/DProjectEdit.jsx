@@ -101,6 +101,7 @@ function DProjectEdit() {
                         rows="3"
                         value={projectData.description}
                         onChange={handleInputChange}
+                        readOnly
                     ></textarea>
                 </div>
                 <div className="form-group">
@@ -112,6 +113,7 @@ function DProjectEdit() {
                         name="estimate_date"
                         value={projectData.estimate_date}
                         onChange={handleInputChange}
+                        readOnly
                     />
                 </div>
                 {/* Render input fields for each item */}
@@ -122,6 +124,7 @@ function DProjectEdit() {
                             type="text"
                             value={item.item}
                             onChange={(e) => handleItemChange(index, 'item', e.target.value)}
+                            readOnly
                         />
                         <input
                             type="number"
@@ -146,7 +149,6 @@ function DProjectEdit() {
                     />
                 </div>
                 {/* Button to add a new item */}
-                <button type="button" className="btn btn-primary" onClick={handleAddItem}>Add Item</button>
                 <button type="submit" className="btn btn-primary">Update Project</button>
             </form>
         </div>
