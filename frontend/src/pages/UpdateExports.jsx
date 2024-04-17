@@ -102,57 +102,61 @@ const UpdateExport = () => {
   return (
     <div className="update-ex with-background">
       <div className="update-export-container">
-    <ExportsNavBar>
-      <div className="update-export-form">
-        <h2>Edit Order</h2>
-        <form onSubmit={handleSubmit}>
-          <label>Order ID:</label>
-          <input
-            type="text"
-            value={exportOrderID}
-            disabled
-          />
-          <label>Importer ID: </label>
-          <input
-            type="text"
-            value={importer}
-            onChange={(e) => setImporter(e.target.value)}
-          />
-          {updatedItems.map((item, index) => (
-            <div key={index}>
-              <label>{`Item(${index + 1}) Item ID`}</label>
+        <ExportsNavBar>
+          <div className="update-export-form">
+            <h2>Edit Order</h2>
+            <form onSubmit={handleSubmit}>
+              <label>Order ID:</label>
               <input
                 type="text"
-                value={item.itemID}
-                onChange={(e) => handleItemChange(index, 'itemID', e.target.value)}
+                value={exportOrderID}
+                disabled
               />
-              <label>{`Item(${index + 1}) Quantity`}</label>
+              <label>Importer ID: </label>
+              <input
+                type="text"
+                value={importer}
+                onChange={(e) => setImporter(e.target.value)}
+              />
+              {updatedItems.map((item, index) => (
+                <div key={index}>
+                  <label>{`Item(${index + 1}) Item ID`}</label>
+                  <input
+                    type="text"
+                    value={item.itemID}
+                    onChange={(e) => handleItemChange(index, 'itemID', e.target.value)}
+                  />
+                  <label>{`Item(${index + 1}) Quantity`}</label>
+                  <input
+                    type="number"
+                    value={item.quantity}
+                    onChange={(e) => handleItemChange(index, 'quantity', e.target.value)}
+                  />
+                </div>
+              ))}
+              <label>Total Cost(In Rs.): </label>
               <input
                 type="number"
-                value={item.quantity}
-                onChange={(e) => handleItemChange(index, 'quantity', e.target.value)}
+                value={totalCost}
+                onChange={(e) => setTotalCost(e.target.value)}
               />
-            </div>
-          ))}
-          <label>Total Cost(In Rs.): </label>
-          <input
-            type="number"
-            value={totalCost}
-            onChange={(e) => setTotalCost(e.target.value)}
-          />
-          <label>Status: </label>
-          <input
-            type="text"
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-          />
-          <button type="submit">Update</button>
-          {error && <div className="error">{error}</div>}
-          {successMessage && <div className="success-message">{successMessage}</div>}
-        </form>
+              <label>Status: </label>
+              <select
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+              >
+                <option value="Delivered">Delivered</option>
+                <option value="Pending">Pending</option>
+                <option value="On the way to the destination country">On the way to the destination country</option>
+                <option value="In transit">In Transit</option>
+              </select><br/><br/>
+              <button type="submit">Update</button>
+              {error && <div className="error">{error}</div>}
+              {successMessage && <div className="success-message">{successMessage}</div>}
+            </form>
+          </div>
+        </ExportsNavBar>
       </div>
-    </ExportsNavBar>
-    </div>
     </div>
   );
 };
