@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useImportersContext } from '../hooks/useImportersContext';
-import ImporterDetails from './ImporterDetails'; // Import ExportDetails component
+import ImporterDetails from './ImporterDetails'; 
 
 const ImporterSearch = () => {
   const { importers } = useImportersContext(); // Get importers from context

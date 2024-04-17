@@ -1,27 +1,46 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Typography, Button, Paper } from "@mui/material";
-import EditIcon from '@mui/icons-material/Edit';
 import { formatDistanceToNow } from 'date-fns';
 
 const ImporterDetails = ({ importer }) => {
-    return (
-        <div style={{ width: '1250px' }}> {/* Set a fixed width for the container */}
-            <Paper elevation={3} style={{ padding: '1.5rem', marginBottom: '1.5rem', borderRadius: '10px', backgroundColor: '#f5f5f5' }}>
-                <Typography variant="h5" gutterBottom>{importer.importerID}</Typography>
-                <Typography variant="body1"><strong>Importer Name: </strong>{importer.importerName}</Typography>
-                <Typography variant="body1"><strong>Address: </strong>{importer.address}</Typography>
-                <Typography variant="body1"><strong>Contact Number: </strong>{importer.contactNumber}</Typography>
-                <Typography variant="body1"><strong>Email: </strong>{importer.email}</Typography>
-                <Typography variant="body1"><strong>Created: </strong>{formatDistanceToNow(new Date(importer.createdAt), { addSuffix: true })}</Typography>
-                <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'flex-end' }}>
-                    <Link to={`/ImporterUpdate/${importer._id}`} style={{ textDecoration: 'none' }}>
-                        <Button variant="contained" color="primary" startIcon={<EditIcon />}>Edit</Button>
-                    </Link>
-                </div>
-            </Paper>
-        </div>
-    );
+  return (
+    <div className="importer-details-container">
+      <h5 className="importer-details-header">{importer.importerID}</h5>
+      <table className="importer-details-table">
+        <tbody>
+        <tr>
+            <th>Importer ID:</th>
+            <td>{importer.importerID}</td>
+          </tr>
+          <tr>
+            <th>Importer Name:</th>
+            <td>{importer.importerName}</td>
+          </tr>
+          <tr>
+            <th>Address:</th>
+            <td>{importer.address}</td>
+          </tr>
+          <tr>
+            <th>Contact Number:</th>
+            <td>{importer.contactNumber}</td>
+          </tr>
+          <tr>
+            <th>Email:</th>
+            <td>{importer.email}</td>
+          </tr>
+          <tr>
+            <th>Created:</th>
+            <td>{formatDistanceToNow(new Date(importer.createdAt), { addSuffix: true })}</td>
+          </tr>
+      </tbody>
+      </table>
+      <div className="importer-details-actions">
+        <Link to={`/ImporterUpdate/${importer._id}`} style={{ textDecoration: 'none' }}>
+          <button className="edit-button">Edit</button>
+        </Link>
+      </div>
+    </div>
+  );
 }
 
 export default ImporterDetails;

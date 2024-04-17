@@ -1,9 +1,6 @@
 import '../exports.css';
 import { useExportsContext } from '../hooks/useExportsContext';
 import { Link } from 'react-router-dom';
-import { Typography, Button, IconButton, Paper, Grid } from "@mui/material";
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import { format } from 'date-fns';
 import Swal from 'sweetalert2';
 
@@ -58,31 +55,50 @@ const ExportDetails = ({ exportt }) => {
   };
 
   return (
-    <Paper elevation={3} style={{ padding: '1.5rem', marginBottom: '1.5rem', borderRadius: '10px', backgroundColor: '#f5f5f5',  width: '1250px' }}>
-      <Typography variant="h5" gutterBottom>{exportt.exportOrderID}</Typography>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Typography><strong>Importer ID:</strong> {exportt.importer}</Typography>
+    <div className="export-details-container">
+      <h2 className="export-details-header">{exportt.exportOrderID}</h2>
+      <table className="export-details-table">
+        <tbody>
+        <tr>
+            <td><strong>Order ID:</strong></td>
+            <td>{exportt.exportOrderID}</td>
+          </tr>
+
+          <tr>
+            <td><strong>Importer ID:</strong></td>
+            <td>{exportt.importer}</td>
+          </tr>
           {exportt.items.map((item, index) => (
-            <div key={index} style={{ marginTop: '0.5rem' }}>
-              <Typography><strong>Item {index + 1}:</strong> {item.itemID}</Typography>
-              <Typography><strong>Quantity:</strong> {item.quantity}</Typography>
-            </div>
+            <tr key={index}>
+              <td><strong>Item {index + 1}:</strong></td>
+              <td>{item.itemID}</td>
+              <td><strong>Quantity:</strong></td>
+              <td>{item.quantity}</td>
+              <td><strong>Unit Cost:</strong></td>
+              <td>{item.unitPrice}</td>
+            </tr>
           ))}
-          <Typography><strong>Total Cost (In Rs.):</strong> {exportt.totalCost}</Typography>
-          <Typography><strong>Status:</strong> {exportt.status}</Typography>
-          <Typography><strong>Created:</strong> {format(new Date(exportt.createdAt), 'MMMM dd, yyyy')}</Typography>
-        </Grid>
-      </Grid>
-      <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'flex-end' }}>
-        <IconButton onClick={handleClick} color="error">
-          <DeleteIcon />
-        </IconButton>
-        <Link to={`/UpdateExports/${exportt._id}`} style={{ textDecoration: 'none' }}>
-          <Button variant="contained" color="primary" startIcon={<EditIcon />}>Edit</Button>
+          <tr>
+            <td><strong>Total Cost (In Rs.):</strong></td>
+            <td colSpan="3">{exportt.totalCost}</td>
+          </tr>
+          <tr>
+            <td><strong>Status:</strong></td>
+            <td colSpan="3">{exportt.status}</td>
+          </tr>
+          <tr>
+            <td><strong>Created:</strong></td>
+            <td colSpan="3">{format(new Date(exportt.createdAt), 'MMMM dd, yyyy')}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div className="export-details-actions">
+        <button onClick={handleClick} className="delete-button">Delete</button>
+        <Link to={`/UpdateExports/${exportt._id}`} className="edit-button">
+          Edit
         </Link>
       </div>
-    </Paper>
+    </div>
   );
 }
 

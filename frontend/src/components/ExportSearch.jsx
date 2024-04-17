@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { useExportsContext } from '../hooks/useExportsContext';
 import ExportDetails from './ExportDetails';
-import { TextField, Button, Select, MenuItem, FormControl, InputLabel, IconButton } from '@mui/material'; // Import Material-UI components
-import SearchIcon from '@mui/icons-material/Search'; // Import search icon
+import { TextField, Button, Select, MenuItem, FormControl, InputLabel, IconButton } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search'; 
 
 const ExportSearch = () => {
   const { exports } = useExportsContext();
@@ -66,7 +66,7 @@ const ExportSearch = () => {
             <IconButton>
               <SearchIcon />
             </IconButton>
-          ) // Add an icon button as an adornment
+          )
         }}
       />
 
