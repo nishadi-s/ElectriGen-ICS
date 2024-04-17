@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import "../senith.css";
+import "../exports.css";
 import ExportsNavBar from "../components/ExportsNavBar.jsx"; // Importing the ExportsNavBar component
 import Swal from 'sweetalert2';
 
@@ -100,8 +100,10 @@ const UpdateExport = () => {
   };
 
   return (
+    <div className="update-ex with-background">
+      <div className="update-export-container">
     <ExportsNavBar>
-      <div className="update-export">
+      <div className="update-export-form">
         <h2>Edit Order</h2>
         <form onSubmit={handleSubmit}>
           <label>Order ID:</label>
@@ -150,6 +152,8 @@ const UpdateExport = () => {
         </form>
       </div>
     </ExportsNavBar>
+    </div>
+    </div>
   );
 };
 

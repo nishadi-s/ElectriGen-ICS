@@ -27,6 +27,7 @@ const ImporterDescription=()=>{
 
 
   return (
+    <div className="im-description with-background">
     <ExportsNavBar>
     <div className="im-dashboard">
       
@@ -36,6 +37,7 @@ const ImporterDescription=()=>{
       </div>
     </div>
     </ExportsNavBar>
+    </div>
   );
 };
 

@@ -24,8 +24,9 @@ const ExportsDashboard=()=>{
   }, [exportsDispatch])
 
   return (
-
+<div className="ex-dashboard with-background">
     <ExportsNavBar>
+      
     <div className="ex-dashboard">      
       <div className="exports">
         <h1>Export Order Details</h1><br />
@@ -34,8 +35,9 @@ const ExportsDashboard=()=>{
 
       </div>      
     </div>
-    </ExportsNavBar>
     
+    </ExportsNavBar>
+    </div>
   );
 };
 

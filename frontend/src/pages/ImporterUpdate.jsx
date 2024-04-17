@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ExportsNavBar from "../components/ExportsNavBar.jsx";
 import Swal from 'sweetalert2';
+import "../exports.css";
 
 const UpdateImporter = () => {
     const { id } = useParams(); // Get the order ID from the URL params
@@ -100,8 +101,10 @@ const UpdateImporter = () => {
     };
     
     return (
+        <div className="update-importer with-background">
+      <div className="update-importer-container">
         <ExportsNavBar>
-            <div className="update-importer">
+            <div className="update-importer-form">
 
                 <h2>Edit Importer Details</h2>
                 <form onSubmit={handleSubmit}>
@@ -141,6 +144,8 @@ const UpdateImporter = () => {
                 </form>
             </div>
         </ExportsNavBar>
+        </div>
+        </div>
     );
 };
 

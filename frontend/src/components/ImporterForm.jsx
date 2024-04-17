@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { TextField, Button, Typography, Grid, Paper } from "@mui/material"; // Import Material-UI components
 import { useImportersContext } from "../hooks/useImportersContext";
+import { useNavigate } from "react-router-dom"; // Import useNavigate hook from React Router
 import Swal from 'sweetalert2'; // Import SweetAlert
 
 const ImporterForm = () => {
     const { dispatch } = useImportersContext();
+    const navigate = useNavigate(); // Initialize the useNavigate hook
     const [importerID, setImporterID] = useState('');
     const [importerName, setImporterName] = useState('');
     const [address, setAddress] = useState('');
@@ -18,6 +20,12 @@ const ImporterForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Check if any of the fields are empty
+        if (!importerID || !importerName || !address || !contactNumber || !email) {
+            setError('Please fill out all fields');
+            return;
+        }
 
         // Validate importerID format
         if (!importerIDPattern.test(importerID)) {
@@ -59,6 +67,9 @@ const ImporterForm = () => {
             setEmptyFields([]);
             dispatch({ type: 'CREATE_IMPORTER', payload: json });
 
+            // Redirect to importer description page after successful submission
+            navigate(`/ImporterDescription`);
+            
             // Display success message using SweetAlert
             Swal.fire({
                 icon: 'success',
@@ -69,12 +80,12 @@ const ImporterForm = () => {
     }
 
     return (
-        <Paper elevation={3} style={{ padding: '2rem' }}>
+        <Paper elevation={3} style={{ padding: '2rem', borderRadius: '10px' }}>
             <Typography variant="h5" align="center" gutterBottom>Add a New Importer</Typography>
 
             <form onSubmit={handleSubmit}>
                 <Grid container spacing={3}>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12}>
                         <TextField
                             label="Importer ID"
                             variant="outlined"
@@ -85,7 +96,7 @@ const ImporterForm = () => {
                             helperText={emptyFields.includes('importerID') ? 'Please enter Importer ID' : ''}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12}>
                         <TextField
                             label="Name"
                             variant="outlined"
@@ -107,7 +118,7 @@ const ImporterForm = () => {
                             helperText={emptyFields.includes('address') ? 'Please enter Address' : ''}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12}>
                         <TextField
                             label="Contact Number"
                             variant="outlined"
@@ -119,7 +130,7 @@ const ImporterForm = () => {
                             helperText={emptyFields.includes('contactNumber') ? 'Please enter Contact Number' : ''}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12}>
                         <TextField
                             label="Email"
                             variant="outlined"

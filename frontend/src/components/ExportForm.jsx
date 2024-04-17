@@ -1,5 +1,6 @@
+import './exports1.css';
 import React, { useState, useEffect } from 'react';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Form, Button, Row, Col,Container } from 'react-bootstrap';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
@@ -79,8 +80,9 @@ const ExportForm = () => {
         timer: 1500
       });
       setTimeout(() => {
+          
         window.location.reload();
-      }, 150000);
+      }, 1500);
     } catch (err) {
       console.error('Error submitting export order:', err);
       Swal.fire({
@@ -105,7 +107,8 @@ const ExportForm = () => {
   };
 
   return (
-    <div>
+    <Container>
+    <div className="form-container">
       <h1>Create Export Order</h1>
       <Form onSubmit={handleSubmit}>
         <Row className="mb-3">
@@ -202,6 +205,7 @@ const ExportForm = () => {
         </Button>
       </Form>
     </div>
+    </Container>
   );
 };
 
