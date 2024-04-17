@@ -23,6 +23,6 @@ router.post("/", createProduct);
 router.delete("/:id", deleteProduct);
 
 //UPDATE a product
-router.patch("/:id", updateProduct);
+router.put("/:id", updateProduct);
 
 module.exports = router;

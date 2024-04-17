@@ -45,6 +45,8 @@ import Materials from "./pages/Materials.jsx";
 import Production from "./pages/Production.jsx";
 import Products from "./pages/Products.jsx";
 import AddProducts from "./pages/AddProducts.jsx";
+import SingleProduct from "./components/SingleProduct"; // Import SingleProduct
+import EditProduct from "./components/EditProduct"; // Import EditProduct
 import ProductForm from "./components/ProductForm";
 
 //Shanali
@@ -118,12 +120,17 @@ const App = () => {
             {/* Define route for updating orders */}
             {/*Senith */}
             <Route path="/Products" element={<Products />} />
-            <Route path="/Production" element={<Production />} />
             <Route path="/Materials" element={<Materials />} />
             <Route path="/AddProducts" element={<AddProducts />} />
-            <Route path="./components/ProductForm" component={ProductForm} />
-          </Routes>
-        
+            <Route path="/ProductForm" element={<ProductForm />} />
+            <Route path="/" element={<Products />} />
+            <Route path="/product/:id" element={<SingleProduct />} />{" "}
+            {/* Define route for single product */}
+            <Route path="/edit-product/:id" element={<EditProduct />} />{" "}
+            {/* Add EditProduct route */}
+            <Route path="/EditProduct" element={<EditProduct />} />
+            <Route path="/SingleProduct" element={<SingleProduct />} />
+        </Routes>
       
     </BrowserRouter>
   );

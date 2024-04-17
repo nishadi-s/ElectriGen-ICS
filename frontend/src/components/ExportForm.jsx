@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2';
 
 const ExportForm = () => {
   const [exportOrderID, setExportOrderID] = useState('');
@@ -59,6 +59,18 @@ const ExportForm = () => {
       // Submit new export order
       await axios.post("http://localhost:4000/api/export/", newExportOrder);
 
+      // Update product quantities
+      items.forEach(async (item) => {
+        const { itemID, quantity } = item;
+        if (itemID && quantity) {
+          const product = products.find((p) => p.itemCode === itemID);
+          if (product) {
+            const updatedQuantity = product.quantity - parseInt(quantity);
+            await axios.put(`http://localhost:4000/api/products/${product._id}`, { quantity: updatedQuantity });
+          }
+        }
+      });
+
       Swal.fire({
         position: "top-end",
         icon: "success",
@@ -68,7 +80,7 @@ const ExportForm = () => {
       });
       setTimeout(() => {
         window.location.reload();
-      }, 1500);
+      }, 150000);
     } catch (err) {
       console.error('Error submitting export order:', err);
       Swal.fire({
