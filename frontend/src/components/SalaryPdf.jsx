@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardContent, Typography, Divider, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button } from '@mui/material'; // Import necessary components from Material-UI
-import jsPDF from 'jspdf'; // Import jsPDF for PDF generation
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 const SalaryReport = ({ salary }) => {
   const currentDate = new Date().toLocaleDateString();
@@ -13,6 +14,7 @@ const SalaryReport = ({ salary }) => {
     // Define table columns and rows
     const tableColumns = ['Field', 'Value'];
     const tableRows = [
+      ['Full Name', `${salary.fname} ${salary.lname}`],
       ['Role', salary.role],
       ['Base Salary', `$${salary.base}`],
       ['Overtime Rate', salary.otRate],

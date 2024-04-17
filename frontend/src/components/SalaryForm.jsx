@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, Button, Typography, Grid, MenuItem } from '@mui/material';
+import Swal from 'sweetalert2';
 
 const roles = [
   'Inventory Manager',
@@ -23,6 +24,7 @@ const bonusReasons = [
   'No bonus added'
 ];
 
+
 const SalaryForm = () => {
   const [fname, setFname] = useState('');
   const [lname, setLname] = useState('');
@@ -38,10 +40,31 @@ const SalaryForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
+    // Basic validations
+    if (!fname || !lname || !email || !role || !base || !otRate || !otHours || !bonus || !reason) {
+      setError("All fields are required");
+      return;
+    }
+  
+    // Validate numerical inputs
+    const numericalFields = [base, otRate, otHours, bonus];
+    const areNumericalInputsValid = numericalFields.every(field => !isNaN(field) && field !== '');
+    if (!areNumericalInputsValid) {
+      setError("Numeric fields must contain valid numbers");
+      return;
+    }
+  
+    // Validate email format
+    const isEmailValid = validateEmail(email);
+    if (!isEmailValid) {
+      setError("Please enter a valid email address");
+      return;
+    }
+  
     // Calculate final salary
     const calculatedFinalSalary = Number(base) + (Number(otRate) * Number(otHours)) + Number(bonus);
-
+  
     const salaryData = {
       fname,
       lname,
@@ -54,7 +77,7 @@ const SalaryForm = () => {
       reason,
       finalSal: calculatedFinalSalary
     };
-
+  
     try {
       const response = await fetch('/api/salaries', {
         method: 'POST',
@@ -64,11 +87,11 @@ const SalaryForm = () => {
         }
       });
       const json = await response.json();
-
+  
       if (!response.ok) {
         throw new Error(json.error);
       }
-
+  
       // Reset form fields and error
       setFname('');
       setLname('');
@@ -81,13 +104,23 @@ const SalaryForm = () => {
       setReason('');
       setError(null);
       setFinalSalary(calculatedFinalSalary);
-
-      console.log('New salary added:', json);
+  
+      // Show success message using SweetAlert
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'New salary added successfully!'
+      });
     } catch (error) {
       setError(error.message);
     }
   };
-
+  
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+  
   return (
     <form onSubmit={handleSubmit}>
       <Typography variant="h5">Add a New Salary</Typography>
@@ -210,18 +243,6 @@ const SalaryForm = () => {
             ))}
           </TextField>
         </Grid>
-
-        {/* Final Salary */}
-       {/* <Grid item xs={12}>
-          <TextField
-            label="Final Salary"
-            variant="outlined"
-            type="number"
-            value={finalSalary}
-            disabled // Disable editing final salary
-            fullWidth
-          />
-        </Grid>*/}
 
         {/* Submit button */}
         <Grid item xs={12}>

@@ -15,6 +15,7 @@ import UpdateSalaryPage from './components/UpdateSalary.jsx'
 import AddSalaryPage from './pages/AddSalary.jsx';
 import SalaryReportPage from "./pages/SalaryReport.jsx";
 import SalaryDetailsPage from './pages/SalaryDetailsPage.jsx';
+import Home from "./pages/Home.jsx";
 
 
 //Nishadi
@@ -92,8 +93,7 @@ const App = () => {
     <div className="pages">
         <Routes>    
 
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/Dashboard" element={<Dashboard />} />
+        
           <Route path="/Analytics" element={<Analytics />} />
           <Route path="/MyProfile" element={<MyProfile />} />
           <Route path="/Logout" element={<Logout />} />
@@ -115,7 +115,7 @@ const App = () => {
             element={<Suppliers />}
           />
           {/* Shanali -export manager*/}
-          <Route path="/" element={<ExportsDashboard />} />
+        {/*<Route path="/" element={<ExportsDashboard />} />*/}
           <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
           <Route path="/Importer" element={<Importer />} />
           <Route path="/ExportOrders" element={<ExportOrders />} />
@@ -139,7 +139,7 @@ const App = () => {
           <Route path="/InvoiceUpdate" element={InvoiceUpdate} />
             
           {/* Dinithi -distribution manager*/}
-          <Route path="/" element={<HomePage />} />
+         {/*<Route path="/" element={<HomePage />} />*/}
           <Route path="/login" element = {!distributor ? <DisLogin /> : <Navigate to= "/DisDashboard"/>} />
           <Route path="/signup" element = {!distributor ? <DisSignup /> : <Navigate to= "/DisDashboard"/>} />
           <Route path="/DisDashboard" element = {distributor ? <DisDashboard /> : <Navigate to="/login" />}/>
@@ -156,7 +156,8 @@ const App = () => {
           {/* Define route for updating orders */}
 
           {/*Uvindya-user*/}
-          <Route path="/" element={<Home_Pay/>} />
+          <Route path="/" element={<Home/>} />
+          <Route path="/Home_Pay" element={<Home_Pay/>} />
           <Route path="/updateSalary/:id" element={<UpdateSalaryPage />} />
           <Route path="/add-salary" element={<AddSalaryPage />} />
           <Route path="/salary-details" element={<SalaryDetailsPage />} />
