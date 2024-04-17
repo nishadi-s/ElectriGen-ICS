@@ -79,6 +79,15 @@ const ImporterForm = () => {
         }
     }
 
+    // Function to handle change in importer name field
+    const handleImporterNameChange = (e) => {
+        const value = e.target.value;
+        // Check if the input contains only letters
+        if (/^[a-zA-Z\s]*$/.test(value)) {
+            setImporterName(value);
+        }
+    };
+
     return (
         <Paper elevation={3} style={{ padding: '2rem', borderRadius: '10px' }}>
             <Typography variant="h5" align="center" gutterBottom>Add a New Importer</Typography>
@@ -102,7 +111,7 @@ const ImporterForm = () => {
                             variant="outlined"
                             fullWidth
                             value={importerName}
-                            onChange={(e) => setImporterName(e.target.value)}
+                            onChange={handleImporterNameChange} // Changed here
                             error={emptyFields.includes('importerName')}
                             helperText={emptyFields.includes('importerName') ? 'Please enter Name' : ''}
                         />

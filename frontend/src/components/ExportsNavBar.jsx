@@ -45,11 +45,11 @@ const ExportsNavBar = ({ children }) => {
       icon: <FaUserAlt />,
     },
 
-    {
-      path: "/MyProfile",
-      name: "Logout",
-      icon: <FaUserAlt />,
-    },
+    // {
+    //   path: "/MyProfile",
+    //   name: "Logout",
+    //   icon: <FaUserAlt />,
+    // },
   ];
 
   return (
