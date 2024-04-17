@@ -112,10 +112,10 @@ const SalaryDetails = ({ salary }) => {
                   <Typography variant="body1" style={{ color: '#000' }}>${salary.bonus}</Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography variant="subtitle1" color="textSecondary"><strong>Reason:</strong></Typography>
+                  <Typography variant="subtitle1" color="textSecondary"><strong>Final Salary:</strong></Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography variant="body1" style={{ color: '#000' }}>{salary.reason}</Typography>
+                  <Typography variant="body1" style={{ color: '#000' }}>${salary.finalSal}</Typography>
                 </TableCell>
               </TableRow>
             </tbody>

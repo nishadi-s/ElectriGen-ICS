@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaTh, FaBars, FaUserAlt, FaMoneyBillAlt,FaRegChartBar } from "react-icons/fa";
+import { FaTh, FaBars, FaUserAlt, FaReceipt,FaMoneyCheckAlt,FaRegChartBar, FaClipboardList } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
 
@@ -11,18 +11,23 @@ const Navbar_Pay = ({ children }) => {
     {
         path: "/add-salary",
         name: "Payroll Form",
-        icon: <FaMoneyBillAlt />,
+        icon: <FaMoneyCheckAlt/>,
       },
      
     {
       path: "/salary-details",
       name: "Payroll Management",
-      icon: <FaMoneyBillAlt />,
+      icon: <FaReceipt />,
     },
     {
       path: "/salary-report",
       name: "Report",
       icon: <FaRegChartBar />,
+    },
+    {
+      path: "/all-salary-report",
+      name: "Summary Report",
+      icon: < FaClipboardList />,
     },
    
   

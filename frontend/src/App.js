@@ -16,6 +16,7 @@ import AddSalaryPage from './pages/AddSalary.jsx';
 import SalaryReportPage from "./pages/SalaryReport.jsx";
 import SalaryDetailsPage from './pages/SalaryDetailsPage.jsx';
 import Home from "./pages/Home.jsx";
+import AllReport from "./pages/SalaryAllPdf.jsx";
 
 
 //Nishadi
@@ -162,6 +163,7 @@ const App = () => {
           <Route path="/add-salary" element={<AddSalaryPage />} />
           <Route path="/salary-details" element={<SalaryDetailsPage />} />
           <Route path="/salary-report" element={<SalaryReportPage />} />
+          <Route path="/all-salary-report" element={<AllReport/>} />
           
           <Route path="/Logout" element={<Logout />} />
 
