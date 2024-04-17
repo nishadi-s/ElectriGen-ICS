@@ -38,7 +38,7 @@ const SDView = () => {
     <SalesNavbar>
       <div>
         <h1>Sales Records</h1>
-        <Button onClick={handleButtonClick} className="btn btn-primary mb-3">Verify PIN</Button>
+        <Button onClick={handleButtonClick} className="btn btn-primary mb-3">Do Modifications</Button>
         <Table striped bordered hover>
           <thead>
             <tr>

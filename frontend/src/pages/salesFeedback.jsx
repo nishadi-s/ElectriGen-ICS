@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
+import SalesNavbar from "../components/SalesNavbar";
 
 const SalesFeedback = () =>{
     const [name, setName] = useState("");
@@ -26,6 +27,7 @@ const SalesFeedback = () =>{
     }
 
     return(
+        <SalesNavbar>
         <div>
             <h1>Sales Feedback</h1>
         
@@ -59,6 +61,7 @@ const SalesFeedback = () =>{
             </form>
         </div>
     </div>
+    </SalesNavbar>
     );
 };
 

@@ -8,7 +8,7 @@ const SDFeedback = () => {
     <SalesNavbar>
     <div>
       <h1>Important Customer Feedbacks</h1>
-      <div>
+      <div class="mt-5 mb-5">
         <SfeedbackFetch />
       </div>
 
