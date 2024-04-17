@@ -5,7 +5,7 @@ const DisAnalytics = () => {
   return (
     <NavbarDini1>
     <div>
-      <h1>Analytics page</h1>
+      <h1>Analytics</h1>
     </div>
     </NavbarDini1>
   );

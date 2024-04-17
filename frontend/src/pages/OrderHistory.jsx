@@ -1,13 +1,11 @@
 import { useEffect } from 'react'
-import "./DistributionFun.css";
 import React, { useState } from 'react';
 import { useOrdersContext } from '../hooks/useOrdersContext.jsx'
 //components
-import './DistributionFun.css'
 import NavbarDini1 from '../components/DisNavbar.jsx'
 import OrderDetails from '../components/OrderDetails.jsx'
 import SearchBar from '../components/Distributor_Search.jsx'
-import '../pages/DistributionFun.css'
+import '../DistributionFun.css'
 
 const OrderHistory = () => {
   const { orders, dispatch } = useOrdersContext();
@@ -57,13 +55,11 @@ const OrderHistory = () => {
     const regex = new RegExp(searchTerm, 'gi'); // Global, case-insensitive search
     return text.replace(regex, (match) => `<mark>${match}</mark>`); // Wrap matched terms in `<mark>` tags
   };
-
-
     return (
       <NavbarDini1>
-        <div className="OrderPlace">
-      <SearchBar onChange={handleFilter} />
-      <div className="orders">
+        <div className="home">
+        <h1>Order History</h1>
+      <SearchBar onChange={handleFilter} style={{ marginBottom: '20px' }} />
         {filteredOrders.length > 0 ? (
           filteredOrders.map((order) => (
             <OrderDetails
@@ -75,8 +71,7 @@ const OrderHistory = () => {
         ) : (
           searchTerm && <p>No orders found matching "{searchTerm}".</p> // Informative message when no results found
         )}
-      </div>
-    </div>
+        </div>
     </NavbarDini1>
     )
 }

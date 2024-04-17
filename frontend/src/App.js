@@ -102,7 +102,6 @@ const { distributor } = useDisDAuthContext()
     <div className="pages">
         <Routes>    
           <Route path="/" element={<Home />} />
-          <Route path="/Home" element={<Home />} />
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/Analytics" element={<Analytics />} />
           <Route path="/MyProfile" element={<MyProfile />} />

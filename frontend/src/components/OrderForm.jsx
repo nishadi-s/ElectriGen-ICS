@@ -101,65 +101,70 @@ const OrderForm = () => {
   };
 
   return (
-    <form className="create" onSubmit={handleSubmit}>
+    <form class="create" onSubmit={handleSubmit}>
   <h3>Order Placement Form</h3>
 
-  <label>Distributor ID</label>
-  <input
-    type="text"
-    onChange={(e) => setDistributorId(e.target.value)}
-    value={distributorId}
-    className={emptyFields.includes("distributorId") ? "error" : ""}
-  />
+  <div class="input-group">
+    <label for="distributorId">Distributor ID</label>
+    <input
+      type="text"
+      id="distributorId"
+      onChange={(e) => setDistributorId(e.target.value)}
+      value={distributorId}
+      class={emptyFields.includes("distributorId") ? "error" : ""}
+    />
+  </div>
 
-  <label>Distributor's Name</label>
-  <input
-    type="text"
-    onChange={(e) => setDistributorName(e.target.value)}
-    value={distributorName}
-    className={emptyFields.includes("distributorName") ? "error" : ""}
-  />
+  <div class="input-group">
+    <label for="distributorName">Distributor's Name</label>
+    <input
+      type="text"
+      id="distributorName"
+      onChange={(e) => setDistributorName(e.target.value)}
+      value={distributorName}
+      class={emptyFields.includes("distributorName") ? "error" : ""}
+    />
+  </div>
 
-  <label>Order Status</label>
-  <input
-    type="text"
-    value={orderStatus}
-    readOnly
-  />
+  <div class="input-group">
+    <label for="orderStatus">Order Status</label>
+    <input type="text" id="orderStatus" value={orderStatus} readOnly />
+  </div>
 
   {/* Item Container */}
-  <div className="item-container">
+  <label class="item-label1">Select Items</label>
+  <div class="item-container">
     {items.map((item, index) => (
-      <div key={index} className="item-fields">
-        <label className="item-lable">Item({index + 1}) code</label>
+      <div key={index} class="item-fields">
+        <label class="item-label">Item({index + 1}) Code</label>
         <input
           type="text"
           onChange={(e) => handleItemChange(index, "code", e.target.value)}
           value={item.code}
         />
 
-        <label className="item-lable">Item({index + 1}) Name</label>
+        <label class="item-label">Item({index + 1}) Name</label>
         <input
           type="text"
           onChange={(e) => handleItemChange(index, "name", e.target.value)}
           value={item.name}
         />
 
-        <label className="item-lable">Item({index + 1}) Unit Price</label>
+        <label class="item-label">Item({index + 1}) Unit Price</label>
         <input
           type="number"
           onChange={(e) => handleItemChange(index, "unit", e.target.value)}
           value={item.unit}
         />
 
-        <label className="item-lable">Item({index + 1}) Quantity</label>
+        <label class="item-label">Item({index + 1}) Quantity</label>
         <input
           type="number"
           onChange={(e) => handleItemChange(index, "quantity", e.target.value)}
           value={item.quantity}
         />
 
-        <label className="item-lable">Item({index + 1}) Total Price</label>
+        <label class="item-label">Item({index + 1}) Total Price</label>
         <input
           type="text"
           value={item.unit * item.quantity}
@@ -172,15 +177,13 @@ const OrderForm = () => {
   {/* Add Item Button */}
   <button type="button" onClick={addNewItem}>Add Item</button>
 
-  <label>Total Amount to Pay</label>
-  <input
-    type="number"
-    value={totalAmount}
-    readOnly
-  />
+  <div class="input-group">
+    <label for="totalAmount">Total Amount to Pay</label>
+    <input type="number" id="totalAmount" value={totalAmount} readOnly />
+  </div>
 
   <button type="submit">Submit</button>
-  {error && <div className="error">{error}</div>}
+  {error && <div class="error">{error}</div>}
 </form>
   );
 };

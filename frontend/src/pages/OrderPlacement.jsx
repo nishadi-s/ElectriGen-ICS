@@ -33,6 +33,7 @@ const OrderPlace = () => {
     return (
         <NavbarDini1>
         <div className="OrderPlace" >
+        <h1>Order Placement</h1>
             <OrderForm/>
         </div>
         </NavbarDini1>

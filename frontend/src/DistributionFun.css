@@ -1,0 +1,613 @@
+/* google font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
+
+/* layout */
+:root {
+  --primary: #233066;
+  --error: #e7195a;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-image: url("../public/dback1.png");
+  background-size: cover;
+  background-position: center;
+}
+.home {
+  min-height: 100vh;
+}
+
+h1 {
+  text-align: left; /* Align text to the left */
+  width: 100%; /* Span the full width of the page */
+  padding: 17px 20px; /* Add padding for spacing */
+  background-color: #233066; /* Deep blue background for the heading container */
+  color: #fff; /* White text color for better readability */
+  font-size: 2.5rem; /* Adjust font size based on your preference */
+  margin-bottom: 30px; /* Add some margin below the heading */
+  margin-top: -20px;
+  margin-left: -10px;
+  border-radius: 10px; /* Add subtle rounded corners for a polished look */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow for depth */
+}
+
+header {
+  background: #fff;
+}
+header .container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+header a {
+  color: #333;
+  text-decoration: none;
+}
+
+.create {
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 30px;
+  background-color: #e7e5e5;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+/* Form Title */
+.create h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: #333;
+  text-align: center;
+}
+
+/* Input Groups */
+.input-group {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between; /* Align labels and inputs horizontally */
+}
+
+/* Labels */
+.input-group label {
+  font-weight: bold; /* Lighter font weight for labels */
+  width: auto; /* Flexible width for labels */
+  color: #000000;
+}
+
+.item-label1{
+  font-weight: bold; /* Lighter font weight for labels */
+  width: auto; /* Flexible width for labels */
+  color: #000000;
+}
+
+/* Inputs */
+.input-group input[type="text"],
+.input-group input[type="number"] {
+  width: 100%; /* Full width for inputs */
+  padding: 10px;
+  border: 1px solid #ffffff;
+  border-radius: 4px 4px;
+  box-sizing:content-box
+}
+
+/* Input Focus */
+.create input[type="text"]:focus,
+.create input[type="number"]:focus {
+  border-color: #f9f9f9; /* Blue border on focus */
+}
+
+/* Error Messages */
+.create .error {
+  color: #e7195a;
+  margin-top: 8px;
+  font-size: smaller;
+}
+
+/* Add Item Button */
+.create button[type="button"] {
+  background-color: #9b9b9b; /* Blue background for primary action */
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: -10px;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  font-weight:500;
+}
+
+.create button[type="button"]:hover {
+  background-color: #c5c5c5; /* Darker blue on hover */
+}
+
+/* Submit Button */
+.create button[type="submit"] {
+  background-color: #233066; /* Green background for positive action */
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 10px;
+  font-weight:500;
+}
+
+.create button[type="submit"]:hover {
+  background-color: #3a53b8; /* Darker green on hover */
+}
+
+/* Item Container */
+.item-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+/* Item Fields */
+.item-fields {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: 20px;
+  padding: 15px;
+  border: 1px solid #ededed; /* Optional: Remove border for a cleaner look */
+  border-radius: 4px 4px;
+  background-color: #ededed; /* Light gray background for items */
+}
+
+/* Item Fields - Individual elements */
+.item-fields > * {
+  margin-bottom: 5px;
+  width: calc(50% - 10px);
+}
+
+.item-label {
+  font-size:85%;
+  font-weight: 600;
+  text-align: left; /* Left align item labels */
+  color: #000000;
+}
+
+div.error {
+  padding: 10px;
+  background: #ffefef;
+  border: 1px solid var(--error);
+  color: var(--error);
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+input.error {
+  border: 1px solid var(--error);
+}
+
+nav {
+  background-color: #808080;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+nav ul li {
+  display: inline;
+}
+
+nav ul li a {
+  display: inline-block;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+}
+
+nav ul li a:hover {
+  background-color: #a2a2a2;
+}
+
+.input-search-wrapper {
+  width: 30%;
+  height: 2.5rem;
+  border: none;
+  border-radius: 5px;
+  padding: 0 15px;
+  box-shadow: 0px 0px 8px #5e5e5e;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  
+}
+
+.input-search {
+  background-color: transparent;
+  font-family: "Poppins";
+  border: none;
+  height: 100%;
+  font-size:small;
+  width: 100%;
+  margin-left: 5px;
+  margin-left: 5px;
+  padding-top: 2.55%;
+}
+
+.input-search:focus {
+  outline: none;
+}
+
+#search-icon {
+  color: rgb(114, 115, 119);
+}
+
+.material-symbols-outlined {
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  background-color: #EC2026;
+  justify-content: flex-end;
+}
+
+.material-symbols-outlined:hover {
+  transform: scale(1.05);
+  opacity: 0.8; 
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end; 
+}
+
+.spacer {
+  flex-grow: 10;
+}
+
+.custom-button {
+  background-color: #233066; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+/* Hover effect */
+.custom-button:hover {
+  background-color: #4d567c;
+}
+
+/* Active effect */
+.custom-button:active {
+  background-color: #0b184d;
+}
+
+.btn-delete {
+  background-color: #EC2026;
+  color: white; /* White text */
+  font-size: 14px;
+  border: none; /* Remove button border */
+  padding: 2px 5px; /* Padding for better appearance */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth transition */
+  width: 100px; /* Adjust button width */
+  height: 30px; /* Adjust button height */
+  margin-right: 10px; /* Adjust margin between buttons */
+}
+
+.btn-delete:hover {
+  background-color: #d32f2f; /* Darker shade of red on hover */
+}
+
+/* Edit button styles */
+.btn-edit {
+  background-color: #808080;
+  color: white; /* White text */
+  font-size: 14px;
+  border: none; /* Remove button border */
+  padding: 2px 5px; /* Padding for better appearance */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth transition */
+  width: 100px; /* Adjust button width */
+  height: 30px; /* Adjust button height */
+}
+
+.btn-edit:hover {
+  background-color: #c8c5c5; /* Darker shade on hover */
+}
+
+/* StartDin navbar */
+nav {
+  display: flex;
+  align-items: center;
+}
+nav a {
+  margin-left: 10px;
+}
+
+nav button {
+  background: #fff;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-family: "Poppins";
+  cursor: pointer;
+  font-size: 1em;
+}
+
+/* auth forms */
+form.signup, form.login {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 4px;
+}
+
+/*fetch table*/
+.order-details {
+  display: flex;
+  justify-content: center; /* Center the table horizontally */
+  width: 100%; /* Ensure the table fills the available space */
+  margin-bottom: 5%;
+}
+
+.order-details .MuiPaper-root {  /* Target the Paper component for styling */
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1); /* Subtle box shadow for depth */
+  border-radius: 4px; /* Rounded corners for a polished look */
+  overflow-x: auto;  /* Enable horizontal scrolling for wide tables */
+}
+
+.order-details table {
+  width: 100%; /* Ensure the table stretches to fit the container */
+  border-collapse: collapse; /* Remove default table borders */
+  height: 50px; /* Set a fixed height for the table */
+}
+
+.order-details thead th{
+  padding: 1px 15px; /* Consistent and comfortable padding */
+  border: 1px solid #ddd; /* Light border for separation */
+  text-align: left; /* Left-align content by default */
+  background-color: #e0e0e0; /* Light gray background for headers */
+  font-weight: bold; /* Emphasize headers */
+  height: 25px; /* Smaller height for headers (adjust as needed) */
+  width: 100px;
+  text-align:center;
+  text-overflow: ellipsi;
+}
+.order-details tbody td {
+  padding: 10px 16px; /* Consistent and comfortable padding */
+  border: 1px solid #ddd; /* Light border for separation */
+  text-align: left; /* Left-align content by default */
+}
+
+.order-details tbody tr:nth-child(even) {
+  background-color: #fafafa; /* Alternate row colors for readability */
+}
+
+/* Specific styling for table cells */
+.order-details .action-buttons {
+  display: flex;
+  justify-content: space-between; /* Space buttons evenly */
+}
+
+/*update order form*/
+.update-form {
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 30px;
+  background-color: #e7e5e5;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+/* Form Title */
+.update-form h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: #333;
+  text-align: center;
+}
+
+/* Input Groups */
+.input-group {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between; /* Align labels and inputs horizontally */
+}
+
+/* Labels */
+.input-group label {
+  font-weight: bold; /* Lighter font weight for labels */
+  width: auto; /* Flexible width for labels */
+  color: #000000;
+}
+
+/* Inputs */
+.input-group input[type="text"],
+.input-group input[type="number"] {
+  width: 100%; /* Full width for inputs */
+  padding: 10px;
+  border: 1px solid #ffffff;
+  border-radius: 4px 4px;
+  box-sizing: content-box;
+}
+
+/* Input Focus */
+.update-form input[type="text"]:focus,
+.update-form input[type="number"]:focus {
+  border-color: #f9f9f9; /* Blue border on focus */
+}
+
+/* Error Messages */
+.update-form .error {
+  color: #e7195a;
+  margin-top: 8px;
+  font-size: smaller;
+}
+
+/* Add Item Button */
+.add-item-button {
+  background-color: #9b9b9b; /* Blue background for primary action */
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: -10px;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  font-weight: 500;
+}
+
+.add-item-button:hover {
+  background-color: #c5c5c5; /* Darker blue on hover */
+}
+
+/* Update Button (replacing submit button) */
+.update-button {
+  background-color: #233066; /* Green background for positive action */
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 10px;
+  font-weight: 500;
+}
+
+.update-button:hover {
+  background-color: #3a53b8; /* Darker green on hover */
+}
+
+/* Item Container */
+.item-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+/* Item Fields */
+.item-fields {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: 20px;
+  padding: 15px;
+  border: 1px solid #ededed; /* Optional: Remove border for a cleaner look */
+  border-radius: 4px 4px;
+  background-color: #ededed; /* Light gray background for items */
+}
+
+/* Item Fields - Individual elements */
+.item-fields > * {
+  margin-bottom: 5px;
+  width: calc(50% - 10px);
+}
+
+.item-label {
+  font-size: 85%;
+  font-weight: 600;
+  text-align: left; 
+}
+
+/*dashboard- Items summary*/
+.summary-container {
+  display: flex;
+  flex-direction: column;
+  width: 350px; /* Adjust width as needed */
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px; /* Adjust margin for placement */
+  position: relative; /* For before/after elements */
+  overflow: visible; /* Ensures content is visible */
+  animation: pop-up 0.5s ease-in forwards; /* Pop-up animation */
+}
+
+@keyframes pop-up {
+  0% {
+    opacity: 0;
+    transform: scale(0.9); /* Start slightly shrunk */
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1); /* Animate to full size */
+  }
+}
+
+/* Removed text-highlight animation for the heading (h2) */
+
+.summary-info {
+  background-color: #e2e8f0; /* Use same light blue for consistency */
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.summary-info:hover {
+  background-color: #d0e3f0; /* Slightly darker blue on hover */
+}
+
+/* Animated Item List (unchanged) */
+.item-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  animation: item-list-appear 1s ease-in forwards;
+}
+
+@keyframes item-list-appear {
+  0% {
+    opacity: 0;
+    transform: translateY(20px); /* Items appear from bottom */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.item {
+  padding: 5px 10px;
+  border-bottom: 1px solid #ddd; /* Optional: Separating line between items */
+  color: #555; /* Text color with slight contrast */
+  transition: background-color 0.3s ease;
+}
+
+.item:hover {
+  background-color: #f2f2f2; /* Light gray background on hover */
+}
+
+.item:last-child {
+  border-bottom: none; /* Remove bottom border for the last item */
+}
