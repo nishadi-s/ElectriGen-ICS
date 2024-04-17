@@ -83,6 +83,7 @@ import EditMaterial from "./components/EditMaterial"; // Import EditProduct
 import ProductionAnalytics from "./pages/ProductionAnalytics.jsx";
 import ProductionProfile from "./pages/ProductionProfile.jsx";
 import ProductForm from "./components/ProductForm";
+import ProductsView from "./pages/ProductView";
 
 /*Shanali
 import ExportsDashboard from "./pages/ExportsDashboard.jsx";
@@ -217,6 +218,7 @@ const App = () => {
             <Route path="/EditProduct" element={<EditProduct />} />
             <Route path="/EditMaterial" element={<EditMaterial />} />
             <Route path="/SingleProduct" element={<SingleProduct />} />
+            <Route path="/ProductsView" element={<ProductsView />} />
           </Routes>
         </div>
       </SalesContextProvider>
