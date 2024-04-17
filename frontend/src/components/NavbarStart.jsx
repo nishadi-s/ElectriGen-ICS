@@ -25,8 +25,8 @@ const NavbarStart = () => {
           </div>
           )}
           {!distributor && (<div>
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Signup</Link>
+            <Link  className="login-link" to="/login">Login</Link>
+            <Link className="login-link" to="/signup">Signup</Link>
           </div>
           )}
         </nav>

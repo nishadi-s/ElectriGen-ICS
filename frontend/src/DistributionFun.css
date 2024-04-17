@@ -29,8 +29,8 @@ h1 {
   font-size: 2.5rem; /* Adjust font size based on your preference */
   margin-bottom: 30px; /* Add some margin below the heading */
   margin-top: -20px;
-  margin-left: -10px;
-  border-radius: 10px; /* Add subtle rounded corners for a polished look */
+  margin-left: -20px;
+  border-radius: 0px 10px 0px 10 px; /* Add subtle rounded corners for a polished look */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow for depth */
 }
 
@@ -389,14 +389,15 @@ form.signup, form.login {
 
 .order-details thead th{
   padding: 1px 15px; /* Consistent and comfortable padding */
-  border: 1px solid #ddd; /* Light border for separation */
+  border: 0px solid #ddd; /* Light border for separation */
   text-align: left; /* Left-align content by default */
-  background-color: #e0e0e0; /* Light gray background for headers */
+  background-color: #233066; /* Light gray background for headers */
   font-weight: bold; /* Emphasize headers */
   height: 25px; /* Smaller height for headers (adjust as needed) */
   width: 100px;
   text-align:center;
   text-overflow: ellipsi;
+  color: #ffffff;
 }
 .order-details tbody td {
   padding: 10px 16px; /* Consistent and comfortable padding */
@@ -610,4 +611,71 @@ form.signup, form.login {
 
 .item:last-child {
   border-bottom: none; /* Remove bottom border for the last item */
+}
+
+/*report gen table*/
+.report-table {
+  border-collapse: collapse;
+  width: 100%; /* Adjust width as needed */
+}
+
+.report-header-row, .report-row {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.report-header-row {
+  background-color: #f2f2f2;
+}
+
+.report-row:nth-child(even) {
+  background-color: #dcdcdc; /* Light gray background for even rows */
+}
+.report-row:nth-child(odd) {
+  background-color: #ffffff; /* Light gray background for even rows */
+}
+
+.report-table th, .report-table td {
+  text-align: left;
+}
+
+.report-table th {
+  font-weight: bold;
+}
+
+.report-table th, .report-table td {
+  padding: 12px;
+}
+
+.report-table thead th {
+  background-color: #233066;
+  color: white;
+}
+
+.report-table tfoot td {
+  font-weight: bold;
+}
+
+.report-table tfoot .grand-total {
+  background-color: #233066;
+  color: white;
+}
+
+.btn-report{
+  background-color: #233066; /* Blue background for primary action */
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  font-weight: 500;
+}
+
+.login-link{
+  background-color: #ffffff;
 }

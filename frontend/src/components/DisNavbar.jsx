@@ -28,7 +28,7 @@ const NavbarDini1 = ({ children }) => {
     },
     {
       path: "/DisAnalytics",
-      name: "Analytics",
+      name: "Reports And Analytics",
       icon: <FaRegChartBar />,
     },
     {
