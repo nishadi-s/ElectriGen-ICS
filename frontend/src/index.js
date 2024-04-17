@@ -33,13 +33,15 @@ root.render(
           <ExportsContextProvider>
             <ImportersContextProvider>
               <MaterialsContextProvider>
-                <ProductsContextProvider>
-                  <DisDAuthContextProvider>
-                    <OrdersContextProvider>
-                      <App />
-                    </OrdersContextProvider>
-                  </DisDAuthContextProvider>
-                </ProductsContextProvider>
+                <ProductionContextProvider>
+                  <ProductsContextProvider>
+                    <DisDAuthContextProvider>
+                      <OrdersContextProvider>
+                        <App />
+                      </OrdersContextProvider>
+                    </DisDAuthContextProvider>
+                  </ProductsContextProvider>
+                </ProductionContextProvider>
               </MaterialsContextProvider>
             </ImportersContextProvider>
           </ExportsContextProvider>
