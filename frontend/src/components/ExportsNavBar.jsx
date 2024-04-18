@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {
   FaTh,
   FaBars,
-  FaUserAlt,
+  //FaUserAlt,
  // FaRegChartBar,
   FaDollyFlatbed,
   FaThList,
