@@ -1,34 +1,57 @@
-const express = require('express')
-
+const express = require('express');
+const router = express.Router();
 const {
     getOrders,
     getOrder,
     createOrder,
     deleteOrder,
-    updateOrder
-} = require('../controllers/orderController.js') //controller function are from orderController.js
-const requireDisDAuth = require('../middleware/requireDisDAuth')
+    updateOrder,
+    getManagerOrders,
+    updateManagerOrder,
+    getManagerOrder
+} = require('../controllers/orderController.js');
 
-const router = express.Router()
+const requireDisDAuth = require('../middleware/requireDisDAuth');
 
-//require authentication for all order routers
-router.use(requireDisDAuth)
+router.use((req, res, next) => {
+    if ((req.path === '/manager/orders' || req.path === '/manager/orders/:id') && req.method === 'GET') {
+        // Skip authentication for getManagerOrders route
+        return next();
+    }
+    if ((req.path === '/manager/orders/:id') && req.method === 'PUT') {
+        // Skip authentication for updateManagerOrder route
+        return next();
+    }
+    if ((req.path === '/manager/orders/:id') && req.method === 'GET') {
+        // Skip authentication for getManagerOrder route
+        return next();
+    }
+    requireDisDAuth(req, res, next);
+});
 
-//establishing routes to manage orders
+// Establishing routes to manage orders
 
-//GET all orders
-router.get('/',getOrders)
+// GET all orders
+router.get('/', getOrders);
 
-//GET a single order
-router.get('/:id',getOrder)
+// GET a single order
+router.get('/:id', getOrder);
 
-//POST a new order
-router.post('/',createOrder)
+// POST a new order
+router.post('/', createOrder);
 
-//DELETE an order
-router.delete('/:id',deleteOrder)
+// DELETE an order
+router.delete('/:id', deleteOrder);
 
-//UPDATE an order
-router.put('/:id',updateOrder)
+// UPDATE an order
+router.put('/:id', updateOrder);
 
-module.exports = router
+//dis manager
+router.get('/manager/orders', getManagerOrders); // Route for managers
+
+router.get('/manager/orders/:id', getManagerOrder); // Route for managers
+
+router.put('/manager/orders/:id', updateManagerOrder); // Route for managers
+
+
+module.exports = router;

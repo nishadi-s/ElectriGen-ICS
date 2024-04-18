@@ -5,8 +5,8 @@ import ReportGeneration from '../components/DisReport'
 const DisAnalytics = () => {
   return (
     <NavbarDini1>
-    <div>
       <h1>Reports And Analytics</h1>
+    <div className="box">
       <ReportGeneration/>
     </div>
     </NavbarDini1>

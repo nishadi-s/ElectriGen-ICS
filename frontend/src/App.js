@@ -64,6 +64,9 @@ import OrderSuccess from './pages/OrderSucess.jsx';
 import UpdateOrder from './pages/UpdateOrderDetails.jsx';
 import { useDisDAuthContext } from "./hooks/useDisDAuthContext.jsx";
 //distribution managers
+import DisMOrderHistory from "./pages/DisMOrderHistory.jsx";
+import DisMDashboard from "./pages/DisMDashboard.jsx";
+import DisMUpdateOrder from './pages/DisMUpdate.jsx';
 
 //Senith
 import Materials from "./pages/Materials.jsx";
@@ -159,6 +162,10 @@ const { distributor } = useDisDAuthContext()
           <Route path="/OrderHistory" element = {<OrderHistory />} />
           <Route path="/OrderSuccess" element={<OrderSuccess/>}/>
           <Route path="/update/:id" element={<UpdateOrder />} /> {/* Define route for updating orders */}
+          {/* Dis manager */}
+          <Route path="/DisMOrderHistory" element = {<DisMOrderHistory />} />
+          <Route path="/DisMDashboard" element = {<DisMDashboard />} />
+          <Route path="update/:id" element = {<DisMUpdateOrder />} />
 
           {/* Define route for updating orders */}
 

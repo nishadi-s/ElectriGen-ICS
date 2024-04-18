@@ -31,4 +31,4 @@ const signupDistributor = async (req, res) => {
     }
 };
 
-module.exports = { signupDistributor, loginDistributor,};
+module.exports = { signupDistributor, loginDistributor};

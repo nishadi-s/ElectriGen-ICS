@@ -15,6 +15,7 @@ body {
   background-image: url("../public/dback1.png");
   background-size: cover;
   background-position: center;
+  background-attachment: fixed;
 }
 .home {
   min-height: 100vh;
@@ -22,7 +23,7 @@ body {
 
 h1 {
   text-align: left; /* Align text to the left */
-  width: 100%; /* Span the full width of the page */
+  width: 100vw; /* Span the full width of the page */
   padding: 17px 20px; /* Add padding for spacing */
   background-color: #233066; /* Deep blue background for the heading container */
   color: #fff; /* White text color for better readability */
@@ -54,7 +55,7 @@ header a {
   max-width: 700px;
   margin: 30px auto;
   padding: 30px;
-  background-color: #e7e5e5;
+  background-color: #ebebeb;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
 }
@@ -178,6 +179,17 @@ header a {
   font-weight: 600;
   text-align: left; /* Left align item labels */
   color: #000000;
+}
+
+.item-select {
+  width: 100%; /* Full width for the select */
+  padding: 10px;
+  border: 1px solid #ffffff;
+  border-radius: 4px; /* Apply border-radius */
+  box-sizing: border-box; /* Use border-box for box model */
+  background-color: #ffffff; /* White background */
+  color: #000000; /* Black text color */
+  font-size: 14px; /* Font size */
 }
 
 div.error {
@@ -339,23 +351,65 @@ nav ul li a:hover {
 }
 
 /* StartDin navbar */
-nav {
+.start-nav-header {
+  background-color: #233066; /* Light background color */
+  padding: 15px 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle bottom shadow */
+}
+
+.start-nav-container {
+  display: flex;
+  justify-content: space-between; /* Space elements horizontally */
+  align-items: center; /* Align vertically */
+  max-width: 1024px; /* Set a maximum width */
+  margin: 0 auto; /* Center horizontally */
+}
+
+/* Logo and heading */
+.start-nav-h2 {
+  font-size: 1.5em; /* Adjust heading size as needed */
+  margin-top: 2%;
+  margin-left: -20%;
+  margin-bottom: 2%;
+  padding: 0.01%;
+  color: white;
+  font-weight: bold;
+}
+
+/* Navigation */
+.start-nav-dis {
+  display: flex; /* Arrange links horizontally */
+  list-style: none; /* Remove default bullet points */
+  padding: 0;
+  margin: 0;
+}
+
+/* Logged-in user styles */
+.start-nav-dis > div {
   display: flex;
   align-items: center;
 }
-nav a {
-  margin-left: 10px;
+
+.start-nav-dis > div span {
+  margin-right: 10px; /* Spacing between email and button */
 }
 
-nav button {
-  background: #fff;
-  color: var(--primary);
-  border: 2px solid var(--primary);
-  padding: 6px 10px;
-  border-radius: 4px;
-  font-family: "Poppins";
+a.signup-link {
+  display: inline-block;
+  padding: 5px 10px;
+  text-decoration: none;
+  color: #000000;
+  background-color: #cbcbcb;
+  border: 0px solid #007bff;
+  border-radius: 0px;
+  font-size: 16px;
   cursor: pointer;
-  font-size: 1em;
+}
+
+/* Optional hover effect */
+a.signup-link:hover {
+  background-color: #d3d2d2;
+  border-color: #0062cc;
 }
 
 /* auth forms */
@@ -568,15 +622,17 @@ form.signup, form.login {
 /* Removed text-highlight animation for the heading (h2) */
 
 .summary-info {
-  background-color: #e2e8f0; /* Use same light blue for consistency */
+  background-color: #233066; /* Use same light blue for consistency */
   padding: 10px 15px;
   margin-bottom: 15px;
+  margin-left: -5px;
   border-radius: 4px;
+  color: white;
   transition: background-color 0.3s ease;
 }
 
 .summary-info:hover {
-  background-color: #d0e3f0; /* Slightly darker blue on hover */
+  background-color: #3c55b8; /* Slightly darker blue on hover */
 }
 
 /* Animated Item List (unchanged) */
@@ -611,6 +667,23 @@ form.signup, form.login {
 
 .item:last-child {
   border-bottom: none; /* Remove bottom border for the last item */
+}
+
+.box {
+  border: 0px solid #ccc; /* Border around the box */
+  border-radius: 5px; /* Rounded corners */
+  padding: 20px 20px; /* Padding inside the box */
+  margin-top: 20px;
+  margin-bottom: 5px; /* Spacing between boxes */
+  background-color: rgba(234, 234, 234, 0.5);
+}
+
+.box h2 {
+  margin-top: 0; /* Remove margin from h2 */
+  background-color: #233066;
+  color: white;
+  padding: 10px 10px;
+  border-radius: 5px;
 }
 
 /*report gen table*/
@@ -678,4 +751,134 @@ form.signup, form.login {
 
 .login-link{
   background-color: #ffffff;
+}
+
+/*dis login form*/
+.login-form {
+  display: flex; /* Center elements horizontally */
+  flex-direction: column; /* Stack elements vertically */
+  width: 300px; /* Adjust width as needed */
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  background-color: #fff;
+}
+
+h3 {
+  text-align: center; /* Center heading */
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block; /* Display labels on their own line */
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+/* Input fields */
+.login-input,
+.eye-button {
+  width: 100%; /* Match container width */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 0.9em;
+  transition: all 0.2s ease-in-out; /* Smooth transitions */
+}
+
+.login-input:focus,
+.eye-button:focus {
+  outline: none; /* Remove default outline */
+  border-color: #999; /* Highlight on focus */
+}
+
+.password-input {
+  position: relative; /* Position eye button absolutely */
+}
+
+.eye-button {
+  position: absolute; /* Position eye button within container */
+  top: 47%;
+  right: -110px;
+  transform: translateY(-50%); /* Center vertically */
+  background: none; /* Transparent background */
+  border: none; /* Remove button border */
+  cursor: pointer; /* Indicate clickable action */
+}
+
+.eye-icon {
+  font-size: 16px;
+  color: #ccc; /* Adjust color based on preference */
+  transition: all 0.2s ease-in-out;
+}
+
+/* Login button */
+.login-button {
+  width: 100%; /* Match container width */
+  padding: 10px 20px;
+  background-color: #233066; /* Adjust base color */
+  color: #fff; /* Text color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-weight: 500;
+}
+
+.login-button:hover {
+  background-color: #374c9f; /* Darker shade on hover */
+}
+
+.login-button[disabled] {
+  background-color: #ddd; /* Disable styling */
+  cursor: default; /* Remove pointer indication */
+}
+
+/* Error message */
+.error {
+  color: red;
+}
+
+a {
+  color: #3498db;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+  color: hsl(0, 0%, 100%);
+}
+
+/* Styling for password visibility toggle button */
+.eye-button:hover .eye-icon {
+  color: #666; /* Darker color on hover */
+}
+
+/* Styling for form container on hover */
+.login-form:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Slightly larger shadow on hover */
+}
+
+/* Styling for input fields on focus */
+.login-input:focus {
+  border-color: #ffffff; /* Highlight input border on focus */
+}
+
+/* Styling for disabled button */
+.login-button[disabled] {
+  background-color: #ccc; /* Lighter shade for disabled button */
+}
+
+.greeting-container {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+
+.greeting-text {
+  flex: 1;
+
 }

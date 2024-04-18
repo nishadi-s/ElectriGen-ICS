@@ -12,6 +12,18 @@ const getOrders = async(req,res) => {
         return res.status(200).json(orders); // Return the orders
 }
 
+//managersss
+const getManagerOrders = async (req, res) => {
+    try {
+        // Fetch all orders regardless of distributor
+        const orders = await Order.find().sort({ createdAt: -1 });
+        return res.status(200).json(orders);
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
 //get a single order
 const getOrder = async(req,res) => {
     const { id } = req.params // Extract the order ID from request parameters
@@ -87,6 +99,7 @@ const deleteOrder = async (req,res) => {
 }
 
 
+
 //update an order
 const updateOrder = async (req, res) => {
     const { id } = req.params; // Extract the order ID from request parameters
@@ -118,10 +131,57 @@ const updateOrder = async (req, res) => {
     }
 };
 
+//dis manager update
+const updateManagerOrder = async (req, res) => {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'Invalid order ID' });
+    }
+
+    try {
+        const updatedOrder = await Order.findByIdAndUpdate(id, req.body, { new: true });
+
+        if (!updatedOrder) {
+            return res.status(404).json({ error: 'Order not found' });
+        }
+
+        res.status(200).json(updatedOrder);
+    } catch (error) {
+        console.error('Error updating order:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+const getManagerOrder = async (req, res) => {
+    const { id } = req.params; 
+
+    if (!mongoose.Types.ObjectId.isValid(id)) { // Check if the ID is valid
+        return res.status(404).json({ error: 'Invalid order ID' });
+    }
+
+    try {
+        const order = await Order.findById(id); // Find order by ID
+
+        if (!order) { // If order not found
+            return res.status(404).json({ error: 'No such order' });
+        }
+
+        res.status(200).json(order); // Return the order
+    } catch (error) {
+        console.error('Error fetching order:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
 module.exports = {
     getOrders,
     getOrder,
     createOrder,
     deleteOrder,
-    updateOrder
+    updateOrder,
+    getManagerOrders,
+    getManagerOrder,
+    updateManagerOrder
 }

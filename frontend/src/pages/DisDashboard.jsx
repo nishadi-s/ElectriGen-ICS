@@ -7,11 +7,30 @@ const DisDashboard = () => {
   const distributor = JSON.parse(localStorage.getItem('distributor'));
   const distributorEmail = distributor ? distributor.email : '';
 
+  //greeting message for distributors
+  const getGreeting = () => {
+    const currentTime = new Date().getHours();
+    let greeting = '';
+
+    if (currentTime < 12) {
+      greeting = 'Good morning';
+    } else if (currentTime >= 12 && currentTime < 18) {
+      greeting = 'Good afternoon';
+    } else {
+      greeting = 'Good evening';
+    }
+
+    return greeting;
+  };
+
   return (
     <NavbarDini1>
       <div>
         <h1>Dashboard</h1>
+        <div>
+        <p>{getGreeting()} Dear Customer</p>
         <p>Distributor Email: {distributorEmail}</p>
+        </div>
       </div>
       <ItemsSummary/>
       <LatestOrder/>

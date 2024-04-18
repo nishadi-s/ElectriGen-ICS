@@ -17,41 +17,44 @@ const DisLogin = () => {
     };
 
     return (
-        <div>
-            <NavbarStart/>
-            <form className="login" onSubmit={handleSubmit}>
-                <h3>Distributor Login</h3>
+<div className="login-container">
+  <NavbarStart />
+<form className="login-form" onSubmit={handleSubmit} autoComplete="off">
+  <h3>Distributor Login</h3>
 
-                <label>Email:</label>
-                <input
-                    type="email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                />
+  <label htmlFor="email">Email:</label>
+  <input
+    type="email"
+    id="email"
+    className="login-input"
+    onChange={(e) => setEmail(e.target.value)}
+    value={email}
+  />
 
-                <label>Password:</label>
-                <div className="password-input">
-                    <input
-                        type={showPassword ? "text" : "password"}
-                        onChange={(e) => setPassword(e.target.value)}
-                        value={password}
-                    />
-                    <button
-                        type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                        className="eye-button"
-                    >
-                        <FontAwesomeIcon
-                            icon={showPassword ? faEyeSlash : faEye}
-                            className="eye-icon"
-                        />
-                    </button>
-                </div>
+  <label htmlFor="password">Password:</label>
+  <div className="password-input">
+    <input
+      type={showPassword ? "text" : "password"}
+      id="password"
+      className="login-input"
+      onChange={(e) => setPassword(e.target.value)}
+      value={password}
+    />
+    <button
+      type="button"
+      onClick={() => setShowPassword(!showPassword)}
+      className="eye-button"
+    >
+      <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} className="eye-icon" />
+    </button>
+  </div>
 
-                <button disabled={isLoading}>Login</button>
-                {error && <div className="error">{error}</div>}
-            </form>
-        </div>
+  <button disabled={isLoading} className="login-button">
+    Login
+  </button>
+  {error && <div className="error">{error}</div>}
+</form>
+</div>
     );
 };
 

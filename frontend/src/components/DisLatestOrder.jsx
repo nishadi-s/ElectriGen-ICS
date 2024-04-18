@@ -17,7 +17,7 @@ const LatestOrder = () => {
   return (
     <div>
       {latestOrder ? (
-        <div>
+        <div className='box'>
           <h2>Latest Order Details</h2>
           <OrderDetails order={latestOrder} />
         </div>

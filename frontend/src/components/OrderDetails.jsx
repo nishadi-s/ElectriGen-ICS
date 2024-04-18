@@ -2,11 +2,9 @@ import React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { TableVirtuoso } from 'react-virtuoso';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import Swal from 'sweetalert2';
 import { useDisDAuthContext } from '../hooks/useDisDAuthContext.jsx';
@@ -71,11 +69,11 @@ const OrderDetails = ({ order }) => {
           {/* Item details headers */}
           <TableCell>Item Code</TableCell>
           <TableCell>Item Name</TableCell>
-          <TableCell>Unit Price</TableCell>
+          <TableCell>Unit Price(lkr)</TableCell>
           <TableCell>Quantity</TableCell>
-          <TableCell>Total Cost</TableCell>
+          <TableCell>Total Cost(lkr)</TableCell>
 
-          <TableCell>Total Amount to Pay</TableCell>
+          <TableCell>Total Amount to Pay(lkr)</TableCell>
           <TableCell>Created At</TableCell>
           <TableCell>Action</TableCell>
         </TableRow>
