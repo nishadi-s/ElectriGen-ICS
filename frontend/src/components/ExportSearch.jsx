@@ -51,7 +51,7 @@ const ExportSearch = () => {
 
   return (
     <div>
-      {/* Material-UI Text Field for search input */}
+      
       <TextField
         type="text"
         label="Search by order ID"
@@ -70,8 +70,8 @@ const ExportSearch = () => {
         }}
       />
 
-      {/* Material-UI Select for filtering by month */}
-      <FormControl variant="outlined" sx={{ width: '20%', mb: 2 }}> {/* Adjust the width and margin bottom */}
+     
+      <FormControl variant="outlined" sx={{ width: '20%', mb: 2 }}> 
         <InputLabel>Filter by month</InputLabel>
         <Select
           value={selectedMonth}
@@ -107,7 +107,7 @@ const ExportSearch = () => {
         <p>No exports found.</p>
       )}
 
-      {/* Material-UI Button for downloading report */}
+      
       <Button variant="contained" onClick={printOrder}>Download Report</Button>
     </div>
   );
