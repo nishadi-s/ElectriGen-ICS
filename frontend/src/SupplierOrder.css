@@ -260,5 +260,18 @@ input.error{
   background-color: #ddd;
 }
 
+/*as place holder thing*/
+.prefix-input {
+  position: relative;
+  padding-left: 30px; 
+}
 
-  
+.prefix-text {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: gray; 
+  font-weight: bold; 
+}
+

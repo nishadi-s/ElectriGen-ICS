@@ -18,15 +18,16 @@ const EditSupplierOrder = () => {
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
   const [newItem, setNewItem] = useState({
-    Sup_Quant: "",
-    Sup_Cost: "",
     Sup_matrial_code: "",
+    M_Name: "",
+    Sup_Quant: "",
+   
   });
   const [currentItemIndex, setCurrentItemIndex] = useState(0); 
   const [nextItemNumber, setNextItemNumber] = useState(1); // To track the next item number
 
   const updateItem = () => {
-    if (newItem.Sup_Quant && newItem.Sup_Cost && newItem.Sup_matrial_code) {
+    if (newItem.Sup_matrial_code && newItem.M_Name && newItem.Sup_Quant) {
       const updatedItems = [...items];
       updatedItems[currentItemIndex] = newItem;
       setItems(updatedItems);
@@ -34,17 +35,19 @@ const EditSupplierOrder = () => {
       if (currentItemIndex < items.length - 1) {
         const nextItem = items[currentItemIndex + 1];
         setNewItem({
-          Sup_Quant: nextItem.Sup_Quant,
-          Sup_Cost: nextItem.Sup_Cost,
           Sup_matrial_code: nextItem.Sup_matrial_code,
+          M_Name: nextItem.M_Name,
+          Sup_Quant: nextItem.Sup_Quant,
+          
         });
         setCurrentItemIndex((prevIndex) => prevIndex + 1);
         setNextItemNumber((prevNumber) => prevNumber + 1); // Update next item number
       } else {
         setNewItem({
-          Sup_Quant: "",
-          Sup_Cost: "",
           Sup_matrial_code: "",
+          M_Name: "",
+          Sup_Quant: "",
+          
         });
         setNextItemNumber((prevNumber) => prevNumber + 1); // Increment next item number
       }
@@ -78,9 +81,10 @@ const EditSupplierOrder = () => {
         if (supplierOrderData.items.length > 0) {
           const firstItem = supplierOrderData.items[0];
           setNewItem({
-            Sup_Quant: firstItem.Sup_Quant,
-            Sup_Cost: firstItem.Sup_Cost,
             Sup_matrial_code: firstItem.Sup_matrial_code,
+            M_Name: firstItem.M_Name,
+            Sup_Quant: firstItem.Sup_Quant,
+            
           });
         } else {
           setNextItemNumber(1); // If there are no items, reset next item number to 1
@@ -151,6 +155,7 @@ const EditSupplierOrder = () => {
       <label>Order ID:</label>
       <input
         type="text"
+        readOnly
         onChange={(e) => setOrder_ID(e.target.value)}
         value={Sup_Ord_id}
         className={emptyFields.includes("Supplier Order ID") ? "error" : ""}
@@ -159,6 +164,7 @@ const EditSupplierOrder = () => {
       <label>Supplier ID:</label>
       <input
         type="text"
+        readOnly
         onChange={(e) => setSupplier_ID(e.target.value)}
         value={Sup_ID}
         className={emptyFields.includes("Supplier ID") ? "error" : ""}
@@ -166,6 +172,27 @@ const EditSupplierOrder = () => {
 
       <label>Item Number:</label>
       <span>{`Item ${nextItemNumber}`}</span>
+
+      <label>Material Code:</label>
+      <input
+        type="text"
+        readOnly
+        onChange={(e) =>
+          setNewItem({ ...newItem, Sup_matrial_code: e.target.value })
+        }
+        value={newItem.Sup_matrial_code}
+        className={emptyFields.includes("Supplier Material Code") ? "error" : ""}
+      />
+
+    <label>Material Name:</label>
+      <input
+        type="text"
+        readOnly
+        onChange={(e) => setNewItem({ ...newItem, M_Name: e.target.value })}
+        value={newItem.M_Name}
+        className={emptyFields.includes("Supplier Material Name") ? "error" : ""}
+      />
+
 
       <label>Quantity:</label>
       <input
@@ -175,27 +202,11 @@ const EditSupplierOrder = () => {
         }
         value={newItem.Sup_Quant}
         className={
-          emptyFields.includes("Supplier Order items") ? "error" : ""
+          emptyFields.includes("Supplier Order Quantity") ? "error" : ""
         }
       />
 
-      <label>Cost:</label>
-      <input
-        type="number"
-        onChange={(e) => setNewItem({ ...newItem, Sup_Cost: e.target.value })}
-        value={newItem.Sup_Cost}
-        className={emptyFields.includes("Supplier Order items") ? "error" : ""}
-      />
-
-      <label>Material Code:</label>
-      <input
-        type="text"
-        onChange={(e) =>
-          setNewItem({ ...newItem, Sup_matrial_code: e.target.value })
-        }
-        value={newItem.Sup_matrial_code}
-        className={emptyFields.includes("Supplier Order items") ? "error" : ""}
-      />
+      
       <button type="button" onClick={updateItem}>
         Update Item {nextItemNumber} {/* Display next item number */}
       </button>
@@ -203,6 +214,7 @@ const EditSupplierOrder = () => {
       <label>Ordered Date:</label>
       <input
         type="date"
+        readOnly
         onChange={(e) => setOrderedDate(new Date(e.target.value))}
         value={Sup_orded_date.toISOString().split('T')[0]} 
         className={
@@ -213,6 +225,7 @@ const EditSupplierOrder = () => {
       <label>Receipt Date:</label>
       <input
         type="date"
+        readOnly
         onChange={(e) => setReceiptDate(new Date(e.target.value))}
         value={Sup_recpt_date.toISOString().split('T')[0]} 
         className={

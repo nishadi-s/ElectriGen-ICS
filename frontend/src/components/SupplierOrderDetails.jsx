@@ -70,9 +70,9 @@ const SupplierOrderDetails = ({ order }) => {
             <td>
               {order.items.map((item, index) => (
                 <div key={index}>
+                  <p><strong>Item {index + 1} Material Code: </strong>{item.Sup_matrial_code}</p>
+                  <p><strong>Item {index + 1} Material Name: </strong>{item.M_Name}</p>
                   <p><strong>Item {index + 1} Quantity: </strong>{item.Sup_Quant}</p>
-                  <p><strong>Item {index + 1} Cost: </strong>{item.Sup_Cost}</p>
-                  <p><strong>Item {index + 1} Code: </strong>{item.Sup_matrial_code}</p>
                 </div>
               ))}
             </td>
