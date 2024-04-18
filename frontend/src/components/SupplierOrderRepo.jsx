@@ -1,114 +1,139 @@
-import React, { useState, useEffect } from "react";
-import { useLocation } from 'react-router-dom';
-import NavbarNishadi from '../components/SupplierOrderNavbar';
-import { format, getMonth } from 'date-fns';
+import React, { useState, useEffect } from 'react';
+import { Card, CardContent, Typography, Divider, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Select, MenuItem } from '@mui/material';
 import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 import 'jspdf-autotable';
-import SupplierOrderDetails from "../components/SupplierOrderDetails";
+import axios from 'axios';
+import NavbarNishadi from './SupplierOrderNavbar';
 
 const SupplierOrderReportPage = () => {
-  const location = useLocation();
-  const orders = location?.state?.orders || [];
+  const [orders, setOrders] = useState([]);
+  const [filteredOrders, setFilteredOrders] = useState([]);
   const [selectedMonth, setSelectedMonth] = useState('');
-  const [showReportButton, setShowReportButton] = useState(false);
 
   useEffect(() => {
-    if (!showReportButton && selectedMonth !== '') {
-      setShowReportButton(true);
+    fetchOrders();
+  }, []);
+
+  const fetchOrders = async () => {
+    try {
+      const response = await axios.get('/api/supplier_order');
+      setOrders(response.data);
+    } catch (error) {
+      console.error('Error fetching supplier orders:', error);
     }
-  }, [showReportButton, selectedMonth]);
+  };
 
-  const handleGenerateReport = () => {
-    const input = document.getElementById('report-content');
-
-    html2canvas(input)
-      .then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'pt', 'a4');
-        const imgProps = pdf.getImageProperties(imgData);
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-        
-        // Add border to the entire page
-        pdf.setLineWidth(2);
-        pdf.rect(0, 0, pdfWidth, pdfHeight);
-
-        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-
-        // Add border to the table
-        const tableOptions = {
-          startY: pdfHeight + 20,
-          theme: 'grid',
-          styles: { halign: 'center' },
-          columnStyles: { 0: { cellWidth: 60 }, 1: { cellWidth: 60 }, 2: { cellWidth: 90 }, 3: { cellWidth: 90 }, 4: { cellWidth: 90 }, 5: { cellWidth: 60 }, 6: { cellWidth: 90 } },
-        };
-        pdf.autoTable(['Order ID', 'Supplier ID', 'Ordered Date', 'Receipt Date', 'Order Status', 'Supplier Rating', 'Items'], filteredOrders.map(order => {
-          return [
-            order.Sup_Ord_id,
-            order.Sup_ID,
-            format(new Date(order.Sup_orded_date), 'yyyy-MM-dd'),
-            format(new Date(order.Sup_recpt_date), 'yyyy-MM-dd'),
-            order.Sup_Ord_sts,
-            order.Sup_rating,
-            order.items.map(item => `${item.Sup_Quant} ${item.Sup_Cost} ${item.Sup_matrial_code}`).join('\n')
-          ];
-        }), tableOptions);
-
-        pdf.save('supplier_order_report.pdf');
+  useEffect(() => {
+    if (selectedMonth !== '') {
+      const filtered = orders.filter(order => {
+        const orderDate = new Date(order.Sup_orded_date);
+        return orderDate.getMonth() === parseInt(selectedMonth);
       });
+      setFilteredOrders(filtered);
+    } else {
+      setFilteredOrders(orders);
+    }
+  }, [selectedMonth, orders]);
+
+  const handleDownloadPdf = () => {
+    const pdf = new jsPDF();
+    const title = `${getMonthName(selectedMonth)} Order Report`;
+    const tableColumns = ['Order ID', 'Supplier ID', 'Ordered Date', 'Receipt Date', 'Order Status', 'Rating', 'Items'];
+    const tableRows = filteredOrders.map(order => [
+      order.Sup_Ord_id,
+      order.Sup_ID,
+      order.Sup_orded_date,
+      order.Sup_recpt_date,
+      order.Sup_Ord_sts,
+      order.Sup_rating,
+      order.items.map((item, index) => `Item${index + 1}: ${item.Sup_matrial_code} - ${item.M_Name} (${item.Sup_Quant})`).join('\n')
+    ]);
+
+    pdf.text(title, 14, 10);
+    pdf.autoTable({ head: [tableColumns], body: tableRows });
+    pdf.save('supplier_order_report.pdf');
   };
 
-  const handleMonthChange = (event) => {
-    const selectedMonth = event.target.value;
-    setSelectedMonth(selectedMonth);
+  const getMonthName = (monthIndex) => {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    return months[monthIndex];
   };
-
-  const filteredOrders = selectedMonth
-    ? orders.filter(order => getMonth(new Date(order.Sup_orded_date)) === parseInt(selectedMonth))
-    : orders;
 
   return (
     <NavbarNishadi>
-      <div>
-        <h1>Supplier Order Report</h1>
-        <br/>
-        <div className="dropdown">
-          <select value={selectedMonth} onChange={handleMonthChange}>
-            <option value="">Select Month</option>
-            <option value="0">January</option>
-            <option value="1">February</option>
-            <option value="2">March</option>
-            <option value="3">April</option>
-            <option value="4">May</option>
-            <option value="5">June</option>
-            <option value="6">July</option>
-            <option value="7">August</option>
-            <option value="8">September</option>
-            <option value="9">October</option>
-            <option value="10">November</option>
-            <option value="11">December</option>
-          </select>
-        </div>
-        <br/><br/>
-        {showReportButton && (
-          <button className="button" onClick={handleGenerateReport}>Generate Report</button>
-        )}
-        <br/><br/><br/>
-        <div id="report-content">
-
-          <h3 style={{ color: 'darkblue' }}>Monthly Report Based on the Ordered Date</h3>
-          <br/>
-          <br/>
-          {filteredOrders.length > 0 ? (
-            filteredOrders.map(order => (
-              <SupplierOrderDetails key={order.Sup_Ord_id} order={order} hideActions hideCreatedAt />
-            ))
-          ) : (
-            <p>No orders to display</p>
-          )}
+    <div>
+      <Typography variant="h3" component="h2" gutterBottom>
+        Supplier Order Report
+      </Typography>
+      <div className="action-buttons">
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleDownloadPdf}
+          disabled={selectedMonth === ''}
+          style={{ marginBottom: '20px' }}
+        >
+          Download PDF
+        </Button>
+        <div style={{ marginLeft: '20px' }}>
+          <Select
+            value={selectedMonth}
+            onChange={(e) => setSelectedMonth(e.target.value)}
+            displayEmpty
+            style={{ width: '200px' }} // Adjust width as needed
+          >
+            <MenuItem value="" disabled>
+              Please select a month
+            </MenuItem>
+            {[...Array(12).keys()].map((index) => (
+              <MenuItem key={index} value={index}>{getMonthName(index)}</MenuItem>
+            ))}
+          </Select>
         </div>
       </div>
+      {filteredOrders.length > 0 && (
+        <Card variant="outlined" style={{ marginTop: '20px' }}>
+          <CardContent>
+            <Typography variant="h5" color="primary" gutterBottom>
+              Order Details
+            </Typography>
+            <Divider />
+            <TableContainer>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell><strong>Order ID</strong></TableCell>
+                    <TableCell><strong>Supplier ID</strong></TableCell>
+                    <TableCell><strong>Ordered Date</strong></TableCell>
+                    <TableCell><strong>Receipt Date</strong></TableCell>
+                    <TableCell><strong>Order Status</strong></TableCell>
+                    <TableCell><strong>Rating</strong></TableCell>
+                    <TableCell><strong>Items</strong></TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {filteredOrders.map(order => (
+                    <TableRow key={order._id}>
+                      <TableCell>{order.Sup_Ord_id}</TableCell>
+                      <TableCell>{order.Sup_ID}</TableCell>
+                      <TableCell>{order.Sup_orded_date}</TableCell>
+                      <TableCell>{order.Sup_recpt_date}</TableCell>
+                      <TableCell>{order.Sup_Ord_sts}</TableCell>
+                      <TableCell>{order.Sup_rating}</TableCell>
+                      <TableCell>
+                        {order.items.map((item, index) => (
+                          <div key={index}>{`Item${index + 1}: ${item.Sup_matrial_code} - ${item.M_Name} (${item.Sup_Quant})`}</div>
+                        ))}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </CardContent>
+        </Card>
+      )}
+    </div>
     </NavbarNishadi>
   );
 };
