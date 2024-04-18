@@ -40,7 +40,7 @@ const NavbarNishadi = ({ children }) => {
    
     {
       path: "/analyticsN",
-      name: "Analytics",
+      name: "Report",
       icon: <FaRegChartBar />,
     },
     {
