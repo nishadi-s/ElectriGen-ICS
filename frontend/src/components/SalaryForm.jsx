@@ -24,7 +24,6 @@ const bonusReasons = [
   'No bonus added'
 ];
 
-
 const SalaryForm = () => {
   const [fname, setFname] = useState('');
   const [lname, setLname] = useState('');
@@ -120,6 +119,24 @@ const SalaryForm = () => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
   };
+
+  // Handle change for First Name field
+  const handleFnameChange = (e) => {
+    const input = e.target.value;
+    // Only allow letters in the input
+    if (/^[a-zA-Z]*$/.test(input) || input === '') {
+      setFname(input);
+    }
+  };
+
+  // Handle change for Last Name field
+  const handleLnameChange = (e) => {
+    const input = e.target.value;
+    // Only allow letters in the input
+    if (/^[a-zA-Z]*$/.test(input) || input === '') {
+      setLname(input);
+    }
+  };
   
   return (
     <form onSubmit={handleSubmit}>
@@ -132,7 +149,7 @@ const SalaryForm = () => {
             label="First Name"
             variant="outlined"
             value={fname}
-            onChange={(e) => setFname(e.target.value)}
+            onChange={handleFnameChange}
             fullWidth
           />
         </Grid>
@@ -143,7 +160,7 @@ const SalaryForm = () => {
             label="Last Name"
             variant="outlined"
             value={lname}
-            onChange={(e) => setLname(e.target.value)}
+            onChange={handleLnameChange}
             fullWidth
           />
         </Grid>
