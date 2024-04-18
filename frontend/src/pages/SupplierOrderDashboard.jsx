@@ -1,57 +1,36 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import SupplierOrderDetails from '../components/SupplierOrderDetails'
 import NavbarNishadi from '../components/SupplierOrderNavbar';
-import React, { useEffect, useState } from "react";
-import { useLocation } from 'react-router-dom';
-import { format } from 'date-fns';
-import SupplierOrderDetails from "../components/SupplierOrderDetails";
+import '../SupplierOrder.css';
 
-const DashBoardN = () => {
-  const location = useLocation();
-  const orders = location?.state?.orders || [];
-  const [todaysOrders, setTodaysOrders] = useState([]);
+const SupplierOrdersWithHighRating = () => {
+  const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    // Get today's date
-    const today = new Date();
-    // Format today's date to match the format of the createdAt field in orders
-    const todayFormatted = format(today, 'yyyy-MM-dd');
+    fetchOrders();
+  }, []);
 
-    // Filter orders to get only those added today
-    const filteredOrders = orders.filter(order => format(new Date(order.Sup_orded_date), 'yyyy-MM-dd') === todayFormatted);
-    setTodaysOrders(filteredOrders);
-  }, [orders]);
+  const fetchOrders = async () => {
+    try {
+      const response = await axios.get('http://localhost:4000/api/supplier_order');
+      const filteredOrders = response.data.filter(order => order.Sup_rating > 3);
+      setOrders(filteredOrders);
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+    }
+  };
 
   return (
     <NavbarNishadi>
-      <div>
-        <h1>Order Dashboard - Today's Orders</h1>
-        <table className="order-table">
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Supplier ID</th>
-              <th>Ordered Date</th>
-              <th>Receipt Date</th>
-              <th>Order Status</th>
-              <th>Supplier Rating</th>
-              <th>Items</th>
-              <th>Created At</th>
-            </tr>
-          </thead>
-          <tbody>
-            {todaysOrders.length > 0 ? (
-              todaysOrders.map(order => (
-                <SupplierOrderDetails key={order.Sup_Ord_id} order={order} />
-              ))
-            ) : (
-              <tr>
-                <td colSpan="8">No orders added today</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+    <div>
+      <h1>Supplier Orders with High Rating</h1>
+      {orders.map(order => (
+        <SupplierOrderDetails key={order._id} order={order} />
+      ))}
+    </div>
     </NavbarNishadi>
   );
-}
+};
 
-export default DashBoardN;
+export default SupplierOrdersWithHighRating;
