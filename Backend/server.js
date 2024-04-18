@@ -61,6 +61,9 @@ app.use("/api/distributor", distributorRoutes); //distributor route(distributor 
 //Senith
 const productRoutes = require("./routes/products");
 app.use("/api/products", productRoutes);
+const materialRoutes = require("./routes/materials.js");
+app.use("/api/materials", materialRoutes);
+
 
 //Shanali
 const exportRoutes = require("./routes/export");
