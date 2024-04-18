@@ -17,7 +17,7 @@ main {
   color: #fff;
   height: device-height;
   width: 200px;
-  margin-left: 0px;
+  margin-left: -60px;
   margin-top: -20px;
   transition: all 0.5s;
 }
@@ -99,4 +99,18 @@ main {
   padding: 6px;
   border-radius: 50%;
   color: #333;
+}
+
+.sales-header {
+  text-align: left;
+  width: 100vw;
+  padding: 17px 20px;
+  background-color: #233066;
+  color: #fff;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  margin-top: -40px;
+  margin-left: -20px;
+  border-radius: 0px 10px 0px 10 px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

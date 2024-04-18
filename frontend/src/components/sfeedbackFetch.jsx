@@ -27,8 +27,8 @@ const SfeedbackFetch = () => {
         text: "You won't be able to revert this!",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
+        confirmButtonColor: "#233066",
+        cancelButtonColor: "#EC2026",
         confirmButtonText: "Yes, delete it!",
       }).then(async (result) => {
         if (result.isConfirmed) {
@@ -44,7 +44,7 @@ const SfeedbackFetch = () => {
   };
 
   return (
-    <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+    <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
       <Table striped bordered hover>
         <thead>
           <tr>
