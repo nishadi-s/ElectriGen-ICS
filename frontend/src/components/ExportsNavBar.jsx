@@ -39,11 +39,11 @@ const ExportsNavBar = ({ children }) => {
     //   name: "Analytics",
     //   icon: <FaRegChartBar />,
     // },
-    {
-      path: "/ExportsProfile",
-      name: "My Profile",
-      icon: <FaUserAlt />,
-    },
+    // {
+    //   path: "/ExportsProfile",
+    //   name: "My Profile",
+    //   icon: <FaUserAlt />,
+    // },
 
     // {
     //   path: "/MyProfile",
