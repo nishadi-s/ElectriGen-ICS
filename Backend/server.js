@@ -1,4 +1,3 @@
-
 require("dotenv").config(); // Load environment variables from the .env file
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -7,9 +6,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 // Create an Express app
 const app = express();
-
-
-
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -29,7 +25,6 @@ mongoose
     app.listen(process.env.PORT, () => {
       console.log("Connected to DB & listening on port", process.env.PORT); // Log that the server is running
     });
-    
   })
   .catch((error) => {
     console.log(error); // Log any errors that occur during database connection
@@ -41,6 +36,9 @@ app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
+
+const authRoutes = require("./routes/authRoutes");
+app.use("/auth", authRoutes);
 
 //primal sales route
 const salesRouter = require("./routes/sales");
@@ -67,8 +65,8 @@ const productRoutes = require("./routes/products");
 app.use("/api/products", productRoutes);
 
 //uvindya
-const salaryRoutes = require('./routes/salaries');
-app.use('/api/salaries', salaryRoutes);
+const salaryRoutes = require("./routes/salaries");
+app.use("/api/salaries", salaryRoutes);
 
 //Shanali
 const exportRoutes = require("./routes/export");
@@ -77,7 +75,7 @@ app.use("/api/export", exportRoutes);
 app.use("/api/importer", importerRoutes);
 
 //Nishadi
-const supplierChain_order = require('./routes/supplier_order'); //Nishadi
-const supplier = require('./routes/supplier'); //Nishadi
-app.use("/api/supplier_order",supplierChain_order); //Nishadi
-app.use("/api/supplier",supplier); //Nishadi
+const supplierChain_order = require("./routes/supplier_order"); //Nishadi
+const supplier = require("./routes/supplier"); //Nishadi
+app.use("/api/supplier_order", supplierChain_order); //Nishadi
+app.use("/api/supplier", supplier); //Nishadi
