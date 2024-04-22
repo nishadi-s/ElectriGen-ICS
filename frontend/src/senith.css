@@ -6,6 +6,7 @@ body {
   background-image: url("../public/26235.png");
   background-size: auto;
   background-position: center;
+  background-repeat: repeat;
 }
 .home {
   min-height: 100vh;
@@ -148,13 +149,17 @@ thead tr {
 }
 
 .production-header {
-  background-color: #233066;
-  color: white;
-  padding: 10px 16px;
   text-align: left;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  width: 100vw;
+  padding: 17px 20px;
+  background-color: #233066;
+  color: #fff;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  margin-top: -20px;
+  margin-left: -20px;
+  border-radius: 0px 10px 0px 10 px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .input-search {
@@ -163,4 +168,70 @@ thead tr {
 
 .pagination-bar {
   text-align: right;
+}
+
+.button-1 {
+  background-color: #233066;
+  border-radius: 8px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  line-height: 20px;
+  list-style: none;
+  margin: 5px;
+  outline: none;
+  padding: 10px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: color 100ms;
+  vertical-align: baseline;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-1:hover,
+.button-1:focus {
+  background-color: #0f1c52;
+}
+
+.button-2 {
+  background-color: #ec2026;
+  border-radius: 8px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  line-height: 20px;
+  list-style: none;
+  margin: 5px;
+  outline: none;
+  padding: 10px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: color 100ms;
+  vertical-align: baseline;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-2:hover,
+.button-2:focus {
+  background-color: #a5171c;
 }

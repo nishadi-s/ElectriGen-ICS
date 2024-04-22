@@ -7,11 +7,14 @@ const EditMaterial = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // State variables to store product data
-  const [name, setName] = useState("");
-  const [code, setCode] = useState("");
-  const [unitPrice, setUnitPrice] = useState("");
-  const [quantity, setQuantity] = useState("");
+  // State variables to store material data
+  const [material, setMaterial] = useState({
+    name: "",
+    code: "",
+    unitPrice: "",
+    quantity: "",
+    unit: "kg", // Default unit
+  });
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
 
@@ -21,14 +24,13 @@ const EditMaterial = () => {
       try {
         const response = await fetch(`/api/materials/${id}`);
         const materialData = await response.json();
-
-        // Populate form fields with material data
-        setName(materialData.name);
-        setCode(materialData.code);
-        setUnitPrice(materialData.unitPrice);
-        setQuantity(materialData.quantity);
+        if (!response.ok) {
+          throw new Error("Failed to fetch material data");
+        }
+        setMaterial(materialData);
       } catch (error) {
         console.error("Error fetching material data:", error);
+        setError(error.message || "Failed to fetch material data");
       }
     };
 
@@ -38,28 +40,15 @@ const EditMaterial = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const updatedMaterial = {
-      name,
-      code,
-      unitPrice,
-      quantity,
-    };
-
     const response = await fetch(`/api/materials/${id}`, {
       method: "PUT",
-      body: JSON.stringify(updatedMaterial),
+      body: JSON.stringify(material),
       headers: {
         "Content-Type": "application/json",
       },
     });
 
     if (response.ok) {
-      const updatedMaterialData = await response.json();
-      setName(updatedMaterialData.name);
-      setCode(updatedMaterialData.code);
-      setUnitPrice(updatedMaterialData.unitPrice);
-      setQuantity(updatedMaterialData.quantity);
-
       navigate(`/materials`);
     } else {
       const errorData = await response.json();
@@ -68,38 +57,56 @@ const EditMaterial = () => {
     }
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setMaterial((prevMaterial) => ({
+      ...prevMaterial,
+      [name]: value,
+    }));
+  };
+
   return (
     <ProductionNavbar>
       <form className="update" onSubmit={handleSubmit}>
         <label>Material name:</label>
         <input
           type="text"
-          onChange={(e) => setName(e.target.value)}
-          value={name}
+          name="name"
+          onChange={handleChange}
+          value={material.name}
           className={emptyFields.includes("name") ? "error" : ""}
         />
         <label>Material code:</label>
         <input
           type="text"
-          onChange={(e) => setCode(e.target.value)} // Use setItemCode
-          value={code}
+          name="code"
+          onChange={handleChange}
+          value={material.code}
           className={emptyFields.includes("code") ? "error" : ""}
         />
-        <label>Unit price(in Rs.):</label>
+        <label>Unit price (in Rs.):</label>
         <input
           type="number"
-          onChange={(e) => setUnitPrice(e.target.value)} // Use setUnitPrice
-          value={unitPrice}
+          name="unitPrice"
+          onChange={handleChange}
+          value={material.unitPrice}
           className={emptyFields.includes("unitPrice") ? "error" : ""}
         />
-        <label>Quantity:</label>
-        <input
-          type="number"
-          onChange={(e) => setQuantity(e.target.value)} // Use setQuantity
-          value={quantity}
-          className={emptyFields.includes("quantity") ? "error" : ""}
-        />
-
+        <div className="quantity-input">
+          <label>Quantity:</label>
+          <input
+            type="string"
+            name="quantity"
+            onChange={handleChange}
+            value={material.quantity}
+            className={emptyFields.includes("quantity") ? "error" : ""}
+          />
+          <select value={material.unit} onChange={handleChange} name="unit">
+            <option value="kg">kg</option>
+            <option value="m">m</option>
+            <option value="pcs">pcs</option>
+          </select>
+        </div>
         <button>Update Material</button>
         {error && <div className="error">{error}</div>}
       </form>

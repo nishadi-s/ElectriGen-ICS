@@ -51,9 +51,9 @@ const Products = () => {
   return (
     <ProductionNavbar>
       <div className="home">
-        {/*<div className="production-header">
+        <div className="production-header">
           <h1>Product Inventory</h1>
-        </div>*/}
+        </div>
         <div className="products">
           <div className="products-search">
             <ProductSearch onSearch={handleSearch} />
@@ -71,10 +71,54 @@ const Products = () => {
                 <tr>
                   <th scope="col">Product Code</th>
                   <th scope="col">Name</th>
+                  <th scope="col">Color</th>
                   <th scope="col">Category</th>
-                  <th scope="col">Colors</th>
                   <th scope="col">Unit Price</th>
                   <th scope="col">Available Quantity</th>
+                  <th scope="col">Actions</th>{" "}
+                  {/* Add an extra column for actions */}
+                </tr>
+                <tr>
+                  <th colSpan="7">
+                    {" "}
+                    {/* Span all columns */}
+                    <nav aria-label="Page navigation example">
+                      <ul className="pagination">
+                        <li className="page-item">
+                          <button
+                            className="page-link"
+                            onClick={() => paginate(currentPage - 1)}
+                            disabled={currentPage === 1}
+                          >
+                            Previous
+                          </button>
+                        </li>
+                        <li className="page-item">
+                          <button
+                            className="page-link"
+                            onClick={() => paginate(1)}
+                          >
+                            1
+                          </button>
+                        </li>
+                        {/* Render additional page numbers here */}
+                        <li className="page-item">
+                          <button
+                            className="page-link"
+                            onClick={() => paginate(currentPage + 1)}
+                            disabled={
+                              currentPage ===
+                              Math.ceil(
+                                filteredProducts.length / productsPerPage
+                              )
+                            }
+                          >
+                            Next
+                          </button>
+                        </li>
+                      </ul>
+                    </nav>
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -84,39 +128,6 @@ const Products = () => {
               </tbody>
             </table>
           )}
-          <tfoot className="pagination-bar">
-            <nav aria-label="Page navigation example">
-              <ul className="pagination">
-                <li className="page-item">
-                  <button
-                    className="page-link"
-                    onClick={() => paginate(currentPage - 1)}
-                    disabled={currentPage === 1}
-                  >
-                    Previous
-                  </button>
-                </li>
-                <li className="page-item">
-                  <button className="page-link" onClick={() => paginate(1)}>
-                    1
-                  </button>
-                </li>
-                {/* Render additional page numbers here */}
-                <li className="page-item">
-                  <button
-                    className="page-link"
-                    onClick={() => paginate(currentPage + 1)}
-                    disabled={
-                      currentPage ===
-                      Math.ceil(filteredProducts.length / productsPerPage)
-                    }
-                  >
-                    Next
-                  </button>
-                </li>
-              </ul>
-            </nav>
-          </tfoot>
 
           <Link to="/AddProducts" className="edit-link">
             <button className="button-5">Add a new Product</button>

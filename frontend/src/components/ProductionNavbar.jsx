@@ -40,14 +40,9 @@ const ProductionNavbar = ({ children }) => {
       name: "Analytics",
       icon: <FaRegChartBar />,
     },
-    {
-      path: "/ProductionProfile",
-      name: "My Profile",
-      icon: <FaUserAlt />,
-    },
 
     {
-      path: "/Logout",
+      path: "/Home",
       name: "Logout",
       icon: <FaUserAlt />,
     },
