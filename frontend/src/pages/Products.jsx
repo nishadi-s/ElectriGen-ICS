@@ -70,9 +70,7 @@ const Products = () => {
               </TableBody>
             </Table>
           </TableContainer>
-          <Link to="/AddProducts" className="edit-link">
-            <button>Add a new Product</button>
-          </Link>
+      
         </div>
       </div>
     </ProductionNavbar>
