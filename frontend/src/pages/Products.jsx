@@ -10,8 +10,6 @@ const Products = () => {
   const { products, dispatch } = useProductContext();
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage] = useState(10); // Change this number as needed
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -38,16 +36,6 @@ const Products = () => {
     setSearchTerm(term);
   };
 
-  // Pagination logic
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = filteredProducts.slice(
-    indexOfFirstProduct,
-    indexOfLastProduct
-  );
-
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
   return (
     <ProductionNavbar>
       <div className="home">
@@ -65,7 +53,7 @@ const Products = () => {
             </p>
           )}
 
-          {currentProducts.length > 0 && (
+          {filteredProducts.length > 0 && (
             <table className="transparent-table">
               <thead className="table-header">
                 <tr>
@@ -75,54 +63,10 @@ const Products = () => {
                   <th scope="col">Category</th>
                   <th scope="col">Unit Price</th>
                   <th scope="col">Available Quantity</th>
-                  <th scope="col">Actions</th>{" "}
-                  {/* Add an extra column for actions */}
-                </tr>
-                <tr>
-                  <th colSpan="7">
-                    {" "}
-                    {/* Span all columns */}
-                    <nav aria-label="Page navigation example">
-                      <ul className="pagination">
-                        <li className="page-item">
-                          <button
-                            className="page-link"
-                            onClick={() => paginate(currentPage - 1)}
-                            disabled={currentPage === 1}
-                          >
-                            Previous
-                          </button>
-                        </li>
-                        <li className="page-item">
-                          <button
-                            className="page-link"
-                            onClick={() => paginate(1)}
-                          >
-                            1
-                          </button>
-                        </li>
-                        {/* Render additional page numbers here */}
-                        <li className="page-item">
-                          <button
-                            className="page-link"
-                            onClick={() => paginate(currentPage + 1)}
-                            disabled={
-                              currentPage ===
-                              Math.ceil(
-                                filteredProducts.length / productsPerPage
-                              )
-                            }
-                          >
-                            Next
-                          </button>
-                        </li>
-                      </ul>
-                    </nav>
-                  </th>
                 </tr>
               </thead>
               <tbody>
-                {currentProducts.map((product) => (
+                {filteredProducts.map((product) => (
                   <ProductDetails key={product._id} product={product} />
                 ))}
               </tbody>

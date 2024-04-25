@@ -35,7 +35,7 @@ const Production = () => {
               <ProductionDetails key={prod._id} production={prod} />
             ))}
           <Link to="/AddProduction" className="edit-link">
-            <button>Add a new Record</button>
+            <button className="button-5">Add a new Record</button>
           </Link>
         </div>
       </div>

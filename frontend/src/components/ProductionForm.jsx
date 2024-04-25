@@ -150,22 +150,6 @@ const ProductionForm = ({ uneditable }) => {
         </Row>
 
         <Row className="mb-3">
-          <Form.Group as={Col} controlId="formProduct">
-            <Form.Label>Product</Form.Label>
-            <Form.Control
-              as="select"
-              value={selectedProduct}
-              onChange={(e) => handleProductSelect(e.target.value)}
-            >
-              <option value="">Select a product</option>
-              {products.map((product) => (
-                <option key={product._id} value={product._id}>
-                  {product.name}
-                </option>
-              ))}
-            </Form.Control>
-          </Form.Group>
-
           <Form.Group as={Col} controlId="formMaterial">
             <Form.Label>Material</Form.Label>
             <Form.Control
@@ -183,9 +167,64 @@ const ProductionForm = ({ uneditable }) => {
           </Form.Group>
         </Row>
 
+        {selectedMaterialDetails && (
+          <div>
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="formMaterialDetails">
+                <Form.Label>Material name</Form.Label>
+                <Form.Control
+                  type="text"
+                  readOnly
+                  value={selectedMaterialDetails.name}
+                />
+              </Form.Group>
+            </Row>
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="formMaterialDetails">
+                <Form.Label>Remaining Quantity</Form.Label>
+                <Form.Control
+                  type="text"
+                  readOnly
+                  value={selectedMaterialDetails.quantity}
+                />
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="formMaterialQuantity">
+                <Form.Label>Material Quantity</Form.Label>
+                <Form.Control
+                  type="number"
+                  value={materialQuantity}
+                  onChange={(e) => setMaterialQuantity(e.target.value)}
+                />
+              </Form.Group>
+            </Row>
+          </div>
+        )}
+
+        <Row className="mb-3">
+          <Button variant="primary" onClick={handleAddMaterialRecord}>
+            Add Material
+          </Button>
+        </Row>
+
         {selectedProductDetails && (
           <div>
             <Row className="mb-3">
+              <Form.Group as={Col} controlId="formProduct">
+                <Form.Label>Product</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={selectedProduct}
+                  onChange={(e) => handleProductSelect(e.target.value)}
+                >
+                  <option value="">Select a product</option>
+                  {products.map((product) => (
+                    <option key={product._id} value={product._id}>
+                      {product.name}
+                    </option>
+                  ))}
+                </Form.Control>
+              </Form.Group>
               <Form.Group as={Col} controlId="formProductDetails">
                 <Form.Label>Product Name</Form.Label>
                 <Form.Control
@@ -237,49 +276,9 @@ const ProductionForm = ({ uneditable }) => {
           </div>
         )}
 
-        {selectedMaterialDetails && (
-          <div>
-            <Row className="mb-3">
-              <Form.Group as={Col} controlId="formMaterialDetails">
-                <Form.Label>Material name</Form.Label>
-                <Form.Control
-                  type="text"
-                  readOnly
-                  value={selectedMaterialDetails.name}
-                />
-              </Form.Group>
-            </Row>
-            <Row className="mb-3">
-              <Form.Group as={Col} controlId="formMaterialDetails">
-                <Form.Label>Remaining Quantity</Form.Label>
-                <Form.Control
-                  type="text"
-                  readOnly
-                  value={selectedMaterialDetails.quantity}
-                />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formMaterialQuantity">
-                <Form.Label>Material Quantity</Form.Label>
-                <Form.Control
-                  type="number"
-                  value={materialQuantity}
-                  onChange={(e) => setMaterialQuantity(e.target.value)}
-                />
-              </Form.Group>
-            </Row>
-          </div>
-        )}
-
-        <Row className="mb-3"></Row>
-
         <Row className="mb-3">
           <Button variant="primary" onClick={handleAddProductRecord}>
             Add Product
-          </Button>
-
-          <Button variant="primary" onClick={handleAddMaterialRecord}>
-            Add Material
           </Button>
         </Row>
 
