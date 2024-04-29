@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useOrdersContext } from "../hooks/useOrdersContext";
-import { useDisDAuthContext } from "../hooks/useDisDAuthContext";
 
 const OrderForm = () => {
   const { dispatch } = useOrdersContext();
-  const { distributor } = useDisDAuthContext();
   const navigate = useNavigate();
 
   const [distributorId, setDistributorId] = useState("");
   const [distributorName, setDistributorName] = useState("");
-  const [orderStatus, setOrderStatus] = useState("Placed");
-  const [items, setItems] = useState([
-    { code: "", name: "", unit: "", quantity: "" },
-  ]);
+  const [orderStatus] = useState("Placed");
+  const [items, setItems] = useState([{ code: "", name: "", unit: "", quantity: "" }]);
   const [totalAmount, setTotalAmount] = useState("");
   const [error, setError] = useState("");
   const [emptyFields, setEmptyFields] = useState([]);
@@ -21,15 +17,16 @@ const OrderForm = () => {
   const [productsMap, setProductsMap] = useState({});
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch("/api/products");
-        const data = await response.json();
-        if (response.ok) {
-          const itemCodes = data.map((product) => product.itemCode);
+        // Fetch products
+        const productsResponse = await fetch("/api/products");
+        const productsData = await productsResponse.json();
+        if (productsResponse.ok) {
+          const itemCodes = productsData.map((product) => product.itemCode);
           setProductCodes(itemCodes);
           const productsMap = {};
-          data.forEach((product) => {
+          productsData.forEach((product) => {
             productsMap[product.itemCode] = {
               name: product.name,
               unit: product.unitPrice,
@@ -39,17 +36,27 @@ const OrderForm = () => {
         } else {
           setError("Failed to fetch products");
         }
+
+        // Fetch distributor data
+        const distributorResponse = await fetch("/api/distributor");
+        const distributorData = await distributorResponse.json();
+        if (distributorResponse.ok) {
+          setDistributorId(distributorData.distributorLoginID);
+          setDistributorName(distributorData.distributorName);
+        } else {
+          setError("Failed to fetch distributor data");
+        }
       } catch (error) {
-        setError("An error occurred while fetching products");
-        console.error("Error fetching products:", error);
+        setError("An error occurred while fetching data");
+        console.error("Error fetching data:", error);
       }
     };
-    fetchProducts();
+    fetchData();
   }, []);
 
   const calculateTotalAmount = () => {
     const total = items.reduce(
-      (acc, item) => acc + item.unit * item.quantity,
+      (acc, item) => acc + (item.unit * item.quantity || 0),
       0
     );
     setTotalAmount(total);
@@ -60,15 +67,11 @@ const OrderForm = () => {
   }, [items]);
 
   const validateDistributorId = (id) => {
-    return /^DS\d{4}$/.test(id);
+    return /^DS\d{5}$/.test(id);
   };
 
   const validateQuantity = (quantity) => {
     return quantity >= 50;
-  };
-
-  const validateDistributorName = (name) => {
-    return !/\d/.test(name); // Check if name contains any numbers
   };
 
   const handleItemChange = (index, field, value) => {
@@ -92,104 +95,92 @@ const OrderForm = () => {
     setItems([...items, { code: "", name: "", unit: "", quantity: "" }]);
   };
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-    
-      if (!distributor) {
-        setError("You must be logged in");
-        return;
-      }
-    
-      if (!validateDistributorId(distributorId)) {
-        setError("Distributor ID must start with 'DS' followed by 4 digits");
-        return;
-      }
-    
-      if (!distributorName) {
-        setError("Please enter the distributor's name");
-        return;
-      }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-      if (!validateDistributorName(distributorName)) {
-        setError("Distributor's name should not contain numbers");
-        return;
-      }
-    
-      if (!totalAmount) {
-        setError("Total amount is required");
-        return;
-      }
-    
-      if (
-        items.some(
-          (item) =>
-            !item.code ||
-            !item.name ||
-            !item.unit ||
-            !item.quantity ||
-            !validateQuantity(item.quantity)
-        )
-      ) {
-        setError("Please fill in all fields correctly");
-        return;
-      }
-    
-      if (items.some((item) => !item.code.startsWith("DP"))) {
-        setError('Item code should start with "DP"');
-        return;
-      }
-    
-      try {
-        const order = {
-          distributorId,
-          distributorName,
-          orderStatus,
-          items,
-          totalAmount,
-        };
-    
-        const response = await fetch("/api/orders", {
-          method: "POST",
-          body: JSON.stringify(order),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${distributor.token}`,
-          },
-        });
-        const json = await response.json();
-    
-        if (!response.ok) {
-          setError(json.error);
-          setEmptyFields(json.emptyFields || []);
-        } else {
-          for (const item of items) {
-            await fetch(`/api/products/${item.code}`, {
-              method: "PUT",
-              body: JSON.stringify({ quantity: -item.quantity }), // Deduct quantity
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
-          }
-    
-          setDistributorId("");
-          setDistributorName("");
-          setOrderStatus("Placed");
-          setItems([{ code: "", name: "", unit: "", quantity: "" }]);
-          setTotalAmount("");
-    
-          setError(null);
-          setEmptyFields([]);
-          console.log("new order added", json);
-          dispatch({ type: "CREATE_ORDER", payload: json });
+    if (!validateDistributorId(distributorId)) {
+      setError("Distributor ID must start with 'DS' followed by 5 digits");
+      return;
+    }
+
+    if (!distributorName) {
+      setError("Please enter the distributor's name");
+      return;
+    }
+
+    if (!totalAmount) {
+      setError("Total amount is required");
+      return;
+    }
+
+    if (
+      items.some(
+        (item) =>
+          !item.code ||
+          !item.name ||
+          !item.unit ||
+          !item.quantity ||
+          !validateQuantity(item.quantity)
+      )
+    ) {
+      setError("Please fill in all fields correctly");
+      return;
+    }
+
+    if (items.some((item) => !item.code.startsWith("DP"))) {
+      setError('Item code should start with "DP"');
+      return;
+    }
+
+    try {
+      const order = {
+        distributorId,
+        distributorName,
+        orderStatus,
+        items,
+        totalAmount,
+      };
+
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        body: JSON.stringify(order),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const json = await response.json();
+
+      if (!response.ok) {
+        setError(json.error);
+        setEmptyFields(json.emptyFields || []);
+      } else {
+        for (const item of items) {
+          await fetch(`/api/products/${item.code}`, {
+            method: "PUT",
+            body: JSON.stringify({ quantity: -item.quantity }), // Deduct quantity
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
         }
-      } catch (error) {
-        setError("An error occurred while submitting the order.");
-        console.error("Error submitting order:", error);
+
+        setDistributorId("");
+        setDistributorName("");
+        setItems([{ code: "", name: "", unit: "", quantity: "" }]);
+        setTotalAmount("");
+
+        setError(null);
+        setEmptyFields([]);
+        console.log("new order added", json);
+        dispatch({ type: "CREATE_ORDER", payload: json });
       }
-    
-      navigate("/OrderHistory");
-    };
+    } catch (error) {
+      setError("An error occurred while submitting the order.");
+      console.error("Error submitting order:", error);
+    }
+
+    navigate("/OrderHistory");
+  };
 
   return (
     <form className="create" onSubmit={handleSubmit}>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import NavbarDini1 from '../components/DisNavbar';
 import { useDisDAuthContext } from '../hooks/useDisDAuthContext';
 import { useOrdersContext } from '../hooks/useOrdersContext';
 import '../DistributionFun.css'
@@ -19,9 +18,6 @@ const UpdateOrder = () => {
         const fetchOrder = async () => {
             try {
                 const response = await fetch(`/api/orders/${id}`, {
-                    headers: {
-                        'Authorization': `Bearer ${distributor?.token}`
-                    }
                 });
                 if (!response.ok) {
                     throw new Error('Failed to fetch order');
@@ -75,8 +71,7 @@ const UpdateOrder = () => {
             const response = await fetch(`/api/orders/${order._id}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${distributor.token}`
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(updatedOrder)
             });
@@ -111,7 +106,6 @@ const UpdateOrder = () => {
     }
 
     return (
-        <NavbarDini1>
     <div className="update-order">
     <h1>Order Modification</h1>
         <form class="update-form">
@@ -218,7 +212,6 @@ const UpdateOrder = () => {
   <button type="button" class="custom-button" onClick={handleUpdate}>Update</button>
 </form>
     </div>
-</NavbarDini1>
     );
 };
 

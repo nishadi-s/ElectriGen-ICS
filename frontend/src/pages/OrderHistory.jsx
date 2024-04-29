@@ -1,78 +1,63 @@
-import { useEffect } from 'react'
-import React, { useState } from 'react';
-import { useOrdersContext } from '../hooks/useOrdersContext.jsx'
-//components
-import NavbarDini1 from '../components/DisNavbar.jsx'
-import OrderDetails from '../components/OrderDetails.jsx'
-import SearchBar from '../components/Distributor_Search.jsx'
-import '../DistributionFun.css'
+import React, { useState, useEffect } from 'react';
+import NavbarDini1 from '../components/DisNavbar.jsx';
+import OrderDetails from '../components/OrderDetails.jsx';
+import SearchBar from '../components/Distributor_Search.jsx';
+import { useOrdersContext } from '../hooks/useOrdersContext.jsx';
+import '../DistributionFun.css';
 
 const OrderHistory = () => {
   const { orders, dispatch } = useOrdersContext();
+  const distributor = JSON.parse(localStorage.getItem('distributor'));
+  const distributorLoginID = distributor ? distributor.distributorLoginID : '';
 
-    // State for search term and filtered orders
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredOrders, setFilteredOrders] = useState([]);
 
-    //fetching method implementation
-    useEffect(() => {
-        const fetchOrders = async () => {
-            const response = await fetch('/api/orders')
-            const json = await response.json()
+  useEffect(() => {
+    const fetchOrders = async () => {
+      const response = await fetch('/api/orders');
+      const json = await response.json();
 
-            if(response.ok){
-               dispatch({type: 'SET_ORDERS', payload: json})
-            }
-        }
+      if (response.ok) {
+        dispatch({ type: 'SET_ORDERS', payload: json });
+      }
+    };
 
-        //method calling
-        fetchOrders()  
-    }, [dispatch])
+    fetchOrders();
+  }, [dispatch]);
 
-    // Initialize filteredOrders with all orders when component mounts
-    useEffect(() => {
-        setFilteredOrders(orders || []); //orders is not null
-    }, [orders]);
+  useEffect(() => {
+    // Filter orders based on distributorLoginID
+    setFilteredOrders(orders.filter(order => order.distributorId === distributorLoginID));
+  }, [orders, distributorLoginID]);
 
-    // Function to filter orders based on search term
   const handleFilter = (e) => {
-    setSearchTerm(e.target.value.toLowerCase()); //case-insensitive search
-
-    const filtered = orders.filter((order) => {
-      const searchText = e.target.value.toLowerCase(); // Lowercase search term for matching
-      const orderString = JSON.stringify(order).toLowerCase(); // Lowercase order data
-
-      return orderString.includes(searchText);
-    });
-
-    setFilteredOrders(filtered);
+    setSearchTerm(e.target.value.toLowerCase());
   };
 
-  // Function to highlight search term within order details (optional)
-  const highlightSearchTerm = (text) => {
-    if (!searchTerm) return text;
-
-    const regex = new RegExp(searchTerm, 'gi'); // Global, case-insensitive search
-    return text.replace(regex, (match) => `<mark>${match}</mark>`); // Wrap matched terms in `<mark>` tags
-  };
-    return (
-      <NavbarDini1>
-        <div className="home">
+  return (
+    <NavbarDini1>
+      <div className="home">
         <h1>Order History</h1>
-      <SearchBar onChange={handleFilter} style={{ marginBottom: '20px' }} />
+        <p>Distributor ID: {distributorLoginID}</p>
+        <SearchBar onChange={handleFilter} style={{ marginBottom: '20px' }} />
         {filteredOrders.length > 0 ? (
-          filteredOrders.map((order) => (
-            <OrderDetails
-              key={order._id}
-              order={order}
-              highlightSearchTerm={highlightSearchTerm} // Pass highlight function as a prop
-            />
-          ))
+          filteredOrders
+            .filter((order) =>
+              order.distributorId.toLowerCase().includes(searchTerm)
+            )
+            .map((order) => (
+              <OrderDetails
+                key={order._id}
+                order={order}
+              />
+            ))
         ) : (
-          searchTerm && <p>No orders found matching "{searchTerm}".</p> // Informative message when no results found
+          searchTerm && <p>No orders found for distributor ID "{searchTerm}".</p>
         )}
-        </div>
+      </div>
     </NavbarDini1>
-    )
-}
-export default OrderHistory
+  );
+};
+
+export default OrderHistory;

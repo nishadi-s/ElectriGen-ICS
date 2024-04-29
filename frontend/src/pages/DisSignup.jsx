@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDisSignup } from "../hooks/useDisSignup";
 import NavbarStart from "../components/NavbarStart";
 
@@ -9,13 +9,34 @@ const DisSignup = () => {
   const [companyName, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [distributorLoginID, setDistributorLoginID] = useState("");
   const { disSignup, isLoading, error } = useDisSignup();
+
+  //auto generated distributor id
+  const generateRandomNumber = () => {
+    return Math.floor(10000 + Math.random() * 90000);
+  };
+
+  // Function to generate the unique distributor login ID
+  const generateDistributorLoginID = () => {
+    return `DS${generateRandomNumber()}`;
+  };
+
+  useEffect(() => {
+    const newLoginID = generateDistributorLoginID();
+    setDistributorLoginID(newLoginID);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!distributorName || !address || !companyName || !email || !password || !distributorLoginID) {
+      console.error("All fields must be filled");
+      return; // Exit the function if any field is empty
+    }
+  
     try {
-      await disSignup(distributorName, address, companyName, email, password);
+      await disSignup(distributorName, address, companyName, email, password, distributorLoginID);
     } catch (error) {
       console.error("Error during signup:", error);
     }
@@ -60,6 +81,13 @@ const DisSignup = () => {
           type="password"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
+        />
+
+        <label>distributor Login ID:</label>
+        <input
+          type="distributorLoginID"
+          value={distributorLoginID}
+          readOnly
         />
 
         <button disabled={isLoading}>Sign up</button>

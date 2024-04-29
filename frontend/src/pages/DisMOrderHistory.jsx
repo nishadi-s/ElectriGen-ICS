@@ -17,7 +17,7 @@ const DisMOrderHistory = () => {
     //fetching method implementation
     useEffect(() => {
         const fetchOrders = async () => {
-            const response = await fetch('/api/orders/manager/orders')
+            const response = await fetch('/api/orders')
             const json = await response.json()
 
             if(response.ok){
@@ -75,4 +75,4 @@ const DisMOrderHistory = () => {
     </NavbarDini2>
     )
 }
-export default DisMOrderHistory;
+export default DisMOrderHistory

@@ -881,3 +881,23 @@ a:hover {
 .greeting-text {
   flex: 1;
 }
+
+/*update form order status*/
+/* Styling for different order statuses */
+#orderStatus option[value="Approved"] {
+  color: green; /* Example color for Approved */
+}
+#orderStatus option[value="Cancelled"] {
+  color: red; /* Example color for Cancelled */
+}
+#orderStatus option[value="Pending"] {
+  color: blue; /* Example color for Pending */
+}
+#orderStatus option[value="Processing"] {
+  color: orange; /* Example color for Processing */
+}
+
+/* Styling for updated order status */
+#orderStatus option[selected] {
+  font-weight: bold; /* Make the selected option bold */
+}

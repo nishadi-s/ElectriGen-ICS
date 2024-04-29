@@ -2,21 +2,49 @@ import React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { TableVirtuoso } from 'react-virtuoso';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import Swal from 'sweetalert2';
 import { useOrdersContext } from '../hooks/useOrdersContext.jsx';
 import { useNavigate } from 'react-router-dom';
-import '../DistributionFun.css'
+import '../DistributionFun.css';
 
 const DisMOrderDetails = ({ order }) => {
+    const { dispatch } = useOrdersContext();
     const navigate = useNavigate();
 
+    const handleClick = async () => {
+        const result = await Swal.fire({
+            title: "Do you want to delete this record?",
+            showCancelButton: true,
+            confirmButtonText: "Delete",
+            cancelButtonText: "Cancel",
+        });
+
+        if (result.isConfirmed) {
+            try {
+                const response = await fetch('/api/orders/' + order._id, {
+                    method: 'DELETE'
+                });
+                const json = await response.json();
+
+                if (response.ok) {
+                    dispatch({ type: 'DELETE_ORDER', payload: json });
+                    Swal.fire("Deleted", "", "success");
+                } else {
+                    throw new Error('Failed to delete order');
+                }
+            } catch (error) {
+                console.error(error);
+                Swal.fire("Error Occurred", "Failed to delete order. Please try again.", "error");
+            }
+        }
+    };
+
     const handleEdit = () => {
-        navigate(`manager/update/${order._id}`);
+        navigate(`/update-order/${order._id}`);
     };
 
     return (
@@ -29,15 +57,13 @@ const DisMOrderDetails = ({ order }) => {
                             <TableCell>Distributor ID</TableCell>
                             <TableCell>Distributor Name</TableCell>
                             <TableCell>Order Status</TableCell>
-
                             {/* Item details headers */}
                             <TableCell>Item Code</TableCell>
                             <TableCell>Item Name</TableCell>
-                            <TableCell>Unit Price</TableCell>
+                            <TableCell>Unit Price(lkr)</TableCell>
                             <TableCell>Quantity</TableCell>
-                            <TableCell>Total Cost</TableCell>
-
-                            <TableCell>Total Amount to Pay</TableCell>
+                            <TableCell>Total Cost(lkr)</TableCell>
+                            <TableCell>Total Amount to Pay(lkr)</TableCell>
                             <TableCell>Created At</TableCell>
                             <TableCell>Action</TableCell>
                         </TableRow>
@@ -69,6 +95,7 @@ const DisMOrderDetails = ({ order }) => {
                                         <TableCell rowSpan={order.items.length}>
                                             {/* Action buttons */}
                                             <div className="action-buttons">
+                                                <button onClick={handleClick} className="btn-delete">Delete</button>
                                                 <button onClick={handleEdit} className="btn-edit">Edit</button>
                                             </div>
                                         </TableCell>

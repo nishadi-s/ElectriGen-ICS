@@ -165,7 +165,8 @@ const { distributor } = useDisDAuthContext()
           {/* Dis manager */}
           <Route path="/DisMOrderHistory" element = {<DisMOrderHistory />} />
           <Route path="/DisMDashboard" element = {<DisMDashboard />} />
-          <Route path="update/:id" element = {<DisMUpdateOrder />} />
+          
+          <Route path="update-order/:id" element = {<DisMUpdateOrder />} />
 
           {/* Define route for updating orders */}
 

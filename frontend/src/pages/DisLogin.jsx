@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const DisLogin = () => {
-    const [email, setEmail] = useState('');
+    const [distributorLoginID, setDistributorLoginID] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
     const { disLogin, isLoading, error } = useDisLogin();
@@ -13,7 +13,7 @@ const DisLogin = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        await disLogin(email, password);
+        await disLogin(distributorLoginID, password);
     };
 
     return (
@@ -22,13 +22,13 @@ const DisLogin = () => {
 <form className="login-form" onSubmit={handleSubmit} autoComplete="off">
   <h3>Distributor Login</h3>
 
-  <label htmlFor="email">Email:</label>
+  <label htmlFor="email">Distributor Login ID:</label>
   <input
-    type="email"
-    id="email"
+    type="distributorLoginID"
+    id="distributorLoginID"
     className="login-input"
-    onChange={(e) => setEmail(e.target.value)}
-    value={email}
+    onChange={(e) => setDistributorLoginID(e.target.value)}
+    value={distributorLoginID}
   />
 
   <label htmlFor="password">Password:</label>

@@ -5,7 +5,7 @@ import ItemsSummary from '../components/DisItemSummary'
 
 const DisDashboard = () => {
   const distributor = JSON.parse(localStorage.getItem('distributor'));
-  const distributorEmail = distributor ? distributor.email : '';
+  const distributorLoginID = distributor ? distributor.distributorLoginID : '';
 
   //greeting message for distributors
   const getGreeting = () => {
@@ -29,7 +29,7 @@ const DisDashboard = () => {
         <h1>Dashboard</h1>
         <div>
         <p>{getGreeting()} Dear Customer</p>
-        <p>Distributor Email: {distributorEmail}</p>
+        <p>Distributor ID: {distributorLoginID}</p>
         </div>
       </div>
       <ItemsSummary/>
