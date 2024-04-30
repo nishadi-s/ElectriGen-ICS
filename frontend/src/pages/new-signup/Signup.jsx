@@ -2,7 +2,9 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import AuthAPI from "../../api/AuthAPI";
 import { errorMessage, successMessage } from "../../utils/Alert";
-import { Link, useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Button, Card, CardContent, TextField, Typography, Link, Grid } from "@mui/material";
+import Navbar_Pay from "../../components/Navbar-uvi";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -12,6 +14,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const validateForm = () => {
     let isValid = true;
@@ -37,17 +40,14 @@ const Signup = () => {
       isValid = false;
       errors.password = "Password is required";
     } else if (password.length < 6) {
-      // Example: Minimum length check
       isValid = false;
       errors.password = "Password must be at least 6 characters";
     }
 
-    // confirm password
     if (!confirmPassword) {
       isValid = false;
       errors.confirmPassword = "Confirm Password is required";
     } else if (confirmPassword.length < 6) {
-      // Example: Minimum length check
       isValid = false;
       errors.confirmPassword = "Confirm Password must be at least 6 characters";
     } else if (confirmPassword !== password) {
@@ -59,138 +59,111 @@ const Signup = () => {
     return isValid;
   };
 
-  const redirectToDashboard = (res) => {
-    navigate("/new-login");
+  const redirectToSalary = () => {
+    navigate("/salary-details");
   };
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: AuthAPI.signup,
     onSuccess: (res) => {
-      successMessage("Success", res.data.message, () => {
-        redirectToDashboard(res);
-      });
+      successMessage("Success", res.data.message, redirectToSalary);
     },
     onError: (err) => {
       errorMessage("Error", err.response.data.message);
+    },
+    onSettled: () => {
+      setIsLoading(false);
     },
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
+      setIsLoading(true);
       mutate({ name, email, password });
     }
   };
-  //
+
   return (
-    <>
-      <br />
-      <div>
-        <div className="row justify-content-center">
-          <div className="col-md-6">
-            <div className="card">
-              <h1 className="card-header text-center">User Signup</h1>
-              <div className="card-body">
-                <form onSubmit={handleSubmit}>
-                  <div className="mb-3">
-                    <label htmlFor="name" className="form-label">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      className={`form-control ${
-                        errors.name ? "is-invalid" : ""
-                      }`}
-                      id="name"
-                      placeholder="Enter your name"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                    {errors.name && (
-                      <div className="invalid-feedback">{errors.name}</div>
-                    )}
-                  </div>
-
-                  {/* email */}
-                  <div className="mb-3">
-                    <label htmlFor="email" className="form-label">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      className={`form-control ${
-                        errors.email ? "is-invalid" : ""
-                      }`}
-                      id="email"
-                      placeholder="Enter your email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                    {errors.email && (
-                      <div className="invalid-feedback">{errors.email}</div>
-                    )}
-                  </div>
-
-                  <div className="mb-3">
-                    <label htmlFor="password" className="form-label">
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      className={`form-control ${
-                        errors.password ? "is-invalid" : ""
-                      }`}
-                      id="password"
-                      placeholder="Enter your password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                    {errors.password && (
-                      <div className="invalid-feedback">{errors.password}</div>
-                    )}
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="password" className="form-label">
-                      Confirm Password
-                    </label>
-                    <input
-                      type="password"
-                      className={`form-control ${
-                        errors.confirmPassword ? "is-invalid" : ""
-                      }`}
-                      id="confirmPassword"
-                      placeholder="Confirm your password"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                    />
-                    {errors.confirmPassword && (
-                      <div className="invalid-feedback">
-                        {errors.confirmPassword}
-                      </div>
-                    )}
-                  </div>
-                  <button
-                    type="submit"
-                    className="btn btn-primary w-100"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? "Loading..." : "Signup"}
-                  </button>
-                </form>
-
-                {/* already have an account */}
-                <div className="mt-3 text-center">
-                  Already have an account?{" "}
-                  <Link to="/new-login" className="text-decoration-none">
-                    Login
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+    
+    <Navbar_Pay>
+    <Grid container justifyContent="center" mt={4}>
+      <Grid item xs={12} sm={8} md={6}>
+        <Card>
+          <CardContent>
+            <Typography variant="h5" align="center" gutterBottom>
+              User Signup
+            </Typography>
+            <form onSubmit={handleSubmit}>
+              <TextField
+                id="name"
+                label="Name"
+                type="text"
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                error={!!errors.name}
+                helperText={errors.name}
+              />
+              <TextField
+                id="email"
+                label="Email"
+                type="email"
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                error={!!errors.email}
+                helperText={errors.email}
+              />
+              <TextField
+                id="password"
+                label="Password"
+                type="password"
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                error={!!errors.password}
+                helperText={errors.password}
+              />
+              <TextField
+                id="confirmPassword"
+                label="Confirm Password"
+                type="password"
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                error={!!errors.confirmPassword}
+                helperText={errors.confirmPassword}
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                fullWidth
+                disabled={isLoading}
+              >
+                {isLoading ? "Loading..." : "Signup"}
+              </Button>
+            </form>
+            {/*<Typography variant="body2" align="center" mt={2}>
+              Already have an account?{" "}
+              <Link component={RouterLink} to="/new-login" underline="hover">
+                Login
+  </Link>
+            </Typography>*/}
+          </CardContent>
+        </Card>
+      </Grid>
+    </Grid>
+    </Navbar_Pay>
   );
 };
 

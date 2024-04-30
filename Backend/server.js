@@ -67,6 +67,8 @@ app.use("/api/products", productRoutes);
 //uvindya
 const salaryRoutes = require("./routes/salaries");
 app.use("/api/salaries", salaryRoutes);
+const userRoutes=require("./routes/userRoutes.js")
+app.use("/api/users",userRoutes)
 
 //Shanali
 const exportRoutes = require("./routes/export");

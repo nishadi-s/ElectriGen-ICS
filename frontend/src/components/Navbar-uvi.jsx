@@ -29,6 +29,16 @@ const Navbar_Pay = ({ children }) => {
       name: "Summary Report",
       icon: < FaClipboardList />,
     },
+    {
+      path: "/new-signup",
+      name: "Signup",
+      icon: <FaUserAlt />,
+    },
+    {
+      path: "/user-details",
+      name: "User Details",
+      icon: <FaUserAlt />,
+    },
    
   
     {

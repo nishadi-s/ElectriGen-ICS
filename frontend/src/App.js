@@ -23,6 +23,9 @@ import SalaryReportPage from "./pages/SalaryReport.jsx";
 import SalaryDetailsPage from "./pages/SalaryDetailsPage.jsx";
 import Home from "./pages/Home.jsx";
 import AllReport from "./pages/SalaryAllPdf.jsx";
+import UserInfo from "./components/UserInfo.jsx";
+import UpdateUser from "./components/UpdateUser.jsx"
+import PrivateRoute from "./route_auth/PrivateRoute.jsx";
 
 //Nishadi
 import NavbarNishadi from "./components/SupplierOrderNavbar.jsx";
@@ -87,7 +90,7 @@ import ExportOrders from "./pages/ExportOrders.jsx";
 import Importer from "./pages/Importer.jsx";
 import ExportAnalytics from "./pages/ExportAnalytics.jsx";
 import UpdateExports from "./pages/UpdateExports.jsx";
-import PrivateRoute from "./route_auth/PrivateRoute.jsx";
+
 
 // New Auth
 import NewLogin from "./pages/new-login/Login.jsx";
@@ -196,6 +199,8 @@ const App = () => {
               <Route element={<PrivateRoute />}>
                 <Route path="/" element={<Home />} />
               </Route>
+              <Route path="/user-details" element={<UserInfo />} />
+              <Route path="/update-user/:id" element={<UpdateUser />} />
               <Route path="/Home_Pay" element={<Home_Pay />} />
               <Route path="/updateSalary/:id" element={<UpdateSalaryPage />} />
               <Route path="/add-salary" element={<AddSalaryPage />} />
@@ -203,6 +208,8 @@ const App = () => {
               <Route path="/salary-report" element={<SalaryReportPage />} />
               <Route path="/all-salary-report" element={<AllReport />} />
               <Route path="/Logout" element={<Logout />} />
+
+
               {/*Senith-inventory manager*/}
               <Route path="/Products" element={<Products />} />
               <Route path="/Production" element={<Production />} />

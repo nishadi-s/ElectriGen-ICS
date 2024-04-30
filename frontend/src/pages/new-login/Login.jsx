@@ -3,16 +3,17 @@ import { useMutation } from "@tanstack/react-query";
 import AuthAPI from "../../api/AuthAPI";
 import { useAuthStore } from "../../store/useAuthStore";
 import { errorMessage, successMessage } from "../../utils/Alert";
-import { Link, useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Button, Card, CardContent, TextField, Typography, Link, Grid } from "@mui/material";
 
 const Login = () => {
   const navigate = useNavigate();
-
   const login = useAuthStore((state) => state.login);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const validateForm = () => {
     let isValid = true;
@@ -30,7 +31,6 @@ const Login = () => {
       isValid = false;
       errors.password = "Password is required";
     } else if (password.length < 6) {
-      // Example: Minimum length check
       isValid = false;
       errors.password = "Password must be at least 6 characters";
     }
@@ -39,98 +39,95 @@ const Login = () => {
     return isValid;
   };
 
-  const redirectToDashboard = (res) => {
+  const redirectToDashboard = () => {
     navigate("/");
   };
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: AuthAPI.login,
     onSuccess: (res) => {
-      // Set user data to global state
       login(res.data.user, res.data.token);
-      successMessage("Success", res.data.message, () => {
-        redirectToDashboard(res);
-      });
+      successMessage("Success", res.data.message, redirectToDashboard);
     },
     onError: (err) => {
       errorMessage("Error", err.response.data.message);
+    },
+    onSettled: () => {
+      setIsLoading(false);
     },
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
+      setIsLoading(true);
       mutate({ email, password });
     }
   };
 
   return (
-    <>
-      <br />
-      <div>
-        <div className="row justify-content-center">
-          <div className="col-md-6">
-            <div className="card">
-              <h1 className="card-header text-center">Login</h1>
-              <div className="card-body">
-                <form onSubmit={handleSubmit}>
-                  <div className="mb-3">
-                    <label htmlFor="email" className="form-label">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      className={`form-control ${
-                        errors.email ? "is-invalid" : ""
-                      }`}
-                      id="email"
-                      placeholder="Enter your email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                    {errors.email && (
-                      <div className="invalid-feedback">{errors.email}</div>
-                    )}
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="password" className="form-label">
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      className={`form-control ${
-                        errors.password ? "is-invalid" : ""
-                      }`}
-                      id="password"
-                      placeholder="Enter your password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                    {errors.password && (
-                      <div className="invalid-feedback">{errors.password}</div>
-                    )}
-                  </div>
-                  <button
-                    type="submit"
-                    className="btn btn-primary w-100"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? "Loading..." : "Login"}
-                  </button>
-                </form>
-                {/* don't have an account */}
-                <div className="mt-3 text-center">
-                  Don't have an account?{" "}
-                  <Link to="/new-signup" className="text-decoration-none">
-                    Sign Up
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+    <div
+      style={{
+        backgroundColor: "#233066", 
+        minHeight: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Grid container justifyContent="center" mt={4}>
+        <Grid item xs={12} sm={8} md={6}>
+          <Card>
+            <CardContent>
+              <Typography variant="h5" align="center" gutterBottom>
+                Login
+              </Typography>
+              <form onSubmit={handleSubmit}>
+                <TextField
+                  id="email"
+                  label="Email"
+                  type="email"
+                  fullWidth
+                  margin="normal"
+                  variant="outlined"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  error={!!errors.email}
+                  helperText={errors.email}
+                />
+                <TextField
+                  id="password"
+                  label="Password"
+                  type="password"
+                  fullWidth
+                  margin="normal"
+                  variant="outlined"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  error={!!errors.password}
+                  helperText={errors.password}
+                />
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Loading..." : "Login"}
+                </Button>
+              </form>
+              {/*<Typography variant="body2" align="center" mt={2}>
+                Don't have an account?{" "}
+                <Link component={RouterLink} to="/new-signup" underline="hover">
+                  Sign Up
+                </Link>
+    </Typography>*/}
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+    </div>
   );
 };
 
