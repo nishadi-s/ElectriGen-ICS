@@ -42,7 +42,7 @@ const Login = () => {
   const redirectToDashboard = () => {
     navigate("/");
   };
-
+//module to execute weather actions happen successfully
   const { mutate } = useMutation({
     mutationFn: AuthAPI.login,
     onSuccess: (res) => {
