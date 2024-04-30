@@ -5,6 +5,7 @@ import { useAuthStore } from "../../store/useAuthStore";
 import { errorMessage, successMessage } from "../../utils/Alert";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Button, Card, CardContent, TextField, Typography, Link, Grid } from "@mui/material";
+import Swal from "sweetalert2"; // Import SweetAlert
 
 const Login = () => {
   const navigate = useNavigate();
@@ -57,13 +58,35 @@ const Login = () => {
     },
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validateForm()) {
-      setIsLoading(true);
-      mutate({ email, password });
+ 
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (validateForm()) {
+    setIsLoading(true);
+    try {
+      const response = await AuthAPI.login({ email, password });
+      const { data } = response;
+      login(data.user, data.token);
+      Swal.fire({
+        title: "Success",
+        text: data.message,
+        icon: "success",
+      }).then(() => {
+        navigate("/");
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Error",
+        text: error.response.data.message,
+        icon: "error",
+      });
+    } finally {
+      setIsLoading(false);
     }
-  };
+  }
+};
+
 
   return (
     <div

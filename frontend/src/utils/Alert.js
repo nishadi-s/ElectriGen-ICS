@@ -1,4 +1,4 @@
-import Swal from "sweetalert2";
+/*import Swal from "sweetalert2";
 
 /**
  * @param {string} title
@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
  * }
  * );
  **/
-export function confirmMessage(title, message, event) {
+/*export function confirmMessage(title, message, event) {
   Swal.fire({
     showConfirmButton: true,
     showCancelButton: true,
@@ -38,7 +38,7 @@ export function confirmMessage(title, message, event) {
  * @example
  * successMessage("Success", "Your Report has been downloaded");
  **/
-export function successMessage(title, message, event) {
+/*export function successMessage(title, message, event) {
   Swal.fire({
     title: `<span class="text-md font-semibold">${title}</span>`,
     html: `<span class="text-md font-semibold">${message}</span>`,
@@ -63,7 +63,7 @@ export function successMessage(title, message, event) {
  * @example
  * errorMessage("Error", "Something went wrong");
  **/
-export function errorMessage(title, message) {
+/*export function errorMessage(title, message) {
   Swal.fire({
     title: `<span class="text-md font-semibold">${title}</span>`,
     html: `<span class="text-md font-semibold">${message}</span>`,
@@ -82,7 +82,7 @@ export function errorMessage(title, message) {
  * @example
  * warningMessage("Warning", "Are you sure?");
  **/
-export function warningMessage(title, message) {
+/*export function warningMessage(title, message) {
   Swal.fire({
     title: `<span class="text-md font-semibold">${title}</span>`,
     html: `<span class="text-md font-semibold">${message}</span>`,
@@ -92,4 +92,4 @@ export function warningMessage(title, message) {
     },
     padding: "1rem",
   });
-}
+}*/

@@ -5,6 +5,7 @@ import { errorMessage, successMessage } from "../../utils/Alert";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Button, Card, CardContent, TextField, Typography, Link, Grid } from "@mui/material";
 import Navbar_Pay from "../../components/Navbar-uvi";
+import Swal from "sweetalert2"; // Import SweetAlert
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -76,13 +77,34 @@ const Signup = () => {
     },
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validateForm()) {
-      setIsLoading(true);
-      mutate({ name, email, password });
+ 
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (validateForm()) {
+    setIsLoading(true);
+    try {
+      const response = await AuthAPI.signup({ name, email, password });
+      const { data } = response;
+      Swal.fire({
+        title: "Success",
+        text: data.message,
+        icon: "success",
+      }).then(() => {
+        navigate("/salary-details");
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Error",
+        text: error.response.data.message,
+        icon: "error",
+      });
+    } finally {
+      setIsLoading(false);
     }
-  };
+  }
+};
+
 
   return (
     
