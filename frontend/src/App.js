@@ -45,6 +45,10 @@ import New_Projects from "./pages/New_Projects.jsx";
 import Doner_Feedback from "./pages/Doner_Feedback.jsx";
 import Doner_Analystics from "./pages/Doner_Analytics.jsx";
 import DFeedbackFetch from "./components/dFeedbackFetch.jsx";
+import DReportCreate from "./components/DReportCreate.jsx";
+import DProjectEdit from "./components/DProjectEdit.jsx";
+import DProjectDetails from "./components/DProjectDetails.jsx";
+
 
 //Primal
 import SalesFeedback from "./pages/salesFeedback.jsx";
@@ -58,6 +62,7 @@ import InvoiceReport from "./pages/InvoiceReport.jsx";
 import SalesDashboard from "./pages/SalesDashboard.jsx";
 import SDFeedback from "./pages/SDFeedback";
 import SDView from "./pages/SDView.jsx";
+
 
 //Dinithi
 
@@ -183,11 +188,11 @@ const App = () => {
               <Route path="/New_Projects" element={<New_Projects />} />
               <Route path="/Doner_Feedback" element={<Doner_Feedback />} />
               <Route path="/Doner_Analytics" element={<Doner_Analystics />} />
-              <Route path="/Dashboard" element={<DFeedbackFetch />} />
-              <Route
-                path="/Donation_Dashboard"
-                element={<Donation_Dashboard />}
-              />
+              <Route path="/DFeedbackFetch" element={<DFeedbackFetch />} />
+              <Route path="/Donation_Dashboard" element={<Donation_Dashboard />} />
+              <Route path="/DProjectDetails" element={<DProjectDetails />} />
+              <Route path="/dProjectEdit/:projectId" element={<DProjectEdit/>} />
+              <Route path="/DReportCreate" element={<DReportCreate />} />
               {/* Primal */}
               <Route path="/salesFeedback" element={<SalesFeedback />} />
               <Route path="/invoiceCreate" element={<InvoiceCreate />} />
