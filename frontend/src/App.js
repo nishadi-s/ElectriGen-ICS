@@ -9,12 +9,12 @@ import {
 } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
-import HomePage from "./pages/Home.jsx";
+import Home from "./pages/Home.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import MyProfile from "./pages/MyProfile.jsx";
 import Analytics from "./pages/Analytics.jsx";
 import Logout from "./pages/Logout.jsx";
-import Home from "./pages/Home.jsx";
+
 
 /*Uvindya
 //import Navbar_Pay from './components/Navbar-uvi.jsx';
@@ -24,6 +24,7 @@ import Home from "./pages/Home.jsx";
 //import Signup from './pages/Signup.jsx';
 //import ForgotPassword from './components/ForgotPassword.jsx';
 //import SalaryDetails from './components/SalaryDetails.jsx';
+
 import UpdateSalaryPage from "./components/UpdateSalary.jsx";
 import AddSalaryPage from "./pages/AddSalary.jsx";
 import Logout from "./pages/Logout.jsx";
@@ -69,6 +70,9 @@ import OrderSuccess from "./pages/OrderSucess.jsx";
 import UpdateOrder from "./pages/UpdateOrderDetails.jsx";
 import { useDisDAuthContext } from "./hooks/useDisDAuthContext.jsx";
 //distribution managers
+import DisMOrderHistory from "./pages/DisMOrderHistory.jsx";
+import DisMDashboard from "./pages/DisMDashboard.jsx";
+import DisMUpdateOrder from './pages/DisMUpdate.jsx';
 
 //Senith
 import Materials from "./pages/Materials.jsx";
@@ -86,11 +90,11 @@ import ProductForm from "./components/ProductForm";
 import ProductsView from "./pages/ProductView";
 import AddMaterials from "./pages/AddMaterials";
 
+
 /*Shanali
 import ExportsDashboard from "./pages/ExportsDashboard.jsx";
 import ExportsNavBar from "./components/ExportsNavBar.jsx";
 import ExportsProfile from "./pages/ExportsProfile.jsx";
-/*import ImporterDescription from "./pages/ImporterDescription.jsx";
 import ImporterDescription from "./pages/ImporterDescription.jsx";
 import ExportOrders from "./pages/ExportOrders.jsx";
 import Importer from "./pages/Importer.jsx";
@@ -162,33 +166,22 @@ const App = () => {
             <Route path="/viewInvoice" element={<ViewInvoice />} />
             <Route path="/PinVerification" element={<PinVerification />} />
             <Route path="/InvoiceUpdate" element={<InvoiceUpdate />} />
-            {/* Dinithi */}
-            <Route
-              path="/login"
-              element={
-                !distributor ? <DisLogin /> : <Navigate to="/DisDashboard" />
-              }
-            />
-            <Route
-              path="/signup"
-              element={
-                !distributor ? <DisSignup /> : <Navigate to="/DisDashboard" />
-              }
-            />
-            <Route
-              path="/DisDashboard"
-              element={
-                distributor ? <DisDashboard /> : <Navigate to="/login" />
-              }
-            />
-            <Route path="/DisMyProfile" element={<DisMyProfile />} />
-            <Route path="/DisAnalytics" element={<DisAnalytics />} />
-            <Route path="/OrderForm" element={<OrderPlace />} />
-            <Route path="/OrderHistory" element={<OrderHistory />} />
-            <Route path="/OrderSuccess" element={<OrderSuccess />} />
-            <Route path="/update/:id" element={<UpdateOrder />} />{" "}
-            {/* Define route for updating orders */}
-            {/* Define route for updating orders */}
+                      
+          {/* Dinithi */}
+          <Route path="/login" element = {!distributor ? <DisLogin /> : <Navigate to= "/DisDashboard"/>} />
+          <Route path="/signup" element = {!distributor ? <DisSignup /> : <Navigate to= "/DisDashboard"/>} />
+          <Route path="/DisDashboard" element = {distributor ? <DisDashboard /> : <Navigate to="/login" />}/>
+          <Route path="/DisMyProfile" element = {<DisMyProfile />} />
+          <Route path="/DisAnalytics" element = {<DisAnalytics />} />
+          <Route path="/OrderForm" element = {<OrderPlace />} />
+          <Route path="/OrderHistory" element = {<OrderHistory />} />
+          <Route path="/OrderSuccess" element={<OrderSuccess/>}/>
+          <Route path="/update/:id" element={<UpdateOrder />} /> {/* Define route for updating orders */}
+          {/* Dis manager */}
+          <Route path="/DisMOrderHistory" element = {<DisMOrderHistory />} />
+          <Route path="/DisMDashboard" element = {<DisMDashboard />} />
+          
+          <Route path="update-order/:id" element = {<DisMUpdateOrder />} />
             {/*Uvindya
             <Route path="/" element={<Home />} />
             <Route path="/updateSalary/:id" element={<UpdateSalaryPage />} />

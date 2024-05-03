@@ -11,7 +11,7 @@ import { useOrdersContext } from '../hooks/useOrdersContext.jsx';
 import { useNavigate } from 'react-router-dom';
 import '../DistributionFun.css';
 
-const OrderDetails = ({ order }) => {
+const DisMOrderDetails = ({ order }) => {
     const { dispatch } = useOrdersContext();
     const navigate = useNavigate();
 
@@ -44,7 +44,7 @@ const OrderDetails = ({ order }) => {
     };
 
     const handleEdit = () => {
-        navigate(`/update/${order._id}`);
+        navigate(`/update-order/${order._id}`);
     };
 
     return (
@@ -110,4 +110,4 @@ const OrderDetails = ({ order }) => {
     );
 };
 
-export default OrderDetails;
+export default DisMOrderDetails;

@@ -21,7 +21,7 @@ const Home = () => {
       id: 3,
       text: "Distributor Management",
       password: "Dd123",
-      link: "/DisDashboard",
+      link: "/DisMDashboard",
     },
     {
       id: 4,
@@ -42,6 +42,8 @@ const Home = () => {
       password: "Ps123",
       link: "/SalesDashboard",
     },
+        { id: 8, text: "Distributors", link: "/login" },
+
   ];
 
   const handleButtonClick = (password, link) => {
@@ -141,22 +143,25 @@ const Home = () => {
 const getCardImage = (text) => {
   switch (text) {
     case "Supplier Management":
-      return require("../pages/img/material.jpg");
+      return require("../pages/img/material.jpg").default;
     case "Production Management":
-      return require("../pages/img/production.jpg");
-    case "Distributor Management":
-      return require("../pages/img/distributor.jpg");
+      return require("../pages/img/production.jpg").default;
+    case "Distributors":
+      return require("../pages/img/dis.jpg").default;
     case "Expot Management":
-      return require("../pages/img/exportM.jpg");
+      return require("../pages/img/exportM.jpg").default;
     case "Employee Salary Management":
-      return require("../pages/img/salary.jpg");
+      return require("../pages/img/salary.jpg").default;
     case "Donation Project Management":
-      return require("../pages/img/don.jpg");
+      return require("../pages/img/don.jpg").default;
     case "Showroom Sales Management":
-      return require("../pages/img/invoice.jpg");
+      return require("../pages/img/invoice.jpg").default;
+    case "Distributor Management":
+      return require("../pages/img/distributor.jpg").default;
     default:
       return null;
   }
 };
+
 
 export default Home;

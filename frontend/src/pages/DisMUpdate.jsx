@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useDisDAuthContext } from '../hooks/useDisDAuthContext';
 import { useOrdersContext } from '../hooks/useOrdersContext';
-import '../DistributionFun.css'
+import '../DistributionFun.css';
 
-const UpdateOrder = () => {
+const DisMUpdateOrder = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [order, setOrder] = useState(null);
     const [updatedOrder, setUpdatedOrder] = useState({});
-    const { distributor } = useDisDAuthContext();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { dispatch: ordersDispatch } = useOrdersContext();
@@ -17,8 +15,7 @@ const UpdateOrder = () => {
     useEffect(() => {
         const fetchOrder = async () => {
             try {
-                const response = await fetch(`/api/orders/${id}`, {
-                });
+                const response = await fetch(`/api/orders/${id}`, {});
                 if (!response.ok) {
                     throw new Error('Failed to fetch order');
                 }
@@ -39,7 +36,7 @@ const UpdateOrder = () => {
             setOrder(null);
             setUpdatedOrder({});
         };
-    }, [id, distributor?.token]);
+    }, [id]);
 
     const handleChange = (e, index) => {
         const { name, value } = e.target;
@@ -51,19 +48,19 @@ const UpdateOrder = () => {
         }));
     };
 
-    const addNewItem = () => {
+    /*const addNewItem = () => {
         const newItem = { code: "", name: "", unit: "", quantity: "" };
         setUpdatedOrder(prevState => ({
             ...prevState,
             items: [...prevState.items, newItem]
         }));
-    };
+    };*/
 
     const calculateTotalAmount = () => {
         if (!updatedOrder.items) return 0;
 
         const total = updatedOrder.items.reduce((acc, item) => acc + (item.unit * item.quantity), 0);
-    return total.toFixed(2);
+        return total.toFixed(2);
     };
 
     const handleUpdate = async () => {
@@ -78,16 +75,10 @@ const UpdateOrder = () => {
     
             if (response.ok) {
                 console.log('Order updated successfully');
-                // Calculate total amount
-                const updatedTotalAmount = calculateTotalAmount();
-                // Update total amount in updated order
-                const updatedOrderWithTotalAmount = { ...updatedOrder, totalAmount: updatedTotalAmount };
-                // Update state with the new total amount
-                setUpdatedOrder(updatedOrderWithTotalAmount);
                 // Dispatch the updated order to the context
-                ordersDispatch({ type: 'UPDATE_ORDER', payload: updatedOrderWithTotalAmount });
+                ordersDispatch({ type: 'UPDATE_ORDER', payload: updatedOrder });
                 // Navigate to OrderHistory
-                navigate('/OrderHistory');
+                navigate('/DisMOrderHistory');
             } else {
                 throw new Error('Failed to update order');
             }
@@ -105,8 +96,9 @@ const UpdateOrder = () => {
         return <div>Error: {error}</div>;
     }
 
+
     return (
-    <div className="update-order">
+        <div className="update-order">
     <h1>Order Modification</h1>
         <form class="update-form">
       <h3>Update Order Form</h3>
@@ -119,7 +111,7 @@ const UpdateOrder = () => {
       name="distributorId"
       class="input-field"
       value={updatedOrder.distributorId}
-      onChange={(e) => setUpdatedOrder(prevState => ({ ...prevState, distributorId: e.target.value }))}
+      readOnly
     />
   </div>
 
@@ -131,21 +123,24 @@ const UpdateOrder = () => {
       name="distributorName"
       class="input-field"
       value={updatedOrder.distributorName}
-      onChange={(e) => setUpdatedOrder(prevState => ({ ...prevState, distributorName: e.target.value }))}
+      readOnly
     />
   </div>
 
   <div class="input-group">
     <label for="orderStatus">Order Status</label>
-    <input
-      type="text"
-      id="orderStatus"
-      name="orderStatus"
-      class="input-field"
-      value={updatedOrder.orderStatus}
-      readOnly
-    />
-  </div>
+    <select
+                        id="orderStatus"
+                        name="orderStatus"
+                        className="input-field"
+                        value={updatedOrder.orderStatus}
+                        onChange={(e) => setUpdatedOrder(prevState => ({ ...prevState, orderStatus: e.target.value }))}>
+                        <option value="Approved">Approved</option>
+                        <option value="Cancelled">Cancelled</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Processing">Processing</option>
+                    </select>
+                </div>
 
   {/* Items List */}
   {updatedOrder.items && updatedOrder.items.map((item, index) => (
@@ -157,7 +152,7 @@ const UpdateOrder = () => {
         name={`code`}
         class="item-field"
         value={item.code}
-        onChange={(e) => handleChange(e, index)}
+        readOnly
       />
 
       <label for={`itemName${index}`} class="item-label">Item({index + 1}) Name</label>
@@ -167,7 +162,7 @@ const UpdateOrder = () => {
         name={`name`}
         class="item-field"
         value={item.name}
-        onChange={(e) => handleChange(e, index)}
+        readOnly
       />
 
       <label for={`itemUnit${index}`} class="item-label">Item({index + 1}) Unit Price</label>
@@ -177,7 +172,7 @@ const UpdateOrder = () => {
         name={`unit`}
         class="item-field"
         value={item.unit}
-        onChange={(e) => handleChange(e, index)}
+        readOnly
       />
 
       <label for={`itemQuantity${index}`} class="item-label">Item({index + 1}) Quantity</label>
@@ -187,13 +182,10 @@ const UpdateOrder = () => {
         name={`quantity`}
         class="item-field"
         value={item.quantity}
-        onChange={(e) => handleChange(e, index)}
+        readOnly
       />
     </div>
   ))}
-
-  {/* Add Item Section */}
-  <button type="button" class="add-item-button" onClick={addNewItem}>Add Item</button>
 
   {/* Total Amount Field */}
   <div class="input-group">
@@ -215,4 +207,4 @@ const UpdateOrder = () => {
     );
 };
 
-export default UpdateOrder;
+export default DisMUpdateOrder;
