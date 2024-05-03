@@ -66,9 +66,6 @@ const ImporterForm = () => {
             setError('');
             setEmptyFields([]);
             dispatch({ type: 'CREATE_IMPORTER', payload: json });
-
-            // Redirect to importer description page after successful submission
-            navigate(`/ImporterDescription`);
             
             // Display success message using SweetAlert
             Swal.fire({
@@ -76,6 +73,11 @@ const ImporterForm = () => {
                 title: 'Success!',
                 text: 'New importer added successfully!'
             });
+            // Redirect to importer description page after successful submission
+            setTimeout(() => {
+                navigate(`/ImporterDescription`);
+                window.location.reload();
+              }, 500);
         }
     }
 

@@ -2,11 +2,10 @@ import '../exports.css';
 import React from "react";
 import { useEffect } from "react";
 import { useExportsContext } from "../hooks/useExportsContext";
-import ExportSearch from '../components/ExportSearch'; 
+import ExportsRepo from '../components/ExportsRepo'; 
 import ExportsNavBar from "../components/ExportsNavBar.jsx";
-import { Link } from 'react-router-dom';
 
-const ExportsDashboard=()=>{
+const ExportsReport=()=>{
   const {dispatch:exportsDispatch} = useExportsContext()
 
   useEffect(()=>{
@@ -30,19 +29,18 @@ const ExportsDashboard=()=>{
       
     <div className="ex-dashboard">      
       <div className="exports">
-        <h1>Export Order Details</h1><br />
+        <h1>Exports Report Generation</h1><br />
 
-        <ExportSearch />
+        <ExportsRepo/>
 
       </div>      
     </div>
+
     
-    { <Link to={`/ExportsReport`} className="report-button">
-         Generate Report
-      </Link> }
+    
     </ExportsNavBar>
     </div>
   );
 };
 
-export default ExportsDashboard;
+export default ExportsReport;

@@ -35,6 +35,11 @@ const ExportsNavBar = ({ children }) => {
       icon: <FaIdBadge />,
     },
     // {
+    //   path: "/ExportsEmail",
+    //   name: "Exports Email",
+    //   icon: <FaIdBadge />,
+    // },
+    // {
     //   path: "/ExportAnalytics",
     //   name: "Analytics",
     //   icon: <FaRegChartBar />,

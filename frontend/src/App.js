@@ -53,13 +53,14 @@ import ProductForm from "./components/ProductForm";
 import ExportsDashboard from "./pages/ExportsDashboard.jsx";
 import ExportsNavBar from "./components/ExportsNavBar.jsx";
 import ExportsProfile from "./pages/ExportsProfile.jsx";
-//import ImporterDescription from "./pages/ImporterDescription.jsx";
+import ExportsReport from "./pages/ExportsReport.jsx";
 import ImporterDescription from "./pages/ImporterDescription.jsx";
 import ExportOrders from "./pages/ExportOrders.jsx";
 import Importer from "./pages/Importer.jsx";
 import ExportAnalytics from "./pages/ExportAnalytics.jsx";
 import UpdateExports from "./pages/UpdateExports.jsx";
 import ImporterUpdate from "./pages/ImporterUpdate.jsx";
+//import ExportsEmail from "./pages/ExportsEmail.jsx";
 import Home from "./pages/Home.jsx";
 
 const App = () => {
@@ -95,7 +96,8 @@ const App = () => {
             <Route path="/ExportsProfile" element={<ExportsProfile />} />
             <Route path="/UpdateExports/:id" element={<UpdateExports />} />
             <Route path="/ImporterUpdate/:id" element={<ImporterUpdate />} />
-            {/* Define route for updating orders */}
+            <Route path="/ExportsReport" element={<ExportsReport />} />
+            {/* <Route path="/ExportsEmail" element={<ExportsEmail />} /> */}
             {/* Dulari */}
             <Route path="/New_Projects" element={<New_Projects />} />
             <Route path="/Doner_Feedback" element={<Doner_Feedback />} />
