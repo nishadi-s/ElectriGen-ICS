@@ -35,8 +35,14 @@ import MyProfileN from "./pages/SupplierOrderProfile.jsx";
 import Orders from "./pages/SupplierOrder_Order.jsx";
 import Suppliers from "./pages/SupplierOrderSuppliers.jsx";
 import AnalyticsN from "./pages/SupplierOrderAnalytics.jsx";
-//import UpdateOrderN from "./components/SupplierOrderUpdate.jsx"; // Import the UpdateOrder component
 import SupplierEdit from "./components/SupplierEdit.jsx"; // Import the UpdateSupplier component
+import SupplierOrderForm from "./components/SupplierOrderForm.jsx"//Import supplier order form component
+import SupplierOrderEdit from "./components/SupplierOrderEdit.jsx" //Import the Update supplier Order component
+import Home from "./pages/Home.jsx";
+import SupplierOrderReport from "./components/SupplierOrderRepo.jsx";
+import Materials from "./pages/Materials.jsx";
+import SupplierEmail from "./components/SupplierEmail.jsx"//Importing supplier email component
+
 
 //Dulari_IT22121110
 import DonationNavbar from "./components/DonationNavbar.jsx";
@@ -82,7 +88,7 @@ import DisMDashboard from "./pages/DisMDashboard.jsx";
 import DisMUpdateOrder from "./pages/DisMUpdate.jsx";
 
 //Senith
-import Materials from "./pages/Materials.jsx";
+//import Materials from "./pages/Materials.jsx";
 import Production from "./pages/Production.jsx";
 import Products from "./pages/Products.jsx";
 import AddProducts from "./pages/AddProducts.jsx";
@@ -154,23 +160,20 @@ const App = () => {
                 element={<ResetPassword />}
               ></Route>
               <Route path="/Dashboard" element={<Dashboard />} />
-              {/* Nishadi */}
-              <Route path="/SupplierOrderDashboard" element={<DashboardN />} />
-              <Route path="/Suppliers" element={<Suppliers />} />
-              <Route path="/Order" element={<Orders />} />
-              <Route path="/analytics" element={<AnalyticsN />} />
-              <Route path="/MyProfile" element={<MyProfileN />} />
-              <Route path="/update/:id" element={<UpdateOrder />} />{" "}
-              {/* Define route for updating orders */}
-              <Route
-                path="Suppliers/supplieredit"
-                element={<SupplierEdit />}
-              />{" "}
-              {/* Define route for updating orders */}
-              <Route
-                path="/Suppliers/supplieredit/Suppliers"
-                element={<Suppliers />}
-              />
+                 {/* Nishadi */}
+                <Route path="/SupplierOrderDashboard" element={<DashboardN />} />
+                <Route path="/Suppliers" element={<Suppliers />} />
+                <Route path="/Order" element={<Orders />} />
+                <Route path="/analyticsN" element={<AnalyticsN />} />
+                <Route path="/MyProfileN" element={<MyProfileN />} />
+                <Route path="/supplier/:id" element={<SupplierEdit />} /> {/* Define route for updating orders */}
+                <Route path="/supplierorderform" element ={< SupplierOrderForm/>}/> {/*View Supplier Order Form */}
+                <Route path="/supplierOrder/:id" element={<SupplierOrderEdit />} /> {/* Define route for updating orders */}
+                <Route path="/" element={<Home />} />
+                <Route path="/Home" element={<Home />} />
+                <Route path="/supplierOrderReport" element ={<SupplierOrderReport/>}/>
+                <Route path="/Materials" element={<Materials/>}/>
+                <Route path="/SupplierEmail" element={<SupplierEmail/>}/>
               {/* Shanali 
             <Route path="/" element={<ExportsDashboard />} />
             <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
