@@ -45,6 +45,9 @@ const SupplierOrders = () => {
       <div className="supplier_order">
         <h1>Supplier Orders Details</h1>
         
+        <button className='button' onClick={() => navigate('/supplierorderform')} style={{ marginRight: '900px' }}> Add a new Order</button>
+        <button className='button' onClick={handleGenerateReport}> Generate the Report</button>
+        
         {/* Search input */}
         <input
           type="text"
@@ -62,8 +65,7 @@ const SupplierOrders = () => {
           <p>No search results found</p>
         )}
 
-        <button className='button' onClick={() => navigate('/supplierorderform')} style={{ marginRight: '900px' }}> Add a new Order</button>
-        <button className='button' onClick={handleGenerateReport}> Generate the Report</button>
+        
       </div>
     </NavbarNishadi>
   );
