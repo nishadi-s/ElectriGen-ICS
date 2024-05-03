@@ -25,9 +25,46 @@ const getProduct = async (req, res) => {
   res.status(200).json(product);
 };
 
-//ceate new product
+// Get all item codes
+const getItemCodes = async (req, res) => {
+  try {
+    const itemCodes = await Product.distinct("itemCode");
+    res.status(200).json(itemCodes);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+//create new product
 const createProduct = async (req, res) => {
-  const { name, itemCode, unitPrice, cost, color, category } = req.body;
+  const { name, itemCode, unitPrice, quantity, color, category } = req.body;
+
+  let emptyFields = [];
+
+  if (!name) {
+    emptyFields.push("name");
+  }
+  if (!itemCode) {
+    emptyFields.push("itemCode");
+  }
+  if (!unitPrice) {
+    emptyFields.push("unitPrice");
+  }
+  if (!category) {
+    emptyFields.push("category");
+  }
+  if (!color) {
+    emptyFields.push("color");
+  }
+  if (!quantity) {
+    emptyFields.push("quantity");
+  }
+
+  if (emptyFields.length > 0) {
+    return res
+      .status(400)
+      .json({ error: "Please fill all the fields", emptyFields });
+  }
 
   //add doc to db
   try {
@@ -35,7 +72,7 @@ const createProduct = async (req, res) => {
       name,
       itemCode,
       unitPrice,
-      cost,
+      quantity,
       color,
       category,
     });
@@ -62,28 +99,75 @@ const deleteProduct = async (req, res) => {
   res.status(200).json(product);
 };
 
-//update a product
+// update a product
 const updateProduct = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "no such product" });
+    return res.status(404).json({ error: "There is no such product" });
   }
 
   try {
-    const updatedProduct = await Product.findOneAndUpdate(
+    const updatedProduct = await Product.findByIdAndUpdate(
       { _id: id },
       {
-        ...req.body,
+        ...req.body, // Update with request body
       },
       { new: true }
-    ); // Add { new: true } to return the updated document
+    ); // return the updated document
 
     if (!updatedProduct) {
-      return res.status(400).json({ error: "No such Product" });
+      return res.status(404).json({ error: "No such Product" });
     }
 
     res.status(200).json(updatedProduct);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const updateProductQuantity = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "There is no such product" });
+  }
+
+  try {
+    const { quantity, ...updateData } = req.body; // Extract quantity separately
+    let updatedProduct;
+
+    if (quantity !== undefined) {
+      // If quantity is provided, update only the quantity field
+      updatedProduct = await Product.findByIdAndUpdate(
+        { _id: id },
+        { $inc: { quantity: quantity } }, // Increment (or decrement) quantity
+        { new: true }
+      );
+    } else {
+      // Otherwise, update all fields
+      updatedProduct = await Product.findByIdAndUpdate(
+        { _id: id },
+        updateData,
+        { new: true }
+      );
+    }
+
+    if (!updatedProduct) {
+      return res.status(404).json({ error: "No such Product" });
+    }
+
+    res.status(200).json(updatedProduct);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+// Get products with quantity less than 100
+const getLowQuantityProducts = async (req, res) => {
+  try {
+    const lowQuantityProducts = await Product.find({ quantity: { $lt: 50 } });
+    res.status(200).json(lowQuantityProducts);
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
@@ -95,4 +179,7 @@ module.exports = {
   createProduct,
   deleteProduct,
   updateProduct,
+  getItemCodes,
+  updateProductQuantity,
+  getLowQuantityProducts,
 };

@@ -1,3 +1,20 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-image: url("../public/26235.png");
+  background-size: auto;
+  background-position: center;
+  background-repeat: repeat;
+}
+.home {
+  min-height: 100vh;
+}
+body {
+  margin: -20px;
+}
+
 label,
 input {
   display: block;
@@ -28,4 +45,191 @@ div.error {
   color: var(--error);
   border-radius: 4px;
   margin: 20px 0;
+}
+
+div.error {
+  padding: 10px;
+  background: #ffefef;
+  border: 1px solid var(--error);
+  color: var(--error);
+  border-radius: 4px;
+  margin: 20px 0;
+}
+input.error {
+  border: 1px solid var(--error);
+}
+
+.product-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.products-search {
+  margin: 20px 0px;
+}
+table {
+  border-collapse: collapse;
+  width: 100%; /* Set table width to fill its container */
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /*shadow */
+  background-color: #fff;
+}
+
+.table-header {
+  background-color: #233066;
+}
+td,
+th {
+  padding: 10px;
+  height: 60px;
+  vertical-align: middle;
+}
+
+td:hover {
+  background-color: #f1f1f1;
+  color: #233066;
+}
+thead tr {
+  background-color: #233066;
+  color: #fff;
+}
+
+/* CSS */
+.button-5 {
+  align-items: center;
+  background-clip: padding-box;
+  background-color: #233066;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
+    Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.25;
+  margin: 0;
+  min-height: 3rem;
+  padding: calc(0.875rem - 1px) calc(1.5rem - 1px);
+  position: relative;
+  text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  width: auto;
+  margin: 20px 0px;
+}
+
+.button-5:hover,
+.button-5:focus {
+  background-color: #3c4b86;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+}
+
+.button-5:hover {
+  transform: translateY(-1px);
+}
+
+.button-5:active {
+  background-color: #0f1c52;
+  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+  transform: translateY(0);
+}
+
+.product-table-head {
+  display: inline-block;
+}
+
+.production-header {
+  text-align: left;
+  width: 100vw;
+  padding: 17px 20px;
+  background-color: #233066;
+  color: #fff;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  margin-top: -20px;
+  margin-left: -20px;
+  border-radius: 0px 10px 0px 10 px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.input-search {
+  vertical-align: middle;
+}
+
+.pagination-bar {
+  text-align: right;
+}
+
+.button-1 {
+  background-color: #233066;
+  border-radius: 8px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  line-height: 20px;
+  list-style: none;
+  margin: 5px;
+  outline: none;
+  padding: 10px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: color 100ms;
+  vertical-align: baseline;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-1:hover,
+button-1:focus {
+  background-color: #0f1c52;
+}
+
+.button-2 {
+  background-color: #ec2026;
+  border-radius: 8px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  line-height: 20px;
+  list-style: none;
+  margin: 5px;
+  outline: none;
+  padding: 10px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: color 100ms;
+  vertical-align: baseline;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-2:hover,
+.button-2:focus {
+  background-color: #a5171c;
 }

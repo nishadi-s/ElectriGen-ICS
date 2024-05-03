@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import MaterialDetails from "../components/MaterialDetails";
-//import MaterialSearch from "../components/MaterialSearch";
+import MaterialSearch from "../components/MaterialSearch";
 import { useMaterialContext } from "../hooks/useMaterialsContext";
-//import ProductionNavbar from "../components/ProductionNavbar";
+import ProductionNavbar from "../components/ProductionNavbar";
 import "../senith.css";
 
 const Materials = () => {
@@ -37,13 +37,15 @@ const Materials = () => {
   };
 
   return (
-  
+    <ProductionNavbar>
       <div className="home">
         <div className="production-header">
           <h1>Material Inventory</h1>
         </div>
         <div className="products">
-         
+          <div className="products-search">
+            <MaterialSearch onSearch={handleSearch} />
+          </div>
 
           {filteredMaterials.length === 0 && (
             <p className="no-results">
@@ -52,17 +54,30 @@ const Materials = () => {
           )}
 
           {filteredMaterials.length > 0 && (
-            <div className="material-list">
-              {filteredMaterials.map((material) => (
-                <MaterialDetails key={material._id} material={material} />
-              ))}
-            </div>
+            <table className="transparent-table">
+              <thead className="table-header">
+                <tr>
+                  <th scope="col">Item Code</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Unit Price</th>
+                  <th scope="col">Available Quantity</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredMaterials.map((material) => (
+                  <MaterialDetails key={material._id} material={material} />
+                ))}
+              </tbody>
+            </table>
           )}
 
-
+          <Link to="/AddMaterials" className="edit-link">
+            <button className="button-5">Add a new item</button>
+          </Link>
         </div>
       </div>
- 
+    </ProductionNavbar>
   );
 };
 

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import InvoiceDetails from '../components/InvoiceDetails';
 import SearchBar from '../components/SearchBar';
+import SalesNavbar from '../components/SalesNavbar';
+import "../sales.css";
 
 const ViewInvoice = () => {
   const [invoices, setInvoices] = useState(null);
@@ -30,8 +32,9 @@ const ViewInvoice = () => {
     : [];
 
   return (
+    <SalesNavbar>
     <div>
-      <h1>View Invoices</h1>
+      <h1 className='sales-header'>View Invoices</h1>
       <div>
         <SearchBar onChange={setSearchQuery} /> {/* Pass setSearchQuery as prop */}
       </div>
@@ -41,6 +44,7 @@ const ViewInvoice = () => {
         ))}
       </div>
     </div>
+    </SalesNavbar>
   );
 };
 

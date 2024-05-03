@@ -3,27 +3,20 @@ let showroom = require("../models/salesModel");
 
 router.post("/add", async (req, res) => {
   try {
-    const { billID, bdate, items } = req.body;
+    const { billID, bdate, items ,totqty ,tot} = req.body;
 
-    // Calculate total amount
-    let totalAmount = 0;
-    let totalQty = 0; // Correct variable name for total quantity
+    
 
-    items.forEach(item => {
-      totalAmount += item.qty * item.price;
-      totalQty += item.qty; // Increment totalQty
-    });
-
-    // Validate and convert bdate to Date object (assuming valid date format)
-    const convertedBdate = new Date(bdate);
+    // Parse ISO date string to JavaScript Date object
+    const parsedDate = new Date(bdate);
 
     // Create a new sales invoice object using the Mongoose model
     const newSale = new showroom({
-      billID: Number(billID), // Ensure billID is converted to a number
-      bdate: convertedBdate,
+      billID, // Ensure billID is converted to a number
+      bdate: parsedDate,
       items,
-      tot: totalAmount, // Use the calculated total amount
-      totqty: totalQty // Corrected variable name for total quantity
+      totqty, // Corrected variable name for total quantity
+      tot // Use the calculated total amount
     });
 
     // Save the new sales invoice to the database
@@ -53,19 +46,21 @@ router.route("/display").get((req,res)=>{
 router.put("/update/:billID", async (req, res) => {
     try {
       const { billID } = req.params;
-      const { bdate, items } = req.body;
+      const { items,tot,totqty } = req.body;
   
       // Calculate total amount based on updated items
-      let totalAmount = 0;
-      items.forEach(item => {
-        totalAmount += item.qty * item.price;
-      });
+      //let totalAmount = 0;
+      //let totalQty = 0;
+      //items.forEach(item => {
+        //totalAmount += item.qty * item.price;
+        //totalQty += item.qty;
+      //});
   
       // Create an object with the updated data and calculated total amount
       const updatedSales = {
-        bdate,
         items,
-        tot: totalAmount
+        tot,
+        totqty
       };
   
       // Use findOneAndUpdate to find and update the document based on billID

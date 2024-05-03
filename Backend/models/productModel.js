@@ -19,18 +19,17 @@ const productSchema = new Schema(
       required: true,
     },
 
-    cost: {
-      type: Number,
+    category: {
+      type: String,
       required: true,
     },
-
     color: {
       type: String,
       required: true,
     },
 
-    category: {
-      type: String,
+    quantity: {
+      type: Number,
       required: true,
     },
   },
