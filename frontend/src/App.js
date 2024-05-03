@@ -98,16 +98,17 @@ import ProductForm from "./components/ProductForm";
 import ProductsView from "./pages/ProductView";
 import AddMaterials from "./pages/AddMaterials";
 
-/*Shanali
+Shanali
 import ExportsDashboard from "./pages/ExportsDashboard.jsx";
-import ExportsNavBar from "./components/ExportsNavBar.jsx";
 import ExportsProfile from "./pages/ExportsProfile.jsx";
+import ExportsReport from "./pages/ExportsReport.jsx";
 import ImporterDescription from "./pages/ImporterDescription.jsx";
 import ExportOrders from "./pages/ExportOrders.jsx";
 import Importer from "./pages/Importer.jsx";
 import ExportAnalytics from "./pages/ExportAnalytics.jsx";
 import UpdateExports from "./pages/UpdateExports.jsx";
-import ImporterUpdate from "./pages/ImporterUpdate.jsx";*/
+import ImporterUpdate from "./pages/ImporterUpdate.jsx";
+//import ExportsEmail from "./pages/ExportsEmail.jsx";
 
 // New Auth
 import NewLogin from "./pages/new-login/Login.jsx";
@@ -180,19 +181,19 @@ const App = () => {
                 element={<SupplierOrderReport />}
               />
               <Route path="/Materials" element={<Materials />} />
-              {/* Shanali 
+              Shanali 
             <Route path="/" element={<ExportsDashboard />} />
             <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
             <Route path="/Importer" element={<Importer />} />
             <Route path="/ExportOrders" element={<ExportOrders />} />
-            <Route
-              path="/ExportOrderDetails"
-              element={<ExportOrderDetails />}
-            />
+            <Route path="/ImporterDescription" element={<ImporterDescription />}/>
             <Route path="/ExportAnalytics" element={<ExportAnalytics />} />
             <Route path="/ExportsProfile" element={<ExportsProfile />} />
-            <Route path="/update/:id" element={<UpdateExports />} />{" "}
-            {/* Define route for updating orders */}
+            <Route path="/UpdateExports/:id" element={<UpdateExports />} />
+            <Route path="/ImporterUpdate/:id" element={<ImporterUpdate />} />
+            <Route path="/ExportsReport" element={<ExportsReport />} />
+            {/* <Route path="/ExportsEmail" element={<ExportsEmail />} /> */}
+  
               {/* Dulari */}
               <Route path="/New_Projects" element={<New_Projects />} />
               <Route path="/Doner_Feedback" element={<Doner_Feedback />} />

@@ -26,4 +26,5 @@ const ProductSearch = ({ onSearch }) => {
   );
 };
 
+
 export default ProductSearch;

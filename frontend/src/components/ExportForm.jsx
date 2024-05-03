@@ -1,148 +1,258 @@
-import { useState } from "react";
-import '../exports.css';
-import { useExportsContext } from "../hooks/useExportsContext";
-import { useEffect } from "react";
-import Swal from 'sweetalert2'; // Import SweetAlert
+import './exports1.css';
+import React, { useState, useEffect } from 'react';
+import { Form, Button, Row, Col, Container } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const ExportForm = () => {
-  const { dispatch } = useExportsContext();
-  const [exportOrderID, setexportOrderID] = useState('');
-  const [importer, setimporter] = useState('');
-  const [itemID, setitemID] = useState('');
-  const [quantity, setquantity] = useState('');
-  const [items, setItems] = useState([]);
-  const [totalCost, settotalCost] = useState('');
-  const [status, setstatus] = useState('');
-  const [error, setError] = useState(null);
-  const [emptyFields, setEmptyFields] = useState([]); // Initialize emptyFields with an empty array
-  const [successMessage, setSuccessMessage] = useState('');
+  const navigate = useNavigate();
+  const [exportOrderID, setExportOrderID] = useState('');
+  const [importer, setImporter] = useState('');
+  const [items, setItems] = useState([{ itemID: '', itemName: '', quantity: '', unitPrice: '' }]);
+  const [totalCost, setTotalCost] = useState('');
+  const [status, setStatus] = useState(''); // Changed to state
+  const [products, setProducts] = useState([]);
 
-  const exportOrderIDPattern = /^E\d{3}$/;
+  useEffect(() => {
+    fetchProducts();
+    // Generate export order ID here if needed
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get('http://localhost:4000/api/products');
+      setProducts(response.data);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+  };
+
+  const handleItemChange = async (index, field, value) => {
+    const updatedItems = [...items];
+    updatedItems[index][field] = value;
+    setItems(updatedItems);
+
+    if (field === 'itemID' && value) {
+      const selectedProduct = products.find((product) => product.itemCode === value);
+      if (selectedProduct) {
+        updatedItems[index].unitPrice = selectedProduct.unitPrice;
+        updatedItems[index].itemName = selectedProduct.name; // Update itemName field
+        setItems(updatedItems);
+      }
+    }
+
+    // Recalculate total cost
+    const total = updatedItems.reduce((acc, item) => acc + (parseFloat(item.quantity) * parseFloat(item.unitPrice)), 0);
+    setTotalCost(total);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!exportOrderIDPattern.test(exportOrderID)) {
-      setError('Export Order ID should start with "E" followed by 3 digits (e.g., E123)');
-      return;
+    // Validate Export Order ID format
+    const exportOrderIDRegex = /^E\d{3}$/; // Regex for format E followed by any three numbers
+    if (!exportOrderIDRegex.test(exportOrderID)) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Export Order ID format is incorrect!",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      return; // Stop form submission if format is incorrect
     }
 
-    const exportt = {
+    const importerRegex = /^I\d{3}$/; // Regex for format E followed by any three numbers
+    if (!importerRegex.test(importer)) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Importer ID format is incorrect!",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      return; // Stop form submission if format is incorrect
+    }
+
+
+    // Check if any fields are empty
+    if (!exportOrderID || !importer || items.some(item => !item.itemID || !item.quantity)) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Please fill out all fields!",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      return; // Stop form submission if any fields are empty
+    }
+
+    const newExportOrder = {
       exportOrderID,
       importer,
       items,
       totalCost,
-      status
+      status,
     };
 
-    const response = await fetch('/api/export', {
-      method: 'POST',
-      body: JSON.stringify(exportt),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    try {
+      // Submit new export order
+      await axios.post("http://localhost:4000/api/export/", newExportOrder);
 
-    const json = await response.json();
-
-    if (!response.ok) {
-      setError(json.error);
-      setEmptyFields(json.emptyFields);
-    }
-    if (response.ok) {
-      setexportOrderID('');
-      setimporter('');
-      setItems([]);
-      settotalCost('');
-      setstatus('');
-      setError('');
-      setEmptyFields([]);
-      setSuccessMessage('New export order added successfully!');
-      dispatch({ type: 'CREATE_EXPORT', payload: json });
+      // Update product quantities
+      items.forEach(async (item) => {
+        const { itemID, quantity } = item;
+        if (itemID && quantity) {
+          const product = products.find((p) => p.itemCode === itemID);
+          if (product) {
+            const updatedQuantity = product.quantity - parseInt(quantity);
+            await axios.put(`http://localhost:4000/api/products/${product._id}`, { quantity: updatedQuantity });
+          }
+        }
+      });
 
       Swal.fire({
-        icon: 'success',
-        title: 'Success!',
-        text: 'New export order added successfully!'
+        position: "top-end",
+        icon: "success",
+        title: "Successfully Submitted!",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      setTimeout(() => {
+        navigate(`/ExportsDashboard`);
+        window.location.reload();
+      }, 1500);
+    } catch (err) {
+      console.error('Error submitting export order:', err);
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Error in Submitting!",
+        showConfirmButton: false,
+        timer: 1500
       });
     }
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setSuccessMessage('');
-    }, 3000);
 
-    return () => clearTimeout(timer);
-  }, [successMessage]);
 
-  const addItem = () => {
-    if (itemID && quantity) {
-      setItems([...items, { itemID, quantity }]);
-      setitemID('');
-      setquantity('');
-    }
+  const handleRemoveItem = (index) => {
+    const updatedItems = [...items];
+    updatedItems.splice(index, 1);
+    setItems(updatedItems);
+  };
+
+  const handleAddItem = () => {
+    setItems([...items, { itemID: '', itemName: '', quantity: '', unitPrice: '' }]);
   };
 
   return (
-    <form className="exportCreate" onSubmit={handleSubmit}>
-      <h3>Add a new Export Order</h3>
+    <Container>
+      <div className="form-container">
+        <h1>Create Export Order</h1>
+        <Form onSubmit={handleSubmit}>
+          <Row className="mb-3">
+            <Form.Group as={Col} controlId="formExportOrderID">
+              <Form.Label>Export Order ID</Form.Label>
+              <Form.Control type="text" value={exportOrderID} onChange={(e) => setExportOrderID(e.target.value)} />
+            </Form.Group>
 
-      {successMessage && <div className="success-message">{successMessage}</div>}
+            <Form.Group as={Col} controlId="formImporter">
+              <Form.Label>Importer ID</Form.Label>
+              <Form.Control type="text" value={importer} onChange={(e) => setImporter(e.target.value)} />
+            </Form.Group>
+          </Row>
 
-      <label>Order ID: </label><br />
-      <input
-        type="text"
-        onChange={(e) => setexportOrderID(e.target.value)}
-        value={exportOrderID}
-        className={emptyFields.includes('exportOrderID') ? 'error' : ''}
-      /><br />
+          {items.map((item, index) => (
+            <div key={index}>
+              <Row className="mb-3">
+                <Form.Group as={Col} controlId={`formItemNumber${index}`}>
+                  <Form.Label>Item Number</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={item.itemID}
+                    onChange={(e) => handleItemChange(index, 'itemID', e.target.value)}
+                  >
+                    <option value="">Select an item</option>
+                    {products.map((product) => (
+                      <option key={product._id} value={product.itemCode}>
+                        {product.itemCode}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
 
-      <label>Importer: </label><br />
-      <input
-        type="text"
-        onChange={(e) => setimporter(e.target.value)}
-        value={importer}
-        className={emptyFields.includes('importer') ? 'error' : ''}
-      /><br />
+                <Form.Group as={Col} controlId={`formItemName${index}`}>
+                  <Form.Label>Item Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={item.itemName}
+                    readOnly
+                  />
+                </Form.Group>
 
-      <label>Item ID: </label><br />
-      <input
-        type="text"
-        onChange={(e) => setitemID(e.target.value)}
-        value={itemID}
-        className={emptyFields.includes('itemID') ? 'error' : ''}
-      /><br />
+                <Form.Group as={Col} controlId={`formQuantity${index}`}>
+                  <Form.Label>Quantity</Form.Label>
+                  <Form.Control
+                    type="number"
+                    value={item.quantity}
+                    onChange={(e) => handleItemChange(index, 'quantity', e.target.value)}
+                  />
+                </Form.Group>
 
-      <label>Quantity: </label><br />
-      <input
-        type="number"
-        onChange={(e) => setquantity(e.target.value)}
-        value={quantity}
-        className={emptyFields.includes('quantity') ? 'error' : ''}
-      /><br />
+                <Form.Group as={Col} controlId={`formUnitPrice${index}`}>
+                  <Form.Label>Unit Price</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={item.unitPrice}
+                    readOnly
+                  />
+                </Form.Group>
 
-      <button type="button" onClick={addItem}>Add Item</button><br />
+                <Button variant="danger" size="sm" onClick={() => handleRemoveItem(index)}>
+                  Remove
+                </Button>
+              </Row>
+            </div>
+          ))}
 
-      <label>Total Cost: </label><br />
-      <input
-        type="number"
-        onChange={(e) => settotalCost(e.target.value)}
-        value={totalCost}
-        className={emptyFields.includes('totalCost') ? 'error' : ''}
-      /><br />
+          <Row className="mb-3">
+            <Button variant="secondary" onClick={handleAddItem}>
+              Add New Item
+            </Button>
 
-      <label>Status: </label><br />
-      <input
-        type="text"
-        onChange={(e) => setstatus(e.target.value)}
-        value={status}
-        className={emptyFields.includes('status') ? 'error' : ''}
-      /><br /><br />
+            <Form.Group as={Col} controlId="formTotalCost">
+              <Form.Label>Total Cost</Form.Label>
+              <Form.Control
+                type="text"
+                readOnly
+                value={totalCost}
+              />
+            </Form.Group>
 
-      <button>Add Order</button>
-      {error && <div className="error">{error}</div>}
-    </form>
+            <Form.Group as={Col} controlId="formStatus">
+              <Form.Label>Status</Form.Label>
+              <Form.Control
+                as="select" // Changed to select
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+              >
+                <option value="">Select Status</option>
+                <option value="Delivered">Delivered</option>
+                <option value="Pending">Pending</option>
+                <option value="On the way to the destination country">On the way to the destination country</option>
+                <option value="In transit">In transit</option>
+              </Form.Control>
+            </Form.Group>
+          </Row>
+
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
+        </Form>
+      </div>
+    </Container>
   );
 };
 

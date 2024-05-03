@@ -1,7 +1,9 @@
 import React from "react";
+
 import SalesNavbar from '../components/SalesNavbar';
 
 const MyProfile = () => {
+  <ExportsNavBar>
   return (
     <SalesNavbar>
     <div>
@@ -9,6 +11,7 @@ const MyProfile = () => {
     </div>
     </SalesNavbar>
   );
+  </ExportsNavBar>
 };
 
 export default MyProfile;
