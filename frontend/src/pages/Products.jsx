@@ -36,16 +36,6 @@ const Products = () => {
     setSearchTerm(term);
   };
 
-  // Pagination logic
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = filteredProducts.slice(
-    indexOfFirstProduct,
-    indexOfLastProduct
-  );
-
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
   return (
     <ProductionNavbar>
       <div className="home">
@@ -69,7 +59,6 @@ const Products = () => {
                 <tr>
                   <th scope="col">Product Code</th>
                   <th scope="col">Name</th>
-            
                   <th scope="col">Color</th>
                   <th scope="col">Category</th>
                   <th scope="col">Unit Price</th>
@@ -77,7 +66,6 @@ const Products = () => {
                 </tr>
               </thead>
               <tbody>
-
                 {filteredProducts.map((product) => (
                   <ProductDetails key={product._id} product={product} />
                 ))}
