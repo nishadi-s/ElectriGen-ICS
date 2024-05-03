@@ -16,6 +16,8 @@ import { OrdersContextProvider } from './context/OrderContext';
 
 //Senith
 import { ProductsContextProvider } from "./context/ProductContext";
+import { MaterialsContextProvider } from "./context/MaterialContext";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -25,9 +27,11 @@ root.render(
     <ExportsContextProvider>
     <ImportersContextProvider>
     <ProductsContextProvider>
+    <MaterialsContextProvider>
     <OrdersContextProvider>    
     <App />
     </OrdersContextProvider>    
+  </MaterialsContextProvider>
   </ProductsContextProvider>
   </ImportersContextProvider> 
   </ExportsContextProvider> 

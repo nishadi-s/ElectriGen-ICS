@@ -19,6 +19,8 @@ import SupplierOrderForm from "./components/SupplierOrderForm.jsx"//Import suppl
 import SupplierOrderEdit from "./components/SupplierOrderEdit.jsx" //Import the Update supplier Order component
 import Home from "./pages/Home.jsx";
 import SupplierOrderReport from "./components/SupplierOrderRepo.jsx";
+import Materials from "./pages/Materials.jsx";
+import SupplierEmail from "./components/SupplierEmail.jsx"//Importing supplier email component
 
 
 
@@ -45,7 +47,7 @@ import OrderHistory from "./pages/OrderHistory.js";
 import OrderSuccess from "./pages/OrderSucess.js";
 import UpdateOrder from "./pages/UpdateOrderDetails.js";
 //Senith
-import Materials from "./pages/Materials.jsx";
+//import Materials from "./pages/Materials.jsx";
 import Production from "./pages/Production.jsx";
 import Products from "./pages/Products.jsx";
 import AddProducts from "./pages/AddProducts.jsx";
@@ -85,6 +87,8 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/Home" element={<Home />} />
           <Route path="/supplierOrderReport" element ={<SupplierOrderReport/>}/>
+          <Route path="/Materials" element={<Materials/>}/>
+          <Route path="/SupplierEmail" element={<SupplierEmail/>}/>
         
 
         
