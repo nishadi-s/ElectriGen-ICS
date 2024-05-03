@@ -35,9 +35,21 @@ const SalaryDetailsPage = () => {
   return (
     <div className="salary-details-page">
       <NavbarPay>
-        <Typography variant="h3" gutterBottom>
-         Payroll Management
-        </Typography>
+      <Typography variant="h5" style={{
+      textAlign: 'left',
+      width: '100vw',
+      padding: '17px 20px',
+      backgroundColor: '#233066',
+      color: '#fff',
+      fontSize: '2.5rem',
+      marginBottom: '30px',
+      marginTop: '-20px',
+      marginLeft: '-20px',
+      borderRadius: '0px 10px 0px 10px',
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
+    }}>
+      Payroll Management
+    </Typography>
         {/* Pass the handleSearch function to the SalarySearch component */}
         {salaries && ( // Check if salaries is not null or undefined
           <SalarySearch salary={salaries} onSearch={handleSearch} />

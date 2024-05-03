@@ -5,6 +5,7 @@ import background_user from "../pages/img/background_user.jpg";
 import Navbar_Pay from "./Navbar-uvi";
 import { TextField, InputAdornment, Table, TableHead, TableBody, TableRow, TableCell, Button } from "@mui/material";
 import { Search } from "@mui/icons-material";
+import Swal from 'sweetalert2';
 
 const UserInfo = () => {
   const [users, setUsers] = useState([]);
@@ -28,15 +29,48 @@ const UserInfo = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    try {
-      // Send DELETE request to delete user
-      await axios.delete(`/api/users/${id}`);
-
-      // Remove the deleted user from the local state
-      setUsers(users.filter((user) => user._id !== id));
-    } catch (error) {
-      console.error("Error deleting user:", error);
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You are about to delete this user. This action cannot be undone.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = await axios.delete(`/api/users/${id}`);
+          
+          if (response.status === 200) {
+            // User deleted successfully
+            // Update UI by removing the deleted user from the list
+            setUsers(users.filter(user => user._id !== id));
+            Swal.fire({
+              title: 'Deleted!',
+              text: 'The user has been deleted.',
+              icon: 'success',
+            });
+          } else {
+            // Error while deleting user
+            Swal.fire({
+              title: 'Error!',
+              text: 'Failed to delete the user.',
+              icon: 'error',
+            });
+          }
+        } catch (error) {
+          // Error while making the request
+          console.error('Error deleting user:', error);
+          Swal.fire({
+            title: 'Error!',
+            text: 'An error occurred while deleting the user.',
+            icon: 'error',
+          });
+        }
+      }
+    });
   };
 
   const handleUpdate = (id) => {

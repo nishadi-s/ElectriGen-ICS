@@ -42,7 +42,7 @@ const Home = () => {
       id: 5,
       text: "Employee Salary Management",
       password: "Us123",
-      link: "/new-signup",
+      link: "/user-details",
     },
     {
       id: 6,

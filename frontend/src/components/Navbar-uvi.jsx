@@ -46,7 +46,7 @@ const Navbar_Pay = ({ children }) => {
       icon: <FaUserAlt />,
     },
     {
-      path: "/my-profile",
+      path: "/user-profile",
       name: "My Profile",
       icon: <FaUserAlt />,
     },

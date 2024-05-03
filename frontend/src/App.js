@@ -29,6 +29,7 @@ import PrivateRoute from "./route_auth/PrivateRoute.jsx";
 import ForgotPassword from "./components/ForgotPassword.jsx";
 import ResetPassword from "./components/ResetPassword.jsx";
 
+
 //Nishadi
 import NavbarNishadi from "./components/SupplierOrderNavbar.jsx";
 import DashboardN from "./pages/SupplierOrderDashboard.jsx";
@@ -99,6 +100,7 @@ import NewLogin from "./pages/new-login/Login.jsx";
 import NewSignup from "./pages/new-signup/Signup.jsx";
 import CheckLoginStatus from "./route_auth/CheckLoginStatus.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import UserProfile from "./components/userProfile.jsx";
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -115,6 +117,7 @@ const App = () => {
                 <Route path="/new-login" element={<NewLogin />} />
                 <Route path="/new-signup" element={<NewSignup />} />
               </Route>
+              
               
               <Route path="/Analytics" element={<Analytics />} />
               <Route path="/MyProfile" element={<MyProfile />} />
@@ -198,9 +201,11 @@ const App = () => {
               <Route path="/update/:id" element={<UpdateOrder />} />{" "}
               {/* Define route for updating orders */}
               {/*Uvindya-user*/}
-              <Route element={<PrivateRoute />}>
+              {/*denying access to home before login */}
+             <Route element={<PrivateRoute />}>
                 <Route path="/" element={<Home />} />
               </Route>
+
               <Route path="/user-details" element={<UserInfo />} />
               <Route path="/update-user/:id" element={<UpdateUser />} />
               <Route path="/Home_Pay" element={<Home_Pay />} />
@@ -209,11 +214,11 @@ const App = () => {
               <Route path="/salary-details" element={<SalaryDetailsPage />} />
               <Route path="/salary-report" element={<SalaryReportPage />} />
               <Route path="/all-salary-report" element={<AllReport />} />
+              <Route path="user-profile"element={<UserProfile/>}/>
               <Route path="/Logout" element={<Logout />} />
               <Route path="/forgot-password" element={<ForgotPassword/>}/>
               <Route path="/reset-password/:id/:token" element={<ResetPassword />}></Route>
-
-
+            
 
               {/*Senith-inventory manager*/}
               <Route path="/Products" element={<Products />} />
@@ -227,6 +232,7 @@ const App = () => {
               />
               <Route path="/EditProduct" element={<EditProduct />} />
               <Route path="/SingleProduct" element={<SingleProduct />} />
+             
             </Routes>
           </div>
         </SalesContextProvider>

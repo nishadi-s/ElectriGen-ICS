@@ -106,6 +106,26 @@ const UpdateUser = () => {
               />
             </div>
             <div className="form-group">
+              <label>Address</label>
+              <input
+                type="text"
+                name="address"
+                value={user.address}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Contact Number</label>
+              <input
+               type="number"
+               name="phoneNumber"
+                value={user.phoneNumber}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-group">
               <label>Role</label>
               <select
                 name="role"

@@ -79,8 +79,21 @@ const AllSalariesReport = () => {
   
   return (
     <div style={{ padding: '20px' }}>
-      <Typography variant="h5" gutterBottom style={{ color: '#3f51b5', marginBottom: '20px', textAlign: 'center' }}>All Salaries Report</Typography>
-      <Paper elevation={3} style={{ padding: '20px', marginBottom: '20px' }}>
+<Typography variant="h5" style={{
+      textAlign: 'left',
+      width: '100vw',
+      padding: '17px 20px',
+      backgroundColor: '#233066',
+      color: '#fff',
+      fontSize: '2.5rem',
+      marginBottom: '30px',
+      marginTop: '-20px',
+      marginLeft: '-20px',
+      borderRadius: '0px 10px 0px 10px',
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
+    }}>
+      Summary Report
+    </Typography>      <Paper elevation={3} style={{ padding: '20px', marginBottom: '20px' }}>
         <Typography variant="h6" gutterBottom style={{ color: '#3f51b5', marginBottom: '10px' }}>Company Details</Typography>
         <Typography variant="body1" gutterBottom>Your Company Name</Typography>
         <Typography variant="body1" gutterBottom>123 Main Street, City, Country</Typography>
