@@ -6,6 +6,10 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@mui/icons-material": "^5.15.15",
+    "@mui/material": "^5.15.15",
+    "@react-pdf/renderer": "^3.4.2",
+    "@tanstack/react-query": "^5.29.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@mui/material": "^5.15.15",
@@ -39,10 +43,12 @@
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "sweetalert": "^2.1.2",
-    "sweetalert2": "^11.10.7",
+    "sweetalert2": "^11.10.8",
     "url": "^0.11.3",
     "util": "^0.12.5",
-    "web-vitals": "^2.1.4"
+    "vite-plugin-rewrite-all": "^1.0.2",
+    "web-vitals": "^2.1.4",
+    "zustand": "^4.5.2"
   },
   "scripts": {
     "start": "react-scripts start",

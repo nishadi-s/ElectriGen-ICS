@@ -1,5 +1,6 @@
 import React from "react";
-import { Table, TableBody, TableCell, TableRow, Button, Typography } from '@mui/material';
+import { TableCell, TableRow, IconButton, Typography, Paper, Grid } from '@mui/material';
+import { Delete as DeleteIcon, Edit as EditIcon } from '@mui/icons-material';
 import Swal from 'sweetalert2';
 import { useSalaryContext } from '../hooks/useSalaryContext';
 import { Link } from 'react-router-dom';
@@ -51,45 +52,85 @@ const SalaryDetails = ({ salary }) => {
     });
   };
 
+
   return (
-    <div className="salary-details">
-      <Table>
-        <TableBody>
-          <TableRow>
-            <TableCell><strong>Full Name:</strong></TableCell>
-            <TableCell><Typography variant="body1">{salary.fname} {salary.lname}</Typography></TableCell>
-            <TableCell><strong>Email:</strong></TableCell>
-            <TableCell><Typography variant="body1">{salary.email}</Typography></TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell><strong>Role:</strong></TableCell>
-            <TableCell><Typography variant="body1">{salary.role}</Typography></TableCell>
-            <TableCell><strong>Base Salary:</strong></TableCell>
-            <TableCell><Typography variant="body1">${salary.base}</Typography></TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell><strong>Overtime Rate:</strong></TableCell>
-            <TableCell><Typography variant="body1">{salary.otRate}</Typography></TableCell>
-            <TableCell><strong>Overtime Hours:</strong></TableCell>
-            <TableCell><Typography variant="body1">{salary.otHours}</Typography></TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell><strong>Bonus:</strong></TableCell>
-            <TableCell><Typography variant="body1">${salary.bonus}</Typography></TableCell>
-            <TableCell><strong>Reason:</strong></TableCell>
-            <TableCell><Typography variant="body1">{salary.reason}</Typography></TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell><strong>Final Salary:</strong></TableCell>
-            <TableCell><Typography variant="body1">${salary.finalSal}</Typography></TableCell>
-            <TableCell colSpan={2}>
-              <Button variant="contained" color="primary" component={Link} to={`/UpdateSalary/${salary._id}`}>Update</Button>
-              <Button variant="contained" color="primary" onClick={handleDelete}>Delete</Button>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </div>
+    <Paper elevation={3} style={{ padding: '20px', marginBottom: '20px' }}>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Typography variant="h5" gutterBottom style={{ color: '#3f51b5' }}>Salary Details</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <table>
+            <tbody>
+              <TableRow>
+                <TableCell>
+                  <Typography variant="subtitle1" color="textSecondary"><strong>Full Name:</strong></Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="body1" style={{ color: '#000' }}>{salary.fname} {salary.lname}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="subtitle1" color="textSecondary"><strong>Email:</strong></Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="body1" style={{ color: '#000' }}>{salary.email}</Typography>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <Typography variant="subtitle1" color="textSecondary"><strong>Role:</strong></Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="body1" style={{ color: '#000' }}>{salary.role}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="subtitle1" color="textSecondary"><strong>Base Salary:</strong></Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="body1" style={{ color: '#000' }}>${salary.base}</Typography>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <Typography variant="subtitle1" color="textSecondary"><strong>Overtime Rate:</strong></Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="body1" style={{ color: '#000' }}>{salary.otRate}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="subtitle1" color="textSecondary"><strong>Overtime Hours:</strong></Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="body1" style={{ color: '#000' }}>{salary.otHours}</Typography>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <Typography variant="subtitle1" color="textSecondary"><strong>Bonus:</strong></Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="body1" style={{ color: '#000' }}>${salary.bonus}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="subtitle1" color="textSecondary"><strong>Final Salary:</strong></Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="body1" style={{ color: '#000' }}>${salary.finalSal}</Typography>
+                </TableCell>
+              </TableRow>
+            </tbody>
+          </table>
+        </Grid>
+      </Grid>
+      <Grid container justifyContent="flex-end">
+        <IconButton component={Link} to={`/UpdateSalary/${salary._id}`} aria-label="edit">
+          <EditIcon color="primary" />
+        </IconButton>
+        <IconButton onClick={handleDelete} aria-label="delete">
+          <DeleteIcon color="error" />
+        </IconButton>
+      </Grid>
+    </Paper>
   );
 };
 

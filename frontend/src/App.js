@@ -16,19 +16,20 @@ import Analytics from "./pages/Analytics.jsx";
 import Logout from "./pages/Logout.jsx";
 
 
-/*Uvindya
-//import Navbar_Pay from './components/Navbar-uvi.jsx';
-//import { useAuthContext } from './hooks/useAuthContext';
-//import Home from './pages/Home-Salary.jsx'
-//import Login from './pages/Login.jsx';
-//import Signup from './pages/Signup.jsx';
-//import ForgotPassword from './components/ForgotPassword.jsx';
-//import SalaryDetails from './components/SalaryDetails.jsx';
-
+import Navbar_Pay from "./components/Navbar-uvi.jsx";
+import Home_Pay from "./pages/Home-Salary.jsx";
 import UpdateSalaryPage from "./components/UpdateSalary.jsx";
 import AddSalaryPage from "./pages/AddSalary.jsx";
-import Logout from "./pages/Logout.jsx";
-import SalaryDetailsPage from "./pages/SalaryDetailsPage.jsx";*/
+import SalaryReportPage from "./pages/SalaryReport.jsx";
+import SalaryDetailsPage from "./pages/SalaryDetailsPage.jsx";
+import Home from "./pages/Home.jsx";
+import AllReport from "./pages/SalaryAllPdf.jsx";
+import UserInfo from "./components/UserInfo.jsx";
+import UpdateUser from "./components/UpdateUser.jsx"
+import PrivateRoute from "./route_auth/PrivateRoute.jsx";
+import ForgotPassword from "./components/ForgotPassword.jsx";
+import ResetPassword from "./components/ResetPassword.jsx";
+
 
 //Nishadi
 import NavbarNishadi from "./components/SupplierOrderNavbar.jsx";
@@ -102,24 +103,55 @@ import ExportAnalytics from "./pages/ExportAnalytics.jsx";
 import UpdateExports from "./pages/UpdateExports.jsx";
 import ImporterUpdate from "./pages/ImporterUpdate.jsx";*/
 
-const App = () => {
-  useEffect(() => {
-    document.title = "ElectriGen";
-  }, []);
 
+// New Auth
+import NewLogin from "./pages/new-login/Login.jsx";
+import NewSignup from "./pages/new-signup/Signup.jsx";
+import CheckLoginStatus from "./route_auth/CheckLoginStatus.jsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import UserProfile from "./components/userProfile.jsx";
+const queryClient = new QueryClient();
+
+const App = () => {
   const { distributor } = useDisDAuthContext();
 
   return (
-    <BrowserRouter>
-      <SalesContextProvider>
-        <div className="pages">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/Home" element={<Home />} />
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <SalesContextProvider>
+          <div className="pages">
+            <Routes>
+              {/* Check Login Status */}
+              <Route element={<CheckLoginStatus />}>
+                <Route path="/new-login" element={<NewLogin />} />
+                <Route path="/new-signup" element={<NewSignup />} />
+              </Route>
+              
+              
+              <Route path="/Analytics" element={<Analytics />} />
+              <Route path="/MyProfile" element={<MyProfile />} />
+              <Route path="/Logout" element={<Logout />} />
+              {/*Uvindya-user*/}
+              {/*denying access to home before login */}
+             <Route element={<PrivateRoute />}>
+                <Route path="/" element={<Home />} />
+              </Route>
+
+              <Route path="/user-details" element={<UserInfo />} />
+              <Route path="/update-user/:id" element={<UpdateUser />} />
+              <Route path="/Home_Pay" element={<Home_Pay />} />
+              <Route path="/updateSalary/:id" element={<UpdateSalaryPage />} />
+              <Route path="/add-salary" element={<AddSalaryPage />} />
+              <Route path="/salary-details" element={<SalaryDetailsPage />} />
+              <Route path="/salary-report" element={<SalaryReportPage />} />
+              <Route path="/all-salary-report" element={<AllReport />} />
+              <Route path="user-profile"element={<UserProfile/>}/>
+              <Route path="/Logout" element={<Logout />} />
+              <Route path="/forgot-password" element={<ForgotPassword/>}/>
+              <Route path="/reset-password/:id/:token" element={<ResetPassword />}></Route>
+            
             <Route path="/Dashboard" element={<Dashboard />} />
-            <Route path="/Analytics" element={<Analytics />} />
-            <Route path="/MyProfile" element={<MyProfile />} />
-            <Route path="/Logout" element={<Logout />} />
+           
             {/* Nishadi */}
             <Route path="/SupplierOrderDashboard" element={<DashboardN />} />
             <Route path="/Suppliers" element={<Suppliers />} />
@@ -182,12 +214,6 @@ const App = () => {
           <Route path="/DisMDashboard" element = {<DisMDashboard />} />
           
           <Route path="update-order/:id" element = {<DisMUpdateOrder />} />
-            {/*Uvindya
-            <Route path="/" element={<Home />} />
-            <Route path="/updateSalary/:id" element={<UpdateSalaryPage />} />
-            <Route path="/add-salary" element={<AddSalaryPage />} />
-            <Route path="/salary-details" element={<SalaryDetailsPage />} />
-            <Route path="/Logout" element={<Logout />} />*/}
             {/*Senith*/}
             <Route path="/Products" element={<Products />} />
             <Route path="/Production" element={<Production />} />
@@ -214,10 +240,11 @@ const App = () => {
             <Route path="/SingleProduct" element={<SingleProduct />} />
             <Route path="/ProductsView" element={<ProductsView />} />
             <Route path="/AddMaterials" element={<AddMaterials />} />
-          </Routes>
-        </div>
-      </SalesContextProvider>
-    </BrowserRouter>
+           </Routes>
+          </div>
+        </SalesContextProvider>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 };
 

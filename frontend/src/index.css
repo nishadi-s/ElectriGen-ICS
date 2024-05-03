@@ -16,7 +16,7 @@ main {
   color: #fff;
   height: device-height;
   width: 200px;
-  margin-left: -70px;
+  margin-left: 0px;
   transition: all 0.5s;
 }
 
