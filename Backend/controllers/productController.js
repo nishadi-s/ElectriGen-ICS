@@ -35,7 +35,7 @@ const getItemCodes = async (req, res) => {
   }
 };
 
-//ceate new product
+//create new product
 const createProduct = async (req, res) => {
   const { name, itemCode, unitPrice, quantity, color, category } = req.body;
 
@@ -158,6 +158,11 @@ const updateProductQuantity = async (req, res) => {
     }
 
     res.status(200).json(updatedProduct);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 // Get products with quantity less than 100
 const getLowQuantityProducts = async (req, res) => {
   try {
