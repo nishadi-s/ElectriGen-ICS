@@ -33,6 +33,7 @@
     "react-router-dom": "^6.22.3",
     "react-scripts": "^5.0.1",
     "react-to-print": "^2.15.1",
+    "recharts": "^2.12.6",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "sweetalert": "^2.1.2",

@@ -3,7 +3,7 @@ import {
   FaTh,
   FaBars,
   //FaUserAlt,
- // FaRegChartBar,
+  FaRegChartBar,
   FaDollyFlatbed,
   FaThList,
   FaIdBadge,
@@ -34,15 +34,16 @@ const ExportsNavBar = ({ children }) => {
       name: "Importers",
       icon: <FaIdBadge />,
     },
-    // {
+    
+     {
+       path: "/ExportAnalytics",
+       name: "Analytics",
+       icon: <FaRegChartBar />,
+     },
+     // {
     //   path: "/ExportsEmail",
     //   name: "Exports Email",
     //   icon: <FaIdBadge />,
-    // },
-    // {
-    //   path: "/ExportAnalytics",
-    //   name: "Analytics",
-    //   icon: <FaRegChartBar />,
     // },
     // {
     //   path: "/ExportsProfile",

@@ -522,3 +522,18 @@ button:hover {
   border-radius: 3px;
   height: 35px;
 }
+
+.export-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.export-table th, .export-table td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.export-table th {
+  background-color: #f2f2f2;
+}
