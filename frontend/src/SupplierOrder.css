@@ -10,6 +10,7 @@
 body{
     background: #f1f1f1;
     margin: 0;
+    padding: 0;
     font-family: "Poppins";
 }
 
@@ -275,3 +276,28 @@ input.error{
   font-weight: bold; 
 }
 
+/*For the report page*/
+/* Custom styles for the order details table */
+.order-details-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.order-details-table th,
+.order-details-table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.order-details-table th {
+  background-color: #f2f2f2;
+}
+
+.order-details-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.order-details-table tbody tr:hover {
+  background-color: #ddd;
+}
