@@ -1,3 +1,6 @@
+
+
+
 import React, { useState } from 'react';
 import { TextField, Button, Typography, Grid, MenuItem } from '@mui/material';
 import Swal from 'sweetalert2';
@@ -143,7 +146,7 @@ const SalaryForm = () => {
       <Typography variant="h5">Add a New Salary</Typography>
 
       <Grid container spacing={2}>
-        {/* First name */}
+       
         <Grid item xs={12} sm={6}>
           <TextField
             label="First Name"
@@ -154,7 +157,7 @@ const SalaryForm = () => {
           />
         </Grid>
 
-        {/* Last name */}
+       
         <Grid item xs={12} sm={6}>
           <TextField
             label="Last Name"
@@ -165,7 +168,6 @@ const SalaryForm = () => {
           />
         </Grid>
 
-        {/* Email */}
         <Grid item xs={12}>
           <TextField
             label="Email"
@@ -177,7 +179,7 @@ const SalaryForm = () => {
           />
         </Grid>
 
-        {/* Role */}
+       
         <Grid item xs={12} sm={6}>
           <TextField
             select
@@ -195,7 +197,6 @@ const SalaryForm = () => {
           </TextField>
         </Grid>
 
-        {/* Base Salary */}
         <Grid item xs={12} sm={6}>
           <TextField
             label="Base Salary"
@@ -207,7 +208,7 @@ const SalaryForm = () => {
           />
         </Grid>
 
-        {/* Overtime Rate */}
+      
         <Grid item xs={12} sm={6}>
           <TextField
             label="Overtime Rate"
@@ -219,7 +220,7 @@ const SalaryForm = () => {
           />
         </Grid>
 
-        {/* Overtime Hours */}
+       
         <Grid item xs={12} sm={6}>
           <TextField
             label="Overtime Hours"
@@ -231,7 +232,7 @@ const SalaryForm = () => {
           />
         </Grid>
 
-        {/* Bonus */}
+    
         <Grid item xs={12} sm={6}>
           <TextField
             label="Bonus"
@@ -243,7 +244,6 @@ const SalaryForm = () => {
           />
         </Grid>
 
-        {/* Reason */}
         <Grid item xs={12} sm={6}>
           <TextField
             select
@@ -261,7 +261,6 @@ const SalaryForm = () => {
           </TextField>
         </Grid>
 
-        {/* Submit button */}
         <Grid item xs={12}>
           <Button variant="contained" color="primary" type="submit">
             Add Salary
@@ -269,7 +268,7 @@ const SalaryForm = () => {
         </Grid>
       </Grid>
 
-      {/* Error message */}
+   
       {error && <div className="error">{error}</div>}
     </form>
   );
