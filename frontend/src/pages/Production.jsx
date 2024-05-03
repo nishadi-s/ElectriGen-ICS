@@ -1,54 +1,45 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import "../senith.css";
+import ProductionDetails from "../components/ProductionDetails";
+import { useProductionContext } from "../hooks/useProductionContext";
+import ProductionNavbar from "../components/ProductionNavbar";
 
 const Production = () => {
-  const [products, setProducts] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState("");
+  const { production, dispatch } = useProductionContext();
 
   useEffect(() => {
-    // Fetch products from the database
-    const fetchProducts = async () => {
+    const fetchProduction = async () => {
       try {
-        const response = await fetch("/api/products");
-        const data = await response.json();
-        setProducts(data); // Assuming data is an array of products
+        const response = await fetch("/api/production");
+        if (response.ok) {
+          const json = await response.json();
+          dispatch({ type: "SET_PRODUCTION", payload: json });
+        } else {
+          console.error("Failed to fetch production data:", response.status);
+        }
       } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error("Error fetching production data:", error);
       }
     };
 
-    fetchProducts();
-  }, []);
-
-  const handleChange = (event) => {
-    setSelectedProduct(event.target.value);
-  };
+    fetchProduction();
+  }, [dispatch]);
 
   return (
-    <div>
-      <h1>Factory Production</h1>
-      <form>
-        <div className="form-group">
-          <label htmlFor="product">Select Product:</label>
-          <select
-            id="product"
-            name="product"
-            className="form-control"
-            value={selectedProduct}
-            onChange={handleChange}
-          >
-            <option value="">Select a product</option>
-            {products.map((product) => (
-              <option key={product._id} value={product._id}>
-                {product.name}
-              </option>
+    <ProductionNavbar>
+      <div className="home">
+        <div className="products">
+          {production &&
+            production.map((prod) => (
+              <ProductionDetails key={prod._id} production={prod} />
             ))}
-          </select>
+          <Link to="/AddProduction" className="edit-link">
+            <button className="button-5">Add a new Record</button>
+          </Link>
         </div>
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
-      </form>
-    </div>
+      </div>
+    </ProductionNavbar>
   );
 };
 

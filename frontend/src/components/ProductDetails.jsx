@@ -16,10 +16,15 @@ const ProductDetails = ({ product }) => {
       onMouseLeave={(e) => e.target.parentNode.classList.remove("hovered")}
     >
       <td>
-        <Link to={`/product/${product._id}`} className="product-link">
+        <Link
+          to={`/product/${product._id}`}
+          className="product-link"
+          style={{ fontWeight: "bold" }}
+        >
           {product.itemCode}
         </Link>
       </td>
+
       <td>
         <Link to={`/product/${product._id}`} className="product-link">
           {product.name}
