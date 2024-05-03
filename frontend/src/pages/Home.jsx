@@ -102,7 +102,7 @@ const Home = () => {
     logout();
     navigate("/new-login");
   };
-t
+
   return (
     <div
       className="container-fluid"

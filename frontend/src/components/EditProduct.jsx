@@ -68,10 +68,10 @@ const EditProduct = () => {
       setUnitPrice(updatedProductData.unitPrice);
       setQuantity(updatedProductData.quantity);
 
-      navigate(`/products`); // Redirect to single product page
+      navigate('/products'); 
     } else {
       const errorData = await response.json();
-      setError(errorData.error || "Error updating product");
+      setError("Error updating product",errorData.error);
       setEmptyFields(errorData.emptyFields || []);
     }
   };
@@ -128,5 +128,4 @@ const EditProduct = () => {
     </ProductionNavbar>
   );
 };
-
 export default EditProduct;
