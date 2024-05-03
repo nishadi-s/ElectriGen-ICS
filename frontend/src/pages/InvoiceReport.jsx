@@ -4,6 +4,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { Table, Button, Dropdown } from 'react-bootstrap';
 import SalesNavbar from '../components/SalesNavbar';
+import "../sales.css";
 
 const InvoiceReport = () => {
   const [data, setData] = useState([]);
@@ -111,7 +112,9 @@ const InvoiceReport = () => {
   return (
     <SalesNavbar>
     <div>
-      <h1 className="mb-4">Report Generator</h1>
+      <div className='sales-header'>
+      <h1>Report Generator</h1>
+      </div>
       <Dropdown className="mb-3">
         <Dropdown.Toggle variant="info" id="dropdown-month">
           {monthFilter ? `Filter by Month: ${monthFilter}` : 'Select Month'}

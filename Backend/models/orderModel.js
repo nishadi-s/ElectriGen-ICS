@@ -4,14 +4,16 @@ const Schema = mongoose.Schema
 
 // Define the schema for orders
 const orderSchema = new Schema({
-    distributorId: {
+    distributorId: {   //distributorLoginID
         type: String,
         required: true
     },
+    
     distributorName: {
         type: String,
         required: true
     },
+
     orderStatus: {
         type: String,
         required: true
@@ -41,11 +43,6 @@ const orderSchema = new Schema({
 
     totalAmount: {
         type: Number,
-        required: true
-    },
-    //distributor authentication
-    distributor_id: {
-        type:String,
         required: true
     }
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table } from 'react-bootstrap';
 import SalesNavbar from '../components/SalesNavbar';
+import "../sales.css";
 
 const SalesDashboard = () => {
   const [salesData, setSalesData] = useState([]);
@@ -38,7 +39,7 @@ const SalesDashboard = () => {
   return (
     <SalesNavbar>
       <div>
-        <h1>Showroom Sales Dashboard</h1>
+        <h1 className='sales-header'>Showroom Sales Dashboard</h1>
 
         <div class="mt-5 mb-5">
           <div class="card">

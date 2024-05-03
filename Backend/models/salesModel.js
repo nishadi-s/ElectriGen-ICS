@@ -8,7 +8,6 @@ const salesSchema = new Schema({
         unique:true
     },
     
-
     bdate : {
         type: String,
     },
