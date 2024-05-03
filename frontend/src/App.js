@@ -26,6 +26,8 @@ import AllReport from "./pages/SalaryAllPdf.jsx";
 import UserInfo from "./components/UserInfo.jsx";
 import UpdateUser from "./components/UpdateUser.jsx"
 import PrivateRoute from "./route_auth/PrivateRoute.jsx";
+import ForgotPassword from "./components/ForgotPassword.jsx";
+import ResetPassword from "./components/ResetPassword.jsx";
 
 //Nishadi
 import NavbarNishadi from "./components/SupplierOrderNavbar.jsx";
@@ -208,6 +210,9 @@ const App = () => {
               <Route path="/salary-report" element={<SalaryReportPage />} />
               <Route path="/all-salary-report" element={<AllReport />} />
               <Route path="/Logout" element={<Logout />} />
+              <Route path="/forgot-password" element={<ForgotPassword/>}/>
+              <Route path="/reset-password/:id/:token" element={<ResetPassword />}></Route>
+
 
 
               {/*Senith-inventory manager*/}

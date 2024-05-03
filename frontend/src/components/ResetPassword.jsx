@@ -1,35 +1,56 @@
-import React, { useState } from 'react';
-import Axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React from 'react'
+import { useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import axios from 'axios'
 
-const ResetPassword = () => {
-    const [password, setPassword] = useState("");    const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await Axios.post('/user/reset-password', {password });
-            if (response.data.status) {
-                navigate('/login');
+function ResetPassword() {
+    const [password, setPassword] = useState()
+    const navigate = useNavigate()
+    const {id, token} = useParams()
+
+    axios.defaults.withCredentials = true;
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        axios.post(`http://localhost:3000/reset-password/${id}/${token}`, {password})
+        .then(res => {
+            if(res.data.Status === "Success") {
+                navigate('/new-login')
+               
             }
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    };
+        }).catch(err => {
+            console.log('Error:', err.response.data); // Log the error message received from the server
+          });
+    }
+    
+      
 
-    return (
-        <form className="signup" onSubmit={handleSubmit}>
-            <h3>Forgot Password</h3>
-            <label>Password:</label>
-      <input
-        type="password"
-        onChange={(e) => setPassword(e.target.value)}
-        value={password}
-      />
-
-            <button type="submit">Send</button>
-        </form>
-    );
-};
+    return(
+        <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
+      <div className="bg-white p-3 rounded w-25">
+        <h4>Reset Password</h4>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="email">
+              <strong>New Password</strong>
+            </label>
+            <input
+              type="password"
+              placeholder="Enter Password"
+              autoComplete="off"
+              name="password"
+              className="form-control rounded-0"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <button type="submit" className="btn btn-success w-100 rounded-0">
+            Update
+          </button>
+          </form>
+        
+      </div>
+    </div>
+    )
+}
 
 export default ResetPassword;

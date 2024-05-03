@@ -139,6 +139,7 @@ const handleSubmit = async (e) => {
                 >
                   {isLoading ? "Loading..." : "Login"}
                 </Button>
+                <RouterLink to="/forgot-password">Forgot Password</RouterLink>
               </form>
               {/*<Typography variant="body2" align="center" mt={2}>
                 Don't have an account?{" "}
