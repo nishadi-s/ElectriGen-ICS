@@ -36,13 +36,10 @@ import Orders from "./pages/SupplierOrder_Order.jsx";
 import Suppliers from "./pages/SupplierOrderSuppliers.jsx";
 import AnalyticsN from "./pages/SupplierOrderAnalytics.jsx";
 import SupplierEdit from "./components/SupplierEdit.jsx"; // Import the UpdateSupplier component
-import SupplierOrderForm from "./components/SupplierOrderForm.jsx"//Import supplier order form component
-import SupplierOrderEdit from "./components/SupplierOrderEdit.jsx" //Import the Update supplier Order component
-import Home from "./pages/Home.jsx";
+import SupplierOrderForm from "./components/SupplierOrderForm.jsx"; //Import supplier order form component
+import SupplierOrderEdit from "./components/SupplierOrderEdit.jsx"; //Import the Update supplier Order component
 import SupplierOrderReport from "./components/SupplierOrderRepo.jsx";
 import Materials from "./pages/Materials.jsx";
-import SupplierEmail from "./components/SupplierEmail.jsx"//Importing supplier email component
-
 
 //Dulari_IT22121110
 import DonationNavbar from "./components/DonationNavbar.jsx";
@@ -54,7 +51,6 @@ import DFeedbackFetch from "./components/dFeedbackFetch.jsx";
 import DReportCreate from "./components/DReportCreate.jsx";
 import DProjectEdit from "./components/DProjectEdit.jsx";
 import DProjectDetails from "./components/DProjectDetails.jsx";
-
 
 //Primal
 import SalesFeedback from "./pages/salesFeedback.jsx";
@@ -68,7 +64,6 @@ import InvoiceReport from "./pages/InvoiceReport.jsx";
 import SalesDashboard from "./pages/SalesDashboard.jsx";
 import SDFeedback from "./pages/SDFeedback";
 import SDView from "./pages/SDView.jsx";
-
 
 //Dinithi
 
@@ -160,20 +155,31 @@ const App = () => {
                 element={<ResetPassword />}
               ></Route>
               <Route path="/Dashboard" element={<Dashboard />} />
-                 {/* Nishadi */}
-                <Route path="/SupplierOrderDashboard" element={<DashboardN />} />
-                <Route path="/Suppliers" element={<Suppliers />} />
-                <Route path="/Order" element={<Orders />} />
-                <Route path="/analyticsN" element={<AnalyticsN />} />
-                <Route path="/MyProfileN" element={<MyProfileN />} />
-                <Route path="/supplier/:id" element={<SupplierEdit />} /> {/* Define route for updating orders */}
-                <Route path="/supplierorderform" element ={< SupplierOrderForm/>}/> {/*View Supplier Order Form */}
-                <Route path="/supplierOrder/:id" element={<SupplierOrderEdit />} /> {/* Define route for updating orders */}
-                <Route path="/" element={<Home />} />
-                <Route path="/Home" element={<Home />} />
-                <Route path="/supplierOrderReport" element ={<SupplierOrderReport/>}/>
-                <Route path="/Materials" element={<Materials/>}/>
-                <Route path="/SupplierEmail" element={<SupplierEmail/>}/>
+              {/* Nishadi */}
+              <Route path="/SupplierOrderDashboard" element={<DashboardN />} />
+              <Route path="/Suppliers" element={<Suppliers />} />
+              <Route path="/Order" element={<Orders />} />
+              <Route path="/analyticsN" element={<AnalyticsN />} />
+              <Route path="/MyProfileN" element={<MyProfileN />} />
+              <Route path="/supplier/:id" element={<SupplierEdit />} />{" "}
+              {/* Define route for updating orders */}
+              <Route
+                path="/supplierorderform"
+                element={<SupplierOrderForm />}
+              />{" "}
+              {/*View Supplier Order Form */}
+              <Route
+                path="/supplierOrder/:id"
+                element={<SupplierOrderEdit />}
+              />{" "}
+              {/* Define route for updating orders */}
+              <Route path="/" element={<Home />} />
+              <Route path="/Home" element={<Home />} />
+              <Route
+                path="/supplierOrderReport"
+                element={<SupplierOrderReport />}
+              />
+              <Route path="/Materials" element={<Materials />} />
               {/* Shanali 
             <Route path="/" element={<ExportsDashboard />} />
             <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
@@ -192,9 +198,15 @@ const App = () => {
               <Route path="/Doner_Feedback" element={<Doner_Feedback />} />
               <Route path="/Doner_Analytics" element={<Doner_Analystics />} />
               <Route path="/DFeedbackFetch" element={<DFeedbackFetch />} />
-              <Route path="/Donation_Dashboard" element={<Donation_Dashboard />} />
+              <Route
+                path="/Donation_Dashboard"
+                element={<Donation_Dashboard />}
+              />
               <Route path="/DProjectDetails" element={<DProjectDetails />} />
-              <Route path="/dProjectEdit/:projectId" element={<DProjectEdit/>} />
+              <Route
+                path="/dProjectEdit/:projectId"
+                element={<DProjectEdit />}
+              />
               <Route path="/DReportCreate" element={<DReportCreate />} />
               {/* Primal */}
               <Route path="/salesFeedback" element={<SalesFeedback />} />
