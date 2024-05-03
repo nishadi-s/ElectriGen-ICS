@@ -94,10 +94,13 @@ const SingleProduct = () => {
                 addSuffix: true,
               })}
             </p>
-            <button onClick={handleDelete}>
+            <button className="button-2" onClick={handleDelete}>
               <FaRegTrashAlt />
             </button>
-            <button onClick={() => navigate(`/edit-product/${product._id}`)}>
+            <button
+              className="button-1"
+              onClick={() => navigate(`/edit-product/${product._id}`)}
+            >
               Edit
             </button>
           </>

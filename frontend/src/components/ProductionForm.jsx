@@ -1,229 +1,322 @@
-import React, { useEffect, useState } from "react";
-import { useProductionContext } from "../hooks/useProductionContext";
-import "../senith.css";
+import React, { useState, useEffect } from "react";
+import { Form, Button, Row, Col } from "react-bootstrap";
+import axios from "axios";
+import Swal from "sweetalert2";
+import ProductionNavbar from "../components/ProductionNavbar";
 
 const ProductionForm = ({ uneditable }) => {
-  const { dispatch } = useProductionContext();
   const [date, setDate] = useState("");
-  const [materials, setMaterials] = useState([
-    { materialName: "", materialNo: "", materialQuantity: "" },
-  ]);
+  const [materials, setMaterials] = useState([]);
   const [products, setProducts] = useState([]);
+  const [productRecords, setProductRecords] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState("");
+  const [selectedMaterial, setSelectedMaterial] = useState("");
   const [productQuantity, setProductQuantity] = useState("");
+  const [materialQuantity, setMaterialQuantity] = useState("");
   const [selectedProductDetails, setSelectedProductDetails] = useState({});
+  const [selectedMaterialDetails, setSelectedMaterialDetails] = useState({});
   const [error, setError] = useState(null);
-  const [emptyFields, setEmptyFields] = useState([]);
 
   useEffect(() => {
-    // Fetch products from the database
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch("/api/products");
-        const data = await response.json();
-        setProducts(data);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-    };
-
+    fetchMaterials();
     fetchProducts();
+    setDate(new Date().toISOString().split("T")[0]);
   }, []);
 
-  // Function to handle product selection
-  const handleProductSelect = async (productId) => {
-    setSelectedProduct(productId);
-    // Fetch product details based on selected product ID
+  const fetchMaterials = async () => {
     try {
-      const response = await fetch(`/api/products/${productId}`);
-      const data = await response.json();
-      setSelectedProductDetails(data);
+      const response = await axios.get("http://localhost:4000/api/materials");
+      setMaterials(response.data);
     } catch (error) {
-      console.error("Error fetching product details:", error);
+      console.error("Error fetching materials:", error);
     }
   };
+
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get("http://localhost:4000/api/products");
+      setProducts(response.data);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+
+  const handleProductSelect = async (productId) => {
+    setSelectedProduct(productId);
+    const selectedProduct = products.find(
+      (product) => product._id === productId
+    );
+    if (selectedProduct) {
+      setSelectedProductDetails(selectedProduct);
+    }
+  };
+
+  const handleMaterialSelect = async (materialId) => {
+    setSelectedMaterial(materialId);
+    const selectedMaterial = materials.find(
+      (material) => material._id === materialId
+    );
+    if (selectedMaterial) {
+      setSelectedMaterialDetails(selectedMaterial);
+    }
+  };
+
+  const handleAddProductRecord = () => {
+    if (selectedProduct && productQuantity) {
+      const newProductRecord = {
+        product: selectedProduct,
+        quantity: productQuantity,
+        ...selectedProductDetails,
+      };
+      setProductRecords([...productRecords, newProductRecord]);
+      // Clear input fields after adding
+      setProductQuantity("");
+      setSelectedProductDetails({});
+    }
+  };
+
+  const handleAddMaterialRecord = () => {
+    if (selectedMaterial && materialQuantity) {
+      const newMaterialRecord = {
+        material: selectedMaterial,
+        quantity: materialQuantity,
+        ...selectedMaterialDetails,
+      };
+      setProductRecords([...productRecords, newMaterialRecord]);
+      // Clear input fields after adding
+      setMaterialQuantity("");
+      setSelectedMaterialDetails({});
+    }
+  };
+
+  const handleRemoveProductRecord = (index) => {
+    const updatedProductRecords = [...productRecords];
+    updatedProductRecords.splice(index, 1);
+    setProductRecords(updatedProductRecords);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Calculate the new quantity after adding the manufactured quantity
-    const newQuantity =
-      selectedProductDetails.quantity + parseInt(productQuantity, 10);
-
-    // Update the product quantity in the database
-    const updateProductQuantity = async () => {
-      try {
-        const response = await fetch(`/api/products/${selectedProduct}`, {
-          method: "PUT",
-          body: JSON.stringify({ quantity: newQuantity }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to update product quantity");
-        }
-      } catch (error) {
-        console.error("Error updating product quantity:", error);
-        setError("Failed to update product quantity");
-        return;
-      }
-    };
-
-    const production = {
+    const newProduction = {
       date,
-      materials,
-      products: selectedProduct
-        ? [
-            {
-              product: selectedProduct,
-              quantity: productQuantity,
-              ...selectedProductDetails,
-            },
-          ]
-        : [],
+      materials: [],
+      products: productRecords,
     };
 
-    const response = await fetch("/api/production", {
-      method: "POST",
-      body: JSON.stringify(production),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    try {
+      // Submit new production record
+      await axios.post("http://localhost:4000/api/production", newProduction);
 
-    const json = await response.json();
+      // Update material/product quantities
+      productRecords.forEach(async (record) => {
+        const { product, material, quantity } = record;
+        if (product) {
+          // Update product quantity logic
+        } else if (material) {
+          // Update material quantity logic
+        }
+      });
 
-    if (!response.ok) {
-      setError(json.error || "Error adding production record");
-      setEmptyFields(json.emptyFields || []);
-    } else {
-      // Update the product quantity only if the production record was successfully added
-      await updateProductQuantity();
-
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Successfully Added Production Record!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      // Clear form fields
       setDate("");
-      setMaterials([
-        { materialName: "", materialNo: "", materialQuantity: "" },
-      ]);
-      setProducts([]);
-      setSelectedProduct("");
-      setSelectedProductDetails({});
-      setProductQuantity("");
-      setError(null);
-      setEmptyFields([]);
-      console.log("New record added successfully", json);
-      dispatch({ type: "CREATE_PRODUCTION", payload: json });
+      setProductRecords([]);
+    } catch (err) {
+      console.error("Error submitting production record:", err);
+      setError("Failed to add production record");
     }
   };
 
-  const handleAddMaterial = () => {
-    setMaterials([
-      ...materials,
-      { materialName: "", materialNo: "", materialQuantity: "" },
-    ]);
-  };
-
-  const handleMaterialChange = (index, field, value) => {
-    const updatedMaterials = [...materials];
-    updatedMaterials[index] = { ...updatedMaterials[index], [field]: value };
-    setMaterials(updatedMaterials);
-  };
-
   return (
-    <form className="create" onSubmit={handleSubmit}>
-      <h3>Add a new record</h3>
-      <label>Date:</label>
-      <input
-        type="date"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-        className={emptyFields.includes("date") ? "error" : ""}
-      />
-      {materials.map((material, index) => (
-        <div key={index}>
-          <label>Material name ({index + 1}):</label>
-          <input
-            type="text"
-            value={material.materialName}
-            onChange={(e) =>
-              handleMaterialChange(index, "materialName", e.target.value)
-            }
-          />
-          <label>Material number ({index + 1}):</label>
-          <input
-            type="text"
-            value={material.materialNo}
-            onChange={(e) =>
-              handleMaterialChange(index, "materialNo", e.target.value)
-            }
-          />
-          <label>Material quantity ({index + 1}):</label>
-          <input
-            type="number"
-            value={material.materialQuantity}
-            onChange={(e) =>
-              handleMaterialChange(index, "materialQuantity", e.target.value)
-            }
-          />
-        </div>
-      ))}
-      <button type="button" onClick={handleAddMaterial}>
-        Add Material
-      </button>
+    <div>
+      <h1>Add Production Record</h1>
+      <Form onSubmit={handleSubmit}>
+        <Row className="mb-3">
+          <Form.Group as={Col} controlId="formDate">
+            <Form.Label>Date</Form.Label>
+            <Form.Control
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </Form.Group>
+        </Row>
 
-      <div>
-        <label>Product name:</label>
-        <select
-          value={selectedProduct}
-          onChange={(e) => handleProductSelect(e.target.value)}
-          disabled={uneditable}
-        >
-          <option value="">Select a product</option>
-          {products.map((product) => (
-            <option key={product._id} value={product._id}>
-              {product.name}
-            </option>
-          ))}
-        </select>
-        {selectedProductDetails && (
+        <Row className="mb-3">
+          <Form.Group as={Col} controlId="formMaterial">
+            <Form.Label>Material</Form.Label>
+            <Form.Control
+              as="select"
+              value={selectedMaterial}
+              onChange={(e) => handleMaterialSelect(e.target.value)}
+            >
+              <option value="">Select a material</option>
+              {materials.map((material) => (
+                <option key={material._id} value={material._id}>
+                  {material.name}
+                </option>
+              ))}
+            </Form.Control>
+          </Form.Group>
+        </Row>
+
+        {selectedMaterialDetails && (
           <div>
-            <label>Product item code:</label>
-            <input
-              type="text"
-              value={selectedProductDetails.itemCode || ""}
-              readOnly
-            />
-            <label>Product unit price:</label>
-            <input
-              type="number"
-              value={selectedProductDetails.unitPrice || ""}
-              readOnly
-            />
-            <label>Product category:</label>
-            <input
-              type="text"
-              value={selectedProductDetails.category || ""}
-              readOnly
-            />
-            <label>Product color:</label>
-            <input
-              type="text"
-              value={selectedProductDetails.color || ""}
-              readOnly
-            />
-            <label>Product quantity:</label>
-            <input
-              type="number"
-              value={productQuantity}
-              onChange={(e) => setProductQuantity(e.target.value)}
-            />
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="formMaterialDetails">
+                <Form.Label>Material name</Form.Label>
+                <Form.Control
+                  type="text"
+                  readOnly
+                  value={selectedMaterialDetails.name}
+                />
+              </Form.Group>
+            </Row>
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="formMaterialDetails">
+                <Form.Label>Remaining Quantity</Form.Label>
+                <Form.Control
+                  type="text"
+                  readOnly
+                  value={selectedMaterialDetails.quantity}
+                />
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="formMaterialQuantity">
+                <Form.Label>Material Quantity</Form.Label>
+                <Form.Control
+                  type="number"
+                  value={materialQuantity}
+                  onChange={(e) => setMaterialQuantity(e.target.value)}
+                />
+              </Form.Group>
+            </Row>
           </div>
         )}
-      </div>
 
-      <button type="submit">Add Production Record</button>
-      {error && <div className="error">{error}</div>}
-    </form>
+        <Row className="mb-3">
+          <Button variant="primary" onClick={handleAddMaterialRecord}>
+            Add Material
+          </Button>
+        </Row>
+
+        {selectedProductDetails && (
+          <div>
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="formProduct">
+                <Form.Label>Product</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={selectedProduct}
+                  onChange={(e) => handleProductSelect(e.target.value)}
+                >
+                  <option value="">Select a product</option>
+                  {products.map((product) => (
+                    <option key={product._id} value={product._id}>
+                      {product.name}
+                    </option>
+                  ))}
+                </Form.Control>
+              </Form.Group>
+              <Form.Group as={Col} controlId="formProductDetails">
+                <Form.Label>Product Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  readOnly
+                  value={selectedProductDetails.name}
+                />
+              </Form.Group>
+            </Row>
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="formProductDetails">
+                <Form.Label>Category</Form.Label>
+                <Form.Control
+                  type="text"
+                  readOnly
+                  value={selectedProductDetails.category}
+                />
+              </Form.Group>
+            </Row>
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="formProductDetails">
+                <Form.Label>Color</Form.Label>
+                <Form.Control
+                  type="text"
+                  readOnly
+                  value={selectedProductDetails.color}
+                />
+              </Form.Group>
+              <Row className="mb-3">
+                <Form.Group as={Col} controlId="formProductDetails">
+                  <Form.Label>Remaining Quantity</Form.Label>
+                  <Form.Control
+                    type="text"
+                    readOnly
+                    value={selectedProductDetails.quantity}
+                  />
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="formProductQuantity">
+                  <Form.Label>Product Quantity</Form.Label>
+                  <Form.Control
+                    type="number"
+                    value={productQuantity}
+                    onChange={(e) => setProductQuantity(e.target.value)}
+                  />
+                </Form.Group>
+              </Row>
+            </Row>
+          </div>
+        )}
+
+        <Row className="mb-3">
+          <Button variant="primary" onClick={handleAddProductRecord}>
+            Add Product
+          </Button>
+        </Row>
+
+        <div>
+          <div>
+            {productRecords.map((record, index) => (
+              <div key={index}>
+                {record.product ? (
+                  <div>
+                    <p>Product Name: {record.name}</p>
+                    <p>Item Code: {record.itemCode}</p>
+                    <p>Quantity: {record.quantity}</p>
+                  </div>
+                ) : (
+                  <div>
+                    <p>Material Name: {record.name}</p>
+                    <p>Material Name: {record.code}</p>
+                    <p>Quantity: {record.quantity}</p>
+                  </div>
+                )}
+                <Button
+                  variant="danger"
+                  onClick={() => handleRemoveProductRecord(index)}
+                >
+                  Remove
+                </Button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <Button variant="primary" type="submit">
+          Add Production Record
+        </Button>
+
+        {error && <div className="error">{error}</div>}
+      </Form>
+    </div>
   );
 };
 

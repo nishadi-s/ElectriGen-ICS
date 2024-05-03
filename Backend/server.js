@@ -4,8 +4,6 @@ const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
 
-
-
 // Create an Express app
 const app = express();
 
@@ -27,12 +25,10 @@ mongoose
     app.listen(process.env.PORT, () => {
       console.log("Connected to DB & listening on port", process.env.PORT); // Log that the server is running
     });
-    
   })
   .catch((error) => {
     console.log(error); // Log any errors that occur during database connection
   });
-
 
 //middleware-importer
 app.use(express.json());
@@ -64,13 +60,34 @@ app.use("/api/distributor", distributorRoutes); //distributor route(distributor 
 
 //Senith
 const productRoutes = require("./routes/products.js");
+const materialRoutes = require("./routes/materials.js");
 const productionRoutes = require("./routes/production.js");
 app.use("/api/products", productRoutes);
 app.use("/api/production", productionRoutes);
+app.use("/api/materials", materialRoutes);
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now();
+    cb(null, uniqueSuffix + file.originalname);
+  },
+});
+
+// Configure storage engine instead of dest object.
+const upload = multer({ storage: storage });
+
+app.post("/upload-image", upload.single("image"), async (req, res) => {
+  console.log(req.body);
+  res.send("Uploaded!");
+});
 
 //uvindya
-const salaryRoutes = require('./routes/salaries');
-app.use('/api/salaries', salaryRoutes);
+const salaryRoutes = require("./routes/salaries");
+app.use("/api/salaries", salaryRoutes);
 
 //Shanali
 const exportRoutes = require("./routes/export");
