@@ -16,7 +16,7 @@ const DisMOrderDetails = ({ order }) => {
     const navigate = useNavigate();
 
     const handleEdit = () => {
-        navigate(`manager/update/${order._id}`);
+        navigate(`manager/update-order/${order._id}`); 
     };
 
     return (
