@@ -2,8 +2,17 @@ import React from "react";
 import bg001 from "../pages/img/bg001.jpg";
 import logo1 from "../pages/img/logo1.png";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/useAuthStore";
 
 const Home = () => {
+
+  const navigate = useNavigate();
+  const { logout, isAuthenticated } = useAuthStore((state) => ({
+    logout: state.logout,
+    isAuthenticated: state.isAuthenticated,
+  }));
+  
   const buttons = [
     {
       id: 1,
@@ -25,11 +34,16 @@ const Home = () => {
     },
     {
       id: 4,
-      text: "Expot Management",
+      text: "Export Management",
       password: "Se123",
       link: "/ExportsDashboard",
     },
-    { id: 5, text: "Employee Salary Management", password: "Us123", link: "#" },
+    {
+      id: 5,
+      text: "Employee Salary Management",
+      password: "Us123",
+      link: "/user-details",
+    },
     {
       id: 6,
       text: "Donation Project Management",
@@ -42,6 +56,7 @@ const Home = () => {
       password: "Ps123",
       link: "/SalesDashboard",
     },
+
         { id: 8, text: "Distributors", link: "/login" },
 
   ];
@@ -83,10 +98,16 @@ const Home = () => {
     };
   };
 
+  const handleLogout = () => {
+    logout();
+    navigate("/new-login");
+  };
+
   return (
     <div
       className="container-fluid"
       style={{
+
         backgroundImage: `url(${bg001})`,
         backgroundSize: "cover",
         height: "100%",
@@ -96,6 +117,18 @@ const Home = () => {
         alignItems: "center",
       }}
     >
+
+      {/* logout button */}
+      {isAuthenticated && (
+        <button
+          className="btn btn-danger"
+          style={{ position: "absolute", top: 20, right: 20 }}
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
+      )}
+
       <div style={{ position: "absolute", top: 20 }}>
         <img
           src={logo1}
@@ -162,6 +195,5 @@ const getCardImage = (text) => {
       return null;
   }
 };
-
 
 export default Home;

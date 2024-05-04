@@ -1,102 +1,28 @@
-require("dotenv").config(); // Load environment variables from the .env file
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const express = require("express");
-const mongoose = require("mongoose");
+const express = require('express');
+const router = express.Router();
+const {
+    getOrders,
+    getOrder,
+    createOrder,
+    deleteOrder,
+    updateOrder,
+} = require('../controllers/orderController.js');
 
-// Create an Express app
-const app = express();
+// Establishing routes to manage orders
 
-app.use(express.json());
-app.use(bodyParser.json());
-app.use(cors());
+// GET all orders
+router.get('/', getOrders);
 
-// Middleware to log incoming requests
-app.use((req, res, next) => {
-  console.log(req.path, req.method); // Log the path and HTTP method of each request
-  next(); // Call the next middleware in the chain
-});
+// GET a single order
+router.get('/:id', getOrder);
 
-// Connect to MongoDB database
-mongoose
-  .connect(process.env.MONGO_URI) // Connect to the MongoDB URI defined in the environment variables
-  .then(() => {
-    // Listen for incoming requests
-    app.listen(process.env.PORT, () => {
-      console.log("Connected to DB & listening on port", process.env.PORT); // Log that the server is running
-    });
-  })
-  .catch((error) => {
-    console.log(error); // Log any errors that occur during database connection
-  });
+// POST a new order
+router.post('/', createOrder);
 
-//middleware-importer
-app.use(express.json());
-app.use((req, res, next) => {
-  console.log(req.path, req.method);
-  next();
-});
+// DELETE an order
+router.delete('/:id', deleteOrder);
 
-//primal sales route
-const salesRouter = require("./routes/sales");
-app.use("/sales", salesRouter);
+// UPDATE an order
+router.put('/:id', updateOrder);
 
-//primal sales feedback route
-const feedbackRouter = require("./routes/sfeedback");
-app.use("/sfeedback", feedbackRouter);
-
-//dulari
-const projectRouter = require("./routes/DonationProjects.js");
-app.use("/DonationProject", projectRouter);
-const dFeedbackRouter = require("./routes/dFeedback.js");
-app.use("/dFeedback", dFeedbackRouter);
-
-//Dinithi
-const orderRoutes = require("./routes/orders.js");
-const distributorRoutes = require("./routes/distributor.js");
-
-app.use("/api/orders", orderRoutes); // Order routes
-app.use("/api/distributor", distributorRoutes); //distributor route(distributor authentication)
-
-//Senith
-const productRoutes = require("./routes/products.js");
-const materialRoutes = require("./routes/materials.js");
-const productionRoutes = require("./routes/production.js");
-app.use("/api/products", productRoutes);
-app.use("/api/production", productionRoutes);
-app.use("/api/materials", materialRoutes);
-const multer = require("multer");
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./uploads");
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now();
-    cb(null, uniqueSuffix + file.originalname);
-  },
-});
-
-// Configure storage engine instead of dest object.
-const upload = multer({ storage: storage });
-
-app.post("/upload-image", upload.single("image"), async (req, res) => {
-  console.log(req.body);
-  res.send("Uploaded!");
-});
-
-//uvindya
-const salaryRoutes = require("./routes/salaries");
-app.use("/api/salaries", salaryRoutes);
-
-//Shanali
-const exportRoutes = require("./routes/export");
-const importerRoutes = require("./routes/importer");
-app.use("/api/export", exportRoutes);
-app.use("/api/importer", importerRoutes);
-
-//Nishadi
-const supplierChain_order = require("./routes/supplier_order"); //Nishadi
-const supplier = require("./routes/supplier"); //Nishadi
-app.use("/api/supplier_order", supplierChain_order); //Nishadi
-app.use("/api/supplier", supplier); //Nishadi
+module.exports = router;
