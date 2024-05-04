@@ -6,7 +6,7 @@ import SalaryDetails from "../components/SalaryDetails";
 import SalaryForm from "../components/SalaryForm";
 import Navbar_Pay from "../components/Navbar-uvi";
 
-const Home = () => {
+const Home_Pay= () => {
   const { salaries, dispatch } = useSalaryContext();
 
   useEffect(() => {
@@ -36,4 +36,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Home_Pay;

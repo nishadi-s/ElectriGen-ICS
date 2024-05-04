@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
+//save data after logged in
 
 const initialState = {
   isAuthenticated: false,
