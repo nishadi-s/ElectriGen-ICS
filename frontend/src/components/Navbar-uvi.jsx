@@ -36,6 +36,11 @@ const Navbar_Pay = ({ children }) => {
       icon: <FaClipboardList />,
     },
     {
+      path: "/user-dash",
+      name: "User Dashboard",
+      icon: <FaUserAlt />,
+    },
+    {
       path: "/new-signup",
       name: "Signup",
       icon: <FaUserAlt />,

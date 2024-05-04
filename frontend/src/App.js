@@ -28,6 +28,7 @@ import UpdateUser from "./components/UpdateUser.jsx"
 import PrivateRoute from "./route_auth/PrivateRoute.jsx";
 import ForgotPassword from "./components/ForgotPassword.jsx";
 import ResetPassword from "./components/ResetPassword.jsx";
+import UsersDashboard from "./pages/UsersDashboard.jsx";
 
 
 //Nishadi
@@ -101,6 +102,7 @@ import NewSignup from "./pages/new-signup/Signup.jsx";
 import CheckLoginStatus from "./route_auth/CheckLoginStatus.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import UserProfile from "./components/userProfile.jsx";
+import UserDashboard from "./pages/UsersDashboard.jsx";
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -214,10 +216,11 @@ const App = () => {
               <Route path="/salary-details" element={<SalaryDetailsPage />} />
               <Route path="/salary-report" element={<SalaryReportPage />} />
               <Route path="/all-salary-report" element={<AllReport />} />
-              <Route path="user-profile"element={<UserProfile/>}/>
+              <Route path="/user-profile"element={<UserProfile/>}/>
               <Route path="/Logout" element={<Logout />} />
               <Route path="/forgot-password" element={<ForgotPassword/>}/>
               <Route path="/reset-password/:id/:token" element={<ResetPassword />}></Route>
+              <Route path="/user-dash"element={<UsersDashboard/>}/>
             
 
               {/*Senith-inventory manager*/}
