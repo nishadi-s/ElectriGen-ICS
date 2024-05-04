@@ -1,76 +1,74 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 import Swal from "sweetalert2";
-import { useProductionContext } from "../hooks/useProductionContext";
 import { FaRegTrashCan } from "react-icons/fa6";
-import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import { format } from "date-fns";
 
 const ProductionDetails = ({ production }) => {
-  const { dispatch } = useProductionContext();
-  const [deleted, setDeleted] = useState(false);
+  const formattedDate = format(new Date(production.date), "yyyy-MM-dd");
 
   const handleDelete = async () => {
     Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
+      title: "Do you want to delete this production?",
       showCancelButton: true,
-      confirmButtonColor: "#233066",
-      cancelButtonColor: "#EC2026",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Delete",
+      cancelButtonText: "Cancel",
+      confirmButtonColor: "#dc3545",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const response = await fetch("/api/production/" + production._id, {
-          method: "DELETE",
-        });
-        const json = await response.json();
-        if (response.ok) {
-          dispatch({ type: "DELETE_PRODUCTION", payload: json });
-          Swal.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
-            icon: "success",
-          }).then(() => {
-            setDeleted(true);
+        try {
+          const response = await fetch(`/api/productions/${production.id}`, {
+            method: "DELETE",
           });
-        } else {
-          Swal.fire({
-            title: "Error!",
-            text: "Failed to delete the record.",
-            icon: "error",
-          });
+
+          if (response.ok) {
+            // Handle deletion success
+            Swal.fire(
+              "Deleted!",
+              "Your production has been deleted.",
+              "success"
+            ).then(() => {
+              // Refresh the page or fetch the data again here
+              window.location.reload(); // Refresh the page
+              // OR fetchProductionData(); // Call the function to fetch data again
+            });
+          } else {
+            throw new Error("Failed to delete the production");
+          }
+        } catch (error) {
+          console.error("Error deleting production:", error);
+          Swal.fire("Error!", "Failed to delete the production.", "error");
         }
       }
     });
   };
 
-  if (deleted) {
-    return null;
-  }
-
   return (
-    <div className="product-details">
-      <h4>Date: {production.date}</h4>
-      <h5>Materials:</h5>
-      <ul>
-        {production.materials.map((material, index) => (
-          <li key={index}>
-            {material.materialName} - {material.materialQuantity}
-          </li>
-        ))}
-      </ul>
-      <h5>Products:</h5>
-      <ul>
-        {production.products.map((product, index) => (
-          <li key={index}>
-            {product.name} - {product.quantity}
-          </li>
-        ))}
-      </ul>
-      <button onClick={handleDelete}>
-        <FaRegTrashCan />
-      </button>
-    </div>
+    <tr className="production-row">
+      <td>{formattedDate}</td>
+      <td>
+        <ul>
+          {production.materials.map((material, index) => (
+            <li key={index}>
+              {material.materialName} - {material.materialQuantity}
+            </li>
+          ))}
+        </ul>
+      </td>
+      <td>
+        <ul>
+          {production.products.map((product, index) => (
+            <li key={index}>
+              {product.name} - {product.quantity}
+            </li>
+          ))}
+        </ul>
+      </td>
+      <td>
+        <button className="button-2" onClick={handleDelete}>
+          <FaRegTrashCan />
+        </button>
+      </td>
+    </tr>
   );
 };
 

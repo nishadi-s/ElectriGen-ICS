@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const DisLogin = () => {
-    const [email, setEmail] = useState('');
+    const [distributorLoginID, setDistributorLoginID] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
     const { disLogin, isLoading, error } = useDisLogin();
@@ -13,45 +13,48 @@ const DisLogin = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        await disLogin(email, password);
+        await disLogin(distributorLoginID, password);
     };
 
     return (
-        <div>
-            <NavbarStart/>
-            <form className="login" onSubmit={handleSubmit}>
-                <h3>Distributor Login</h3>
+<div className="login-container">
+  <NavbarStart />
+<form className="login-form" onSubmit={handleSubmit} autoComplete="off">
+  <h3>Distributor Login</h3>
 
-                <label>Email:</label>
-                <input
-                    type="email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                />
+  <label htmlFor="email">Distributor Login ID:</label>
+  <input
+    type="distributorLoginID"
+    id="distributorLoginID"
+    className="login-input"
+    onChange={(e) => setDistributorLoginID(e.target.value)}
+    value={distributorLoginID}
+  />
 
-                <label>Password:</label>
-                <div className="password-input">
-                    <input
-                        type={showPassword ? "text" : "password"}
-                        onChange={(e) => setPassword(e.target.value)}
-                        value={password}
-                    />
-                    <button
-                        type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                        className="eye-button"
-                    >
-                        <FontAwesomeIcon
-                            icon={showPassword ? faEyeSlash : faEye}
-                            className="eye-icon"
-                        />
-                    </button>
-                </div>
+  <label htmlFor="password">Password:</label>
+  <div className="password-input">
+    <input
+      type={showPassword ? "text" : "password"}
+      id="password"
+      className="login-input"
+      onChange={(e) => setPassword(e.target.value)}
+      value={password}
+    />
+    <button
+      type="button"
+      onClick={() => setShowPassword(!showPassword)}
+      className="eye-button"
+    >
+      <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} className="eye-icon" />
+    </button>
+  </div>
 
-                <button disabled={isLoading}>Login</button>
-                {error && <div className="error">{error}</div>}
-            </form>
-        </div>
+  <button disabled={isLoading} className="login-button">
+    Login
+  </button>
+  {error && <div className="error">{error}</div>}
+</form>
+</div>
     );
 };
 

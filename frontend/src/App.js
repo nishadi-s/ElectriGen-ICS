@@ -1,306 +1,169 @@
-import React, { useEffect } from "react";
-import "./index.css";
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-  Switch,
-  Navigate,
-} from "react-router-dom";
+require("dotenv").config(); // Load environment variables from the .env file
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const express = require("express");
+//laters
+const cookieParser=require('cookie-parser')
+const UserModel =require('./models/User.js')
+const jwt =require('jsonwebtoken')
+const nodemailer=require('nodemailer')
+const bcrypt = require('bcrypt');
+const mongoose = require("mongoose");
+// Create an Express app
+const app = express();
 
-import Navbar from "./components/Navbar";
-import Home from "./pages/Home.jsx";
-import Dashboard from "./pages/Dashboard.jsx";
-import MyProfile from "./pages/MyProfile.jsx";
-import Analytics from "./pages/Analytics.jsx";
-import Logout from "./pages/Logout.jsx";
+app.use(express.json());
+app.use(bodyParser.json());
+app.use(cors());
 
-import Navbar_Pay from "./components/Navbar-uvi.jsx";
-import Home_Pay from "./pages/Home-Salary.jsx";
-import UpdateSalaryPage from "./components/UpdateSalary.jsx";
-import AddSalaryPage from "./pages/AddSalary.jsx";
-import SalaryReportPage from "./pages/SalaryReport.jsx";
-import SalaryDetailsPage from "./pages/SalaryDetailsPage.jsx";
-import AllReport from "./pages/SalaryAllPdf.jsx";
-import UserInfo from "./components/UserInfo.jsx";
-import UpdateUser from "./components/UpdateUser.jsx";
-import PrivateRoute from "./route_auth/PrivateRoute.jsx";
-import ForgotPassword from "./components/ForgotPassword.jsx";
-import ResetPassword from "./components/ResetPassword.jsx";
+// Middleware to log incoming requests
+app.use((req, res, next) => {
+  console.log(req.path, req.method); // Log the path and HTTP method of each request
+  next(); // Call the next middleware in the chain
+});
 
-//Nishadi
-import NavbarNishadi from "./components/SupplierOrderNavbar.jsx";
-import DashboardN from "./pages/SupplierOrderDashboard.jsx";
-import MyProfileN from "./pages/SupplierOrderProfile.jsx";
-import Orders from "./pages/SupplierOrder_Order.jsx";
-import Suppliers from "./pages/SupplierOrderSuppliers.jsx";
-import AnalyticsN from "./pages/SupplierOrderAnalytics.jsx";
-import SupplierEdit from "./components/SupplierEdit.jsx"; // Import the UpdateSupplier component
-import SupplierOrderForm from "./components/SupplierOrderForm.jsx"; //Import supplier order form component
-import SupplierOrderEdit from "./components/SupplierOrderEdit.jsx"; //Import the Update supplier Order component
-import SupplierOrderReport from "./components/SupplierOrderRepo.jsx";
-import Materials from "./pages/Materials.jsx";
+// Connect to MongoDB database
+mongoose
+  .connect(process.env.MONGO_URI) // Connect to the MongoDB URI defined in the environment variables
+  .then(() => {
+    // Listen for incoming requests
+    app.listen(process.env.PORT, () => {
+      console.log("Connected to DB & listening on port", process.env.PORT); // Log that the server is running
+    });
+  })
+  .catch((error) => {
+    console.log(error); // Log any errors that occur during database connection
+  });
 
-//Dulari_IT22121110
-import DonationNavbar from "./components/DonationNavbar.jsx";
-import Donation_Dashboard from "./pages/Donation_Dashboard.jsx";
-import New_Projects from "./pages/New_Projects.jsx";
-import Doner_Feedback from "./pages/Doner_Feedback.jsx";
-import Doner_Analystics from "./pages/Doner_Analytics.jsx";
-import DFeedbackFetch from "./components/dFeedbackFetch.jsx";
-import DReportCreate from "./components/DReportCreate.jsx";
-import DProjectEdit from "./components/DProjectEdit.jsx";
-import DProjectDetails from "./components/DProjectDetails.jsx";
 
-//Primal
-import SalesFeedback from "./pages/salesFeedback.jsx";
-import InvoiceCreate from "./pages/invoiceCreate.jsx";
-import SfeedbackFetch from "./components/sfeedbackFetch.jsx";
-import ViewInvoice from "./pages/viewInvoice.jsx";
-import PinVerification from "./components/PinVerification.jsx";
-import { SalesContextProvider } from "./context/SalesContext.jsx";
-import InvoiceUpdate from "./pages/InvoiceUpdate.jsx";
-import InvoiceReport from "./pages/InvoiceReport.jsx";
-import SalesDashboard from "./pages/SalesDashboard.jsx";
-import SDFeedback from "./pages/SDFeedback";
-import SDView from "./pages/SDView.jsx";
+
+const authRoutes = require("./routes/authRoutes");
+app.use("/auth", authRoutes);
+
+//primal sales route
+const salesRouter = require("./routes/sales");
+app.use("/sales", salesRouter);
+
+//primal sales feedback route
+const feedbackRouter = require("./routes/sfeedback");
+app.use("/sfeedback", feedbackRouter);
+
+//dulari
+const dFeedbackRouter = require("./routes/dFeedback.js");
+const projectRouter = require("./routes/DonationProjects.js");
+app.use("/DonationProject", projectRouter);
+app.use("/dFeedback", dFeedbackRouter);
 
 //Dinithi
+const orderRoutes = require("./routes/orders.js");
+const distributorRoutes = require("./routes/distributor.js");
 
-import DisSignup from "./pages/DisSignup.jsx";
-import DisLogin from "./pages/DisLogin.jsx";
-import DisDashboard from "./pages/DisDashboard.jsx";
-import DisMyProfile from "./pages/DisMyProfile.jsx";
-import DisAnalytics from "./pages/DisAnalytics";
-import OrderPlace from "./pages/OrderPlacement.jsx";
-import OrderHistory from "./pages/OrderHistory.jsx";
-import OrderSuccess from "./pages/OrderSucess.jsx";
-import UpdateOrder from "./pages/UpdateOrderDetails.jsx";
-import { useDisDAuthContext } from "./hooks/useDisDAuthContext.jsx";
-//distribution managers
-import DisMOrderHistory from "./pages/DisMOrderHistory.jsx";
-import DisMDashboard from "./pages/DisMDashboard.jsx";
-import DisMUpdateOrder from "./pages/DisMUpdate.jsx";
+app.use("/api/orders", orderRoutes); // Order routes
+app.use("/api/distributor", distributorRoutes); //distributor route(distributor authentication)
 
 //Senith
-//import Materials from "./pages/Materials.jsx";
-import Production from "./pages/Production.jsx";
-import Products from "./pages/Products.jsx";
-import AddProducts from "./pages/AddProducts.jsx";
-import AddProduction from "./pages/AddProduction.jsx";
-import ProductionDashboard from "./pages/ProductionDashboard.jsx";
-import SingleProduct from "./components/SingleProduct"; // Import SingleProduct
-import EditProduct from "./components/EditProduct"; // Import EditProduct
-import EditMaterial from "./components/EditMaterial"; // Import EditProduct
-import ProductionAnalytics from "./pages/ProductionAnalytics.jsx";
-import ProductionProfile from "./pages/ProductionProfile.jsx";
-import ProductForm from "./components/ProductForm";
-import ProductsView from "./pages/ProductView";
-import AddMaterials from "./pages/AddMaterials";
+const productRoutes = require("./routes/products.js");
+const materialRoutes = require("./routes/materials.js");
+const productionRoutes = require("./routes/production.js");
+app.use("/api/products", productRoutes);
+app.use("/api/production", productionRoutes);
+app.use("/api/materials", materialRoutes);
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now();
+    cb(null, uniqueSuffix + file.originalname);
+  },
+});
+
+// Configure storage engine instead of dest object.
+const upload = multer({ storage: storage });
+
+app.post("/upload-image", upload.single("image"), async (req, res) => {
+  console.log(req.body);
+  res.send("Uploaded!");
+});
+
+//uvindya
+const salaryRoutes = require("./routes/salaries");
+app.use("/api/salaries", salaryRoutes);
+const userRoutes=require("./routes/userRoutes.js")
+app.use("/api/users",userRoutes)
 
 //Shanali
-import ExportsDashboard from "./pages/ExportsDashboard.jsx";
-import ExportsProfile from "./pages/ExportsProfile.jsx";
-import ExportsReport from "./pages/ExportsReport.jsx";
-import ImporterDescription from "./pages/ImporterDescription.jsx";
-import ExportOrders from "./pages/ExportOrders.jsx";
-import Importer from "./pages/Importer.jsx";
-import ExportAnalytics from "./pages/ExportAnalytics.jsx";
-import UpdateExports from "./pages/UpdateExports.jsx";
-import ImporterUpdate from "./pages/ImporterUpdate.jsx";
-//import ExportsEmail from "./pages/ExportsEmail.jsx";
+const exportRoutes=require('./routes/export')
+const importerRoutes=require('./routes/importer')
+app.use('/api/export', exportRoutes)
+app.use('/api/importer', importerRoutes)
 
-// New Auth
-import NewLogin from "./pages/new-login/Login.jsx";
-import NewSignup from "./pages/new-signup/Signup.jsx";
-import CheckLoginStatus from "./route_auth/CheckLoginStatus.jsx";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import UserProfile from "./components/userProfile.jsx";
-const queryClient = new QueryClient();
+//Nishadi
+const supplierChain_order = require("./routes/supplier_order"); //Nishadi
+const supplier = require("./routes/supplier"); //Nishadi
+app.use("/api/supplier_order", supplierChain_order); //Nishadi
+app.use("/api/supplier", supplier); //Nishadi
 
-const App = () => {
-  const { distributor } = useDisDAuthContext();
+//reset password
+app.post('/forgot-password', (req, res) => {
+  const { email } = req.body;
+  UserModel.findOne({ email: email })
+    .then(user => {
+      if (!user) {
+        return res.send({ Status: "User not existed" });
+      }
 
-  return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <SalesContextProvider>
-          <div className="pages">
-            <Routes>
-              {/* Check Login Status */}
-              <Route element={<CheckLoginStatus />}>
-                <Route path="/new-login" element={<NewLogin />} />
-                <Route path="/new-signup" element={<NewSignup />} />
-              </Route>
-              <Route path="/Analytics" element={<Analytics />} />
-              <Route path="/MyProfile" element={<MyProfile />} />
-              <Route path="/Logout" element={<Logout />} />
-              {/*Uvindya-user*/}
-              {/*denying access to home before login */}
-              <Route element={<PrivateRoute />}>
-                <Route path="/" element={<Home />} />
-              </Route>
-              <Route path="/user-details" element={<UserInfo />} />
-              <Route path="/update-user/:id" element={<UpdateUser />} />
-              <Route path="/Home_Pay" element={<Home_Pay />} />
-              <Route path="/updateSalary/:id" element={<UpdateSalaryPage />} />
-              <Route path="/add-salary" element={<AddSalaryPage />} />
-              <Route path="/salary-details" element={<SalaryDetailsPage />} />
-              <Route path="/salary-report" element={<SalaryReportPage />} />
-              <Route path="/all-salary-report" element={<AllReport />} />
-              <Route path="user-profile" element={<UserProfile />} />
-              <Route path="/Logout" element={<Logout />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
-              <Route
-                path="/reset-password/:id/:token"
-                element={<ResetPassword />}
-              ></Route>
-              <Route path="/Dashboard" element={<Dashboard />} />
-              {/* Nishadi */}
-              <Route path="/SupplierOrderDashboard" element={<DashboardN />} />
-              <Route path="/Suppliers" element={<Suppliers />} />
-              <Route path="/Order" element={<Orders />} />
-              <Route path="/analyticsN" element={<AnalyticsN />} />
-              <Route path="/MyProfileN" element={<MyProfileN />} />
-              <Route path="/supplier/:id" element={<SupplierEdit />} />{" "}
-              {/* Define route for updating orders */}
-              <Route
-                path="/supplierorderform"
-                element={<SupplierOrderForm />}
-              />{" "}
-              {/*View Supplier Order Form */}
-              <Route
-                path="/supplierOrder/:id"
-                element={<SupplierOrderEdit />}
-              />{" "}
-              {/* Define route for updating orders */}
-              <Route path="/" element={<Home />} />
-              <Route path="/Home" element={<Home />} />
-              <Route
-                path="/supplierOrderReport"
-                element={<SupplierOrderReport />}
-              />
-              <Route path="/Materials" element={<Materials />} />
-              {/*Shanali*/}
-              <Route path="/" element={<ExportsDashboard />} />
-              <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
-              <Route path="/Importer" element={<Importer />} />
-              <Route path="/ExportOrders" element={<ExportOrders />} />
-              <Route
-                path="/ImporterDescription"
-                element={<ImporterDescription />}
-              />
-              <Route path="/ExportAnalytics" element={<ExportAnalytics />} />
-              <Route path="/ExportsProfile" element={<ExportsProfile />} />
-              <Route path="/UpdateExports/:id" element={<UpdateExports />} />
-              <Route path="/ImporterUpdate/:id" element={<ImporterUpdate />} />
-              <Route path="/ExportsReport" element={<ExportsReport />} />
-              {/* <Route path="/ExportsEmail" element={<ExportsEmail />} /> */}
-              {/* Dulari */}
-              <Route path="/New_Projects" element={<New_Projects />} />
-              <Route path="/Doner_Feedback" element={<Doner_Feedback />} />
-              <Route path="/Doner_Analytics" element={<Doner_Analystics />} />
-              <Route path="/DFeedbackFetch" element={<DFeedbackFetch />} />
-              <Route
-                path="/Donation_Dashboard"
-                element={<Donation_Dashboard />}
-              />
-              <Route path="/DProjectDetails" element={<DProjectDetails />} />
-              <Route
-                path="/dProjectEdit/:projectId"
-                element={<DProjectEdit />}
-              />
-              <Route path="/DReportCreate" element={<DReportCreate />} />
-              {/* Primal */}
-              <Route path="/salesFeedback" element={<SalesFeedback />} />
-              <Route path="/invoiceCreate" element={<InvoiceCreate />} />
-              <Route path="/sfeedbackFetch" element={<SfeedbackFetch />} />
-              <Route path="/viewInvoice" element={<ViewInvoice />} />
-              <Route path="/PinVerification" element={<PinVerification />} />
-              <Route
-                path="/InvoiceUpdate/:billID"
-                element={<InvoiceUpdate />}
-              />
-              <Route path="/InvoiceReport" element={<InvoiceReport />} />
-              <Route path="/SalesDashboard" element={<SalesDashboard />} />
-              <Route path="/SDFeedback" element={<SDFeedback />} />
-              <Route path="/SDView" element={<SDView />} />
-              <Route
-                path="/InvoiceUpdate/:billID"
-                element={<InvoiceUpdate />}
-              />
-              <Route path="/InvoiceReport" element={<InvoiceReport />} />
-              <Route path="/SalesDashboard" element={<SalesDashboard />} />
-              <Route path="/SDFeedback" element={<SDFeedback />} />
-              <Route path="/SDView" element={<SDView />} />
-              {/* Dinithi */}
-              <Route
-                path="/login"
-                element={
-                  !distributor ? <DisLogin /> : <Navigate to="/DisDashboard" />
-                }
-              />
-              <Route
-                path="/signup"
-                element={
-                  !distributor ? <DisSignup /> : <Navigate to="/DisDashboard" />
-                }
-              />
-              <Route
-                path="/DisDashboard"
-                element={
-                  distributor ? <DisDashboard /> : <Navigate to="/login" />
-                }
-              />
-              <Route path="/DisMyProfile" element={<DisMyProfile />} />
-              <Route path="/DisAnalytics" element={<DisAnalytics />} />
-              <Route path="/OrderForm" element={<OrderPlace />} />
-              <Route path="/OrderHistory" element={<OrderHistory />} />
-              <Route path="/OrderSuccess" element={<OrderSuccess />} />
-              <Route path="/update/:id" element={<UpdateOrder />} />{" "}
-              {/* Define route for updating orders */}
-              {/* Dis manager */}
-              <Route path="/DisMOrderHistory" element={<DisMOrderHistory />} />
-              <Route path="/DisMDashboard" element={<DisMDashboard />} />
-              <Route path="update-order/:id" element={<DisMUpdateOrder />} />
-              {/*Senith*/}
-              <Route path="/Products" element={<Products />} />
-              <Route path="/Production" element={<Production />} />
-              <Route path="/Materials" element={<Materials />} />
-              <Route path="/AddProducts" element={<AddProducts />} />
-              <Route path="/AddProduction" element={<AddProduction />} />
-              <Route
-                path="/ProductionAnalytics"
-                element={<ProductionAnalytics />}
-              />
-              <Route path="/ProductForm" element={<ProductForm />} />
-              <Route
-                path="/ProductionDashboard"
-                element={<ProductionDashboard />}
-              />
-              <Route
-                path="/ProductionProfile"
-                element={<ProductionProfile />}
-              />
-              <Route path="/" element={<Products />} />
-              <Route path="/product/:id" element={<SingleProduct />} />{" "}
-              {/* Define route for single product */}
-              <Route path="/edit-product/:id" element={<EditProduct />} />{" "}
-              {/* Add EditProduct route */}
-              <Route path="/EditProduct" element={<EditProduct />} />
-              <Route
-                path="/edit-material/:id"
-                element={<EditMaterial />}
-              />{" "}
-              <Route path="/SingleProduct" element={<SingleProduct />} />
-              <Route path="/ProductsView" element={<ProductsView />} />
-              <Route path="/AddMaterials" element={<AddMaterials />} />
-            </Routes>
-          </div>
-        </SalesContextProvider>
-      </BrowserRouter>
-    </QueryClientProvider>
-  );
-};
+      const token = jwt.sign({ id: user._id }, "jwt_secret_key", { expiresIn: "1d" });
 
-export default App;
+      // Create transporter with App Password
+      var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'uvindyajayasundara@gmail.com',
+          pass: 'twpw ntzi iwxc hvtj' // Replace with your App Password
+        }
+      });
+
+      var mailOptions = {
+        from: 'uvindyajayasundara@gmail.com',
+        to: 'your email@gmail.com',
+        subject: 'Reset Password Link',
+        text: `http://localhost:3000/reset-password/${user._id}/${token}`
+      };
+
+      // Send the email
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+          res.status(500).send({ Status: "Error sending email" });
+        } else {
+          console.log('Email sent: ' + info.response);
+          res.send({ Status: "Email sent successfully" });
+        }
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).send({ Status: "Error processing request" });
+    });
+});
+app.post('/reset-password/:id/:token', (req, res) => {
+  const {id, token} = req.params
+  const {password} = req.body
+
+  jwt.verify(token, "jwt_secret_key", (err, decoded) => {
+      if(err) {
+          return res.json({Status: "Error with token"})
+      } else {
+          bcrypt.hash(password, 10)
+          .then(hash => {
+              UserModel.findByIdAndUpdate({_id: id}, {password: hash})
+              .then(u => res.send({Status: "Success"}))
+              .catch(err => res.send({Status: err}))
+          })
+          .catch(err => res.send({Status: err}))
+      }
+  })
+})
