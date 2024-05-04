@@ -1,39 +1,54 @@
-import React, { useState } from "react";
-import { Table, TableCell, TableRow, TextField } from '@mui/material';
-import { useSalaryContext } from '../hooks/useSalaryContext';
+import React, { useState } from 'react';
+import { TextField, IconButton } from '@mui/material';
+import { Search as SearchIcon } from '@mui/icons-material';
+import SalaryDetails from './SalaryDetails'; // Import SalaryDetails component
+import Navbar_Pay from './Navbar-uvi';
 
 const SalarySearch = ({ salary }) => {
-  const { dispatch } = useSalaryContext();
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(''); // State to store search query
 
-  const filteredSalary = salary.filter(salaryItem =>
-    salaryItem.email.toLowerCase().includes(searchQuery.toLowerCase())
+  // Function to handle search
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  // Filter salaries based on search query
+  const filteredSalaries = salary.filter(salary =>
+    salary.email.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  // Function to handle salary deletion
+  const handleDelete = async (salaryId) => {
+    // Your deletion logic
+  };
+
   return (
-    <div className="salary-details">
+    <div>
+      {/* Search input field */}
       <TextField
-        label="Search by Email"
+        type="text"
+        placeholder="Search by email"
         value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
+        onChange={handleSearch}
+        variant="outlined"
+        fullWidth
+        InputProps={{
+          endAdornment: (
+            <IconButton onClick={handleSearch}>
+              <SearchIcon />
+            </IconButton>
+          )
+        }}
       />
-      <Table>
-        {/* Render filtered salary details */}
-        {filteredSalary.length > 0 ? (
-          filteredSalary.map((salaryItem) => (
-            <TableRow key={salaryItem._id}>
-              {/* Render salary details */}
-              {/* You can render the salary details here */}
-              <TableCell>{salaryItem.email}</TableCell>
-              {/* Add other table cells for other salary details */}
-            </TableRow>
-          ))
-        ) : (
-          <TableRow>
-            <TableCell colSpan={2}>No matching records found.</TableCell>
-          </TableRow>
-        )}
-      </Table>
+
+      {/* Display filtered salaries */}
+      {filteredSalaries.length > 0 ? (
+        filteredSalaries.map(filteredSalary => (
+          <SalaryDetails key={filteredSalary._id} salary={filteredSalary} handleDelete={handleDelete} />
+        ))
+      ) : (
+        <p>No matching salaries found.</p>
+      )}
     </div>
   );
 };

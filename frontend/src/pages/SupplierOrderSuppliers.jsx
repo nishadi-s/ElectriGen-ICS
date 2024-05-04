@@ -1,22 +1,40 @@
 //supplier page
 
 import React, { useState, useEffect } from "react";
-import '../SupplierOrder.css';
+import "../SupplierOrder.css";
 import { useSupplierContext } from "../hooks/useSupplierContext";
+import api from "../api/api";
 
 // Components
-import SupplierDetails from '../components/SupplierDetails'
-import SupplierForm from '../components/SupplierForm'
+import SupplierDetails from "../components/SupplierDetails";
+import SupplierForm from "../components/SupplierForm";
 
 const Suppliers = () => {
   const { suppliers, dispatch } = useSupplierContext();
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState("");
   const [filteredSuppliers, setFilteredSuppliers] = useState([]);
   const [noResults, setNoResults] = useState(false); // State to track if there are no search results
   const [loading, setLoading] = useState(true); // State to track loading state
 
   useEffect(() => {
+    api
+      .get("/suppliers")
+      .then((response) => {
+        setFilteredSuppliers(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching suppliers:", error);
+      });
+
     const fetchSupplier = async () => {
+      try {
+        const response = await api.get("/suppliers");
+      } catch (error) {
+        console.error("Error fetching donation feedback:", error);
+      }
+    };
+
+    /*const fetchSupplier = async () => {
       const response = await fetch('/api/supplier');
       const json = await response.json();
 
@@ -24,7 +42,7 @@ const Suppliers = () => {
         dispatch({ type: 'SET_SUPPLIER', payload: json });
         setLoading(false); // Data fetching complete, set loading to false
       }
-    }
+    }*/
 
     fetchSupplier();
   }, [dispatch]);
@@ -33,7 +51,7 @@ const Suppliers = () => {
   const handleSearchInputChange = (e) => {
     setSearchInput(e.target.value);
     // Filter suppliers based on the search input and supplier name
-    const results = suppliers.filter(s =>
+    const results = suppliers.filter((s) =>
       s.Sup_Name.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setFilteredSuppliers(results);
@@ -60,15 +78,17 @@ const Suppliers = () => {
         {/* Display loading message while data is being fetched */}
         {loading && <p>Loading...</p>}
         {/* Display filtered suppliers or no search results message */}
-        {!loading && searchInput !== '' && noResults && (
+        {!loading && searchInput !== "" && noResults && (
           <p>No search results found</p>
         )}
         {/* Only render suppliers list if data is loaded and no search results */}
-        {!loading && (searchInput === '' || (searchInput !== '' && !noResults)) && (
-          (filteredSuppliers.length > 0 ? filteredSuppliers : suppliers).map((supplier) => (
-            <SupplierDetails key={supplier.Sup_ID} supplier={supplier} />
-          ))
-        )}
+        {!loading &&
+          (searchInput === "" || (searchInput !== "" && !noResults)) &&
+          (filteredSuppliers.length > 0 ? filteredSuppliers : suppliers).map(
+            (supplier) => (
+              <SupplierDetails key={supplier.Sup_ID} supplier={supplier} />
+            )
+          )}
       </div>
     </div>
   );

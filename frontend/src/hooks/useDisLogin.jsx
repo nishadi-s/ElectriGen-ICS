@@ -6,7 +6,7 @@ export const useDisLogin = () => {
     const [isLoading, setIsLoading] = useState(false); // Changed null to false
     const { dispatch } = useContext(DisDAuthContext); // Use useContext hook
 
-    const disLogin = async (email, password) => {
+    const disLogin = async (distributorLoginID, password) => {
         setIsLoading(true);
         setError(null);
 
@@ -14,7 +14,7 @@ export const useDisLogin = () => {
             const response = await fetch('/api/distributor/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ distributorLoginID, password })
             });
 
             const json = await response.json();

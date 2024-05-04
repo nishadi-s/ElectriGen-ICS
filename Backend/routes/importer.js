@@ -1,27 +1,27 @@
-const express=require('express')
+const express = require("express");
 const {
-    createImporter,
-    getImporters,
-    getImporter,
-    deleteImporter,
-    updateImporter
-}=require('../controllers/importerController')
+  createImporter,
+  getImporters,
+  getImporter,
+  deleteImporter,
+  updateImporter,
+} = require("../controllers/importerController");
 
-const router=express.Router()
+const router = express.Router();
 
 //GET all importers
-router.get('/',getImporters)
+router.get("/", getImporters);
 
 //GET a single importer
-router.get('/:id',getImporter)
+router.get("/:id", getImporter);
 
 //POST a new importer
-router.post('/',createImporter)
+router.post("/", createImporter);
 
 //DELETE an importer
-router.delete('/:id',deleteImporter)
+router.delete("/:id", deleteImporter);
 
 //UPDATE a importer
-router.patch('/:id',updateImporter)
+router.put("/:id", updateImporter);
 
-module.exports=router
+module.exports = router;
