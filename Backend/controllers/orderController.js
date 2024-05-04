@@ -5,7 +5,7 @@ const mongoose = require("mongoose"); //data is coming from mongoDB
 
 //get all orders
 const getOrders = async (req, res) => {
-  const distributor_id = req.userId;
+  const distributor_id = req.distributor._id;
 
   const orders = await Order.find({ distributor_id }).sort({ createdAt: -1 }); // Fetch all orders and sort by createdAt
 
@@ -66,7 +66,7 @@ const createOrder = async (req, res) => {
   // Add new order document to the database
   try {
     //distributor authentication
-    const distributor_id = req.userId;
+    const distributor_id = req.distributor._id;
     const newOrder = await Order.create({
       distributorId,
       distributorName,
@@ -110,7 +110,7 @@ const updateOrder = async (req, res) => {
 
   try {
     // Ensure that the distributor ID from the request matches the distributor ID in the order
-    const distributorIdFromToken = req.userId;
+    const distributorIdFromToken = req.distributor._id.toString();
     const order = await Order.findById(id);
 
     if (!order) {

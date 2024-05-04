@@ -6,33 +6,27 @@ const {
   getProducts,
   updateProduct,
   deleteProduct,
+  getLowQuantityProducts, // Import the new function
 } = require("../controllers/productController");
-const authMiddleware = require("../middleware/authMiddleware");
-const USER_ROLES = require("../constants/roles");
 
 const router = express.Router();
 
 //GET all products
-router.get("/", authMiddleware([USER_ROLES.INVENTORY_MANAGER]), getProducts);
+router.get("/", getProducts);
 
 //GET a single product
-router.get("/:id", authMiddleware([USER_ROLES.INVENTORY_MANAGER]), getProduct);
+router.get("/:id", getProduct);
 
 //POST a new product
-router.post("/", authMiddleware([USER_ROLES.INVENTORY_MANAGER]), createProduct);
+router.post("/", createProduct);
 
 //DELETE a product
-router.delete(
-  "/:id",
-  authMiddleware([USER_ROLES.INVENTORY_MANAGER]),
-  deleteProduct
-);
+router.delete("/:id", deleteProduct);
 
 //UPDATE a product
-router.put(
-  "/:id",
-  authMiddleware([USER_ROLES.INVENTORY_MANAGER]),
-  updateProduct
-);
+router.put("/:id", updateProduct);
+
+// GET products with quantity less than 100
+router.get("/lowquantity", getLowQuantityProducts); // Add this route
 
 module.exports = router;

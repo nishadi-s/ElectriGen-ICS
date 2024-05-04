@@ -14,25 +14,19 @@ import Dashboard from "./pages/Dashboard.jsx";
 import MyProfile from "./pages/MyProfile.jsx";
 import Analytics from "./pages/Analytics.jsx";
 import Logout from "./pages/Logout.jsx";
-//import Home from "./pages/Home.jsx";
 
-//Uvindya
 import Navbar_Pay from "./components/Navbar-uvi.jsx";
-//import { useAuthContext } from './hooks/useAuthContext';
 import Home_Pay from "./pages/Home-Salary.jsx";
-//import Home from './pages/Home-Salary.jsx'
-//import Login from './pages/Login.jsx';
-//import Signup from './pages/Signup.jsx';
-//import ForgotPassword from './components/ForgotPassword.jsx';
-//import SalaryDetails from './components/SalaryDetails.jsx';
 import UpdateSalaryPage from "./components/UpdateSalary.jsx";
 import AddSalaryPage from "./pages/AddSalary.jsx";
-// import Logout from './pages/Logout.jsx'
+import SalaryReportPage from "./pages/SalaryReport.jsx";
 import SalaryDetailsPage from "./pages/SalaryDetailsPage.jsx";
-//import UpdateSalaryPage from "./components/UpdateSalary.jsx";
-//import AddSalaryPage from "./pages/AddSalary.jsx";
-//import Logout from './pages/Logout.jsx'
-//import SalaryDetailsPage from "./pages/SalaryDetailsPage.jsx";
+import AllReport from "./pages/SalaryAllPdf.jsx";
+import UserInfo from "./components/UserInfo.jsx";
+import UpdateUser from "./components/UpdateUser.jsx";
+import PrivateRoute from "./route_auth/PrivateRoute.jsx";
+import ForgotPassword from "./components/ForgotPassword.jsx";
+import ResetPassword from "./components/ResetPassword.jsx";
 
 //Nishadi
 import NavbarNishadi from "./components/SupplierOrderNavbar.jsx";
@@ -41,8 +35,11 @@ import MyProfileN from "./pages/SupplierOrderProfile.jsx";
 import Orders from "./pages/SupplierOrder_Order.jsx";
 import Suppliers from "./pages/SupplierOrderSuppliers.jsx";
 import AnalyticsN from "./pages/SupplierOrderAnalytics.jsx";
-//import UpdateOrderN from "./components/SupplierOrderUpdate.jsx"; // Import the UpdateOrder component
 import SupplierEdit from "./components/SupplierEdit.jsx"; // Import the UpdateSupplier component
+import SupplierOrderForm from "./components/SupplierOrderForm.jsx"; //Import supplier order form component
+import SupplierOrderEdit from "./components/SupplierOrderEdit.jsx"; //Import the Update supplier Order component
+import SupplierOrderReport from "./components/SupplierOrderRepo.jsx";
+import Materials from "./pages/Materials.jsx";
 
 //Dulari_IT22121110
 import DonationNavbar from "./components/DonationNavbar.jsx";
@@ -51,6 +48,9 @@ import New_Projects from "./pages/New_Projects.jsx";
 import Doner_Feedback from "./pages/Doner_Feedback.jsx";
 import Doner_Analystics from "./pages/Doner_Analytics.jsx";
 import DFeedbackFetch from "./components/dFeedbackFetch.jsx";
+import DReportCreate from "./components/DReportCreate.jsx";
+import DProjectEdit from "./components/DProjectEdit.jsx";
+import DProjectDetails from "./components/DProjectDetails.jsx";
 
 //Primal
 import SalesFeedback from "./pages/salesFeedback.jsx";
@@ -60,11 +60,15 @@ import ViewInvoice from "./pages/viewInvoice.jsx";
 import PinVerification from "./components/PinVerification.jsx";
 import { SalesContextProvider } from "./context/SalesContext.jsx";
 import InvoiceUpdate from "./pages/InvoiceUpdate.jsx";
+import InvoiceReport from "./pages/InvoiceReport.jsx";
+import SalesDashboard from "./pages/SalesDashboard.jsx";
+import SDFeedback from "./pages/SDFeedback";
+import SDView from "./pages/SDView.jsx";
 
 //Dinithi
 
-// import DisSignup from "./pages/DisSignup.jsx";
-// import DisLogin from "./pages/DisLogin.jsx";
+import DisSignup from "./pages/DisSignup.jsx";
+import DisLogin from "./pages/DisLogin.jsx";
 import DisDashboard from "./pages/DisDashboard.jsx";
 import DisMyProfile from "./pages/DisMyProfile.jsx";
 import DisAnalytics from "./pages/DisAnalytics";
@@ -74,9 +78,12 @@ import OrderSuccess from "./pages/OrderSucess.jsx";
 import UpdateOrder from "./pages/UpdateOrderDetails.jsx";
 import { useDisDAuthContext } from "./hooks/useDisDAuthContext.jsx";
 //distribution managers
+import DisMOrderHistory from "./pages/DisMOrderHistory.jsx";
+import DisMDashboard from "./pages/DisMDashboard.jsx";
+import DisMUpdateOrder from "./pages/DisMUpdate.jsx";
 
 //Senith
-import Materials from "./pages/Materials.jsx";
+//import Materials from "./pages/Materials.jsx";
 import Production from "./pages/Production.jsx";
 import Products from "./pages/Products.jsx";
 import AddProducts from "./pages/AddProducts.jsx";
@@ -84,29 +91,31 @@ import AddProduction from "./pages/AddProduction.jsx";
 import ProductionDashboard from "./pages/ProductionDashboard.jsx";
 import SingleProduct from "./components/SingleProduct"; // Import SingleProduct
 import EditProduct from "./components/EditProduct"; // Import EditProduct
+import EditMaterial from "./components/EditMaterial"; // Import EditProduct
 import ProductionAnalytics from "./pages/ProductionAnalytics.jsx";
 import ProductionProfile from "./pages/ProductionProfile.jsx";
 import ProductForm from "./components/ProductForm";
+import ProductsView from "./pages/ProductView";
+import AddMaterials from "./pages/AddMaterials";
 
-/*Shanali
+//Shanali
 import ExportsDashboard from "./pages/ExportsDashboard.jsx";
-import ExportsNavBar from "./components/ExportsNavBar.jsx";
 import ExportsProfile from "./pages/ExportsProfile.jsx";
+import ExportsReport from "./pages/ExportsReport.jsx";
 import ImporterDescription from "./pages/ImporterDescription.jsx";
 import ExportOrders from "./pages/ExportOrders.jsx";
 import Importer from "./pages/Importer.jsx";
 import ExportAnalytics from "./pages/ExportAnalytics.jsx";
 import UpdateExports from "./pages/UpdateExports.jsx";
-import ImporterUpdate from "./pages/ImporterUpdate.jsx";*/
+import ImporterUpdate from "./pages/ImporterUpdate.jsx";
+//import ExportsEmail from "./pages/ExportsEmail.jsx";
 
-// Auth
-import PrivateRoute from "./route_auth/PrivateRoute.jsx";
+// New Auth
+import NewLogin from "./pages/new-login/Login.jsx";
+import NewSignup from "./pages/new-signup/Signup.jsx";
 import CheckLoginStatus from "./route_auth/CheckLoginStatus.jsx";
-import Login from "./pages/login/Login.jsx";
-import Profile from "./pages/profile/Profile.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { USER_ROLES } from "./constants/roles.js";
-import Signup from "./pages/signup/Signup.jsx";
+import UserProfile from "./components/userProfile.jsx";
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -118,195 +127,174 @@ const App = () => {
         <SalesContextProvider>
           <div className="pages">
             <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/Dashboard" element={<Dashboard />} />
+              {/* Check Login Status */}
+              <Route element={<CheckLoginStatus />}>
+                <Route path="/new-login" element={<NewLogin />} />
+                <Route path="/new-signup" element={<NewSignup />} />
+              </Route>
               <Route path="/Analytics" element={<Analytics />} />
               <Route path="/MyProfile" element={<MyProfile />} />
               <Route path="/Logout" element={<Logout />} />
-              {/* Nishadi - SUPPLIER_CHAIN_SUPERVISOR */}
-              <Route
-                element={
-                  <PrivateRoute
-                    permissionLevel={[USER_ROLES.SUPPLIER_CHAIN_SUPERVISOR]}
-                  />
-                }
-              >
-                <Route
-                  path="/supplier-chain-supervisor"
-                  element={<DashboardN />}
-                />
-                <Route path="/Suppliers" element={<Suppliers />} />
-                <Route path="/Order" element={<Orders />} />
-                <Route path="/analytics" element={<AnalyticsN />} />
-                <Route path="/MyProfile" element={<MyProfileN />} />
-                <Route path="/update/:id" element={<UpdateOrder />} />{" "}
-                {/* Define route for updating orders */}
-                <Route
-                  path="Suppliers/supplieredit"
-                  element={<SupplierEdit />}
-                />{" "}
-                {/* Define route for updating orders */}
-                <Route
-                  path="/Suppliers/supplieredit/Suppliers"
-                  element={<Suppliers />}
-                />
+              {/*Uvindya-user*/}
+              {/*denying access to home before login */}
+              <Route element={<PrivateRoute />}>
+                <Route path="/" element={<Home />} />
               </Route>
-              {/* Shanali - EXPORT_MANAGER */}
-              {/* <Route
-                element={
-                  <PrivateRoute permissionLevel={[USER_ROLES.EXPORT_MANAGER]} />
-                }
-              >
-                {/* <Route path="/" element={<ExportsDashboard />} /> 
-                <Route path="/export-manager" element={<ExportsDashboard />} />
-                <Route path="/Importer" element={<Importer />} />
-                <Route path="/ExportOrders" element={<ExportOrders />} />
-                <Route
-                  path="/ExportOrderDetails"
-                  element={<ExportOrderDetails />}
-                />
-                <Route path="/ExportAnalytics" element={<ExportAnalytics />} />
-                <Route path="/ExportsProfile" element={<ExportsProfile />} />
-                <Route path="/update/:id" element={<UpdateExports />} />{" "}
-                {/* Define route for updating orders
-              </Route>*/}
-              {/* Dulari - DONATION_MANAGER */}
+              <Route path="/user-details" element={<UserInfo />} />
+              <Route path="/update-user/:id" element={<UpdateUser />} />
+              <Route path="/Home_Pay" element={<Home_Pay />} />
+              <Route path="/updateSalary/:id" element={<UpdateSalaryPage />} />
+              <Route path="/add-salary" element={<AddSalaryPage />} />
+              <Route path="/salary-details" element={<SalaryDetailsPage />} />
+              <Route path="/salary-report" element={<SalaryReportPage />} />
+              <Route path="/all-salary-report" element={<AllReport />} />
+              <Route path="user-profile" element={<UserProfile />} />
+              <Route path="/Logout" element={<Logout />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route
-                element={
-                  <PrivateRoute
-                    permissionLevel={[USER_ROLES.DONATION_MANAGER]}
-                  />
-                }
-              >
-                <Route path="/New_Projects" element={<New_Projects />} />
-                <Route path="/Doner_Feedback" element={<Doner_Feedback />} />
-                <Route path="/Doner_Analytics" element={<Doner_Analystics />} />
-                <Route path="/Dashboard" element={<DFeedbackFetch />} />
-                <Route
-                  path="/donation-manager"
-                  element={<Donation_Dashboard />}
-                />
-              </Route>
-              {/* Primal - SHOWROOM_AND_SALES_MANAGER */}
+                path="/reset-password/:id/:token"
+                element={<ResetPassword />}
+              ></Route>
+              <Route path="/Dashboard" element={<Dashboard />} />
+              {/* Nishadi */}
+              <Route path="/SupplierOrderDashboard" element={<DashboardN />} />
+              <Route path="/Suppliers" element={<Suppliers />} />
+              <Route path="/Order" element={<Orders />} />
+              <Route path="/analyticsN" element={<AnalyticsN />} />
+              <Route path="/MyProfileN" element={<MyProfileN />} />
+              <Route path="/supplier/:id" element={<SupplierEdit />} />{" "}
+              {/* Define route for updating orders */}
               <Route
-                element={
-                  <PrivateRoute
-                    permissionLevel={[USER_ROLES.SHOWROOM_AND_SALES_MANAGER]}
-                  />
-                }
-              >
-                <Route path="/salesFeedback" element={<SalesFeedback />} />
-                <Route path="/invoiceCreate" element={<InvoiceCreate />} />
-                <Route path="/sfeedbackFetch" element={<SfeedbackFetch />} />
-                <Route path="/viewInvoice" element={<ViewInvoice />} />
-                <Route path="/PinVerification" element={<PinVerification />} />
-                <Route path="/InvoiceUpdate" element={InvoiceUpdate} />
-              </Route>
-              {/* Dinithi - DISTRIBUTOR_MANAGER */}
+                path="/supplierorderform"
+                element={<SupplierOrderForm />}
+              />{" "}
+              {/*View Supplier Order Form */}
               <Route
-                element={
-                  <PrivateRoute
-                    permissionLevel={[USER_ROLES.DISTRIBUTOR_MANAGER]}
-                  />
-                }
-              >
-                {/*<Route path="/distributor-manager" element={<HomePage />} />
-                 <Route
+                path="/supplierOrder/:id"
+                element={<SupplierOrderEdit />}
+              />{" "}
+              {/* Define route for updating orders */}
+              <Route path="/" element={<Home />} />
+              <Route path="/Home" element={<Home />} />
+              <Route
+                path="/supplierOrderReport"
+                element={<SupplierOrderReport />}
+              />
+              <Route path="/Materials" element={<Materials />} />
+              {/*Shanali*/}
+              <Route path="/" element={<ExportsDashboard />} />
+              <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
+              <Route path="/Importer" element={<Importer />} />
+              <Route path="/ExportOrders" element={<ExportOrders />} />
+              <Route
+                path="/ImporterDescription"
+                element={<ImporterDescription />}
+              />
+              <Route path="/ExportAnalytics" element={<ExportAnalytics />} />
+              <Route path="/ExportsProfile" element={<ExportsProfile />} />
+              <Route path="/UpdateExports/:id" element={<UpdateExports />} />
+              <Route path="/ImporterUpdate/:id" element={<ImporterUpdate />} />
+              <Route path="/ExportsReport" element={<ExportsReport />} />
+              {/* <Route path="/ExportsEmail" element={<ExportsEmail />} /> */}
+              {/* Dulari */}
+              <Route path="/New_Projects" element={<New_Projects />} />
+              <Route path="/Doner_Feedback" element={<Doner_Feedback />} />
+              <Route path="/Doner_Analytics" element={<Doner_Analystics />} />
+              <Route path="/DFeedbackFetch" element={<DFeedbackFetch />} />
+              <Route
+                path="/Donation_Dashboard"
+                element={<Donation_Dashboard />}
+              />
+              <Route path="/DProjectDetails" element={<DProjectDetails />} />
+              <Route
+                path="/dProjectEdit/:projectId"
+                element={<DProjectEdit />}
+              />
+              <Route path="/DReportCreate" element={<DReportCreate />} />
+              {/* Primal */}
+              <Route path="/salesFeedback" element={<SalesFeedback />} />
+              <Route path="/invoiceCreate" element={<InvoiceCreate />} />
+              <Route path="/sfeedbackFetch" element={<SfeedbackFetch />} />
+              <Route path="/viewInvoice" element={<ViewInvoice />} />
+              <Route path="/PinVerification" element={<PinVerification />} />
+              <Route
+                path="/InvoiceUpdate/:billID"
+                element={<InvoiceUpdate />}
+              />
+              <Route path="/InvoiceReport" element={<InvoiceReport />} />
+              <Route path="/SalesDashboard" element={<SalesDashboard />} />
+              <Route path="/SDFeedback" element={<SDFeedback />} />
+              <Route path="/SDView" element={<SDView />} />
+              <Route
+                path="/InvoiceUpdate/:billID"
+                element={<InvoiceUpdate />}
+              />
+              <Route path="/InvoiceReport" element={<InvoiceReport />} />
+              <Route path="/SalesDashboard" element={<SalesDashboard />} />
+              <Route path="/SDFeedback" element={<SDFeedback />} />
+              <Route path="/SDView" element={<SDView />} />
+              {/* Dinithi */}
+              <Route
                 path="/login"
                 element={
                   !distributor ? <DisLogin /> : <Navigate to="/DisDashboard" />
                 }
-              /> */}
-                {/* <Route
+              />
+              <Route
                 path="/signup"
                 element={
                   !distributor ? <DisSignup /> : <Navigate to="/DisDashboard" />
                 }
-              /> */}
-                {/* <Route
+              />
+              <Route
                 path="/DisDashboard"
                 element={
                   distributor ? <DisDashboard /> : <Navigate to="/login" />
                 }
-              /> */}
-                <Route path="/distributor-manager" element={<DisDashboard />} />
-                <Route path="/DisMyProfile" element={<DisMyProfile />} />
-                <Route path="/DisAnalytics" element={<DisAnalytics />} />
-                <Route path="/OrderForm" element={<OrderPlace />} />
-                <Route path="/OrderHistory" element={<OrderHistory />} />
-                <Route path="/OrderSuccess" element={<OrderSuccess />} />
-                <Route path="/update/:id" element={<UpdateOrder />} />{" "}
-                {/* Define route for updating orders */}
-                <Route path="/OrderForm" element={<OrderPlace />} />
-                <Route path="/OrderHistory" element={<OrderHistory />} />
-                <Route path="/OrderSuccess" element={<OrderSuccess />} />
-                <Route path="/update/:id" element={<UpdateOrder />} />{" "}
-                {/* Define route for updating orders */}
-              </Route>
-
-              {/*Uvindya - USER_MANAGER*/}
+              />
+              <Route path="/DisMyProfile" element={<DisMyProfile />} />
+              <Route path="/DisAnalytics" element={<DisAnalytics />} />
+              <Route path="/OrderForm" element={<OrderPlace />} />
+              <Route path="/OrderHistory" element={<OrderHistory />} />
+              <Route path="/OrderSuccess" element={<OrderSuccess />} />
+              <Route path="/update/:id" element={<UpdateOrder />} />{" "}
+              {/* Define route for updating orders */}
+              {/* Dis manager */}
+              <Route path="/DisMOrderHistory" element={<DisMOrderHistory />} />
+              <Route path="/DisMDashboard" element={<DisMDashboard />} />
+              <Route path="update-order/:id" element={<DisMUpdateOrder />} />
+              {/*Senith*/}
+              <Route path="/Products" element={<Products />} />
+              <Route path="/Production" element={<Production />} />
+              <Route path="/Materials" element={<Materials />} />
+              <Route path="/AddProducts" element={<AddProducts />} />
+              <Route path="/AddProduction" element={<AddProduction />} />
               <Route
-                element={
-                  <PrivateRoute permissionLevel={[USER_ROLES.USER_MANAGER]} />
-                }
-              >
-                <Route path="/user-manager" element={<Home_Pay />} />
-                <Route
-                  path="/updateSalary/:id"
-                  element={<UpdateSalaryPage />}
-                />
-                <Route path="/add-salary" element={<AddSalaryPage />} />
-                <Route path="/salary-details" element={<SalaryDetailsPage />} />
-                <Route path="/Logout" element={<Logout />} />
-              </Route>
-
-              {/*Senith - INVENTORY_MANAGER*/}
+                path="/ProductionAnalytics"
+                element={<ProductionAnalytics />}
+              />
+              <Route path="/ProductForm" element={<ProductForm />} />
               <Route
-                element={
-                  <PrivateRoute
-                    permissionLevel={[USER_ROLES.INVENTORY_MANAGER]}
-                  />
-                }
-              >
-                <Route path="/Products" element={<Products />} />
-                <Route path="/Production" element={<Production />} />
-                <Route path="/Materials" element={<Materials />} />
-                <Route path="/AddProducts" element={<AddProducts />} />
-                <Route path="/ProductForm" element={<ProductForm />} />
-                <Route
-                  path="/inventory-manager"
-                  element={<ProductionDashboard />}
-                />
-                <Route path="/EditProduct" element={<EditProduct />} />
-                <Route path="/SingleProduct" element={<SingleProduct />} />
-              </Route>
-
-              {/* Auth */}
-              {/* Check Login Status */}
-              <Route element={<CheckLoginStatus />}>
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-              </Route>
-
-              {/* all logged in users can access the profile page */}
+                path="/ProductionDashboard"
+                element={<ProductionDashboard />}
+              />
               <Route
-                element={
-                  <PrivateRoute
-                    permissionLevel={[
-                      USER_ROLES.USER_MANAGER,
-                      USER_ROLES.DISTRIBUTOR_MANAGER,
-                      USER_ROLES.INVENTORY_MANAGER,
-                      USER_ROLES.SUPPLIER_CHAIN_SUPERVISOR,
-                      USER_ROLES.EXPORT_MANAGER,
-                      USER_ROLES.DONATION_MANAGER,
-                      USER_ROLES.SHOWROOM_AND_SALES_MANAGER,
-                      USER_ROLES.DISTRIBUTORS,
-                    ]}
-                  />
-                }
-              >
-                <Route path="/profile" element={<Profile />} />
-              </Route>
+                path="/ProductionProfile"
+                element={<ProductionProfile />}
+              />
+              <Route path="/" element={<Products />} />
+              <Route path="/product/:id" element={<SingleProduct />} />{" "}
+              {/* Define route for single product */}
+              <Route path="/edit-product/:id" element={<EditProduct />} />{" "}
+              {/* Add EditProduct route */}
+              <Route path="/EditProduct" element={<EditProduct />} />
+              <Route
+                path="/edit-material/:id"
+                element={<EditMaterial />}
+              />{" "}
+              <Route path="/SingleProduct" element={<SingleProduct />} />
+              <Route path="/ProductsView" element={<ProductsView />} />
+              <Route path="/AddMaterials" element={<AddMaterials />} />
             </Routes>
           </div>
         </SalesContextProvider>

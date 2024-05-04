@@ -6,43 +6,21 @@ const {
   deleteOrder,
   updateOrder,
 } = require("../controllers/supplier_orderController");
-const authMiddleware = require("../middleware/authMiddleware");
-const USER_ROLES = require("../constants/roles");
 const router = express.Router();
 
 // Get all orders
-router.get(
-  "/",
-  authMiddleware([USER_ROLES.SUPPLIER_CHAIN_SUPERVISOR]),
-  getOrders
-);
+router.get("/", getOrders);
 
 // Get a single order
-router.get(
-  "/:id",
-  authMiddleware([USER_ROLES.SUPPLIER_CHAIN_SUPERVISOR]),
-  getOrderById
-);
+router.get("/:id", getOrderById);
 
 // POST a new order
-router.post(
-  "/",
-  authMiddleware([USER_ROLES.SUPPLIER_CHAIN_SUPERVISOR]),
-  createOrder
-);
+router.post("/", createOrder);
 
 // DELETE a single order
-router.delete(
-  "/:id",
-  authMiddleware([USER_ROLES.SUPPLIER_CHAIN_SUPERVISOR]),
-  deleteOrder
-);
+router.delete("/:id", deleteOrder);
 
 // UPDATE a supplier order
-router.patch(
-  "/:id",
-  authMiddleware([USER_ROLES.SUPPLIER_CHAIN_SUPERVISOR]),
-  updateOrder
-);
+router.put("/:id", updateOrder);
 
 module.exports = router;

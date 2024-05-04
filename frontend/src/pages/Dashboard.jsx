@@ -1,19 +1,10 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SfeedbackFetch from "../components/sfeedbackFetch";
 import PinVerification from "../components/PinVerification";
-import { useAuthStore } from "../store/useAuthStore";
-import { USER_ROLES } from "../constants/roles";
+import InvoiceReport from "./InvoiceReport";
 
 const Dashboard = () => {
-  const navigate = useNavigate();
-  //
-  const { isAuthenticated, logout, user } = useAuthStore((state) => ({
-    isAuthenticated: state.isAuthenticated,
-    logout: state.logout,
-    user: state.user,
-  }));
-  //
   const correctPin = "1234"; // Your correct PIN number
   const targetPage = "/viewInvoice"; // URL of the target page
 
@@ -29,35 +20,9 @@ const Dashboard = () => {
     setShowPinVerification(false);
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
-
   return (
     <div>
       <h1>Dashboard page</h1>
-
-      {user && (
-        <div className="alert alert-primary" role="alert">
-          You are logged in as <strong>{USER_ROLES[user.role]}</strong>
-        </div>
-      )}
-
-      {!isAuthenticated ? (
-        <Link to="/login" className="btn btn-primary">
-          Login
-        </Link>
-      ) : (
-        <>
-          <Link to="/profile" className="btn btn-primary">
-            Profile
-          </Link>
-          <button onClick={handleLogout} className="btn btn-danger mx-2">
-            Logout
-          </button>
-        </>
-      )}
 
       <div>
         <h2>Invoice Records</h2>
@@ -101,9 +66,21 @@ const Dashboard = () => {
       </div>
 
       <div>
-        <button onClick={handleButtonClick} className="btn btn-primary">
+        <button
+          onClick={handleButtonClick}
+          className="btn btn-primary btn-lg mr-4 fs-lg"
+        >
           Enter Secure Area
         </button>
+      </div>
+      <br />
+
+      <div>
+        <Link to="/InvoiceReport">
+          <button type="button" className="btn btn-primary btn-lg mr-4 fs-lg">
+            Sales Report
+          </button>
+        </Link>
       </div>
 
       <div>

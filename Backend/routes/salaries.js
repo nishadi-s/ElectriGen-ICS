@@ -6,24 +6,22 @@ const {
   deleteSalary,
   updateSalary,
 } = require("../controllers/salaryController");
-const authMiddleware = require("../middleware/authMiddleware");
-const USER_ROLES = require("../constants/roles");
 
 const router = express.Router();
 
 // GET all workouts
-router.get("/", authMiddleware([USER_ROLES.USER_MANAGER]), getSalaries);
+router.get("/", getSalaries);
 
 // GET a single workout
-router.get("/:id", authMiddleware([USER_ROLES.USER_MANAGER]), getSalary);
+router.get("/:id", getSalary);
 
 // POST a new workout
-router.post("/", authMiddleware([USER_ROLES.USER_MANAGER]), createSalary);
+router.post("/", createSalary);
 
 // DELETE a workout
-router.delete("/:id", authMiddleware([USER_ROLES.USER_MANAGER]), deleteSalary);
+router.delete("/:id", deleteSalary);
 
 // UPDATE a workout
-router.put("/:id", authMiddleware([USER_ROLES.USER_MANAGER]), updateSalary);
+router.put("/:id", updateSalary);
 
 module.exports = router;
