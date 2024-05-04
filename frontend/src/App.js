@@ -85,6 +85,7 @@ import ProductionProfile from "./pages/ProductionProfile.jsx";
 import ProductForm from "./components/ProductForm";
 import ProductsView from "./pages/ProductView";
 import AddMaterials from "./pages/AddMaterials";
+import Welcome from "./pages/welcome.jsx";
 
 /*Shanali
 import ExportsDashboard from "./pages/ExportsDashboard.jsx";
@@ -197,6 +198,7 @@ const App = () => {
             <Route path="/Logout" element={<Logout />} />*/}
             {/*Senith*/}
             <Route path="/Products" element={<Products />} />
+            <Route path="/Welcome" element={<Welcome />} />
             <Route path="/Production" element={<Production />} />
             <Route path="/Materials" element={<Materials />} />
             <Route path="/AddProducts" element={<AddProducts />} />

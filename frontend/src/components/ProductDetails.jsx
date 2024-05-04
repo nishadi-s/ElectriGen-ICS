@@ -9,9 +9,14 @@ import "../senith.css";
 const ProductDetails = ({ product }) => {
   const { dispatch } = useProductContext();
 
+  const rowStyle = {
+    backgroundColor: product.quantity < 100 ? "#f01313" : "inherit",
+  };
+
   return (
     <tr
       className="product-row"
+      style={rowStyle}
       onMouseEnter={(e) => e.target.parentNode.classList.add("hovered")}
       onMouseLeave={(e) => e.target.parentNode.classList.remove("hovered")}
     >

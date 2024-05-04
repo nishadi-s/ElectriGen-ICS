@@ -66,6 +66,14 @@ input.error {
   text-decoration: none;
 }
 
+.product-row {
+  background-color: rgba(
+    197,
+    22,
+    22,
+    0.1
+  ); /* Adjust the alpha value (0.5) as needed */
+}
 .products-search {
   margin: 20px 0px;
 }
@@ -90,6 +98,7 @@ th {
 td:hover {
   background-color: #f1f1f1;
   color: #233066;
+  border-radius: 10px;
 }
 thead tr {
   background-color: #233066;
