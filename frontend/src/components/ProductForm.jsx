@@ -1,21 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useProductContext } from "../hooks/useProductsContext";
-
+import "../senith.css";
+import Swal from "sweetalert2"; // Import SweetAlert
 
 const ProductForm = () => {
-  const { disptach } = useProductContext();
+  const { dispatch, products } = useProductContext();
   const [name, setName] = useState("");
   const [itemCode, setitemCode] = useState("");
   const [category, setcategory] = useState("");
   const [color, setcolor] = useState("");
   const [unitPrice, setunitPrice] = useState("");
-  const [cost, setcost] = useState("");
   const [quantity, setquantity] = useState("");
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
 
+  useEffect(() => {
+    if (products.some((product) => product.itemCode === itemCode)) {
+      setError("Product with the same item code already exists.");
+    } else {
+      setError(null);
+    }
+  }, [itemCode, products]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (error) {
+      return; // Prevent form submission if there is an error
+    }
 
     const product = {
       name,
@@ -23,7 +35,6 @@ const ProductForm = () => {
       category,
       color,
       unitPrice,
-      cost,
       quantity,
     };
 
@@ -39,7 +50,7 @@ const ProductForm = () => {
 
     if (!response.ok) {
       setError(json.error);
-      setEmptyFields(json.emptyFields);
+      setEmptyFields(json.emptyFields || []);
     }
 
     if (response.ok) {
@@ -48,14 +59,24 @@ const ProductForm = () => {
       setcategory("");
       setcolor("");
       setunitPrice("");
-      setcost("");
       setquantity("");
 
       setError(null);
       setEmptyFields([]);
 
-      console.log("New product added successfully", json);
-      dispatchEvent({ type: "CREATE_PRODUCT", payload: json });
+      // Show SweetAlert popup
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Product hass been added successfully",
+        showConfirmButton: false,
+        timer: 2000,
+      }).then(() => {
+        // Redirect to products page after timer runs out
+        window.location.href = "/products";
+      });
+
+      dispatch({ type: "CREATE_PRODUCT", payload: json });
     }
   };
 
@@ -69,19 +90,22 @@ const ProductForm = () => {
         value={name}
         className={emptyFields.includes("name") ? "error" : ""}
       />
+      <label>Product code:</label>
+      <input
+        type="text"
+        value={itemCode}
+        onChange={(e) => {
+          const userInput = e.target.value.replace(/[^\d]/g, "");
+          setitemCode("DP" + userInput);
+        }}
+        className={error ? "error" : ""}
+      />
       <label>Product category:</label>
       <input
         type="text"
         onChange={(e) => setcategory(e.target.value)}
         value={category}
         className={emptyFields.includes("category") ? "error" : ""}
-      />
-      <label>Product code:</label>
-      <input
-        type="text"
-        onChange={(e) => setitemCode(e.target.value)}
-        value={itemCode}
-        className={emptyFields.includes("itemCode") ? "error" : ""}
       />
       <label>Color:</label>
       <input
@@ -97,13 +121,6 @@ const ProductForm = () => {
         value={unitPrice}
         className={emptyFields.includes("unitPrice") ? "error" : ""}
       />
-      <label>Cost(in Rs.):</label>
-      <input
-        type="number"
-        onChange={(e) => setcost(e.target.value)}
-        value={cost}
-        className={emptyFields.includes("cost") ? "error" : ""}
-      />
       <label>Quantity:</label>
       <input
         type="number"
@@ -111,8 +128,8 @@ const ProductForm = () => {
         value={quantity}
         className={emptyFields.includes("quantity") ? "error" : ""}
       />
-      <button>Add product</button>
-      {error && <div className="error">(error)</div>}
+      <button className="button-5">Add product</button>
+      {error && <div className="error">{error}</div>}
     </form>
   );
 };

@@ -8,15 +8,13 @@ const UserModel =require('./models/User.js')
 const jwt =require('jsonwebtoken')
 const nodemailer=require('nodemailer')
 const bcrypt = require('bcrypt');
-
-
 const mongoose = require("mongoose");
 // Create an Express app
 const app = express();
 
+app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors());
-app.use(express.json());
 
 // Middleware to log incoming requests
 app.use((req, res, next) => {
@@ -64,12 +62,36 @@ app.use("/dFeedback", dFeedbackRouter);
 //Dinithi
 const orderRoutes = require("./routes/orders.js");
 const distributorRoutes = require("./routes/distributor.js");
+
 app.use("/api/orders", orderRoutes); // Order routes
 app.use("/api/distributor", distributorRoutes); //distributor route(distributor authentication)
 
 //Senith
-const productRoutes = require("./routes/products");
+const productRoutes = require("./routes/products.js");
+const materialRoutes = require("./routes/materials.js");
+const productionRoutes = require("./routes/production.js");
 app.use("/api/products", productRoutes);
+app.use("/api/production", productionRoutes);
+app.use("/api/materials", materialRoutes);
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now();
+    cb(null, uniqueSuffix + file.originalname);
+  },
+});
+
+// Configure storage engine instead of dest object.
+const upload = multer({ storage: storage });
+
+app.post("/upload-image", upload.single("image"), async (req, res) => {
+  console.log(req.body);
+  res.send("Uploaded!");
+});
 
 //uvindya
 const salaryRoutes = require("./routes/salaries");
@@ -150,3 +172,4 @@ app.post('/reset-password/:id/:token', (req, res) => {
       }
   })
 })
+

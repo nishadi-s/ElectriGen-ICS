@@ -6,13 +6,13 @@ import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 
 const Home = () => {
+
   const navigate = useNavigate();
-  //
   const { logout, isAuthenticated } = useAuthStore((state) => ({
     logout: state.logout,
     isAuthenticated: state.isAuthenticated,
   }));
-  //
+  
   const buttons = [
     {
       id: 1,
@@ -30,7 +30,7 @@ const Home = () => {
       id: 3,
       text: "Distributor Management",
       password: "Dd123",
-      link: "/DisDashboard",
+      link: "/DisMDashboard",
     },
     {
       id: 4,
@@ -56,6 +56,9 @@ const Home = () => {
       password: "Ps123",
       link: "/SalesDashboard",
     },
+
+        { id: 8, text: "Distributors", link: "/login" },
+
   ];
 
   const handleButtonClick = (password, link) => {
@@ -99,12 +102,13 @@ const Home = () => {
     logout();
     navigate("/new-login");
   };
-
+t
   return (
     <div
       className="container-fluid"
       style={{
-        backgroundImage: `url(${bg001}) `,
+
+        backgroundImage: `url(${bg001})`,
         backgroundSize: "cover",
         height: "100%",
         width: "100%",
@@ -113,6 +117,7 @@ const Home = () => {
         alignItems: "center",
       }}
     >
+
       {/* logout button */}
       {isAuthenticated && (
         <button
@@ -123,6 +128,7 @@ const Home = () => {
           Logout
         </button>
       )}
+
       <div style={{ position: "absolute", top: 20 }}>
         <img
           src={logo1}
@@ -170,19 +176,21 @@ const Home = () => {
 const getCardImage = (text) => {
   switch (text) {
     case "Supplier Management":
-      return require("../pages/img/material.jpg");
+      return require("../pages/img/material.jpg").default;
     case "Production Management":
-      return require("../pages/img/production.jpg");
-    case "Distributor Management":
-      return require("../pages/img/distributor.jpg");
+      return require("../pages/img/production.jpg").default;
+    case "Distributors":
+      return require("../pages/img/dis.jpg").default;
     case "Expot Management":
-      return require("../pages/img/exportM.jpg");
+      return require("../pages/img/exportM.jpg").default;
     case "Employee Salary Management":
-      return require("../pages/img/salary.jpg");
+      return require("../pages/img/salary.jpg").default;
     case "Donation Project Management":
-      return require("../pages/img/don.jpg");
+      return require("../pages/img/don.jpg").default;
     case "Showroom Sales Management":
-      return require("../pages/img/invoice.jpg");
+      return require("../pages/img/invoice.jpg").default;
+    case "Distributor Management":
+      return require("../pages/img/distributor.jpg").default;
     default:
       return null;
   }

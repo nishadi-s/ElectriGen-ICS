@@ -1,34 +1,28 @@
-const express = require('express')
-
+const express = require('express');
+const router = express.Router();
 const {
     getOrders,
     getOrder,
     createOrder,
     deleteOrder,
-    updateOrder
-} = require('../controllers/orderController.js') //controller function are from orderController.js
-const requireDisDAuth = require('../middleware/requireDisDAuth')
+    updateOrder,
+} = require('../controllers/orderController.js');
 
-const router = express.Router()
+// Establishing routes to manage orders
 
-//require authentication for all order routers
-router.use(requireDisDAuth)
+// GET all orders
+router.get('/', getOrders);
 
-//establishing routes to manage orders
+// GET a single order
+router.get('/:id', getOrder);
 
-//GET all orders
-router.get('/',getOrders)
+// POST a new order
+router.post('/', createOrder);
 
-//GET a single order
-router.get('/:id',getOrder)
+// DELETE an order
+router.delete('/:id', deleteOrder);
 
-//POST a new order
-router.post('/',createOrder)
+// UPDATE an order
+router.put('/:id', updateOrder);
 
-//DELETE an order
-router.delete('/:id',deleteOrder)
-
-//UPDATE an order
-router.put('/:id',updateOrder)
-
-module.exports = router
+module.exports = router;

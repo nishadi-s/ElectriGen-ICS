@@ -26,6 +26,18 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.2",
     "nodemailer": "^6.9.13",
+    "browserify-zlib": "^0.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.3",
+    "https-browserify": "^1.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.2.2",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.13",
+    "ors": "^1.0.0",
+    "browserify-zlib": "^0.2.0",
+    "https-browserify": "^1.0.0",
     "nodemon": "^3.1.0",
     "ors": "^1.0.0",
     "stream-browserify": "^3.0.0",
@@ -34,5 +46,6 @@
     "util": "^0.12.5",
     "validator": "^13.11.0",
     "zod": "^3.22.5"
+    "validator": "^13.11.0"
   }
 }
