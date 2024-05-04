@@ -1,15 +1,3 @@
-require("dotenv").config(); // Load environment variables from the .env file
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const express = require("express");
-//laters
-const cookieParser=require('cookie-parser')
-const UserModel =require('./models/User.js')
-const jwt =require('jsonwebtoken')
-const nodemailer=require('nodemailer')
-const bcrypt = require('bcrypt');
-const mongoose = require("mongoose");
-// Create an Express app
 import React, { useEffect } from "react";
 import "./index.css";
 import {
