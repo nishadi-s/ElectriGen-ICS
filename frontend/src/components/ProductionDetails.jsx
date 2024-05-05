@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 import { FaRegTrashCan } from "react-icons/fa6";
-import { format } from "date-fns";
+import { useProductionContext } from "../hooks/useProductionContext";
+import format from "date-fns/format";
 
 const ProductionDetails = ({ production }) => {
-  const formattedDate = format(new Date(production.date), "yyyy-MM-dd");
+  const { dispatch } = useProductionContext();
 
   const handleDelete = async () => {
     Swal.fire({
@@ -16,21 +18,17 @@ const ProductionDetails = ({ production }) => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const response = await fetch(`/api/productions/${production.id}`, {
+          const response = await fetch(`/api/productions/${production._id}`, {
             method: "DELETE",
           });
 
           if (response.ok) {
-            // Handle deletion success
+            dispatch({ type: "DELETE_PRODUCTION", payload: production._id });
             Swal.fire(
               "Deleted!",
               "Your production has been deleted.",
               "success"
-            ).then(() => {
-              // Refresh the page or fetch the data again here
-              window.location.reload(); // Refresh the page
-              // OR fetchProductionData(); // Call the function to fetch data again
-            });
+            );
           } else {
             throw new Error("Failed to delete the production");
           }
@@ -44,7 +42,7 @@ const ProductionDetails = ({ production }) => {
 
   return (
     <tr className="production-row">
-      <td>{formattedDate}</td>
+      <td>{format(new Date(production.date), "yyyy-MM-dd")}</td>
       <td>
         <ul>
           {production.materials.map((material, index) => (
@@ -67,6 +65,9 @@ const ProductionDetails = ({ production }) => {
         <button className="button-2" onClick={handleDelete}>
           <FaRegTrashCan />
         </button>
+        <Link to={`/production/${production._id}`} className="product-link">
+          Edit
+        </Link>
       </td>
     </tr>
   );

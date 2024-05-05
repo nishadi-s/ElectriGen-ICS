@@ -3,6 +3,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 
 // Create an Express app
 const app = express();
@@ -63,22 +65,8 @@ const productRoutes = require("./routes/products.js");
 const materialRoutes = require("./routes/materials.js");
 const productionRoutes = require("./routes/production.js");
 app.use("/api/products", productRoutes);
-app.use("/api/production", productionRoutes);
+app.use("/api/productions", productionRoutes);
 app.use("/api/materials", materialRoutes);
-const multer = require("multer");
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./uploads");
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now();
-    cb(null, uniqueSuffix + file.originalname);
-  },
-});
-
-// Configure storage engine instead of dest object.
-const upload = multer({ storage: storage });
 
 app.post("/upload-image", upload.single("image"), async (req, res) => {
   console.log(req.body);

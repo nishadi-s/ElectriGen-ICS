@@ -9,7 +9,7 @@ const MaterialForm = () => {
   const [code, setCode] = useState("");
   const [unitPrice, setUnitPrice] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [unit, setUnit] = useState("kg"); // Default unit
+  const [unit, setUnit] = useState(" "); // Default unit
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
 
@@ -81,6 +81,8 @@ const MaterialForm = () => {
   return (
     <form className="create" onSubmit={handleSubmit}>
       <h3>Add a new Material</h3>
+      {error && <div className="error">{error}</div>}
+
       <label>Material name:</label>
       <input
         type="text"
@@ -120,7 +122,6 @@ const MaterialForm = () => {
         </select>
       </div>
       <button className="button-5">Add Material</button>
-      {error && <div className="error">{error}</div>}
     </form>
   );
 };

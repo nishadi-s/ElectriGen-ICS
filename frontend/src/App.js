@@ -83,8 +83,10 @@ import EditMaterial from "./components/EditMaterial"; // Import EditProduct
 import ProductionAnalytics from "./pages/ProductionAnalytics.jsx";
 import ProductionProfile from "./pages/ProductionProfile.jsx";
 import ProductForm from "./components/ProductForm";
+import ProductionReport from "./components/ProductionReport";
 import ProductsView from "./pages/ProductView";
 import AddMaterials from "./pages/AddMaterials";
+import ProductView from "./pages/ProductView";
 import Welcome from "./pages/welcome.jsx";
 
 /*Shanali
@@ -201,6 +203,7 @@ const App = () => {
             <Route path="/Welcome" element={<Welcome />} />
             <Route path="/Production" element={<Production />} />
             <Route path="/Materials" element={<Materials />} />
+            <Route path="/ProductView" element={<ProductView />} />
             <Route path="/AddProducts" element={<AddProducts />} />
             <Route path="/AddProduction" element={<AddProduction />} />
             <Route
@@ -222,6 +225,7 @@ const App = () => {
             <Route path="/edit-material/:id" element={<EditMaterial />} />{" "}
             <Route path="/SingleProduct" element={<SingleProduct />} />
             <Route path="/ProductsView" element={<ProductsView />} />
+            <Route path="/ProductionReport" element={<ProductionReport />} />
             <Route path="/AddMaterials" element={<AddMaterials />} />
           </Routes>
         </div>

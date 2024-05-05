@@ -244,3 +244,12 @@ thead tr {
 .button-2:focus {
   background-color: #a5171c;
 }
+
+.date-picker-container {
+  display: flex;
+  align-items: center;
+}
+
+.date-picker-wrapper {
+  margin-right: 20px;
+}

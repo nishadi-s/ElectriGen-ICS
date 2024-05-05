@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import Swal from "sweetalert2";
-import ProductionNavbar from "../components/ProductionNavbar";
 
 const ProductionForm = ({ uneditable }) => {
   const [date, setDate] = useState("");
@@ -65,7 +64,7 @@ const ProductionForm = ({ uneditable }) => {
     if (selectedProduct && productQuantity) {
       const newProductRecord = {
         product: selectedProduct,
-        quantity: productQuantity,
+        quantity: productQuantity, // productQuantity entered by the user
         ...selectedProductDetails,
       };
       setProductRecords([...productRecords, newProductRecord]);
@@ -105,8 +104,18 @@ const ProductionForm = ({ uneditable }) => {
     };
 
     try {
-      // Submit new production record
-      await axios.post("http://localhost:4000/api/production", newProduction);
+      // Submit new production record using fetch
+      const response = await fetch("http://localhost:4000/api/productions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newProduction),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add production record");
+      }
 
       // Update material/product quantities
       productRecords.forEach(async (record) => {
@@ -159,7 +168,7 @@ const ProductionForm = ({ uneditable }) => {
             >
               <option value="">Select a material</option>
               {materials.map((material) => (
-                <option key={material._id} value={material._id}>
+                <option key={material._id} value={materials.name}>
                   {material.name}
                 </option>
               ))}
@@ -171,24 +180,14 @@ const ProductionForm = ({ uneditable }) => {
           <div>
             <Row className="mb-3">
               <Form.Group as={Col} controlId="formMaterialDetails">
-                <Form.Label>Material name</Form.Label>
+                <Form.Label>Material Code</Form.Label>
                 <Form.Control
                   type="text"
-                  readOnly
-                  value={selectedMaterialDetails.name}
+                  value={selectedMaterialDetails.code}
                 />
               </Form.Group>
             </Row>
             <Row className="mb-3">
-              <Form.Group as={Col} controlId="formMaterialDetails">
-                <Form.Label>Remaining Quantity</Form.Label>
-                <Form.Control
-                  type="text"
-                  readOnly
-                  value={selectedMaterialDetails.quantity}
-                />
-              </Form.Group>
-
               <Form.Group as={Col} controlId="formMaterialQuantity">
                 <Form.Label>Material Quantity</Form.Label>
                 <Form.Control
@@ -226,11 +225,11 @@ const ProductionForm = ({ uneditable }) => {
                 </Form.Control>
               </Form.Group>
               <Form.Group as={Col} controlId="formProductDetails">
-                <Form.Label>Product Name</Form.Label>
+                <Form.Label>Product Code</Form.Label>
                 <Form.Control
                   type="text"
                   readOnly
-                  value={selectedProductDetails.name}
+                  value={selectedProductDetails.itemCode}
                 />
               </Form.Group>
             </Row>
@@ -254,15 +253,6 @@ const ProductionForm = ({ uneditable }) => {
                 />
               </Form.Group>
               <Row className="mb-3">
-                <Form.Group as={Col} controlId="formProductDetails">
-                  <Form.Label>Remaining Quantity</Form.Label>
-                  <Form.Control
-                    type="text"
-                    readOnly
-                    value={selectedProductDetails.quantity}
-                  />
-                </Form.Group>
-
                 <Form.Group as={Col} controlId="formProductQuantity">
                   <Form.Label>Product Quantity</Form.Label>
                   <Form.Control

@@ -34,18 +34,6 @@ const productionSchema = new Schema(
           type: String,
           required: true,
         },
-        unitPrice: {
-          type: Number,
-          required: true,
-        },
-        category: {
-          type: String,
-          required: true,
-        },
-        color: {
-          type: String,
-          required: true,
-        },
         quantity: {
           type: Number,
           required: true,

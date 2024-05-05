@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import ProductDetails from "../components/ProductDetails";
-import ProductSearch from "../components/ProductSearch";
+import Swal from "sweetalert2";
 import { useProductContext } from "../hooks/useProductsContext";
 import ProductionNavbar from "../components/ProductionNavbar";
+import ProductSearch from "../components/ProductSearch";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import "../senith.css";
 
 const ProductsView = () => {
@@ -51,10 +52,10 @@ const ProductsView = () => {
   return (
     <ProductionNavbar>
       <div className="home">
-        {/*<div className="production-header">
-          <h1>Product Inventory</h1>
-        </div>*/}
         <div className="products">
+          <div className="production-header">
+            <h1>Product Catalog</h1>
+          </div>
           <div className="products-search">
             <ProductSearch onSearch={handleSearch} />
           </div>
@@ -71,6 +72,7 @@ const ProductsView = () => {
                 <tr>
                   <th scope="col">Product Code</th>
                   <th scope="col">Name</th>
+                  <th scope="col">Color</th>
                   <th scope="col">Category</th>
                   <th scope="col">Unit Price</th>
                   <th scope="col">Available Quantity</th>
@@ -78,7 +80,21 @@ const ProductsView = () => {
               </thead>
               <tbody>
                 {currentProducts.map((product) => (
-                  <ProductDetails key={product._id} product={product} />
+                  <tr
+                    key={product._id}
+                    style={{
+                      backgroundColor:
+                        product.quantity < 100 ? "#f01313" : "inherit",
+                    }}
+                  >
+                    <td>{product.itemCode}</td>
+                    <td>{product.name}</td>
+                    <td>{product.color}</td>
+                    <td>{product.category}</td>
+                    <td>{product.unitPrice}</td>
+                    <td>{product.quantity}</td>
+                    <td></td>
+                  </tr>
                 ))}
               </tbody>
             </table>

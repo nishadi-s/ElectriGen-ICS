@@ -1,135 +1,117 @@
-import { useState, useEffect } from "react";
-import { useProductContext } from "../hooks/useProductsContext";
-import "../senith.css";
-import Swal from "sweetalert2"; // Import SweetAlert
+import React, { useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const ProductForm = () => {
-  const { dispatch, products } = useProductContext();
   const [name, setName] = useState("");
-  const [itemCode, setitemCode] = useState("");
-  const [category, setcategory] = useState("");
-  const [color, setcolor] = useState("");
-  const [unitPrice, setunitPrice] = useState("");
-  const [quantity, setquantity] = useState("");
-  const [error, setError] = useState(null);
-  const [emptyFields, setEmptyFields] = useState([]);
-
-  useEffect(() => {
-    if (products.some((product) => product.itemCode === itemCode)) {
-      setError("Product with the same item code already exists.");
-    } else {
-      setError(null);
-    }
-  }, [itemCode, products]);
+  const [itemCode, setItemCode] = useState("");
+  const [category, setCategory] = useState("");
+  const [color, setColor] = useState("");
+  const [unitPrice, setUnitPrice] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [image, setImage] = useState(null); // State to store selected image file
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (error) {
-      return; // Prevent form submission if there is an error
-    }
+    // Create FormData object to send image along with other product data
+    const formData = new FormData();
+    formData.append("image", image); // Append selected image file to FormData
+    formData.append("name", name);
+    formData.append("itemCode", itemCode);
+    formData.append("category", category);
+    formData.append("color", color);
+    formData.append("unitPrice", unitPrice);
+    formData.append("quantity", quantity);
 
-    const product = {
-      name,
-      itemCode,
-      category,
-      color,
-      unitPrice,
-      quantity,
-    };
-
-    const response = await fetch("/api/products", {
-      method: "POST",
-      body: JSON.stringify(product),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const json = await response.json();
-
-    if (!response.ok) {
-      setError(json.error);
-      setEmptyFields(json.emptyFields || []);
-    }
-
-    if (response.ok) {
-      setName("");
-      setitemCode("");
-      setcategory("");
-      setcolor("");
-      setunitPrice("");
-      setquantity("");
-
-      setError(null);
-      setEmptyFields([]);
-
-      // Show SweetAlert popup
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Product hass been added successfully",
-        showConfirmButton: false,
-        timer: 2000,
-      }).then(() => {
-        // Redirect to products page after timer runs out
-        window.location.href = "/products";
+    try {
+      // Send FormData containing image and other product data to server
+      const response = await axios.post("/upload-image", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Set content type for file upload
+        },
       });
-
-      dispatch({ type: "CREATE_PRODUCT", payload: json });
+      // Handle response
+      console.log("Upload success:", response.data);
+      // Show success message
+      Swal.fire({
+        icon: "success",
+        title: "Product image uploaded successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      // Reset form fields after successful upload
+      setName("");
+      setItemCode("");
+      setCategory("");
+      setColor("");
+      setUnitPrice("");
+      setQuantity("");
+      setImage(null);
+    } catch (error) {
+      // Handle error
+      console.error("Error uploading image:", error);
+      // Show error message
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
     }
   };
 
   return (
-    <form className="create" onSubmit={handleSubmit}>
-      <h3>Add a new product</h3>
-      <label>Product name:</label>
+    <form className="product-form" onSubmit={handleSubmit}>
+      <h2>Add New Product</h2>
+      <label htmlFor="name">Name:</label>
       <input
         type="text"
-        onChange={(e) => setName(e.target.value)}
+        id="name"
         value={name}
-        className={emptyFields.includes("name") ? "error" : ""}
+        onChange={(e) => setName(e.target.value)}
       />
-      <label>Product code:</label>
+      <label htmlFor="itemCode">Item Code:</label>
       <input
         type="text"
+        id="itemCode"
         value={itemCode}
-        onChange={(e) => {
-          const userInput = e.target.value.replace(/[^\d]/g, "");
-          setitemCode("DP" + userInput);
-        }}
-        className={error ? "error" : ""}
+        onChange={(e) => setItemCode(e.target.value)}
       />
-      <label>Product category:</label>
+      <label htmlFor="category">Category:</label>
       <input
         type="text"
-        onChange={(e) => setcategory(e.target.value)}
+        id="category"
         value={category}
-        className={emptyFields.includes("category") ? "error" : ""}
+        onChange={(e) => setCategory(e.target.value)}
       />
-      <label>Color:</label>
+      <label htmlFor="color">Color:</label>
       <input
         type="text"
-        onChange={(e) => setcolor(e.target.value)}
+        id="color"
         value={color}
-        className={emptyFields.includes("color") ? "error" : ""}
+        onChange={(e) => setColor(e.target.value)}
       />
-      <label>Unit price(in Rs.):</label>
+      <label htmlFor="unitPrice">Unit Price:</label>
       <input
         type="number"
-        onChange={(e) => setunitPrice(e.target.value)}
+        id="unitPrice"
         value={unitPrice}
-        className={emptyFields.includes("unitPrice") ? "error" : ""}
+        onChange={(e) => setUnitPrice(e.target.value)}
       />
-      <label>Quantity:</label>
+      <label htmlFor="quantity">Quantity:</label>
       <input
         type="number"
-        onChange={(e) => setquantity(e.target.value)}
+        id="quantity"
         value={quantity}
-        className={emptyFields.includes("quantity") ? "error" : ""}
+        onChange={(e) => setQuantity(e.target.value)}
       />
-      <button className="button-5">Add product</button>
-      {error && <div className="error">{error}</div>}
+      <input
+        type="file"
+        id="image"
+        accept="image/*"
+        onChange={(e) => setImage(e.target.files[0])}
+      />
+      <button type="submit">Add Product</button>
     </form>
   );
 };
