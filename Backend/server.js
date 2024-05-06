@@ -2,6 +2,12 @@ require("dotenv").config(); // Load environment variables from the .env file
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const express = require("express");
+//laters
+const cookieParser=require('cookie-parser')
+const UserModel =require('./models/User.js')
+const jwt =require('jsonwebtoken')
+const nodemailer=require('nodemailer')
+const bcrypt = require('bcrypt');
 const mongoose = require("mongoose");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
@@ -32,12 +38,10 @@ mongoose
     console.log(error); // Log any errors that occur during database connection
   });
 
-//middleware-importer
-app.use(express.json());
-app.use((req, res, next) => {
-  console.log(req.path, req.method);
-  next();
-});
+
+
+const authRoutes = require("./routes/authRoutes");
+app.use("/auth", authRoutes);
 
 //primal sales route
 const salesRouter = require("./routes/sales");
@@ -48,9 +52,9 @@ const feedbackRouter = require("./routes/sfeedback");
 app.use("/sfeedback", feedbackRouter);
 
 //dulari
+const dFeedbackRouter = require("./routes/dFeedback.js");
 const projectRouter = require("./routes/DonationProjects.js");
 app.use("/DonationProject", projectRouter);
-const dFeedbackRouter = require("./routes/dFeedback.js");
 app.use("/dFeedback", dFeedbackRouter);
 
 //Dinithi
@@ -76,15 +80,79 @@ app.post("/upload-image", upload.single("image"), async (req, res) => {
 //uvindya
 const salaryRoutes = require("./routes/salaries");
 app.use("/api/salaries", salaryRoutes);
+const userRoutes=require("./routes/userRoutes.js")
+app.use("/api/users",userRoutes)
 
 //Shanali
-const exportRoutes = require("./routes/export");
-const importerRoutes = require("./routes/importer");
-app.use("/api/export", exportRoutes);
-app.use("/api/importer", importerRoutes);
+const exportRoutes=require('./routes/export')
+const importerRoutes=require('./routes/importer')
+app.use('/api/export', exportRoutes)
+app.use('/api/importer', importerRoutes)
 
 //Nishadi
 const supplierChain_order = require("./routes/supplier_order"); //Nishadi
 const supplier = require("./routes/supplier"); //Nishadi
 app.use("/api/supplier_order", supplierChain_order); //Nishadi
 app.use("/api/supplier", supplier); //Nishadi
+
+//reset password
+app.post('/forgot-password', (req, res) => {
+  const { email } = req.body;
+  UserModel.findOne({ email: email })
+    .then(user => {
+      if (!user) {
+        return res.send({ Status: "User not existed" });
+      }
+
+      const token = jwt.sign({ id: user._id }, "jwt_secret_key", { expiresIn: "1d" });
+
+      // Create transporter with App Password
+      var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'uvindyajayasundara@gmail.com',
+          pass: 'twpw ntzi iwxc hvtj' // Replace with your App Password
+        }
+      });
+
+      var mailOptions = {
+        from: 'uvindyajayasundara@gmail.com',
+        to: 'your email@gmail.com',
+        subject: 'Reset Password Link',
+        text: `http://localhost:3000/reset-password/${user._id}/${token}`
+      };
+
+      // Send the email
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+          res.status(500).send({ Status: "Error sending email" });
+        } else {
+          console.log('Email sent: ' + info.response);
+          res.send({ Status: "Email sent successfully" });
+        }
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).send({ Status: "Error processing request" });
+    });
+});
+app.post('/reset-password/:id/:token', (req, res) => {
+  const {id, token} = req.params
+  const {password} = req.body
+
+  jwt.verify(token, "jwt_secret_key", (err, decoded) => {
+      if(err) {
+          return res.json({Status: "Error with token"})
+      } else {
+          bcrypt.hash(password, 10)
+          .then(hash => {
+              UserModel.findByIdAndUpdate({_id: id}, {password: hash})
+              .then(u => res.send({Status: "Success"}))
+              .catch(err => res.send({Status: err}))
+          })
+          .catch(err => res.send({Status: err}))
+      }
+  })
+})

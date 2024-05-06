@@ -13,20 +13,17 @@ const NavbarStart = () => {
   }
 
   return (
-    <header>
-      <div className="container">
-        <Link to="/">
-          <h1>Electrigen</h1>
-        </Link>
-        <nav>
+    <header className='start-nav-header'>
+      <div className="start-nav-container">
+          <h2 className='start-nav-h2'>Electrigen</h2>
+        <nav className='start-nav-dis'>
           {distributor && (<div>
             <span>{distributor.email}</span>
             <button onClick={handleClick}>Log out</button>
           </div>
           )}
           {!distributor && (<div>
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Signup</Link>
+            <Link className='signup-link' to="/signup">Signup</Link>
           </div>
           )}
         </nav>

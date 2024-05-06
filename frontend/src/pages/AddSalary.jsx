@@ -7,7 +7,7 @@ const AddSalaryPage = () => {
   return (
     <Navbar_Pay>
     <div className="add-salary-page">
-      <h1>Add Salary</h1>
+     
       <SalaryForm />
     </div>
     </Navbar_Pay>

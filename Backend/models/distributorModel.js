@@ -27,12 +27,16 @@ const distributorSchema = new Schema({
         type: String,
         required: true,
     },
+    distributorLoginID: {
+        type: String,
+        required: true,
+    },
 });
 
 // Static signup method
-distributorSchema.statics.signup = async function ({ distributorName, address, companyName, email, password }) {
+distributorSchema.statics.signup = async function ({ distributorName, address, companyName, email, password, distributorLoginID }) {
     // Validation
-    if (!email || !password || !distributorName || !address || !companyName) {
+    if (!email || !password || !distributorName || !address || !companyName || !distributorLoginID) {
         throw Error('All fields must be filled');
     }
     if (!validator.isEmail(email)) {
@@ -51,16 +55,16 @@ distributorSchema.statics.signup = async function ({ distributorName, address, c
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
 
-    const distributor = await this.create({ distributorName, address, companyName, email, password: hash });
+    const distributor = await this.create({ distributorName, address, companyName, email, password: hash, distributorLoginID });
     return distributor;
 };
 
 // Static login method
-distributorSchema.statics.login = async function (email, password) {
-    if (!email || !password) {
+distributorSchema.statics.login = async function (distributorLoginID, password) {
+    if (!distributorLoginID || !password) {
         throw Error('All fields must be filled');
     }
-    const distributor = await this.findOne({ email });
+    const distributor = await this.findOne({ distributorLoginID });
     if (!distributor) {
         throw Error('Incorrect email');
     }

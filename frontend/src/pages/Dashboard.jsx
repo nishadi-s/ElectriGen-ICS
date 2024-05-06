@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import SfeedbackFetch from "../components/sfeedbackFetch";
 import PinVerification from "../components/PinVerification";
+import InvoiceReport from "./InvoiceReport";
 
 const Dashboard = () => {
-  const correctPin = '1234'; // Your correct PIN number
-  const targetPage = '/viewInvoice'; // URL of the target page
+  const correctPin = "1234"; // Your correct PIN number
+  const targetPage = "/viewInvoice"; // URL of the target page
 
   const [showPinVerification, setShowPinVerification] = useState(false);
 
@@ -29,16 +30,26 @@ const Dashboard = () => {
 
       <table>
         <tr>
-          <td style={{ padding: '10px' }}>
+          <td style={{ padding: "10px" }}>
             <Link to="/invoiceCreate">
-              <button type="button" className="btn btn-primary btn-lg mr-4 fs-lg">Create Invoice</button>
+              <button
+                type="button"
+                className="btn btn-primary btn-lg mr-4 fs-lg"
+              >
+                Create Invoice
+              </button>
             </Link>
           </td>
         </tr>
         <tr>
-          <td style={{ padding: '10px' }}>
+          <td style={{ padding: "10px" }}>
             <Link to="/viewInvoice">
-              <button type="button" className="btn btn-primary btn-lg mr-4 fs-lg">View Invoices</button>
+              <button
+                type="button"
+                className="btn btn-primary btn-lg mr-4 fs-lg"
+              >
+                View Invoices
+              </button>
             </Link>
           </td>
         </tr>
@@ -55,7 +66,21 @@ const Dashboard = () => {
       </div>
 
       <div>
-        <button onClick={handleButtonClick} className="btn btn-primary">Enter Secure Area</button>
+        <button
+          onClick={handleButtonClick}
+          className="btn btn-primary btn-lg mr-4 fs-lg"
+        >
+          Enter Secure Area
+        </button>
+      </div>
+      <br />
+
+      <div>
+        <Link to="/InvoiceReport">
+          <button type="button" className="btn btn-primary btn-lg mr-4 fs-lg">
+            Sales Report
+          </button>
+        </Link>
       </div>
 
       <div>
@@ -67,7 +92,9 @@ const Dashboard = () => {
       </div>
 
       <Link to="/salesFeedback">
-        <button type="button" className="btn btn-primary">Add Feedback</button>
+        <button type="button" className="btn btn-primary">
+          Add Feedback
+        </button>
       </Link>
     </div>
   );
