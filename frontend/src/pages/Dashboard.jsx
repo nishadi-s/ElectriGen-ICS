@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import SfeedbackFetch from "../components/sfeedbackFetch";
 import PinVerification from "../components/PinVerification";
-import InvoiceReport from "./InvoiceReport";
+//import InvoiceReport from "./InvoiceReport";
 
 const Dashboard = () => {
   const correctPin = "1234"; // Your correct PIN number

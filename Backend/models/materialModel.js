@@ -20,7 +20,7 @@ const materialSchema = new Schema(
     },
 
     quantity: {
-      type: String,
+      type: Number,
       required: true,
     },
   },

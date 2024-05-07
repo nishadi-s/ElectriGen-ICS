@@ -158,11 +158,34 @@ const updateProductQuantity = async (req, res) => {
     }
 
     res.status(200).json(updatedProduct);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 // Get products with quantity less than 100
 const getLowQuantityProducts = async (req, res) => {
   try {
     const lowQuantityProducts = await Product.find({ quantity: { $lt: 50 } });
     res.status(200).json(lowQuantityProducts);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const getProductByItemCode = async (req, res) => {
+  const { itemCode } = req.params;
+
+  try {
+    const product = await Product.findOne({ itemCode });
+
+    if (!product) {
+      return res
+        .status(404)
+        .json({ error: "No product found with the provided item code" });
+    }
+
+    res.status(200).json(product);
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
@@ -177,4 +200,5 @@ module.exports = {
   getItemCodes,
   updateProductQuantity,
   getLowQuantityProducts,
+  getProductByItemCode,
 };
