@@ -31,6 +31,6 @@ router.delete("/:id", deleteProduct);
 router.put("/:id", updateProduct);
 
 // GET products with quantity less than 100
-router.get("/lowquantity", getLowQuantityProducts); // Add this route
+router.get("/lowquantity", getLowQuantityProducts);
 
 module.exports = router;

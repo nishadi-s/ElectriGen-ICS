@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table } from 'react-bootstrap';
 import DonationNavbar from '../components/DonationNavbar';
+import "../donation.css";
 
 const DonationDashboard = () => {
   const [projects, setProjects] = useState([]);
@@ -35,7 +36,7 @@ const DonationDashboard = () => {
   return (
     <DonationNavbar>
       <div>
-        <h1>Donation Dashboard</h1>
+        <h1 className='don-header'>Donation Dashboard</h1>
 
         <div className="mt-5 mb-5">
           <div className="card">
@@ -50,7 +51,7 @@ const DonationDashboard = () => {
           </div>
         </div>
 
-        <Table striped bordered hover>
+        <Table striped bordered hover variant="primary"> {/* Change variant to "primary" for blue color */}
           <thead>
             <tr>
               <th>Project ID</th>

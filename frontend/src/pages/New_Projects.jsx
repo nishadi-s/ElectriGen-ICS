@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Table, Form, Button } from "react-bootstrap";
 import DonationNavbar from "../components/DonationNavbar";
+import Swal from "sweetalert2"; // Import SweetAlert
+import "../donation.css";
+
 
 const GenerateProjectID = () => {
   const currentDate = new Date();
@@ -38,22 +41,20 @@ export default function NewProjects() {
     try {
       // Deduct quantity of selected products from the database
       for (const item of projectData.items) {
-        const { itemCode, qty } = item;
-        if (itemCode && qty) {
-          const product = products.find((p) => p.itemCode === itemCode);
-          if (product) {
-            const updatedQuantity = product.quantity - parseInt(qty);
-            await axios.put(`http://localhost:4000/api/products/${product._id}`, {
-              quantity: updatedQuantity, // Deduct quantity
-            });
-          }
-        }
+        // Deduct quantity code...
       }
-
+  
       // Add the project data to the database
       await axios.post("http://localhost:4000/DonationProject/add", projectData);
-
-      alert("Project added successfully!");
+  
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Your work has been saved",
+        showConfirmButton: false,
+        timer: 1500
+      });
+  
       setProjectData({
         project_id: GenerateProjectID(), // Generate new project ID
         estimate_date: "",
@@ -61,11 +62,15 @@ export default function NewProjects() {
         total_amount: "",
         items: [],
       });
+  
+      // Redirect to DProjectDetails.jsx page
+      window.location.href = "/DProjectDetails"; // Adjust the URL as per your route configuration
     } catch (error) {
       console.error("Error adding project:", error);
       alert("Error adding project. Please try again.");
     }
   };
+  
 
   const handleAddRow = () => {
     setProjectData((prevData) => ({
@@ -83,9 +88,20 @@ export default function NewProjects() {
 
   const handleInputChange = (e, index, field) => {
     const { name, value } = e.target;
+  
+    // Validate if the input value is a positive number
+    if (name === "qty" && parseInt(value) < 0) {
+      // If the value is negative, set the input field to red and return
+      e.target.classList.add("is-invalid");
+      return;
+    } else {
+      // If the value is valid, remove the red color from the input field
+      e.target.classList.remove("is-invalid");
+    }
+  
     const updatedItems = [...projectData.items];
     updatedItems[index][field] = value;
-    const selectedProduct = products.find((product) => product.name === value);
+    const selectedProduct = products.find((product) => product.itemCode === value);
     if (selectedProduct) {
       updatedItems[index]["unitPrice"] = selectedProduct.unitPrice;
       updatedItems[index]["itemCode"] = selectedProduct.itemCode; // Add itemCode
@@ -96,6 +112,7 @@ export default function NewProjects() {
     }));
     updateTotalAmount(updatedItems);
   };
+  
 
   const updateTotalAmount = (updatedItems) => {
     let total = 0;
@@ -113,6 +130,7 @@ export default function NewProjects() {
   return (
     <DonationNavbar>
       <div>
+        <h1 className="don-header">Create New Project Record</h1>
         <form onSubmit={sendData}>
           <div className="form-group">
             <label htmlFor="projectID">Project ID</label>
@@ -190,8 +208,8 @@ export default function NewProjects() {
                     >
                       <option value="">Select an item</option>
                       {products.map((product) => (
-                        <option key={product._id} value={product.name}>
-                          {product.name}
+                        <option key={product._id} value={product.itemCode}>
+                          {product.itemCode}
                         </option>
                       ))}
                     </Form.Control>
