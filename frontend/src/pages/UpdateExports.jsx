@@ -17,6 +17,7 @@ const UpdateExport = () => {
   const [emptyFields, setEmptyFields] = useState([]);
   const [successMessage, setSuccessMessage] = useState('');
   const [updatedItems, setUpdatedItems] = useState([]);
+  const [oldQuantities, setOldQuantities] = useState({}); // Store old quantities
 
   useEffect(() => {
     const fetchExportData = async () => {
@@ -29,6 +30,13 @@ const UpdateExport = () => {
         setUpdatedItems([...exportData.items]);
         setTotalCost(exportData.totalCost);
         setStatus(exportData.status);
+
+        // Fetch initial item quantities and store in oldQuantities
+        const initialQuantities = {};
+        for (const item of exportData.items) {
+          initialQuantities[item.itemID] = item.quantity;
+        }
+        setOldQuantities(initialQuantities);
       } catch (error) {
         console.error("Error fetching export data:", error);
       }
@@ -65,6 +73,7 @@ const UpdateExport = () => {
 
       if (response.ok) {
         const updatedExportData = await response.json();
+        // Update export order details
         setExportOrderID(updatedExportData.exportOrderID);
         setImporter(updatedExportData.importer);
         setItems(updatedExportData.items);
@@ -72,16 +81,63 @@ const UpdateExport = () => {
         setTotalCost(updatedExportData.totalCost);
         setStatus(updatedExportData.status);
         setSuccessMessage('Export order updated successfully!');
+
+        // Iterate through updated items to update product quantities
+        for (const item of updatedItems) {
+          try {
+            // Fetch old quantity for the item
+            const oldQuantity = oldQuantities[item.itemID];
+            if (oldQuantity !== undefined) {
+              // Calculate quantity difference
+              const quantityDifference = item.quantity - oldQuantity;
+
+              // Fetch product associated with the item code
+              const productResponse = await fetch(`/api/products/itemCode/${item.itemID}`);
+              if (productResponse.ok) {
+                const productData = await productResponse.json();
+
+                // Calculate new quantity for the product
+                let newQuantity;
+                if (quantityDifference > 0) {
+                  newQuantity = productData.quantity - quantityDifference; // Subtract quantity difference
+                } else {
+                  newQuantity = productData.quantity + Math.abs(quantityDifference); // Add absolute value of quantity difference
+                }
+
+                // Update product quantity in the database
+                const updateProductResponse = await fetch(`/api/products/${productData._id}`, {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ quantity: newQuantity }),
+                });
+
+                if (!updateProductResponse.ok) {
+                  throw new Error("Failed to update product quantity");
+                }
+              }
+            }
+          } catch (error) {
+            console.error("Error updating product:", error);
+            // Handle error updating product quantity
+          }
+        }
+
+        // Show success message
         Swal.fire({
           icon: 'success',
           title: 'Success!',
           text: 'Export order updated successfully!'
         });
+
+        // Redirect to ExportsDashboard after a delay
         setTimeout(() => navigate('/ExportsDashboard'), 2000);
       } else {
         const errorData = await response.json();
         setError("Error updating export order: " + errorData.error);
         setEmptyFields(errorData.emptyFields || []);
+        // Show error message
         Swal.fire({
           icon: 'error',
           title: 'Error!',
@@ -91,6 +147,7 @@ const UpdateExport = () => {
     } catch (error) {
       console.error("Error:", error);
       setError("An error occurred while updating the export order.");
+      // Show error message
       Swal.fire({
         icon: 'error',
         title: 'Error!',

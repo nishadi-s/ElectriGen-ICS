@@ -109,7 +109,9 @@ import Importer from "./pages/Importer.jsx";
 import ExportAnalytics from "./pages/ExportAnalytics.jsx";
 import UpdateExports from "./pages/UpdateExports.jsx";
 import ImporterUpdate from "./pages/ImporterUpdate.jsx";
+import ExportsNewDashboard from "./pages/ExportsNewDashboard.jsx";
 //import ExportsEmail from "./pages/ExportsEmail.jsx";
+
 
 // New Auth
 import NewLogin from "./pages/new-login/Login.jsx";
@@ -122,7 +124,6 @@ const queryClient = new QueryClient();
 
 const App = () => {
   const { distributor } = useDisDAuthContext();
-
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
@@ -184,21 +185,22 @@ const App = () => {
                 element={<SupplierOrderReport />}
               />
               <Route path="/Materials" element={<Materials />} />
-              {/*Shanali*/}
-              <Route path="/" element={<ExportsDashboard />} />
-              <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
-              <Route path="/Importer" element={<Importer />} />
-              <Route path="/ExportOrders" element={<ExportOrders />} />
-              <Route
-                path="/ImporterDescription"
-                element={<ImporterDescription />}
-              />
-              <Route path="/ExportAnalytics" element={<ExportAnalytics />} />
-              <Route path="/ExportsProfile" element={<ExportsProfile />} />
-              <Route path="/UpdateExports/:id" element={<UpdateExports />} />
-              <Route path="/ImporterUpdate/:id" element={<ImporterUpdate />} />
-              <Route path="/ExportsReport" element={<ExportsReport />} />
-              {/* <Route path="/ExportsEmail" element={<ExportsEmail />} /> */}
+                
+            {/* Shanali */}
+            <Route path="/" element={<Home />} />
+            <Route path="/Home" element={<Home />} />            
+            <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
+            <Route path="/Importer" element={<Importer />} />
+            <Route path="/ExportOrders" element={<ExportOrders />} />
+            <Route path="/ImporterDescription" element={<ImporterDescription />}/>
+            <Route path="/ExportAnalytics" element={<ExportAnalytics />} />
+            <Route path="/ExportsProfile" element={<ExportsProfile />} />
+            <Route path="/UpdateExports/:id" element={<UpdateExports />} />
+            <Route path="/ImporterUpdate/:id" element={<ImporterUpdate />} />
+            <Route path="/ExportsReport" element={<ExportsReport />} />
+            <Route path="/ExportsNewDashboard" element={<ExportsNewDashboard />} />
+            {/* <Route path="/ExportsEmail" element={<ExportsEmail />} /> */}
+
               {/* Dulari */}
               <Route path="/New_Projects" element={<New_Projects />} />
               <Route path="/Doner_Feedback" element={<Doner_Feedback />} />

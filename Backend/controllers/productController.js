@@ -35,6 +35,7 @@ const getItemCodes = async (req, res) => {
   }
 };
 
+
 //create new product
 const createProduct = async (req, res) => {
   const { name, itemCode, unitPrice, quantity, color, category } = req.body;
@@ -173,6 +174,25 @@ const getLowQuantityProducts = async (req, res) => {
   }
 };
 
+const getProductByItemCode = async (req, res) => {
+  const { itemCode } = req.params;
+
+  try {
+    const product = await Product.findOne({ itemCode });
+
+    if (!product) {
+      return res
+        .status(404)
+        .json({ error: "No product found with the provided item code" });
+    }
+
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+
 module.exports = {
   getProduct,
   getProducts,
@@ -182,4 +202,6 @@ module.exports = {
   getItemCodes,
   updateProductQuantity,
   getLowQuantityProducts,
+  getProductByItemCode,
+
 };
