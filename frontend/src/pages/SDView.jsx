@@ -3,6 +3,7 @@ import { Table, Button } from 'react-bootstrap';
 import SalesNavbar from '../components/SalesNavbar';
 import axios from 'axios';
 import PinVerification from "../components/PinVerification";
+import "../sales.css";
 
 const SDView = () => {
   const correctPin = '1234'; // Your correct PIN number
@@ -37,8 +38,8 @@ const SDView = () => {
   return (
     <SalesNavbar>
       <div>
-        <h1>Sales Records</h1>
-        <Button onClick={handleButtonClick} className="btn btn-primary mb-3">Verify PIN</Button>
+        <h1 className="sales-header">Sales Records</h1>
+        <Button onClick={handleButtonClick} className="btn btn-primary mb-3">Do Modifications</Button>
         <Table striped bordered hover>
           <thead>
             <tr>

@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import SalesNavbar from '../components/SalesNavbar';
+import "../sales.css";
 
 const InvoiceUpdate = () => {
   const { billID } = useParams(); // Fetching billID from URL params
@@ -89,7 +90,7 @@ const InvoiceUpdate = () => {
   return (
     <SalesNavbar>
     <div>
-      <h1>Edit Invoice</h1>
+      <h1 className='sales-header'>Edit Invoice</h1>
       <Form onSubmit={handleSubmit}>
         <Row className="mb-3">
           <Form.Group as={Col} controlId="formBillID">

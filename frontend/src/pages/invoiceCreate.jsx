@@ -3,6 +3,7 @@ import { Form, Button, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import SalesNavbar from '../components/SalesNavbar';
+import "../sales.css";
 
 const InvoiceCreate = () => {
   const GenerateBillID = () => {
@@ -121,7 +122,7 @@ const InvoiceCreate = () => {
   return (
     <SalesNavbar>
       <div>
-        <h1>Create Invoice</h1>
+        <h1 className='sales-header'>Create Invoice</h1>
         <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Form onSubmit={handleSubmit} >
           <Row className="mb-3">
@@ -185,6 +186,7 @@ const InvoiceCreate = () => {
                   <Form.Control
                     type="number"
                     value={item.price}
+                    readOnly
                     onChange={(e) => handleItemChange(index, 'price', e.target.value)}
                   />
                 </Form.Group>

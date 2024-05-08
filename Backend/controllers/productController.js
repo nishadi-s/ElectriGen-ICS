@@ -35,7 +35,19 @@ const getItemCodes = async (req, res) => {
   }
 };
 
-//ceate new product
+
+
+// Get all item codes
+const getItemCodes = async (req, res) => {
+  try {
+    const itemCodes = await Product.distinct("itemCode");
+    res.status(200).json(itemCodes);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+//create new product
 const createProduct = async (req, res) => {
   const { name, itemCode, unitPrice, quantity, color, category } = req.body;
 
@@ -50,6 +62,8 @@ const createProduct = async (req, res) => {
   if (!unitPrice) {
     emptyFields.push("unitPrice");
   }
+  if (!category) {
+    emptyFields.push("category");
   if (!category) {
     emptyFields.push("category");
   }
@@ -72,6 +86,7 @@ const createProduct = async (req, res) => {
       name,
       itemCode,
       unitPrice,
+      quantity,
       quantity,
       color,
       category,
