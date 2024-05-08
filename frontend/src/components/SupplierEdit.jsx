@@ -92,6 +92,7 @@ const EditSupplier = () => {
             <label className='text-xl mr-4 text-gray-500'>Supplier ID:</label>
             <input
               type="text"
+              readOnly
               value={Sup_ID}
               onChange={(e) => setSupplier_ID(e.target.value)}
               className='border-2 border-gray-500 px-4 py-2 w-full'
@@ -148,9 +149,9 @@ const EditSupplier = () => {
             />
           </div>
           
-          {/* Save Button */}
-          <button className='p-2 bg-sky-300 m-8' onClick={handleEditSupplier}>
-            Save
+          {/* Edit Button */}
+          <button className='Sup_button' onClick={handleEditSupplier}>
+            Update Supplier
           </button>
           {/* Error Message */}
           {error && <div className="error">{error}</div>}

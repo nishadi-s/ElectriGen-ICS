@@ -41,6 +41,8 @@ import SupplierOrderForm from "./components/SupplierOrderForm.jsx"; //Import sup
 import SupplierOrderEdit from "./components/SupplierOrderEdit.jsx"; //Import the Update supplier Order component
 import SupplierOrderReport from "./components/SupplierOrderRepo.jsx";
 import Materials from "./pages/Materials.jsx";
+import SupplierEmail from "./pages/supplierEmail.jsx"//Importing supplier email component
+
 
 //Dulari_IT22121110
 import DonationNavbar from "./components/DonationNavbar.jsx";
@@ -187,6 +189,7 @@ const App = () => {
                 element={<SupplierOrderReport />}
               />
               <Route path="/Materials" element={<Materials />} />
+              <Route path="/SupplierEmail" element={<SupplierEmail/>}/> 
                 
             {/* Shanali */}
             <Route path="/" element={<Home />} />

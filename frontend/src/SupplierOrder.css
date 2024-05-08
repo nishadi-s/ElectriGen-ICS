@@ -3,16 +3,19 @@
 
 /*layout*/
 :root{
-    --primary:#076ac0;
+    --primary:#000204;
     --error:#a20033;
 }
 
-body{
-    background: #f1f1f1;
-    margin: 0;
-    padding: 0;
-    font-family: "Poppins";
+body {
+  background: #b3d9ff;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins";
+  
 }
+
+
 
 header{
     background: #fff;
@@ -85,7 +88,7 @@ input.error{
   
   /* Table Header */
   .table th {
-    background-color: #f2f2f2;
+    background-color: #8bcbf6;
     font-weight: bold;
     text-align: left;
     padding: 8px;
@@ -103,7 +106,7 @@ input.error{
   }
   
   /* Button Styles */
-  .button1 {
+  .Sup_button1 {
     background-color: #0a32c0;
     color: white;
     border: none;
@@ -116,7 +119,7 @@ input.error{
     border-radius: 4px;
   }
 
-  .button2 {
+  .Sup_button2 {
     background-color: #cd0c2c;
     color: white;
     border: none;
@@ -129,10 +132,13 @@ input.error{
     border-radius: 4px;
   }
   
-  .button1:hover {
+  .Sup_button:hover {
     background-color: #4577a0;
   }
 
+  .Sup_button1:hover {
+    background-color: #4577a0;
+  }
   .button2:hover {
     background-color: #fc2755;
   }
@@ -196,7 +202,7 @@ input.error{
   }
   
 /*supplier_order ORDER page button*/
-.button{
+.Sup_button{
   background: rgb(4, 4, 68);
   border: 0;
   color: #fff;

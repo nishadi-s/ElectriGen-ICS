@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import '../SupplierOrder.css';
-import { useEffect } from 'react'
 import { useSupplierOrderContext } from "../hooks/useSupplierOrderContext";
 import { useNavigate } from 'react-router-dom';
 import NavbarNishadi from '../components/SupplierOrderNavbar'
@@ -14,28 +13,33 @@ const SupplierOrders = () => {
 
   useEffect(() => {
     const fetchSupplierOrder = async () => {
-      const response = await fetch('/api/supplier_order');
-      const json = await response.json();
-
-      if (response.ok) {
+      try {
+        const response = await fetch('/api/supplier_order');
+        if (!response.ok) {
+          throw new Error('Failed to fetch supplier orders');
+        }
+        const json = await response.json();
+        console.log('Fetched orders:', json); // Log fetched orders
         dispatch({ type: 'SET_ORDERS', payload: json });
+      } catch (error) {
+        console.error('Error fetching supplier orders:', error);
       }
     };
 
     fetchSupplierOrder();
   }, [dispatch]);
 
-  // Filter orders based on search query
   useEffect(() => {
+    console.log('Search query:', searchQuery); // Log search query
     if (orders) {
       const filteredOrders = orders.filter(order => {
         return order.Sup_Ord_id.toLowerCase().includes(searchQuery.toLowerCase());
       });
+      console.log('Filtered orders:', filteredOrders); // Log filtered orders
       setSearchResults(filteredOrders);
     }
   }, [orders, searchQuery]);
 
-  // Handle navigation to report page
   const handleGenerateReport = () => {
     navigate("/supplierOrderReport", { state: { orders: searchResults } });
   };
@@ -45,10 +49,9 @@ const SupplierOrders = () => {
       <div className="supplier_order">
         <h1>Supplier Orders Details</h1>
         
-        <button className='button' onClick={() => navigate('/supplierorderform')} style={{ marginRight: '900px' }}> Add a new Order</button>
-        <button className='button' onClick={handleGenerateReport}> Generate the Report</button>
+        <button className='Sup_button' onClick={() => navigate('/supplierorderform')} style={{ marginRight: '900px' }}> Add a new Order</button>
+        <button className='Sup_button' onClick={handleGenerateReport}> Generate the Report</button>
         
-        {/* Search input */}
         <input
           type="text"
           placeholder="Search by Order ID"
@@ -56,7 +59,6 @@ const SupplierOrders = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
 
-        {/* Display search results or message if no results */}
         {searchResults.length > 0 ? (
           searchResults.map(order => (
             <SupplierOrderDetails key={order.Sup_Ord_id} order={order} />
@@ -64,8 +66,6 @@ const SupplierOrders = () => {
         ) : (
           <p>No search results found</p>
         )}
-
-        
       </div>
     </NavbarNishadi>
   );

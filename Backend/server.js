@@ -9,6 +9,7 @@ const jwt =require('jsonwebtoken')
 const nodemailer=require('nodemailer')
 const bcrypt = require('bcrypt');
 const mongoose = require("mongoose");
+const nodemailer = require('nodemailer'); //email 
 // Create an Express app
 const app = express();
 
@@ -21,6 +22,46 @@ app.use((req, res, next) => {
   console.log(req.path, req.method); // Log the path and HTTP method of each request
   next(); // Call the next middleware in the chain
 });
+
+
+/*email
+// Endpoint to send emails
+app.post('/send-email', (req, res) => {
+  const { recipients, subject, message } = req.body;
+
+  // Create a Nodemailer transporter
+  const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user:'electrigensystem@gmail.com', //updated email here
+      pass: 'electrigen1234' //updated password here
+    }
+  });
+
+  // Send emails to multiple recipients
+  recipients.forEach((recipient) => {
+    const mailOptions = {
+      from: 'electrigensystem@gmail.com',
+      to: recipient.email,
+      subject: subject,
+      text: `Hello ${recipient.name},\n\n${message}`
+    };
+
+    // Send email
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+  });
+
+  res.send('Emails sent successfully');
+});//email*/
+
+
+
 
 // Connect to MongoDB database
 mongoose

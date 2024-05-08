@@ -54,6 +54,7 @@ const AnalyticsN = () => {
   }));
 
   return (
+    <div className="dashboard-container">
     <NavbarNishadi>
       <div>
         <Typography variant="h3" component="h2" gutterBottom>
@@ -140,6 +141,7 @@ const AnalyticsN = () => {
         )}
       </div>
     </NavbarNishadi>
+   </div>
   );
 };
 
