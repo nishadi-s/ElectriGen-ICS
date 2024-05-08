@@ -27,11 +27,6 @@ const NavbarDini1 = ({ children }) => {
       icon: <FaShapes />,
     },
     {
-      path: "/DisAnalytics",
-      name: "Reports And Analytics",
-      icon: <FaRegChartBar />,
-    },
-    {
       path: "/DisMyProfile",
       name: "My Profile",
       icon: <FaUserAlt />,

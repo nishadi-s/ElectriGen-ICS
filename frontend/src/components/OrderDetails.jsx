@@ -95,8 +95,13 @@ const OrderDetails = ({ order }) => {
                                         <TableCell rowSpan={order.items.length}>
                                             {/* Action buttons */}
                                             <div className="action-buttons">
-                                                <button onClick={handleClick} className="btn-delete">Delete</button>
-                                                <button onClick={handleEdit} className="btn-edit">Edit</button>
+                                                {/* Conditionally render buttons based on order status */}
+                                                {order.orderStatus !== "Approved" && (
+                                                    <>
+                                                        <button onClick={handleClick} className="btn-delete">Delete</button>
+                                                        <button onClick={handleEdit} className="btn-edit">Edit</button>
+                                                    </>
+                                                )}
                                             </div>
                                         </TableCell>
                                     </>

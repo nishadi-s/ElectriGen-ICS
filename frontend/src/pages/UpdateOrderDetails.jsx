@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDisDAuthContext } from '../hooks/useDisDAuthContext';
 import { useOrdersContext } from '../hooks/useOrdersContext';
@@ -77,25 +78,34 @@ const UpdateOrder = () => {
             });
     
             if (response.ok) {
-                console.log('Order updated successfully');
-                // Calculate total amount
-                const updatedTotalAmount = calculateTotalAmount();
-                // Update total amount in updated order
-                const updatedOrderWithTotalAmount = { ...updatedOrder, totalAmount: updatedTotalAmount };
-                // Update state with the new total amount
-                setUpdatedOrder(updatedOrderWithTotalAmount);
-                // Dispatch the updated order to the context
-                ordersDispatch({ type: 'UPDATE_ORDER', payload: updatedOrderWithTotalAmount });
-                // Navigate to OrderHistory
-                navigate('/OrderHistory');
-            } else {
-                throw new Error('Failed to update order');
-            }
-        } catch (error) {
-            console.error('Error updating order:', error);
-            setError(error.message);
-        }
-    };
+              console.log('Order updated successfully');
+              // Calculate total amount
+              const updatedTotalAmount = calculateTotalAmount();
+              // Update total amount in updated order
+              const updatedOrderWithTotalAmount = { ...updatedOrder, totalAmount: updatedTotalAmount };
+              // Update state with the new total amount
+              setUpdatedOrder(updatedOrderWithTotalAmount);
+              // Dispatch the updated order to the context
+              ordersDispatch({ type: 'UPDATE_ORDER', payload: updatedOrderWithTotalAmount });
+              // Show SweetAlert
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Order Successfully Updated',
+                  showConfirmButton: false,
+                  timer: 1500
+              });
+              // Navigate to OrderHistory after a delay
+              setTimeout(() => {
+                  navigate('/OrderHistory');
+              }, 1500);
+          } else {
+              throw new Error('Failed to update order');
+          }
+      } catch (error) {
+          console.error('Error updating order:', error);
+          setError(error.message);
+      }
+  };
 
     if (loading) {
         return <div>Loading...</div>;

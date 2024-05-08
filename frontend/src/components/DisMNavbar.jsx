@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { FaTh, FaBars, FaUserAlt, FaRegChartBar, FaShapes, FaIndustry, FaDollyFlatbed, FaSignOutAlt } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom"; // Import useNavigate hook
-import { useDisLogout } from '../hooks/useDisLogout'; // Import useDisLogout
 import '../disNavbar.css'
 
 const NavbarDini2 = ({ children }) => {
@@ -20,7 +19,12 @@ const NavbarDini2 = ({ children }) => {
     },
     {
       path: "/DisMAnalytics",
-      name: "Reports And Analytics",
+      name: "Distribution Reports",
+      icon: <FaRegChartBar />,
+    },
+    {
+      path: "/DisMAnalytics2",
+      name: "Analytics",
       icon: <FaRegChartBar />,
     },
     {

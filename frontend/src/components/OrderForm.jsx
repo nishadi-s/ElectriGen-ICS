@@ -36,16 +36,6 @@ const OrderForm = () => {
         } else {
           setError("Failed to fetch products");
         }
-
-        // Fetch distributor data
-        const distributorResponse = await fetch("/api/distributor");
-        const distributorData = await distributorResponse.json();
-        if (distributorResponse.ok) {
-          setDistributorId(distributorData.distributorLoginID);
-          setDistributorName(distributorData.distributorName);
-        } else {
-          setError("Failed to fetch distributor data");
-        }
       } catch (error) {
         setError("An error occurred while fetching data");
         console.error("Error fetching data:", error);
