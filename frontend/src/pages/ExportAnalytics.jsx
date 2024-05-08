@@ -52,6 +52,7 @@ const ExportAnalytics = () => {
   }));
 
   return (
+    <div className="ex-analytics with-background">
     <ExportsNavBar>
       <div>
         <Typography variant="h3" component="h2" gutterBottom>
@@ -136,6 +137,7 @@ const ExportAnalytics = () => {
         )}
       </div>
     </ExportsNavBar>
+    </div>
   );
 };
 

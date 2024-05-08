@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import {
   FaTh,
   FaBars,
-  //FaUserAlt,
+  FaUserAlt,
+  FaShapes,
   FaRegChartBar,
   FaDollyFlatbed,
   FaThList,
@@ -15,9 +16,14 @@ const ExportsNavBar = ({ children }) => {
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
     {
-      path: "/ExportsDashboard",
+      path: "/ExportsNewDashboard",
       name: "Dashboard",
       icon: <FaTh />,
+    },
+    {
+      path: "/ExportsDashboard",
+      name: "Order Details",
+      icon: <FaShapes />,
     },
     {
       path: "/ImporterDescription",
@@ -40,22 +46,23 @@ const ExportsNavBar = ({ children }) => {
        name: "Analytics",
        icon: <FaRegChartBar />,
      },
-     // {
-    //   path: "/ExportsEmail",
-    //   name: "Exports Email",
-    //   icon: <FaIdBadge />,
-    // },
-    // {
-    //   path: "/ExportsProfile",
-    //   name: "My Profile",
-    //   icon: <FaUserAlt />,
-    // },
+    //   {
+    //    path: "/ExportsEmail",
+    //    name: "Exports Email",
+    //    icon: <FaIdBadge />,
+    //  },
+     {
+       path: "/ExportsProfile",
+       name: "My Profile",
+       icon: <FaUserAlt />,
+     },
 
-    // {
-    //   path: "/MyProfile",
-    //   name: "Logout",
-    //   icon: <FaUserAlt />,
-    // },
+     {
+       path: "/MyProfile",
+       name: "Logout",
+       icon: <FaUserAlt />,
+     },
+     
   ];
 
   return (
