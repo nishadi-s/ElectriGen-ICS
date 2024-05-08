@@ -42,7 +42,7 @@ const Home = () => {
       id: 5,
       text: "Employee Salary Management",
       password: "Us123",
-      link: "/user-details",
+      link: "/user-dash",
     },
     {
       id: 6,
@@ -102,7 +102,7 @@ const Home = () => {
     logout();
     navigate("/new-login");
   };
-t
+
   return (
     <div
       className="container-fluid"

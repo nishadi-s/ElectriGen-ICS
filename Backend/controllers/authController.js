@@ -8,8 +8,14 @@ const authController = {
     try {
       const { name, email, password, phoneNumber, address, role, age, dateOfBirth } = req.body;
 
-      // Remove this validation step
-      // userSignupSchema.parse(req.body);
+      // Validate password: Minimum 8 characters, at least one uppercase letter, one lowercase letter, and one digit
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+      if (!passwordRegex.test(password)) {
+        return res.status(400).json({
+          success: false,
+          message: "Password must contain at least one uppercase letter, one lowercase letter, and one digit, with a minimum length of 8 characters",
+        });
+      }
 
       const existingUser = await User.findOne({ email });
       if (existingUser) {
@@ -57,6 +63,7 @@ const authController = {
       });
     }
   },
+  // Your login function remains the same
   login: async (req, res) => {
     try {
       const { email, password } = req.body;
@@ -108,6 +115,9 @@ const authController = {
 };
 
 module.exports = authController;
+
+
+
 /*require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");

@@ -41,7 +41,7 @@ const UpdateUser = () => {
           title: 'Success!',
           text: 'User details updated successfully!',
         });
-        navigate('/salary-details'); // Navigate to the home page or any other desired route
+        navigate('/user-details'); // Navigate to the home page or any other desired route
       }
     } catch (error) {
       console.error('Error:', error);
@@ -71,8 +71,23 @@ const UpdateUser = () => {
           }
         `}
       </style>
-      <div className="signup-container">
-        <h2>Edit User Details</h2>
+      
+      <h2 style={{
+      textAlign: 'left',
+      width: '100vw',
+      padding: '17px 20px',
+      backgroundColor: '#233066',
+      color: '#fff',
+      fontSize: '2.5rem',
+      marginBottom: '30px',
+      marginTop: '-20px',
+      marginLeft: '-20px',
+      borderRadius: '0px 10px 0px 10px',
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
+    }}>
+      Edit User Details
+    </h2>
+    <div className="signup-container">
         {user ? (
           <form onSubmit={handleSubmit}>
             <div className="form-group">

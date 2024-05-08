@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
-import Home from "./pages/Home.jsx";
+//import Home from "./pages/Home.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import MyProfile from "./pages/MyProfile.jsx";
 import Analytics from "./pages/Analytics.jsx";

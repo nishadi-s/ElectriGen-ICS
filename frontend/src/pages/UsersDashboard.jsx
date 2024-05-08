@@ -10,7 +10,7 @@ const UserDashboard = () => {
       name: "Dulari Nisansala",
       email: "donationManager@dev.lk",
       contactNumber: "0717885963",
-      address: "4/3, 1st Lane, Pubudu Mawatha, Kurunegala",
+      address: "No 122/5 Prince Street, 11 City,Colombo",
       role: "Donation Manager",
       age: 23
     },
@@ -18,7 +18,7 @@ const UserDashboard = () => {
       name: "Primal Fernando",
       email: "salesManager@dev.lk",
       contactNumber: "0762252511",
-      address: "4/3, 1st Lane, Pubudu Mawatha, Kurunegala",
+      address: "47 Upstaire Old Butcher Street, Colombo",
       role: "Showroom Manager",
       age: 22
     },
@@ -26,29 +26,14 @@ const UserDashboard = () => {
       name: "Senith Udara",
       email: "inventoryManager@dev.lk",
       contactNumber: "0762252511",
-      address: "4/3, 1st Lane, Pubudu Mawatha, Kurunegala",
+      address: "No 61, Maliban Street,11, Colombo",
       role: "Inventory Manager",
       age: 22
     },
+    
     {
       name: "Uvindya Jayasundara",
-      email: "uvindyahasanduni@gmail.com",
-      contactNumber: "0762252504",
-      address: "4/3, 1st Lane, Pubudu Mawatha, Kurunegala",
-      role: "User Manager",
-      age: 23
-    },
-    {
-      name: "Uvindya Hasanduni",
-      email: "uvindyajayasundara@gmail.com",
-      contactNumber: "0762252504",
-      address: "4/3, 1st Lane, Pubudu Mawatha, Kurunegala",
-      role: "User Manager",
-      age: 23
-    },
-    {
-      name: "Uvindya Jayasundara",
-      email: "userManager@dev.com",
+      email: "userManager@dev.lk",
       contactNumber: "0762252504",
       address: "4/3, 1st Lane, Pubudu Mawatha, Kurunegala",
       role: "User Manager",
@@ -58,7 +43,7 @@ const UserDashboard = () => {
       name: "Dinithi Wickramaraachchi",
       email: "distributorManager@dev.lk",
       contactNumber: "0762252511",
-      address: "4/3, 1st Lane, Pubudu Mawatha, Kurunegala",
+      address: "28/1, Col T G Jayawardena Mawatha,Colombo",
       role: "Distributor Manager",
       age: 22
     },
@@ -66,7 +51,7 @@ const UserDashboard = () => {
       name: "Nishadi Jayarathne",
       email: "supplierManager@dev.lk",
       contactNumber: "0787336251",
-      address: "4/3, 1st Lane, Pubudu Mawatha, Kurunegala",
+      address: "No 14, Ruhunu Kala Mawatha, kaluthara",
       role: "Supplier Manager",
       age: 23
     },
@@ -74,7 +59,7 @@ const UserDashboard = () => {
       name: "Shanali Rajakaruna",
       email: "exportManager@dev.lk",
       contactNumber: "0717885963",
-      address: "4/3, 1st Lane, Pubudu Mawatha, Kurunegala",
+      address: "N0.833, Sirimawo Bandaranayake Mawatha, Colombo.",
       role: "Export Manager",
       age: 22
     }
