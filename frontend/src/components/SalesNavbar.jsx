@@ -7,7 +7,8 @@ import {
   FaKey,
   FaHandHoldingHeart,
   FaReplyAll,
-  FaFileContract
+  FaFileContract,
+  FaRegChartBar
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
@@ -39,6 +40,11 @@ const Navbar = ({ children }) => {
       path: "/InvoiceReport",
       name: "Report Handling",
       icon: <FaFileContract />,
+    },
+    {
+      path: "/SalesAna",
+      name: "Sales Analytics",
+      icon: <FaRegChartBar />,
     },
     {
       path: "/MyProfile",

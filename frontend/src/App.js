@@ -39,6 +39,7 @@ import SalesDashboard from "./pages/SalesDashboard.jsx";
 import SDFeedback from "./pages/SDFeedback";
 import SDView from "./pages/SDView.jsx";
 import Home from "./pages/Home.jsx";
+import SalesAna from "./pages/SalesAna.jsx";
 
 //Dinithi
 import DisSignup from "./pages/DisSignup.js";
@@ -138,6 +139,7 @@ const App = () => {
           <Route path="/SalesDashboard" element={<SalesDashboard />} />
           <Route path="/SDFeedback" element={<SDFeedback />} />
           <Route path="/SDView" element={<SDView />} />
+          <Route path="/SalesAna" element={<SalesAna />} />
 
           {/* Dinithi */}
           <Route path="/" element={<HomePage />} />
