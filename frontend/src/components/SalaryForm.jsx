@@ -24,6 +24,21 @@ const bonusReasons = [
   'Innovation and creativity',
   'No bonus added'
 ];
+const basicSalaries = [ // Dropdown options for basic salary
+  1000,
+  1500,
+  2000,
+  2500,
+  3000
+];
+const otRates = [ // Dropdown options for OT rate
+  10,
+  15,
+  20,
+  25,
+  30
+];
+
 
 const SalaryForm = () => {
   const [fname, setFname] = useState('');
@@ -186,7 +201,9 @@ const SalaryForm = () => {
           onChange={(e) => setEmail(e.target.value)}
           fullWidth
           style={{ marginBottom: '20px' }}
+          InputProps={{ endAdornment: "@dev.lk" }} // Add @dev.lk to the end of the email input
         />
+
 
         <TextField
           select
@@ -205,24 +222,35 @@ const SalaryForm = () => {
         </TextField>
 
         <TextField
+          select
           label="Base Salary"
           variant="outlined"
-          type="number"
           value={base}
           onChange={(e) => setBase(e.target.value)}
           fullWidth
           style={{ marginBottom: '20px' }}
-        />
-
+        >
+          {basicSalaries.map((salary) => (
+            <MenuItem key={salary} value={salary}>
+              {salary}
+            </MenuItem>
+          ))}
+        </TextField>
         <TextField
+          select
           label="Overtime Rate"
           variant="outlined"
-          type="number"
           value={otRate}
           onChange={(e) => setOtRate(e.target.value)}
           fullWidth
           style={{ marginBottom: '20px' }}
-        />
+        >
+          {otRates.map((rate) => (
+            <MenuItem key={rate} value={rate}>
+              {rate}
+            </MenuItem>
+          ))}
+        </TextField>
 
         <TextField
           label="Overtime Hours"
