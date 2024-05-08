@@ -4,14 +4,16 @@ const Schema = mongoose.Schema
 
 // Define the schema for orders
 const orderSchema = new Schema({
-    distributorId: {
+    distributorId: {   //distributorLoginID
         type: String,
         required: true
     },
+    
     distributorName: {
         type: String,
         required: true
     },
+
     orderStatus: {
         type: String,
         required: true
@@ -36,41 +38,13 @@ const orderSchema = new Schema({
                 type: Number,
                 required: true
             }
-        },
-        {
-            code: {
-                type: String,
-                required: true
-            },
-            name: {
-                type: String,
-                required: true
-            },
-            quantity: {
-                type: Number,
-                required: true
-            }
-        },
-        {
-            code: {
-                type: String,
-                required: true
-            },
-            name: {
-                type: String,
-                required: true
-            },
-            quantity: {
-                type: Number,
-                required: true
-            }
-        }
+        },     
     ],
 
     totalAmount: {
         type: Number,
         required: true
-    },
+    }
 
 },{timestamps:true}) // Add timestamps for createdAt and updatedAt fields
 

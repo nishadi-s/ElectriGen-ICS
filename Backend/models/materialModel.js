@@ -20,11 +20,13 @@ const materialSchema = new Schema(
     },
 
     quantity: {
-      type: Number,
+      type: String,
       required: true,
     },
   },
   { timestamps: true }
 );
 
+
 module.exports = mongoose.model("Material", materialSchema);
+

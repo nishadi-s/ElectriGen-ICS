@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import {
   FaTh,
   FaBars,
@@ -17,6 +18,11 @@ const Navbar = ({ children }) => {
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
     {
+      path: "/Homepage",
+      name: "Homepage",
+      icon: <FaTh />,
+    },
+    {
       path: "/Donation_Dashboard",
       name: "Donation Dashboard",
       icon: <FaTh />,
@@ -31,7 +37,6 @@ const Navbar = ({ children }) => {
       name: "Exports Dashboard",
       icon: <FaTh />,
     },
-
     {
       path: "/OrderForm",
       name: "Order Placement",
@@ -86,7 +91,11 @@ const Navbar = ({ children }) => {
       name: "My Profile",
       icon: <FaUserAlt />,
     },
-
+    {
+      path: "/MyProfile",
+      name: "My Profile",
+      icon: <FaUserAlt />,
+    },
     {
       path: "/New_Projects",
       name: "New Projects",

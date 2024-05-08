@@ -6,6 +6,7 @@ const {
   getProducts,
   updateProduct,
   deleteProduct,
+  getLowQuantityProducts, // Import the new function
 } = require("../controllers/productController");
 
 const router = express.Router();
@@ -23,6 +24,9 @@ router.post("/", createProduct);
 router.delete("/:id", deleteProduct);
 
 //UPDATE a product
-router.patch("/:id", updateProduct);
+router.put("/:id", updateProduct);
+
+// GET products with quantity less than 100
+router.get("/lowquantity", getLowQuantityProducts); // Add this route
 
 module.exports = router;

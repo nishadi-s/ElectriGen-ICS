@@ -10,14 +10,14 @@
 }
 main {
   width: 100%;
-  padding: 20px;
 }
 .sidebar {
   background: #233066;
   color: #fff;
   height: wrap;
   width: 200px;
-  margin-left: -120px;
+  margin-left: 0px;
+  margin-top: -20px;
   transition: all 0.5s;
 }
 
@@ -58,12 +58,6 @@ main {
   font-size: 20px;
 }
 
-
-
-
-
-
-
 /*primal*/
 
 .invoiceDetails {
@@ -72,7 +66,7 @@ main {
   margin: 20px auto;
   padding: 20px;
   position: relative;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
 }
 .invoiceDetails h4 {
   margin: 0 0 10px 0;
@@ -81,7 +75,7 @@ main {
 }
 .invoiceDetails h5 {
   margin: 0 0 10px 0;
-  font-size: 1.0em;
+  font-size: 1em;
   color: var(--primary);
 }
 .invoiceDetails p {

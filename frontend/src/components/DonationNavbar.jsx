@@ -5,8 +5,11 @@ import {
   FaUserAlt,
   FaRegChartBar,
   FaShapes,
-  FaIndustry,
+  FaSignOutAlt,
   FaDollyFlatbed,
+  FaSignLanguage,
+  FaBookOpen,
+  FaHandHoldingHeart,
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
@@ -15,7 +18,7 @@ const DonationNavbar = ({ children }) => {
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
     {
-      path: "/",
+      path: "/Donation_Dashboard",
       name: "Dashboard",
       icon: <FaTh />,
     },
@@ -30,7 +33,7 @@ const DonationNavbar = ({ children }) => {
     {
         path: "/Doner_Feedback",
         name: "Doner Feedback",
-        icon: <FaShapes />,
+        icon: <FaSignLanguage />,
     },
 
     //{
@@ -52,9 +55,21 @@ const DonationNavbar = ({ children }) => {
     //},
 
     {
-      path: "/doner_analytics",  
+      path: "/DReportCreate",  
       name: "Analytics and Report",
       icon: <FaRegChartBar />,
+    },
+
+    {
+      path: "/DProjectDetails",  
+      name: "View Past Projects",
+      icon: <FaBookOpen />,
+    },
+
+    {
+      path: "/dFeedbackFetch",  
+      name: "View Feedbacks",
+      icon: <FaHandHoldingHeart />,
     },
     {
       path: "/MyProfile",
@@ -63,9 +78,9 @@ const DonationNavbar = ({ children }) => {
     },
 
     {
-      path: "/Logout",
+      path: "/",
       name: "Logout",
-      icon: <FaUserAlt />,
+      icon: <FaSignOutAlt />,
     },
 
     
