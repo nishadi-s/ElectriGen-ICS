@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { FaRegTrashCan } from "react-icons/fa6";
@@ -7,38 +7,63 @@ import format from "date-fns/format";
 
 const ProductionDetails = ({ production }) => {
   const { dispatch } = useProductionContext();
+  const [deleted, setDeleted] = useState(false);
 
   const handleDelete = async () => {
     Swal.fire({
-      title: "Do you want to delete this production?",
+      title: "Enter your password to confirm deletion",
+      input: "password",
+      inputAttributes: {
+        autocapitalize: "off",
+      },
       showCancelButton: true,
       confirmButtonText: "Delete",
       cancelButtonText: "Cancel",
       confirmButtonColor: "#dc3545",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        try {
-          const response = await fetch(`/api/productions/${production._id}`, {
-            method: "DELETE",
-          });
+        const password = result.value;
+        // Check if the entered password is correct
+        if (password === "Sp123") {
+          // Change "Sp123" to your actual password
+          try {
+            const response = await fetch(`/api/productions/${production._id}`, {
+              method: "DELETE",
+            });
 
-          if (response.ok) {
-            dispatch({ type: "DELETE_PRODUCTION", payload: production._id });
-            Swal.fire(
-              "Deleted!",
-              "Your production has been deleted.",
-              "success"
-            );
-          } else {
-            throw new Error("Failed to delete the production");
+            if (response.ok) {
+              dispatch({ type: "DELETE_PRODUCTION", payload: production._id });
+              setDeleted(true);
+              Swal.fire(
+                "Deleted!",
+                "Your production has been deleted.",
+                "success"
+              ).then(() => {
+                window.location.reload(); // Refresh the page after deletion
+              });
+            } else {
+              throw new Error("Failed to delete the production");
+            }
+          } catch (error) {
+            console.error("Error deleting production:", error);
+            Swal.fire("Error!", "Failed to delete the production.", "error");
           }
-        } catch (error) {
-          console.error("Error deleting production:", error);
-          Swal.fire("Error!", "Failed to delete the production.", "error");
+        } else {
+          // Incorrect password
+          Swal.fire("Error!", "Incorrect password.", "error");
         }
       }
     });
   };
+
+  useEffect(() => {
+    if (deleted) {
+      // Refetch production data here
+      // Example:
+      // fetchData();
+      setDeleted(false); // Reset the deleted state
+    }
+  }, [deleted]);
 
   return (
     <tr className="production-row">
@@ -65,8 +90,12 @@ const ProductionDetails = ({ production }) => {
         <button className="button-2" onClick={handleDelete}>
           <FaRegTrashCan />
         </button>
-        <Link to={`/production/${production._id}`} className="product-link">
-          Edit
+
+        <Link
+          to={`/update-production/${production._id}`}
+          className="product-link"
+        >
+          <button className="button-1">Edit</button>
         </Link>
       </td>
     </tr>

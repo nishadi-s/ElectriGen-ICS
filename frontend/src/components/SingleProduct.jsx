@@ -12,6 +12,54 @@ const SingleProduct = () => {
   const [product, setProduct] = useState(null);
   const navigate = useNavigate();
 
+  const handleDelete = async () => {
+    Swal.fire({
+      title: "Enter your password to confirm deletion",
+      input: "password",
+      inputAttributes: {
+        autocapitalize: "off",
+      },
+      showCancelButton: true,
+      confirmButtonText: "Delete",
+      cancelButtonText: "Cancel",
+      confirmButtonColor: "#dc3545",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const password = result.value;
+        // Check if the entered password is correct
+        if (password === "Sp123") {
+          try {
+            const response = await fetch(`/api/products/${id}`, {
+              method: "DELETE",
+            });
+
+            if (response.ok) {
+              dispatch({ type: "DELETE_PRODUCT", payload: id });
+              navigate("/products");
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your product has been deleted.",
+                icon: "success",
+              });
+            } else {
+              throw new Error("Failed to delete the product");
+            }
+          } catch (error) {
+            console.error("Error deleting product:", error);
+            Swal.fire({
+              title: "Error!",
+              text: "Failed to delete the product.",
+              icon: "error",
+            });
+          }
+        } else {
+          // Incorrect password
+          Swal.fire("Error!", "Incorrect password.", "error");
+        }
+      }
+    });
+  };
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -28,33 +76,6 @@ const SingleProduct = () => {
 
     fetchProduct();
   }, [dispatch, id]);
-
-  const handleDelete = async () => {
-    try {
-      const response = await fetch(`/api/products/${id}`, {
-        method: "DELETE",
-      });
-
-      if (response.ok) {
-        dispatch({ type: "DELETE_PRODUCT", payload: id });
-        navigate("/products");
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your product has been deleted.",
-          icon: "success",
-        });
-      } else {
-        throw new Error("Failed to delete the product");
-      }
-    } catch (error) {
-      console.error("Error deleting product:", error);
-      Swal.fire({
-        title: "Error!",
-        text: "Failed to delete the product.",
-        icon: "error",
-      });
-    }
-  };
 
   return (
     <ProductionNavbar>

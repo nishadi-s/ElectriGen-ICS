@@ -77,9 +77,10 @@ import Products from "./pages/Products.jsx";
 import AddProducts from "./pages/AddProducts.jsx";
 import AddProduction from "./pages/AddProduction.jsx";
 import ProductionDashboard from "./pages/ProductionDashboard.jsx";
-import SingleProduct from "./components/SingleProduct"; // Import SingleProduct
-import EditProduct from "./components/EditProduct"; // Import EditProduct
-import EditMaterial from "./components/EditMaterial"; // Import EditProduct
+import SingleProduct from "./components/SingleProduct";
+import EditProduct from "./components/EditProduct";
+import EditProduction from "./components/EditProduction";
+import EditMaterial from "./components/EditMaterial";
 import ProductionAnalytics from "./pages/ProductionAnalytics.jsx";
 import ProductionProfile from "./pages/ProductionProfile.jsx";
 import ProductForm from "./components/ProductForm";
@@ -214,12 +215,11 @@ const App = () => {
             />
             <Route path="/ProductionProfile" element={<ProductionProfile />} />
             <Route path="/" element={<Products />} />
-            <Route path="/product/:id" element={<SingleProduct />} />{" "}
-            {/* Define route for single product */}
-            <Route path="/edit-product/:id" element={<EditProduct />} />{" "}
-            {/* Add EditProduct route */}
+            <Route path="/product/:id" element={<SingleProduct />} />
+            <Route path="/edit-product/:id" element={<EditProduct />} />
+            <Route path="/update-production/:id" element={<EditProduction />} />
             <Route path="/EditProduct" element={<EditProduct />} />
-            <Route path="/edit-material/:id" element={<EditMaterial />} />{" "}
+            <Route path="/edit-material/:id" element={<EditMaterial />} />
             <Route path="/SingleProduct" element={<SingleProduct />} />
             <Route path="/ProductsView" element={<ProductsView />} />
             <Route path="/AddMaterials" element={<AddMaterials />} />

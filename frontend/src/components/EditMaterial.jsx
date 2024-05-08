@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../senith.css";
 import ProductionNavbar from "../components/ProductionNavbar";
+import Swal from "sweetalert2";
 
 const EditMaterial = () => {
   const { id } = useParams();
@@ -39,6 +40,25 @@ const EditMaterial = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Show SweetAlert popup to confirm whether to save changes
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // If confirmed, proceed with updating material
+        updateMaterial();
+      } else if (result.isDenied) {
+        // If denied, do nothing
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+  };
+
+  const updateMaterial = async () => {
     const response = await fetch(`/api/materials/${id}`, {
       method: "PUT",
       body: JSON.stringify(material),
@@ -48,7 +68,17 @@ const EditMaterial = () => {
     });
 
     if (response.ok) {
-      navigate(`/materials`);
+      // Show success popup
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Material details have been updated",
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(() => {
+        // Navigate to materials page after the timer runs out
+        navigate(`/materials`);
+      });
     } else {
       const errorData = await response.json();
       setError(errorData.error || "Error updating material");
@@ -66,7 +96,10 @@ const EditMaterial = () => {
 
   return (
     <ProductionNavbar>
-      <form className="update" onSubmit={handleSubmit}>
+      <div className="production-header">
+        <h1>Edit Material Details</h1>
+      </div>
+      <form className="create" onSubmit={handleSubmit}>
         <label>Material name:</label>
         <input
           type="text"

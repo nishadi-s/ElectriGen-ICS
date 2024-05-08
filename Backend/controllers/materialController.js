@@ -112,7 +112,7 @@ const getMaterialByItemCode = async (req, res) => {
   const { code } = req.params;
 
   try {
-    const material = await Material.findOne({ code }, { quantity: 1 });
+    const material = await Material.findOne({ code });
 
     if (!material) {
       return res

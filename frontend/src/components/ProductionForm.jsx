@@ -6,7 +6,17 @@ const ProductionForm = () => {
   const { dispatch } = useProductionContext();
   const navigate = useNavigate();
 
-  const [date, setDate] = useState("");
+  const getCurrentDate = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  // Initialize the date state with the current date
+  const [date, setDate] = useState(getCurrentDate());
+
   const [materials, setMaterials] = useState([
     { materialName: "", materialNo: "", materialQuantity: "" },
   ]);
@@ -132,7 +142,7 @@ const ProductionForm = () => {
             const materialData = await materialResponse.json();
 
             // Update material quantity
-            const updatedQuantity = materialData.quantity + quantity;
+            const updatedQuantity = materialData.quantity - quantity;
 
             // Perform the update using Fetch
             const updateResponse = await fetch(
@@ -152,6 +162,45 @@ const ProductionForm = () => {
           } catch (error) {
             console.error("Error updating material quantity:", error);
             // Handle error updating material quantity
+          }
+        });
+
+        // Update product quantities
+        products.forEach(async (product) => {
+          try {
+            const productItemCode = product.itemCode;
+            const quantity = parseInt(product.quantity);
+
+            // Fetch current product details
+            const productResponse = await fetch(
+              `/api/products/itemCode/${productItemCode}`
+            );
+            if (!productResponse.ok) {
+              throw new Error("Failed to fetch product details");
+            }
+            const productData = await productResponse.json();
+
+            // Update product quantity
+            const updatedQuantity = productData.quantity + quantity;
+
+            // Perform the update using Fetch
+            const updateResponse = await fetch(
+              `/api/products/${productData._id}`,
+              {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ quantity: updatedQuantity }),
+              }
+            );
+
+            if (!updateResponse.ok) {
+              throw new Error("Failed to update product quantity");
+            }
+          } catch (error) {
+            console.error("Error updating product quantity:", error);
+            // Handle error updating product quantity
           }
         });
 
@@ -186,6 +235,7 @@ const ProductionForm = () => {
           value={date}
           onChange={(e) => setDate(e.target.value)}
           className={emptyFields.includes("date") ? "error" : ""}
+          max={getCurrentDate()} // Set the max attribute to the current date
         />
       </div>
 

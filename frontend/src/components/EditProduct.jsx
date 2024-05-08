@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../senith.css";
 import ProductionNavbar from "../components/ProductionNavbar";
+import Swal from "sweetalert2";
 
 const EditProduct = () => {
   const { id } = useParams();
@@ -51,34 +52,64 @@ const EditProduct = () => {
       quantity,
     };
 
-    const response = await fetch(`/api/products/${id}`, {
-      method: "PUT",
-      body: JSON.stringify(updatedProduct),
-      headers: {
-        "Content-Type": "application/json",
-      },
+    // Show SweetAlert popup to confirm whether to save changes
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = await fetch(`/api/products/${id}`, {
+            method: "PUT",
+            body: JSON.stringify(updatedProduct),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (response.ok) {
+            const updatedProductData = await response.json();
+            setName(updatedProductData.name);
+            setItemCode(updatedProductData.itemCode);
+            setCategory(updatedProductData.category);
+            setColor(updatedProductData.color);
+            setUnitPrice(updatedProductData.unitPrice);
+            setQuantity(updatedProductData.quantity);
+
+            // Show success popup
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Product details have been updated",
+              showConfirmButton: false,
+              timer: 1500,
+            }).then(() => {
+              // Redirect to products page after the timer runs out
+              navigate(`/products`);
+            });
+          } else {
+            throw new Error("Failed to update product");
+          }
+        } catch (error) {
+          console.error("Error updating product:", error);
+          Swal.fire("Error!", "Failed to update product.", "error");
+        }
+      } else if (result.isDenied) {
+        // If denied, do nothing
+        Swal.fire("Changes are not saved", "", "info");
+      }
     });
-
-    if (response.ok) {
-      const updatedProductData = await response.json();
-      setName(updatedProductData.name);
-      setItemCode(updatedProductData.itemCode);
-      setCategory(updatedProductData.category);
-      setColor(updatedProductData.color);
-      setUnitPrice(updatedProductData.unitPrice);
-      setQuantity(updatedProductData.quantity);
-
-      navigate(`/products`); // Redirect to single product page
-    } else {
-      const errorData = await response.json();
-      setError(errorData.error || "Error updating product");
-      setEmptyFields(errorData.emptyFields || []);
-    }
   };
 
   return (
     <ProductionNavbar>
-      <form className="update" onSubmit={handleSubmit}>
+      <div className="production-header">
+        <h1>Edit Product Details</h1>
+      </div>
+      <form className="create" onSubmit={handleSubmit}>
         <label>Product name:</label>
         <input
           type="text"
@@ -101,12 +132,30 @@ const EditProduct = () => {
           className={emptyFields.includes("itemCode") ? "error" : ""}
         />
         <label>Color:</label>
-        <input
+        <select
           type="text"
           onChange={(e) => setColor(e.target.value)} // Use setColor
           value={color}
           className={emptyFields.includes("color") ? "error" : ""}
-        />
+          style={{
+            width: "100%",
+            height: "45px",
+            padding: "0px 5px",
+            margin: "5px 0px 15px",
+            border: "none",
+            borderRadius: "4px",
+            backgroundColor: "#ffffff",
+          }}
+        >
+          <option value="">Select a color</option>
+          <option value="Black">Black</option>
+          <option value="White">White</option>
+          <option value="Gray">Gray</option>
+          <option value="Blue">Blue</option>
+          <option value="Green">Green</option>
+          <option value="Orange">Orange</option>
+          <option value="Transparent">Transparent</option>
+        </select>
         <label>Unit price(in Rs.):</label>
         <input
           type="number"
