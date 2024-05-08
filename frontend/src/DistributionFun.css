@@ -22,17 +22,17 @@ body {
 }
 
 h1 {
-  text-align: left; /* Align text to the left */
-  width: 100vw; /* Span the full width of the page */
-  padding: 17px 20px; /* Add padding for spacing */
-  background-color: #233066; /* Deep blue background for the heading container */
-  color: #fff; /* White text color for better readability */
-  font-size: 2.5rem; /* Adjust font size based on your preference */
-  margin-bottom: 30px; /* Add some margin below the heading */
+  text-align: left; 
+  width: 100vw; 
+  padding: 17px 20px; 
+  background-color: #233066; 
+  color: #fff; 
+  font-size: 2.5rem; 
+  margin-bottom: 30px; 
   margin-top: -20px;
   margin-left: -20px;
-  border-radius: 0px 10px 0px 10 px; /* Add subtle rounded corners for a polished look */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow for depth */
+  border-radius: 0px 10px 0px 10 px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
 header {
@@ -73,26 +73,26 @@ header a {
 .input-group {
   margin-bottom: 15px;
   display: flex;
-  justify-content: space-between; /* Align labels and inputs horizontally */
+  justify-content: space-between; 
 }
 
 /* Labels */
 .input-group label {
-  font-weight: bold; /* Lighter font weight for labels */
-  width: auto; /* Flexible width for labels */
+  font-weight: bold; 
+  width: auto; 
   color: #000000;
 }
 
 .item-label1{
-  font-weight: bold; /* Lighter font weight for labels */
-  width: auto; /* Flexible width for labels */
+  font-weight: bold; 
+  width: auto; 
   color: #000000;
 }
 
 /* Inputs */
 .input-group input[type="text"],
 .input-group input[type="number"] {
-  width: 100%; /* Full width for inputs */
+  width: 100%; 
   padding: 10px;
   border: 1px solid #ffffff;
   border-radius: 4px 4px;
@@ -102,7 +102,7 @@ header a {
 /* Input Focus */
 .create input[type="text"]:focus,
 .create input[type="number"]:focus {
-  border-color: #f9f9f9; /* Blue border on focus */
+  border-color: #f9f9f9; 
 }
 
 /* Error Messages */
@@ -114,7 +114,7 @@ header a {
 
 /* Add Item Button */
 .create button[type="button"] {
-  background-color: #9b9b9b; /* Blue background for primary action */
+  background-color: #9b9b9b; 
   color: #fff;
   border: none;
   padding: 12px 24px;
@@ -129,12 +129,12 @@ header a {
 }
 
 .create button[type="button"]:hover {
-  background-color: #c5c5c5; /* Darker blue on hover */
+  background-color: #c5c5c5;
 }
 
 /* Submit Button */
 .create button[type="submit"] {
-  background-color: #233066; /* Green background for positive action */
+  background-color: #233066; 
   color: #fff;
   border: none;
   padding: 12px 24px;
@@ -147,7 +147,7 @@ header a {
 }
 
 .create button[type="submit"]:hover {
-  background-color: #3a53b8; /* Darker green on hover */
+  background-color: #3a53b8; 
 }
 
 /* Item Container */
@@ -163,9 +163,9 @@ header a {
   flex-wrap: wrap;
   margin-right: 20px;
   padding: 15px;
-  border: 1px solid #ededed; /* Optional: Remove border for a cleaner look */
+  border: 1px solid #ededed; 
   border-radius: 4px 4px;
-  background-color: #ededed; /* Light gray background for items */
+  background-color: #ededed; 
 }
 
 /* Item Fields - Individual elements */
@@ -177,19 +177,19 @@ header a {
 .item-label {
   font-size:85%;
   font-weight: 600;
-  text-align: left; /* Left align item labels */
+  text-align: left; 
   color: #000000;
 }
 
 .item-select {
-  width: 100%; /* Full width for the select */
+  width: 100%; 
   padding: 10px;
   border: 1px solid #ffffff;
-  border-radius: 4px; /* Apply border-radius */
-  box-sizing: border-box; /* Use border-box for box model */
-  background-color: #ffffff; /* White background */
-  color: #000000; /* Black text color */
-  font-size: 14px; /* Font size */
+  border-radius: 4px; 
+  box-sizing: border-box; 
+  background-color: #ffffff; 
+  color: #000000; 
+  font-size: 14px; 
 }
 
 div.error {
@@ -291,7 +291,7 @@ nav ul li a:hover {
 }
 
 .custom-button {
-  background-color: #233066; /* Green */
+  background-color: #233066; 
   border: none;
   color: white;
   padding: 15px 32px;
@@ -316,58 +316,58 @@ nav ul li a:hover {
 
 .btn-delete {
   background-color: #EC2026;
-  color: white; /* White text */
+  color: white; 
   font-size: 14px;
-  border: none; /* Remove button border */
-  padding: 2px 5px; /* Padding for better appearance */
-  border-radius: 4px; /* Rounded corners */
-  cursor: pointer; /* Cursor on hover */
-  transition: background-color 0.3s ease; /* Smooth transition */
-  width: 100px; /* Adjust button width */
-  height: 30px; /* Adjust button height */
-  margin-right: 10px; /* Adjust margin between buttons */
+  border: none;
+  padding: 2px 5px; 
+  border-radius: 4px; 
+  cursor: pointer; 
+  transition: background-color 0.3s ease; 
+  width: 100px; 
+  height: 30px; 
+  margin-right: 10px; 
 }
 
 .btn-delete:hover {
-  background-color: #d32f2f; /* Darker shade of red on hover */
+  background-color: #d32f2f; 
 }
 
 /* Edit button styles */
 .btn-edit {
   background-color: #808080;
-  color: white; /* White text */
+  color: white; 
   font-size: 14px;
-  border: none; /* Remove button border */
-  padding: 2px 5px; /* Padding for better appearance */
-  border-radius: 4px; /* Rounded corners */
-  cursor: pointer; /* Cursor on hover */
-  transition: background-color 0.3s ease; /* Smooth transition */
-  width: 100px; /* Adjust button width */
-  height: 30px; /* Adjust button height */
+  border: none; 
+  padding: 2px 5px; 
+  border-radius: 4px; 
+  cursor: pointer; 
+  transition: background-color 0.3s ease; 
+  width: 100px; 
+  height: 30px; 
 }
 
 .btn-edit:hover {
-  background-color: #c8c5c5; /* Darker shade on hover */
+  background-color: #c8c5c5; 
 }
 
 /* StartDin navbar */
 .start-nav-header {
-  background-color: #233066; /* Light background color */
+  background-color: #233066; 
   padding: 15px 0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle bottom shadow */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); 
 }
 
 .start-nav-container {
   display: flex;
-  justify-content: space-between; /* Space elements horizontally */
-  align-items: center; /* Align vertically */
-  max-width: 1024px; /* Set a maximum width */
-  margin: 0 auto; /* Center horizontally */
+  justify-content: space-between; 
+  align-items: center; 
+  max-width: 1024px; 
+  margin: 0 auto; 
 }
 
 /* Logo and heading */
 .start-nav-h2 {
-  font-size: 1.5em; /* Adjust heading size as needed */
+  font-size: 1.5em; 
   margin-top: 2%;
   margin-left: -20%;
   margin-bottom: 2%;
@@ -378,8 +378,8 @@ nav ul li a:hover {
 
 /* Navigation */
 .start-nav-dis {
-  display: flex; /* Arrange links horizontally */
-  list-style: none; /* Remove default bullet points */
+  display: flex; 
+  list-style: none; 
   padding: 0;
   margin: 0;
 }
@@ -391,7 +391,7 @@ nav ul li a:hover {
 }
 
 .start-nav-dis > div span {
-  margin-right: 10px; /* Spacing between email and button */
+  margin-right: 10px; 
 }
 
 a.signup-link {
@@ -424,49 +424,49 @@ form.signup, form.login {
 /*fetch table*/
 .order-details {
   display: flex;
-  justify-content: center; /* Center the table horizontally */
-  width: 100%; /* Ensure the table fills the available space */
+  justify-content: center; 
+  width: 100%; 
   margin-bottom: 5%;
 }
 
-.order-details .MuiPaper-root {  /* Target the Paper component for styling */
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1); /* Subtle box shadow for depth */
-  border-radius: 4px; /* Rounded corners for a polished look */
-  overflow-x: auto;  /* Enable horizontal scrolling for wide tables */
+.order-details .MuiPaper-root {  
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1); 
+  border-radius: 4px; 
+  overflow-x: auto;  
 }
 
 .order-details table {
-  width: 100%; /* Ensure the table stretches to fit the container */
-  border-collapse: collapse; /* Remove default table borders */
-  height: 50px; /* Set a fixed height for the table */
+  width: 100%; 
+  border-collapse: collapse;
+  height: 50px; 
 }
 
 .order-details thead th{
-  padding: 1px 15px; /* Consistent and comfortable padding */
-  border: 0px solid #ddd; /* Light border for separation */
-  text-align: left; /* Left-align content by default */
-  background-color: #233066; /* Light gray background for headers */
-  font-weight: bold; /* Emphasize headers */
-  height: 25px; /* Smaller height for headers (adjust as needed) */
+  padding: 1px 15px; 
+  border: 0px solid #ddd; 
+  text-align: left; 
+  background-color: #233066; 
+  font-weight: bold; 
+  height: 25px; 
   width: 100px;
   text-align:center;
   text-overflow: ellipsi;
   color: #ffffff;
 }
 .order-details tbody td {
-  padding: 10px 16px; /* Consistent and comfortable padding */
-  border: 1px solid #ddd; /* Light border for separation */
-  text-align: left; /* Left-align content by default */
+  padding: 10px 16px;
+  border: 1px solid #ddd; 
+  text-align: left; 
 }
 
 .order-details tbody tr:nth-child(even) {
-  background-color: #fafafa; /* Alternate row colors for readability */
+  background-color: #fafafa; 
 }
 
 /* Specific styling for table cells */
 .order-details .action-buttons {
   display: flex;
-  justify-content: space-between; /* Space buttons evenly */
+  justify-content: space-between; 
 }
 
 /*update order form*/
@@ -492,20 +492,20 @@ form.signup, form.login {
 .input-group {
   margin-bottom: 15px;
   display: flex;
-  justify-content: space-between; /* Align labels and inputs horizontally */
+  justify-content: space-between; 
 }
 
 /* Labels */
 .input-group label {
-  font-weight: bold; /* Lighter font weight for labels */
-  width: auto; /* Flexible width for labels */
+  font-weight: bold; 
+  width: auto; 
   color: #000000;
 }
 
 /* Inputs */
 .input-group input[type="text"],
 .input-group input[type="number"] {
-  width: 100%; /* Full width for inputs */
+  width: 100%; 
   padding: 10px;
   border: 1px solid #ffffff;
   border-radius: 4px 4px;
@@ -515,7 +515,7 @@ form.signup, form.login {
 /* Input Focus */
 .update-form input[type="text"]:focus,
 .update-form input[type="number"]:focus {
-  border-color: #f9f9f9; /* Blue border on focus */
+  border-color: #f9f9f9; 
 }
 
 /* Error Messages */
@@ -527,7 +527,7 @@ form.signup, form.login {
 
 /* Add Item Button */
 .add-item-button {
-  background-color: #9b9b9b; /* Blue background for primary action */
+  background-color: #9b9b9b; 
   color: #fff;
   border: none;
   padding: 12px 24px;
@@ -542,12 +542,11 @@ form.signup, form.login {
 }
 
 .add-item-button:hover {
-  background-color: #c5c5c5; /* Darker blue on hover */
+  background-color: #c5c5c5; 
 }
 
-/* Update Button (replacing submit button) */
 .update-button {
-  background-color: #233066; /* Green background for positive action */
+  background-color: #233066; 
   color: #fff;
   border: none;
   padding: 12px 24px;
@@ -560,7 +559,7 @@ form.signup, form.login {
 }
 
 .update-button:hover {
-  background-color: #3a53b8; /* Darker green on hover */
+  background-color: #3a53b8; 
 }
 
 /* Item Container */
@@ -576,12 +575,12 @@ form.signup, form.login {
   flex-wrap: wrap;
   margin-right: 20px;
   padding: 15px;
-  border: 1px solid #ededed; /* Optional: Remove border for a cleaner look */
+  border: 1px solid #ededed; 
   border-radius: 4px 4px;
-  background-color: #ededed; /* Light gray background for items */
+  background-color: #ededed; 
 }
 
-/* Item Fields - Individual elements */
+/* Item Fields */
 .item-fields > * {
   margin-bottom: 5px;
   width: calc(50% - 10px);
@@ -597,32 +596,30 @@ form.signup, form.login {
 .summary-container {
   display: flex;
   flex-direction: column;
-  width: 350px; /* Adjust width as needed */
+  width: 350px; 
   background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
   border-radius: 8px;
   padding: 20px;
-  margin: 20px; /* Adjust margin for placement */
-  position: relative; /* For before/after elements */
-  overflow: visible; /* Ensures content is visible */
-  animation: pop-up 0.5s ease-in forwards; /* Pop-up animation */
+  margin: 20px; 
+  position: relative; 
+  overflow: visible; 
+  animation: pop-up 0.5s ease-in forwards; 
 }
 
 @keyframes pop-up {
   0% {
     opacity: 0;
-    transform: scale(0.9); /* Start slightly shrunk */
+    transform: scale(0.9); 
   }
   100% {
     opacity: 1;
-    transform: scale(1); /* Animate to full size */
+    transform: scale(1); 
   }
 }
 
-/* Removed text-highlight animation for the heading (h2) */
-
 .summary-info {
-  background-color: #233066; /* Use same light blue for consistency */
+  background-color: #233066; 
   padding: 10px 15px;
   margin-bottom: 15px;
   margin-left: -5px;
@@ -632,7 +629,7 @@ form.signup, form.login {
 }
 
 .summary-info:hover {
-  background-color: #3c55b8; /* Slightly darker blue on hover */
+  background-color: #3c55b8; 
 }
 
 /* Animated Item List (unchanged) */
@@ -646,7 +643,7 @@ form.signup, form.login {
 @keyframes item-list-appear {
   0% {
     opacity: 0;
-    transform: translateY(20px); /* Items appear from bottom */
+    transform: translateY(20px);
   }
   100% {
     opacity: 1;
@@ -656,30 +653,30 @@ form.signup, form.login {
 
 .item {
   padding: 5px 10px;
-  border-bottom: 1px solid #ddd; /* Optional: Separating line between items */
-  color: #555; /* Text color with slight contrast */
+  border-bottom: 1px solid #ddd; 
+  color: #555; 
   transition: background-color 0.3s ease;
 }
 
 .item:hover {
-  background-color: #f2f2f2; /* Light gray background on hover */
+  background-color: #f2f2f2; 
 }
 
 .item:last-child {
-  border-bottom: none; /* Remove bottom border for the last item */
+  border-bottom: none; 
 }
 
 .box {
-  border: 0px solid #ccc; /* Border around the box */
-  border-radius: 5px; /* Rounded corners */
-  padding: 20px 20px; /* Padding inside the box */
+  border: 0px solid #ccc; 
+  border-radius: 5px;
+  padding: 20px 20px; 
   margin-top: 20px;
-  margin-bottom: 5px; /* Spacing between boxes */
+  margin-bottom: 5px; 
   background-color: rgba(234, 234, 234, 0.5);
 }
 
 .box h2 {
-  margin-top: 0; /* Remove margin from h2 */
+  margin-top: 0;
   background-color: #233066;
   color: white;
   padding: 10px 10px;
@@ -689,7 +686,7 @@ form.signup, form.login {
 /*report gen table*/
 .report-table {
   border-collapse: collapse;
-  width: 100%; /* Adjust width as needed */
+  width: 100%;
 }
 
 .report-header-row, .report-row {
@@ -702,10 +699,10 @@ form.signup, form.login {
 }
 
 .report-row:nth-child(even) {
-  background-color: #dcdcdc; /* Light gray background for even rows */
+  background-color: #dcdcdc; 
 }
 .report-row:nth-child(odd) {
-  background-color: #ffffff; /* Light gray background for even rows */
+  background-color: #ffffff; 
 }
 
 .report-table th, .report-table td {
@@ -735,7 +732,7 @@ form.signup, form.login {
 }
 
 .btn-report{
-  background-color: #233066; /* Blue background for primary action */
+  background-color: #233066; 
   color: #fff;
   border: none;
   padding: 12px 24px;
@@ -755,25 +752,25 @@ form.signup, form.login {
 
 /*dis login form*/
 .login-form {
-  display: flex; /* Center elements horizontally */
-  flex-direction: column; /* Stack elements vertically */
-  width: 300px; /* Adjust width as needed */
+  display: flex;
+  flex-direction: column; 
+  width: 300px; 
   margin: 50px auto;
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
   background-color: #fff;
 }
 
 h3 {
-  text-align: center; /* Center heading */
+  text-align: center; 
   font-size: 1.2em;
   margin-bottom: 20px;
 }
 
 label {
-  display: block; /* Display labels on their own line */
+  display: block; 
   margin-bottom: 5px;
   font-weight: 600;
 }
@@ -781,46 +778,46 @@ label {
 /* Input fields */
 .login-input,
 .eye-button {
-  width: 100%; /* Match container width */
+  width: 100%; 
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 3px;
   font-size: 0.9em;
-  transition: all 0.2s ease-in-out; /* Smooth transitions */
+  transition: all 0.2s ease-in-out; 
 }
 
 .login-input:focus,
 .eye-button:focus {
-  outline: none; /* Remove default outline */
-  border-color: #999; /* Highlight on focus */
+  outline: none; 
+  border-color: #999; 
 }
 
 .password-input {
-  position: relative; /* Position eye button absolutely */
+  position: relative; 
 }
 
 .eye-button {
-  position: absolute; /* Position eye button within container */
+  position: absolute; 
   top: 47%;
   right: -110px;
-  transform: translateY(-50%); /* Center vertically */
-  background: none; /* Transparent background */
-  border: none; /* Remove button border */
-  cursor: pointer; /* Indicate clickable action */
+  transform: translateY(-50%); 
+  background: none; 
+  border: none; 
+  cursor: pointer; 
 }
 
 .eye-icon {
   font-size: 16px;
-  color: #ccc; /* Adjust color based on preference */
+  color: #ccc; 
   transition: all 0.2s ease-in-out;
 }
 
 /* Login button */
 .login-button {
-  width: 100%; /* Match container width */
+  width: 100%; 
   padding: 10px 20px;
-  background-color: #233066; /* Adjust base color */
-  color: #fff; /* Text color */
+  background-color: #233066; 
+  color: #fff; 
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -829,12 +826,12 @@ label {
 }
 
 .login-button:hover {
-  background-color: #374c9f; /* Darker shade on hover */
+  background-color: #374c9f; 
 }
 
 .login-button[disabled] {
-  background-color: #ddd; /* Disable styling */
-  cursor: default; /* Remove pointer indication */
+  background-color: #ddd; 
+  cursor: default; 
 }
 
 /* Error message */
@@ -852,24 +849,24 @@ a:hover {
   color: hsl(0, 0%, 100%);
 }
 
-/* Styling for password visibility toggle button */
+/*password visibility toggle button*/
 .eye-button:hover .eye-icon {
-  color: #666; /* Darker color on hover */
+  color: #666; 
 }
 
-/* Styling for form container on hover */
+/*form container on hover*/
 .login-form:hover {
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Slightly larger shadow on hover */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Styling for input fields on focus */
+/*input fields on focus*/
 .login-input:focus {
-  border-color: #ffffff; /* Highlight input border on focus */
+  border-color: #ffffff; 
 }
 
-/* Styling for disabled button */
+/*disabled button*/
 .login-button[disabled] {
-  background-color: #ccc; /* Lighter shade for disabled button */
+  background-color: #ccc; 
 }
 
 .greeting-container {
@@ -883,21 +880,39 @@ a:hover {
 }
 
 /*update form order status*/
-/* Styling for different order statuses */
 #orderStatus option[value="Approved"] {
-  color: green; /* Example color for Approved */
+  color: green; 
 }
 #orderStatus option[value="Cancelled"] {
-  color: red; /* Example color for Cancelled */
+  color: red; 
 }
 #orderStatus option[value="Pending"] {
-  color: blue; /* Example color for Pending */
+  color: blue; 
 }
-#orderStatus option[value="Processing"] {
-  color: orange; /* Example color for Processing */
+#orderStatus option[value="Collectible"] {
+  color: orange;
+}
+#orderStatus option[selected] {
+  font-weight: bold; 
 }
 
-/* Styling for updated order status */
-#orderStatus option[selected] {
-  font-weight: bold; /* Make the selected option bold */
+/*report*/
+.select-month {
+  background-color: #fff; 
+  border: 0px solid #fff; 
+  border-radius: 4px; 
+  padding: 4px 10px;
+  font-size: 16px; 
+  color: #333; 
+  appearance: none; 
+  width: 150px; 
+  height: 30px; 
+}
+.select-month:focus {
+  outline: 2px solid #233066; 
+}
+.select-month option {
+  padding: 5px 10px;
+  font-size: 16px;
+  color: #333;
 }

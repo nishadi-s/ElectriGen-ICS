@@ -1,6 +1,6 @@
 import React from "react";
 import NavbarDini1 from "../components/DisNavbar";
-import LatestOrder from '../components/DisLatestOrder'
+import DisLatestOrder from '../components/DisLatestOrder'
 import ItemsSummary from '../components/DisItemSummary'
 
 const DisDashboard = () => {
@@ -33,7 +33,7 @@ const DisDashboard = () => {
         </div>
       </div>
       <ItemsSummary/>
-      <LatestOrder/>
+      <DisLatestOrder/>
     </NavbarDini1>
   );
 };

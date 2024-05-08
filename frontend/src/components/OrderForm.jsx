@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useOrdersContext } from "../hooks/useOrdersContext";
+import Swal from 'sweetalert2';
 
 const OrderForm = () => {
   const { dispatch } = useOrdersContext();
@@ -35,16 +36,6 @@ const OrderForm = () => {
           setProductsMap(productsMap);
         } else {
           setError("Failed to fetch products");
-        }
-
-        // Fetch distributor data
-        const distributorResponse = await fetch("/api/distributor");
-        const distributorData = await distributorResponse.json();
-        if (distributorResponse.ok) {
-          setDistributorId(distributorData.distributorLoginID);
-          setDistributorName(distributorData.distributorName);
-        } else {
-          setError("Failed to fetch distributor data");
         }
       } catch (error) {
         setError("An error occurred while fetching data");
@@ -173,15 +164,25 @@ const OrderForm = () => {
         setEmptyFields([]);
         console.log("new order added", json);
         dispatch({ type: "CREATE_ORDER", payload: json });
-      }
-    } catch (error) {
-      setError("An error occurred while submitting the order.");
-      console.error("Error submitting order:", error);
+
+      // SweetAlert success pop-up
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Your order has been successfully placed.',
+        confirmButtonText: 'OK'
+      }).then(() => {
+        // Navigate to OrderHistory page
+        navigate("/OrderHistory");
+      });
     }
+  } catch (error) {
+    setError("An error occurred while submitting the order.");
+    console.error("Error submitting order:", error);
+  }
+};
 
-    navigate("/OrderHistory");
-  };
-
+//form details
   return (
     <form className="create" onSubmit={handleSubmit}>
       <h3>Order Placement Form</h3>
