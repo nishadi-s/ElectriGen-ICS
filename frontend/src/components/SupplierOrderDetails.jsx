@@ -78,10 +78,10 @@ const SupplierOrderDetails = ({ order }) => {
             </td>
             <td>{formatDistanceToNow(new Date(order.createdAt), { addSuffix: true })}</td>
             <td>
-              <button className='button1' onClick={handleEdit}>Edit</button>
+              <button className='Sup_button1' onClick={handleEdit}>Edit</button>
               <br/>
               <br/>
-              <button onClick={handleClick} className="button2">Delete</button>
+              <button onClick={handleClick} className="Sup_button2">Delete</button>
             </td>
           </tr>
         </tbody>

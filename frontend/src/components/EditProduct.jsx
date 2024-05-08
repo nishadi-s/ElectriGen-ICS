@@ -68,10 +68,10 @@ const EditProduct = () => {
       setUnitPrice(updatedProductData.unitPrice);
       setQuantity(updatedProductData.quantity);
 
-      navigate('/products'); 
+      navigate("/products");
     } else {
       const errorData = await response.json();
-      setError("Error updating product",errorData.error);
+      setError("Error updating product", errorData.error);
       setEmptyFields(errorData.emptyFields || []);
     }
   };

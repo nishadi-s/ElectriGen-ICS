@@ -5,13 +5,13 @@ import Navbar_Pay from "../../components/Navbar-uvi"; // Corrected import
 import background_user from "../img/background_user.jpg"; // Import background image
 
 const roles = [
-  'Inventory Manager',
-  'Distributor Manager',
-  'Showroom Manager',
-  'Donation Manager',
-  'Export Manager',
-  'Supplier Manager',
-  'User Manager'
+  "Inventory Manager",
+  "Distributor Manager",
+  "Showroom Manager",
+  "Donation Manager",
+  "Export Manager",
+  "Supplier Manager",
+  "User Manager",
 ];
 
 const Signup = () => {
@@ -103,11 +103,10 @@ const Signup = () => {
   return (
     <>
       <Navbar_Pay>
-      <div className="signup-header">
+        <div className="signup-header">
           <h2>User Signup</h2>
         </div>
         <div className="signup-container">
-          
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label>Name</label>
@@ -147,7 +146,9 @@ const Signup = () => {
                 value={formData.confirmPassword}
                 onChange={handleChange}
               />
-              {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
+              {errors.confirmPassword && (
+                <p className="error">{errors.confirmPassword}</p>
+              )}
             </div>
             <div className="form-group">
               <label>Phone Number</label>
@@ -172,7 +173,9 @@ const Signup = () => {
               <select name="role" value={formData.role} onChange={handleChange}>
                 <option value="">Select Role</option>
                 {roles.map((roleOption) => (
-                  <option key={roleOption} value={roleOption}>{roleOption}</option>
+                  <option key={roleOption} value={roleOption}>
+                    {roleOption}
+                  </option>
                 ))}
               </select>
             </div>
@@ -194,7 +197,9 @@ const Signup = () => {
                 onChange={handleChange}
               />
             </div>
-            <button type="submit" disabled={isLoading}>{isLoading ? "Loading..." : "Signup"}</button>
+            <button type="submit" disabled={isLoading}>
+              {isLoading ? "Loading..." : "Signup"}
+            </button>
           </form>
         </div>
       </Navbar_Pay>
@@ -283,7 +288,6 @@ const Signup = () => {
 };
 
 export default Signup;
-
 
 /*import { useState } from "react";
 import AuthAPI from "../../api/AuthAPI";
@@ -485,7 +489,6 @@ const Signup = () => {
 };
 
 export default Signup;*/
-
 
 /*import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";

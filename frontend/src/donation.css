@@ -1,0 +1,104 @@
+/* google font */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+.container {
+  display: flex;
+}
+main {
+  width: 100%;
+  padding: 20px;
+}
+.sidebar {
+  background: #233066;
+  color: #fff;
+  height: device-height;
+  width: 200px;
+  margin-left: 0px;
+  margin-top: -20px;
+  transition: all 0.5s;
+}
+
+.sidebar a {
+  text-decoration: none;
+}
+.top_section {
+  display: flex;
+  align-items: center;
+  padding: 20px 15px;
+}
+.logo {
+  font-size: 30px;
+}
+.bars {
+  display: flex;
+  font-size: 25px;
+  margin-left: 50px;
+}
+.link {
+  display: flex;
+  color: #fff;
+  padding: 10px 15px;
+  gap: 15px;
+  transition: all 0.5s;
+}
+.link:hover {
+  background: #4c5fad;
+  color: #000;
+  transition: all 0.5s;
+}
+.active {
+  background: #4c5fad;
+  color: #000;
+}
+.icon,
+.link_text {
+  font-size: 20px;
+}
+.don-header {
+    text-align: left;
+    width: 100vw;
+    padding: 17px 20px;
+    background-color: #233066;
+    color: #fff;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    margin-top: -40px;
+    margin-left: -20px;
+    border-radius: 0px 10px 0px 10 px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .donation-project-details-container {
+    background-color: #e6f7ff; /* Light blue background color */
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+}
+
+.project-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.project-table th, .project-table td {
+    padding: 12px;
+    border: 1px solid #dddddd;
+}
+
+.project-table th {
+    background-color: #ccebff; /* Light blue background color for table header */
+}
+
+.project-table tr:hover {
+    background-color: #f2f2f2; /* Light grey background color on hover */
+}
+
+
+
+
+
+

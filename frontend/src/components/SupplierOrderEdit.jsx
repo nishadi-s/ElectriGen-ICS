@@ -26,41 +26,7 @@ const EditSupplierOrder = () => {
   const [currentItemIndex, setCurrentItemIndex] = useState(0); 
   const [nextItemNumber, setNextItemNumber] = useState(1); // To track the next item number
 
-  const updateItem = () => {
-    if (newItem.Sup_matrial_code && newItem.M_Name && newItem.Sup_Quant) {
-      const updatedItems = [...items];
-      updatedItems[currentItemIndex] = newItem;
-      setItems(updatedItems);
 
-      if (currentItemIndex < items.length - 1) {
-        const nextItem = items[currentItemIndex + 1];
-        setNewItem({
-          Sup_matrial_code: nextItem.Sup_matrial_code,
-          M_Name: nextItem.M_Name,
-          Sup_Quant: nextItem.Sup_Quant,
-          
-        });
-        setCurrentItemIndex((prevIndex) => prevIndex + 1);
-        setNextItemNumber((prevNumber) => prevNumber + 1); // Update next item number
-      } else {
-        setNewItem({
-          Sup_matrial_code: "",
-          M_Name: "",
-          Sup_Quant: "",
-          
-        });
-        setNextItemNumber((prevNumber) => prevNumber + 1); // Increment next item number
-      }
-
-      // Display success message using SweetAlert2
-      Swal.fire({
-        icon: 'success',
-        title: `Item ${nextItemNumber} has been successfully updated`,
-        showConfirmButton: false,
-        timer: 2000 // Close after 2 seconds
-      });
-    }
-  };
 
   useEffect(() => {
     const fetchSupplierOrders = async () => {
@@ -147,6 +113,80 @@ const EditSupplierOrder = () => {
     }
   };
 
+
+  const updateItem = async () => {
+    if (newItem.Sup_matrial_code && newItem.M_Name && newItem.Sup_Quant) {
+      const updatedItems = [...items];
+      updatedItems[currentItemIndex] = newItem;
+      setItems(updatedItems);
+  
+      try {
+        // Fetch current material details
+        const materialResponse = await fetch(`http://localhost:4000/api/materials/code/${newItem.Sup_matrial_code}`);
+        if (!materialResponse.ok) {
+          throw new Error('Failed to fetch material details');
+        }
+        const material = await materialResponse.json();
+  
+        // Calculate difference in quantities
+        const oldQuantity = items[currentItemIndex].Sup_Quant;
+        const newQuantity = newItem.Sup_Quant;
+        const quantityDifference = newQuantity - oldQuantity;
+  
+        // Update material quantity
+        const updatedMaterialQuantity = material.quantity + quantityDifference;
+  
+        const updateMaterialResponse = await fetch(`http://localhost:4000/api/materials/${material._id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ quantity: updatedMaterialQuantity })
+        });
+  
+        if (!updateMaterialResponse.ok) {
+          throw new Error('Failed to update material quantity');
+        }
+  
+        // Display success message using SweetAlert2
+        Swal.fire({
+          icon: 'success',
+          title: `Item ${nextItemNumber} has been successfully updated`,
+          showConfirmButton: false,
+          timer: 2000 // Close after 2 seconds
+        });
+  
+        if (currentItemIndex < items.length - 1) {
+          const nextItem = items[currentItemIndex + 1];
+          setNewItem({
+            Sup_matrial_code: nextItem.Sup_matrial_code,
+            M_Name: nextItem.M_Name,
+            Sup_Quant: nextItem.Sup_Quant,
+          });
+          setCurrentItemIndex((prevIndex) => prevIndex + 1);
+          setNextItemNumber((prevNumber) => prevNumber + 1); // Update next item number
+        } else {
+          setNewItem({
+            Sup_matrial_code: "",
+            M_Name: "",
+            Sup_Quant: "",
+          });
+          setNextItemNumber((prevNumber) => prevNumber + 1); // Increment next item number
+        }
+      } catch (error) {
+        console.error('Error updating item and material quantity:', error);
+        // Handle error updating item and material quantity
+        Swal.fire({
+          icon: 'error',
+          title: 'Error updating item and material quantity',
+          showConfirmButton: false,
+          timer: 2000 // Close after 2 seconds
+        });
+      }
+    }
+  };
+  
+  
   return (
     <NavbarNishadi>
       <form className="update-supplier-order">

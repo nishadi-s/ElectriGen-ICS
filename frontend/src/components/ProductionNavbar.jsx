@@ -1,4 +1,6 @@
+import { NavLink, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
+import { useAuthStore } from "../store/useAuthStore";
 import {
   FaTh,
   FaBars,
@@ -7,12 +9,18 @@ import {
   FaShapes,
   FaIndustry,
   FaDollyFlatbed,
+  FaSignOutAlt,
 } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
 
 const ProductionNavbar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const navigate = useNavigate();
+  const { isAuthenticated, logout } = useAuthStore();
+  const handleLogout = () => {
+    logout();
+    navigate("/new-login");
+  };
   const menuItem = [
     {
       path: "/ProductionDashboard",
@@ -42,8 +50,8 @@ const ProductionNavbar = ({ children }) => {
     },
 
     {
-      path: "/Home",
-      name: "Logout",
+      path: "/ProductionProfile",
+      name: "Profile",
       icon: <FaUserAlt />,
     },
   ];
@@ -80,6 +88,24 @@ const ProductionNavbar = ({ children }) => {
             </div>
           </NavLink>
         ))}
+        {/* Add logout menu item if user is authenticated */}
+        {isAuthenticated && (
+          <div
+            className="link"
+            onClick={handleLogout}
+            style={{ cursor: "pointer" }}
+          >
+            <div className="icon">
+              <FaSignOutAlt />
+            </div>
+            <div
+              style={{ display: isOpen ? "block" : "none" }}
+              className="link_text"
+            >
+              Logout
+            </div>
+          </div>
+        )}
       </div>
       <main>{children}</main>{" "}
     </div>

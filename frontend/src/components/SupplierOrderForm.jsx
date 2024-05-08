@@ -3,7 +3,7 @@ import { Form, Button, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import NavbarNishadi from './SupplierOrderNavbar';
-import { useNavigate  } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const SupplierOrderForm = () => {
   const navigate = useNavigate();
@@ -18,6 +18,7 @@ const SupplierOrderForm = () => {
 
   useEffect(() => {
     fetchMaterials();
+    generateOrderID(); // Generate order ID when component mounts
   }, []);
 
   const fetchMaterials = async () => {
@@ -29,6 +30,14 @@ const SupplierOrderForm = () => {
     } catch (error) {
       console.error('Error fetching materials:', error);
     }
+  };
+
+  const generateOrderID = () => {
+    // Generate a unique order ID using a prefix and timestamp
+    const prefix = "ORD"; // Prefix for order ID
+    const timestamp = Date.now(); // Current timestamp
+    const generatedID = prefix + timestamp; // Concatenate prefix and timestamp
+    setOrderID(generatedID);
   };
 
   const handleItemChange = async (index, field, value) => {
@@ -64,12 +73,58 @@ const SupplierOrderForm = () => {
     };
 
     try {
-      await axios.post(`http://localhost:4000/api/supplier_order/`, newSupplierOrder);
+      // Submit new supplier order
+      const orderResponse = await fetch(`http://localhost:4000/api/supplier_order/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newSupplierOrder)
+      });
 
+      if (!orderResponse.ok) {
+        throw new Error('Failed to submit supplier order');
+      }
+
+      // Update material quantities
+      items.forEach(async (item) => {
+        try {
+          const materialCode = item.Sup_matrial_code; // Get the material code from the item
+          const quantity = parseInt(item.Sup_Quant);
+
+          // Fetch current material details
+          const materialResponse = await fetch(`http://localhost:4000/api/materials/code/${materialCode}`);
+          if (!materialResponse.ok) {
+            throw new Error('Failed to fetch material details');
+          }
+          const material = await materialResponse.json();
+
+          // Update material quantity
+          const updatedQuantity = material.quantity + quantity;
+
+          // Perform the update using Fetch
+          const updateResponse = await fetch(`http://localhost:4000/api/materials/${material._id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ quantity: updatedQuantity })
+          });
+
+          if (!updateResponse.ok) {
+            throw new Error('Failed to update material quantity');
+          }
+        } catch (error) {
+          console.error('Error updating material quantity:', error);
+          // Handle error updating material quantity
+        }
+      });
+
+      // Show success message
       Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Successfully Submitted!",
+        position: 'top-end',
+        icon: 'success',
+        title: 'Successfully Submitted!',
         showConfirmButton: false,
         timer: 1500
       });
@@ -78,10 +133,11 @@ const SupplierOrderForm = () => {
       }, 1500);
     } catch (err) {
       console.error('Error submitting supplier order:', err);
+      // Show error message
       Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: "Error in Submitting!",
+        position: 'top-end',
+        icon: 'error',
+        title: 'Error in Submitting!',
         showConfirmButton: false,
         timer: 1500
       });
@@ -89,23 +145,14 @@ const SupplierOrderForm = () => {
   };
 
   const validateOrder = () => {
-    if (!orderID.startsWith('OID')) {
-      setOrderID('OID' + orderID);
-    }
-
-    if (!supID.match(/^[Ss]\d+/)) {
-      setSupID('S' + supID);
-    }
-
-    if (new Date(recDate) <= new Date(orderDate)) {
+    if (new Date(orderDate) >= new Date(recDate)) {
       Swal.fire({
         icon: 'error',
-        title: 'Invalid Dates',
-        text: 'Received date should be after the ordered date'
+        title: 'Oops...',
+        text: 'Order date should be before receipt date!',
       });
       return false;
     }
-
     return true;
   };
 
@@ -122,17 +169,17 @@ const SupplierOrderForm = () => {
   return (
     <NavbarNishadi>
       <div>
-        <h1>Create Export Order</h1>
+        <h1>Create Supplier Order</h1>
         <Form onSubmit={handleSubmit}>
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formSupplierOrderID">
-              <Form.Label>Export Order ID</Form.Label>
-              <Form.Control type="text" value={orderID} onChange={(e) => setOrderID(e.target.value)} />
+              <Form.Label>Supplier Order ID</Form.Label>
+              <Form.Control type="text" value={orderID} readOnly />
             </Form.Group>
 
             <Form.Group as={Col} controlId="formSupplierID">
               <Form.Label>Supplier ID</Form.Label>
-              <Form.Control type="text" value={supID} onChange={(e) => setSupID(e.target.value)} />
+              <Form.Control type="text" value={supID} onChange={(e) => setSupID("S" + e.target.value)} />
             </Form.Group>
           </Row>
 

@@ -108,10 +108,30 @@ const updateMaterial = async (req, res) => {
   }
 };
 
+const getMaterialByItemCode = async (req, res) => {
+  const { code } = req.params;
+
+  try {
+    const material = await Material.findOne({ code });
+
+    if (!material) {
+      return res
+        .status(404)
+        .json({ error: "No material found with the provided item code" });
+    }
+
+    res.status(200).json(material);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   getMaterial,
   getMaterials,
   createMaterial,
   deleteMaterial,
   updateMaterial,
+  getMaterialByItemCode,
+
 };

@@ -6,6 +6,7 @@ const {
   getMaterial,
   updateMaterial,
   deleteMaterial,
+  getMaterialByItemCode,
 } = require("../controllers/materialController");
 
 const router = express.Router();
@@ -25,5 +26,7 @@ router.delete("/:id", deleteMaterial);
 //UPDATE a materials
 router.put("/:id", updateMaterial);
 
+// GET a single material by item code
+router.get("/code/:code", getMaterialByItemCode);
 
 module.exports = router;

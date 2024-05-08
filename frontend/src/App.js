@@ -27,6 +27,7 @@ import UpdateUser from "./components/UpdateUser.jsx";
 import PrivateRoute from "./route_auth/PrivateRoute.jsx";
 import ForgotPassword from "./components/ForgotPassword.jsx";
 import ResetPassword from "./components/ResetPassword.jsx";
+import UsersDashboard from "./pages/UsersDashboard.jsx";
 
 //Nishadi
 import NavbarNishadi from "./components/SupplierOrderNavbar.jsx";
@@ -40,6 +41,8 @@ import SupplierOrderForm from "./components/SupplierOrderForm.jsx"; //Import sup
 import SupplierOrderEdit from "./components/SupplierOrderEdit.jsx"; //Import the Update supplier Order component
 import SupplierOrderReport from "./components/SupplierOrderRepo.jsx";
 import Materials from "./pages/Materials.jsx";
+import SupplierEmail from "./pages/supplierEmail.jsx"//Importing supplier email component
+
 
 //Dulari_IT22121110
 import DonationNavbar from "./components/DonationNavbar.jsx";
@@ -64,6 +67,8 @@ import InvoiceReport from "./pages/InvoiceReport.jsx";
 import SalesDashboard from "./pages/SalesDashboard.jsx";
 import SDFeedback from "./pages/SDFeedback";
 import SDView from "./pages/SDView.jsx";
+import SalesAna from "./pages/SalesAna.jsx";
+
 
 //Dinithi
 import DisSignup from "./pages/DisSignup.jsx";
@@ -90,10 +95,10 @@ import AddProducts from "./pages/AddProducts.jsx";
 import AddProduction from "./pages/AddProduction.jsx";
 import ProductionDashboard from "./pages/ProductionDashboard.jsx";
 import SingleProduct from "./components/SingleProduct"; // Import SingleProduct
+import ProductionProfile from "./components/productionProfile";
 import EditProduct from "./components/EditProduct"; // Import EditProduct
 import EditMaterial from "./components/EditMaterial"; // Import EditProduct
 import ProductionAnalytics from "./pages/ProductionAnalytics.jsx";
-import ProductionProfile from "./pages/ProductionProfile.jsx";
 import ProductForm from "./components/ProductForm";
 import ProductsView from "./pages/ProductView";
 import AddMaterials from "./pages/AddMaterials";
@@ -108,7 +113,9 @@ import Importer from "./pages/Importer.jsx";
 import ExportAnalytics from "./pages/ExportAnalytics.jsx";
 import UpdateExports from "./pages/UpdateExports.jsx";
 import ImporterUpdate from "./pages/ImporterUpdate.jsx";
+import ExportsNewDashboard from "./pages/ExportsNewDashboard.jsx";
 //import ExportsEmail from "./pages/ExportsEmail.jsx";
+
 
 // New Auth
 import NewLogin from "./pages/new-login/Login.jsx";
@@ -116,11 +123,11 @@ import NewSignup from "./pages/new-signup/Signup.jsx";
 import CheckLoginStatus from "./route_auth/CheckLoginStatus.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import UserProfile from "./components/userProfile.jsx";
+import UserDashboard from "./pages/UsersDashboard.jsx";
 const queryClient = new QueryClient();
 
 const App = () => {
   const { distributor } = useDisDAuthContext();
-
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
@@ -148,13 +155,14 @@ const App = () => {
               <Route path="/salary-details" element={<SalaryDetailsPage />} />
               <Route path="/salary-report" element={<SalaryReportPage />} />
               <Route path="/all-salary-report" element={<AllReport />} />
-              <Route path="user-profile" element={<UserProfile />} />
+              <Route path="/user-profile" element={<UserProfile />} />
               <Route path="/Logout" element={<Logout />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route
                 path="/reset-password/:id/:token"
                 element={<ResetPassword />}
               ></Route>
+              <Route path="/user-dash" element={<UsersDashboard />} />
               <Route path="/Dashboard" element={<Dashboard />} />
               {/* Nishadi */}
               <Route path="/SupplierOrderDashboard" element={<DashboardN />} />
@@ -181,21 +189,23 @@ const App = () => {
                 element={<SupplierOrderReport />}
               />
               <Route path="/Materials" element={<Materials />} />
-              {/*Shanali*/}
-              <Route path="/" element={<ExportsDashboard />} />
-              <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
-              <Route path="/Importer" element={<Importer />} />
-              <Route path="/ExportOrders" element={<ExportOrders />} />
-              <Route
-                path="/ImporterDescription"
-                element={<ImporterDescription />}
-              />
-              <Route path="/ExportAnalytics" element={<ExportAnalytics />} />
-              <Route path="/ExportsProfile" element={<ExportsProfile />} />
-              <Route path="/UpdateExports/:id" element={<UpdateExports />} />
-              <Route path="/ImporterUpdate/:id" element={<ImporterUpdate />} />
-              <Route path="/ExportsReport" element={<ExportsReport />} />
-              {/* <Route path="/ExportsEmail" element={<ExportsEmail />} /> */}
+              <Route path="/SupplierEmail" element={<SupplierEmail/>}/> 
+                
+            {/* Shanali */}
+            <Route path="/" element={<Home />} />
+            <Route path="/Home" element={<Home />} />            
+            <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
+            <Route path="/Importer" element={<Importer />} />
+            <Route path="/ExportOrders" element={<ExportOrders />} />
+            <Route path="/ImporterDescription" element={<ImporterDescription />}/>
+            <Route path="/ExportAnalytics" element={<ExportAnalytics />} />
+            <Route path="/ExportsProfile" element={<ExportsProfile />} />
+            <Route path="/UpdateExports/:id" element={<UpdateExports />} />
+            <Route path="/ImporterUpdate/:id" element={<ImporterUpdate />} />
+            <Route path="/ExportsReport" element={<ExportsReport />} />
+            <Route path="/ExportsNewDashboard" element={<ExportsNewDashboard />} />
+            {/* <Route path="/ExportsEmail" element={<ExportsEmail />} /> */}
+
               {/* Dulari */}
               <Route path="/New_Projects" element={<New_Projects />} />
               <Route path="/Doner_Feedback" element={<Doner_Feedback />} />
@@ -212,27 +222,23 @@ const App = () => {
               />
               <Route path="/DReportCreate" element={<DReportCreate />} />
               {/* Primal */}
-              <Route path="/salesFeedback" element={<SalesFeedback />} />
-              <Route path="/invoiceCreate" element={<InvoiceCreate />} />
-              <Route path="/sfeedbackFetch" element={<SfeedbackFetch />} />
-              <Route path="/viewInvoice" element={<ViewInvoice />} />
-              <Route path="/PinVerification" element={<PinVerification />} />
-              <Route
-                path="/InvoiceUpdate/:billID"
-                element={<InvoiceUpdate />}
-              />
-              <Route path="/InvoiceReport" element={<InvoiceReport />} />
-              <Route path="/SalesDashboard" element={<SalesDashboard />} />
-              <Route path="/SDFeedback" element={<SDFeedback />} />
-              <Route path="/SDView" element={<SDView />} />
-              <Route
-                path="/InvoiceUpdate/:billID"
-                element={<InvoiceUpdate />}
-              />
-              <Route path="/InvoiceReport" element={<InvoiceReport />} />
-              <Route path="/SalesDashboard" element={<SalesDashboard />} />
-              <Route path="/SDFeedback" element={<SDFeedback />} />
-              <Route path="/SDView" element={<SDView />} />
+          <Route path="/salesFeedback" element={<SalesFeedback />} />
+          <Route path="/invoiceCreate" element={<InvoiceCreate />} />
+          <Route path="/sfeedbackFetch" element={<SfeedbackFetch />} />
+          <Route path="/viewInvoice" element={<ViewInvoice />} />
+          <Route path="/PinVerification" element={<PinVerification />} />
+          <Route path="/InvoiceUpdate/:billID" element={<InvoiceUpdate />} />
+          <Route path="/InvoiceReport" element={<InvoiceReport />} />
+          <Route path="/SalesDashboard" element={<SalesDashboard />} />
+          <Route path="/SDFeedback" element={<SDFeedback />} />
+          <Route path="/SDView" element={<SDView />} />
+          <Route path="/InvoiceUpdate/:billID" element={<InvoiceUpdate />} />
+          <Route path="/InvoiceReport" element={<InvoiceReport />} />
+          <Route path="/SalesDashboard" element={<SalesDashboard />} />
+          <Route path="/SDFeedback" element={<SDFeedback />} />
+          <Route path="/SDView" element={<SDView />} />
+          <Route path="/SalesAna" element={<SalesAna />} />
+
               {/* Dinithi */}
               <Route
                 path="/login"
@@ -279,10 +285,6 @@ const App = () => {
                 path="/ProductionDashboard"
                 element={<ProductionDashboard />}
               />
-              <Route
-                path="/ProductionProfile"
-                element={<ProductionProfile />}
-              />
               <Route path="/" element={<Products />} />
               <Route path="/product/:id" element={<SingleProduct />} />{" "}
               {/* Define route for single product */}
@@ -296,6 +298,10 @@ const App = () => {
               <Route path="/SingleProduct" element={<SingleProduct />} />
               <Route path="/ProductsView" element={<ProductsView />} />
               <Route path="/AddMaterials" element={<AddMaterials />} />
+              <Route
+                path="/ProductionProfile"
+                element={<ProductionProfile />}
+              />
             </Routes>
           </div>
         </SalesContextProvider>
