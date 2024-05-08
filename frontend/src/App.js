@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
-//import Home from "./pages/Home.jsx";
+import Home from "./pages/Home.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import MyProfile from "./pages/MyProfile.jsx";
 import Analytics from "./pages/Analytics.jsx";
@@ -91,10 +91,10 @@ import AddProducts from "./pages/AddProducts.jsx";
 import AddProduction from "./pages/AddProduction.jsx";
 import ProductionDashboard from "./pages/ProductionDashboard.jsx";
 import SingleProduct from "./components/SingleProduct"; // Import SingleProduct
+import ProductionProfile from "./components/productionProfile";
 import EditProduct from "./components/EditProduct"; // Import EditProduct
 import EditMaterial from "./components/EditMaterial"; // Import EditProduct
 import ProductionAnalytics from "./pages/ProductionAnalytics.jsx";
-import ProductionProfile from "./pages/ProductionProfile.jsx";
 import ProductForm from "./components/ProductForm";
 import ProductsView from "./pages/ProductView";
 import AddMaterials from "./pages/AddMaterials";
@@ -150,13 +150,14 @@ const App = () => {
               <Route path="/salary-details" element={<SalaryDetailsPage />} />
               <Route path="/salary-report" element={<SalaryReportPage />} />
               <Route path="/all-salary-report" element={<AllReport />} />
-              <Route path="/user-profile"element={<UserProfile/>}/>
+              <Route path="/user-profile" element={<UserProfile />} />
               <Route path="/Logout" element={<Logout />} />
-              <Route path="/forgot-password" element={<ForgotPassword/>}/>
-              <Route path="/reset-password/:id/:token" element={<ResetPassword />}></Route>
-              <Route path="/user-dash"element={<UsersDashboard/>}/>
-            
-           
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route
+                path="/reset-password/:id/:token"
+                element={<ResetPassword />}
+              ></Route>
+              <Route path="/user-dash" element={<UsersDashboard />} />
               <Route path="/Dashboard" element={<Dashboard />} />
               {/* Nishadi */}
               <Route path="/SupplierOrderDashboard" element={<DashboardN />} />
@@ -280,10 +281,6 @@ const App = () => {
                 path="/ProductionDashboard"
                 element={<ProductionDashboard />}
               />
-              <Route
-                path="/ProductionProfile"
-                element={<ProductionProfile />}
-              />
               <Route path="/" element={<Products />} />
               <Route path="/product/:id" element={<SingleProduct />} />{" "}
               {/* Define route for single product */}
@@ -297,6 +294,10 @@ const App = () => {
               <Route path="/SingleProduct" element={<SingleProduct />} />
               <Route path="/ProductsView" element={<ProductsView />} />
               <Route path="/AddMaterials" element={<AddMaterials />} />
+              <Route
+                path="/ProductionProfile"
+                element={<ProductionProfile />}
+              />
             </Routes>
           </div>
         </SalesContextProvider>
