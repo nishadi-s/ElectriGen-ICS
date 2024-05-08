@@ -24,6 +24,10 @@ const exportSchema=new Schema({
             quantity:{
                 type:Number,
                 required:true
+            }, 
+            unitPrice:{
+                type:Number,
+                required:true
             } 
         }
 

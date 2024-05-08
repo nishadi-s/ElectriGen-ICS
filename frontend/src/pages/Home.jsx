@@ -34,7 +34,7 @@ const Home = () => {
     },
     {
       id: 4,
-      text: "Expot Management",
+      text: "Export Management",
       password: "Se123",
       link: "/ExportsDashboard",
     },
@@ -42,7 +42,7 @@ const Home = () => {
       id: 5,
       text: "Employee Salary Management",
       password: "Us123",
-      link: "/user-details",
+      link: "/user-dash",
     },
     {
       id: 6,

@@ -77,8 +77,8 @@ const Navbar = ({ children }) => {
       icon: <FaDollyFlatbed />,
     },
     {
-      path: "/ExportOrderDetails",
-      name: "Order Details",
+      path: "/ImporterDescription",
+      name: "Importer Details",
       icon: <FaThList />,
     },
     {

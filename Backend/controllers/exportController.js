@@ -42,7 +42,7 @@ const createExport=async(req,res)=>{
 
     } else {
         for (const item of items) {
-            if (!item.itemID || !item.quantity) {
+            if (!item.itemID || !item.quantity || !item.unitPrice) {
                 emptyFields.push('items');
                 break;
             }

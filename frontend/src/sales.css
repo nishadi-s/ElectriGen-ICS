@@ -18,7 +18,7 @@ main {
   height: device-height;
   width: 200px;
   margin-left: -60px;
-  margin-top: -20px;
+  margin-top: 20px;
   transition: all 0.5s;
 }
 

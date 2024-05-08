@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaTh, FaBars, FaUserAlt, FaReceipt, FaMoneyCheckAlt, FaRegChartBar, FaClipboardList, FaSignOutAlt } from "react-icons/fa";
+import { FaTh, FaBars, FaUserAlt, FaReceipt, FaMoneyCheckAlt, FaRegChartBar, FaClipboardList, FaSignOutAlt ,FaUserCheck } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 
@@ -36,6 +36,11 @@ const Navbar_Pay = ({ children }) => {
       icon: <FaClipboardList />,
     },
     {
+      path: "/user-dash",
+      name: "User Dashboard",
+      icon: < FaTh/>,
+    },
+    {
       path: "/new-signup",
       name: "Signup",
       icon: <FaUserAlt />,
@@ -43,7 +48,7 @@ const Navbar_Pay = ({ children }) => {
     {
       path: "/user-details",
       name: "User Details",
-      icon: <FaUserAlt />,
+      icon: <FaReceipt  />,
     },
     {
       path: "/user-profile",

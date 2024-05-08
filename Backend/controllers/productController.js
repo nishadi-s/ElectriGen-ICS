@@ -35,6 +35,18 @@ const getItemCodes = async (req, res) => {
   }
 };
 
+
+// Get all item codes
+const getItemCodes = async (req, res) => {
+  try {
+    const itemCodes = await Product.distinct("itemCode");
+    res.status(200).json(itemCodes);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+
 //create new product
 const createProduct = async (req, res) => {
   const { name, itemCode, unitPrice, quantity, color, category } = req.body;
@@ -50,6 +62,8 @@ const createProduct = async (req, res) => {
   if (!unitPrice) {
     emptyFields.push("unitPrice");
   }
+  if (!category) {
+    emptyFields.push("category");
   if (!category) {
     emptyFields.push("category");
   }
@@ -72,6 +86,7 @@ const createProduct = async (req, res) => {
       name,
       itemCode,
       unitPrice,
+      quantity,
       quantity,
       color,
       category,
@@ -173,6 +188,24 @@ const getLowQuantityProducts = async (req, res) => {
   }
 };
 
+const getProductByItemCode = async (req, res) => {
+  const { itemCode } = req.params;
+
+  try {
+    const product = await Product.findOne({ itemCode });
+
+    if (!product) {
+      return res
+        .status(404)
+        .json({ error: "No product found with the provided item code" });
+    }
+
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   getProduct,
   getProducts,
@@ -182,4 +215,6 @@ module.exports = {
   getItemCodes,
   updateProductQuantity,
   getLowQuantityProducts,
+  getProductByItemCode,
+
 };
