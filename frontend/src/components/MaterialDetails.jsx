@@ -75,14 +75,27 @@ const MaterialDetails = ({ material }) => {
     fetchData();
   }, [dispatch]);
 
+  // Apply CSS class to make the row appear red if quantity is less than 100
+  const rowClassName = material.quantity < 100 ? "low-quantity-row" : "";
+
+  // Apply CSS class to make text appear red if material quantity is less than 100
+  const textClassName = material.quantity < 100 ? "low-quantity-text" : "";
+
   return (
-    <tr className="product-row">
-      <td style={{ fontWeight: "bold" }} className="product-code">
+    <tr className={`product-row ${rowClassName}`}>
+      <td
+        style={{ fontWeight: "bold" }}
+        className={`product-code ${textClassName}`}
+      >
         {material.code}
       </td>
-      <td className="product-name">{material.name}</td>
-      <td className="product-unit-price">Rs. {material.unitPrice}</td>
-      <td className="product-quantity">{material.quantity}</td>
+      <td className={`product-name ${textClassName}`}>{material.name}</td>
+      <td className={`product-unit-price ${textClassName}`}>
+        Rs. {material.unitPrice}
+      </td>
+      <td className={`product-quantity ${textClassName}`}>
+        {material.quantity}
+      </td>
       <td>
         <Link to={`/edit-material/${material._id}`}>
           <button className="button-1">Edit</button>

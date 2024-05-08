@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useProductionContext } from "../hooks/useProductionContext";
+import Swal from "sweetalert2";
 
 const ProductionForm = () => {
   const { dispatch } = useProductionContext();
@@ -126,82 +127,13 @@ const ProductionForm = () => {
         setError(json.error);
         setEmptyFields(json.emptyFields || []);
       } else {
-        // Update material quantities
-        materials.forEach(async (material) => {
-          try {
-            const materialCode = material.materialNo; // Assuming materialNo is the material code
-            const quantity = parseInt(material.materialQuantity);
-
-            // Fetch current material details
-            const materialResponse = await fetch(
-              `/api/materials/code/${materialCode}`
-            );
-            if (!materialResponse.ok) {
-              throw new Error("Failed to fetch material details");
-            }
-            const materialData = await materialResponse.json();
-
-            // Update material quantity
-            const updatedQuantity = materialData.quantity - quantity;
-
-            // Perform the update using Fetch
-            const updateResponse = await fetch(
-              `/api/materials/${materialData._id}`,
-              {
-                method: "PUT",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ quantity: updatedQuantity }),
-              }
-            );
-
-            if (!updateResponse.ok) {
-              throw new Error("Failed to update material quantity");
-            }
-          } catch (error) {
-            console.error("Error updating material quantity:", error);
-            // Handle error updating material quantity
-          }
-        });
-
-        // Update product quantities
-        products.forEach(async (product) => {
-          try {
-            const productItemCode = product.itemCode;
-            const quantity = parseInt(product.quantity);
-
-            // Fetch current product details
-            const productResponse = await fetch(
-              `/api/products/itemCode/${productItemCode}`
-            );
-            if (!productResponse.ok) {
-              throw new Error("Failed to fetch product details");
-            }
-            const productData = await productResponse.json();
-
-            // Update product quantity
-            const updatedQuantity = productData.quantity + quantity;
-
-            // Perform the update using Fetch
-            const updateResponse = await fetch(
-              `/api/products/${productData._id}`,
-              {
-                method: "PUT",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ quantity: updatedQuantity }),
-              }
-            );
-
-            if (!updateResponse.ok) {
-              throw new Error("Failed to update product quantity");
-            }
-          } catch (error) {
-            console.error("Error updating product quantity:", error);
-            // Handle error updating product quantity
-          }
+        // Show SweetAlert on successful submission
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your work has been saved",
+          showConfirmButton: false,
+          timer: 1500,
         });
 
         // Reset form fields and state
@@ -214,19 +146,23 @@ const ProductionForm = () => {
         setEmptyFields([]);
         console.log("new production added", json);
         dispatch({ type: "CREATE_PRODUCTION", payload: json });
+
+        // Navigate to the production page after the SweetAlert timer runs out
+        setTimeout(() => {
+          navigate("/Production");
+        }, 1500); // Same timer value as SweetAlert timer
       }
     } catch (error) {
       setError("An error occurred while submitting the production.");
       console.error("Error submitting production:", error);
     }
-
-    navigate("/Production");
   };
 
   return (
     <form className="create" onSubmit={handleSubmit}>
       <h3>Production Form</h3>
 
+      {/* Date input */}
       <div className="input-group">
         <label htmlFor="date">Date</label>
         <input
@@ -235,10 +171,10 @@ const ProductionForm = () => {
           value={date}
           onChange={(e) => setDate(e.target.value)}
           className={emptyFields.includes("date") ? "error" : ""}
-          max={getCurrentDate()} // Set the max attribute to the current date
         />
       </div>
 
+      {/* Materials section */}
       <label className="material-label">Materials</label>
       <div className="material-container">
         {materials.map((material, index) => (
@@ -247,6 +183,15 @@ const ProductionForm = () => {
             <select
               value={material.materialName}
               onChange={(e) => handleMaterialNameChange(index, e.target.value)}
+              style={{
+                width: "100%",
+                height: "45px",
+                padding: "0px 5px",
+                margin: "5px 0px 15px",
+                border: "none",
+                borderRadius: "4px",
+                backgroundColor: "#ffffff",
+              }}
             >
               <option value="">Select material name</option>
               {allMaterials.map((material, idx) => (
@@ -278,11 +223,11 @@ const ProductionForm = () => {
           </div>
         ))}
       </div>
-
       <button type="button" onClick={addNewMaterial}>
         Add Material
       </button>
 
+      {/* Products section */}
       <label className="product-label">Products</label>
       <div className="product-container">
         {products.map((product, index) => (
@@ -291,6 +236,15 @@ const ProductionForm = () => {
             <select
               value={product.name}
               onChange={(e) => handleProductNameChange(index, e.target.value)}
+              style={{
+                width: "100%",
+                height: "45px",
+                padding: "0px 5px",
+                margin: "5px 0px 15px",
+                border: "none",
+                borderRadius: "4px",
+                backgroundColor: "#ffffff",
+              }}
             >
               <option value="">Select product name</option>
               {allProductNames.map((name, idx) => (
@@ -322,7 +276,6 @@ const ProductionForm = () => {
           </div>
         ))}
       </div>
-
       <button type="button" onClick={addNewProduct}>
         Add Product
       </button>

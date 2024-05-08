@@ -7,6 +7,7 @@ import ProductionNavbar from "../components/ProductionNavbar";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import jsPDF from "jspdf"; // Import jsPDF library
+import "jspdf-autotable";
 import { format } from "date-fns";
 import { FaRegTrashCan } from "react-icons/fa";
 
@@ -58,35 +59,69 @@ const Production = () => {
 
       // Add logo
       const logoImg = new Image();
-      logoImg.src = "logo1.png";
-      doc.addImage(logoImg, "PNG", 10, 10, 50, 50);
+      logoImg.onload = function () {
+        const logoWidth = 50; // Set the desired width of the logo
+        const logoHeight = (logoImg.height * logoWidth) / logoImg.width; // Calculate the height based on the aspect ratio
 
-      const formattedStartDate = startDate
-        ? format(startDate, "MM/dd/yyyy")
-        : "N/A";
-      const formattedEndDate = endDate ? format(endDate, "MM/dd/yyyy") : "N/A";
-      const reportTitle = `Production Report (${formattedStartDate} - ${formattedEndDate})`;
-      doc.setFontSize(20);
-      doc.text(reportTitle, 70, 30); // Adjust position as needed
+        const logoX = (doc.internal.pageSize.width - logoWidth) / 2;
+        doc.addImage(logoImg, "PNG", logoX, 10, logoWidth, logoHeight);
 
-      // Add current date
-      doc.setFontSize(10);
-      doc.text(`Date: ${formattedCurrentDate}`, 70, 40); // Adjust position as needed
+        const formattedStartDate = startDate
+          ? format(startDate, "MM/dd/yyyy")
+          : "N/A";
+        const formattedEndDate = endDate
+          ? format(endDate, "MM/dd/yyyy")
+          : "N/A";
+        const reportTitle = `Divolca Electric Production Report`;
+        const subtitle = `(${formattedStartDate} - ${formattedEndDate})`;
 
-      // Add table
-      doc.autoTable({
-        head: [["Date", "Materials", "Products"]],
-        body: filteredProduction.map((record) => [
-          format(new Date(record.date), "MM/dd/yyyy"), // Format the date here
-          record.materials
-            .map((m) => `${m.materialName} - ${m.materialQuantity}`)
-            .join("\n"),
-          record.products.map((p) => `${p.name} - ${p.quantity}`).join("\n"),
-        ]),
-        startY: 60, // Adjust the vertical position of the table
-      });
+        const titleWidth =
+          (doc.getStringUnitWidth(reportTitle) * doc.internal.getFontSize()) /
+          doc.internal.scaleFactor;
+        const subtitleWidth =
+          (doc.getStringUnitWidth(subtitle) * doc.internal.getFontSize()) /
+          doc.internal.scaleFactor;
 
-      doc.save(fileName);
+        const titleX = (doc.internal.pageSize.width - titleWidth) / 2;
+        const subtitleX = (doc.internal.pageSize.width - subtitleWidth) / 2;
+
+        // Add title and subtitle
+        doc.setFontSize(20);
+        doc.text(reportTitle, titleX, 40);
+        doc.setFontSize(14);
+        doc.text(subtitle, subtitleX, 50);
+
+        // Add footer
+        const footerText =
+          "Divolca Electric Pvt. LTD, 296 Sir Ratnajothi Saravanamuttu Mawatha, Colombo 13";
+        const footerWidth =
+          (doc.getStringUnitWidth(footerText) * doc.internal.getFontSize()) /
+          doc.internal.scaleFactor;
+        const footerX = (doc.internal.pageSize.width - footerWidth) / 2;
+        doc.setFontSize(10);
+        doc.text(footerText, footerX, doc.internal.pageSize.height - 10);
+
+        // Add current date
+        doc.setFontSize(10);
+        doc.text(`Date: ${formattedCurrentDate}`, 70, 70);
+
+        // Add table
+        doc.autoTable({
+          head: [["Date", "Materials", "Products"]],
+          body: filteredProduction.map((record) => [
+            format(new Date(record.date), "MM/dd/yyyy"),
+            record.materials
+              .map((m) => `${m.materialName} - ${m.materialQuantity}`)
+              .join("\n"),
+            record.products.map((p) => `${p.name} - ${p.quantity}`).join("\n"),
+          ]),
+          startY: 90, // Adjust the vertical position of the table
+        });
+
+        doc.save(fileName);
+      };
+
+      logoImg.src = "header.png";
     }
   };
 
