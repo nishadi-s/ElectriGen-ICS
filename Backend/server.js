@@ -3,13 +3,12 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const express = require("express");
 //laters
-const cookieParser=require('cookie-parser')
-const UserModel =require('./models/User.js')
-const jwt =require('jsonwebtoken')
-const nodemailer=require('nodemailer')
-const bcrypt = require('bcrypt');
+const cookieParser = require("cookie-parser");
+const UserModel = require("./models/User.js");
+const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
+const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
-const nodemailer = require('nodemailer'); //email 
 // Create an Express app
 const app = express();
 
@@ -22,7 +21,6 @@ app.use((req, res, next) => {
   console.log(req.path, req.method); // Log the path and HTTP method of each request
   next(); // Call the next middleware in the chain
 });
-
 
 /*email
 // Endpoint to send emails
@@ -60,9 +58,6 @@ app.post('/send-email', (req, res) => {
   res.send('Emails sent successfully');
 });//email*/
 
-
-
-
 // Connect to MongoDB database
 mongoose
   .connect(process.env.MONGO_URI) // Connect to the MongoDB URI defined in the environment variables
@@ -75,8 +70,6 @@ mongoose
   .catch((error) => {
     console.log(error); // Log any errors that occur during database connection
   });
-
-
 
 const authRoutes = require("./routes/authRoutes");
 app.use("/auth", authRoutes);
@@ -132,14 +125,14 @@ app.post("/upload-image", upload.single("image"), async (req, res) => {
 //uvindya
 const salaryRoutes = require("./routes/salaries");
 app.use("/api/salaries", salaryRoutes);
-const userRoutes=require("./routes/userRoutes.js")
-app.use("/api/users",userRoutes)
+const userRoutes = require("./routes/userRoutes.js");
+app.use("/api/users", userRoutes);
 
 //Shanali
-const exportRoutes=require('./routes/export')
-const importerRoutes=require('./routes/importer')
-app.use('/api/export', exportRoutes)
-app.use('/api/importer', importerRoutes)
+const exportRoutes = require("./routes/export");
+const importerRoutes = require("./routes/importer");
+app.use("/api/export", exportRoutes);
+app.use("/api/importer", importerRoutes);
 
 //Nishadi
 const supplierChain_order = require("./routes/supplier_order"); //Nishadi
@@ -148,30 +141,32 @@ app.use("/api/supplier_order", supplierChain_order); //Nishadi
 app.use("/api/supplier", supplier); //Nishadi
 
 //reset password
-app.post('/forgot-password', (req, res) => {
+app.post("/forgot-password", (req, res) => {
   const { email } = req.body;
   UserModel.findOne({ email: email })
-    .then(user => {
+    .then((user) => {
       if (!user) {
         return res.send({ Status: "User not existed" });
       }
 
-      const token = jwt.sign({ id: user._id }, "jwt_secret_key", { expiresIn: "1d" });
+      const token = jwt.sign({ id: user._id }, "jwt_secret_key", {
+        expiresIn: "1d",
+      });
 
       // Create transporter with App Password
       var transporter = nodemailer.createTransport({
-        service: 'gmail',
+        service: "gmail",
         auth: {
-          user: 'uvindyajayasundara@gmail.com',
-          pass: 'twpw ntzi iwxc hvtj' // Replace with your App Password
-        }
+          user: "uvindyajayasundara@gmail.com",
+          pass: "twpw ntzi iwxc hvtj", // Replace with your App Password
+        },
       });
 
       var mailOptions = {
-        from: 'uvindyajayasundara@gmail.com',
-        to: 'uvindyahasanduni@gmail.com',
-        subject: 'Reset Password Link',
-        text: `http://localhost:3000/reset-password/${user._id}/${token}`
+        from: "uvindyajayasundara@gmail.com",
+        to: "uvindyahasanduni@gmail.com",
+        subject: "Reset Password Link",
+        text: `http://localhost:3000/reset-password/${user._id}/${token}`,
       };
 
       // Send the email
@@ -180,32 +175,32 @@ app.post('/forgot-password', (req, res) => {
           console.log(error);
           res.status(500).send({ Status: "Error sending email" });
         } else {
-          console.log('Email sent: ' + info.response);
+          console.log("Email sent: " + info.response);
           res.send({ Status: "Email sent successfully" });
         }
       });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.status(500).send({ Status: "Error processing request" });
     });
 });
-app.post('/reset-password/:id/:token', (req, res) => {
-  const {id, token} = req.params
-  const {password} = req.body
+app.post("/reset-password/:id/:token", (req, res) => {
+  const { id, token } = req.params;
+  const { password } = req.body;
 
   jwt.verify(token, "jwt_secret_key", (err, decoded) => {
-      if(err) {
-          return res.json({Status: "Error with token"})
-      } else {
-          bcrypt.hash(password, 10)
-          .then(hash => {
-              UserModel.findByIdAndUpdate({_id: id}, {password: hash})
-              .then(u => res.send({Status: "Success"}))
-              .catch(err => res.send({Status: err}))
-          })
-          .catch(err => res.send({Status: err}))
-      }
-  })
-})
-
+    if (err) {
+      return res.json({ Status: "Error with token" });
+    } else {
+      bcrypt
+        .hash(password, 10)
+        .then((hash) => {
+          UserModel.findByIdAndUpdate({ _id: id }, { password: hash })
+            .then((u) => res.send({ Status: "Success" }))
+            .catch((err) => res.send({ Status: err }));
+        })
+        .catch((err) => res.send({ Status: err }));
+    }
+  });
+});
