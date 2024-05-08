@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from 'react-router-dom';
 import SfeedbackFetch from "../components/sfeedbackFetch";
 import PinVerification from "../components/PinVerification";
+import InvoiceReport from "./InvoiceReport";
 
 const Dashboard = () => {
   const correctPin = '1234'; // Your correct PIN number
@@ -55,7 +56,13 @@ const Dashboard = () => {
       </div>
 
       <div>
-        <button onClick={handleButtonClick} className="btn btn-primary">Enter Secure Area</button>
+        <button onClick={handleButtonClick} className="btn btn-primary btn-lg mr-4 fs-lg">Enter Secure Area</button>
+      </div><br/>
+
+      <div>
+        <Link to="/InvoiceReport">
+            <button type="button" className="btn btn-primary btn-lg mr-4 fs-lg">Sales Report</button>
+         </Link>
       </div>
 
       <div>

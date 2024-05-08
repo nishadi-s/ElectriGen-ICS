@@ -9,13 +9,21 @@ import {
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
-const Navbar = ({ children }) => {
+const NavbarNishadi = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
+    
+    /*{
+      path: "/Home",
+      name: "Supplier Order Dashboard",
+      
+    },*/
+    
+    
     {
       path: "/SupplierOrderDashboard",
-      name: "Dashboard",
+      name: "Supplier Order Dashboard",
       icon: <FaTh />,
     },
 
@@ -31,18 +39,18 @@ const Navbar = ({ children }) => {
     },
    
     {
-      path: "/analytics",
+      path: "/analyticsN",
       name: "Analytics",
       icon: <FaRegChartBar />,
     },
     {
-      path: "/MyProfile",
+      path: "/MyProfileN",
       name: "My Profile",
       icon: <FaUserAlt />,
     },
 
     {
-      path: "/MyProfile",
+      path: "/MyProfileN",
       name: "Logout",
       icon: <FaUserAlt />,
     },
@@ -86,4 +94,4 @@ const Navbar = ({ children }) => {
   );
 };
 
-export default Navbar;
+export default NavbarNishadi;

@@ -1,0 +1,70 @@
+/* google font */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+}
+
+main {
+  width: 100%;
+  padding: 20px;
+}
+
+.sidebar {
+  background: #233066;
+  color: #fff;
+  height: device-height;
+  width: 200px;
+  margin-left: -120px;
+  transition: all 0.5s;
+}
+
+.sidebar a {
+  display: flex; /* Make the links flex containers */
+  align-items: center; /* Align items vertically */
+  text-decoration: none;
+}
+
+.top_section {
+  display: flex;
+  align-items: center;
+  padding: 20px 15px;
+}
+
+.logo {
+  font-size: 30px;
+}
+
+.bars {
+  display: flex;
+  font-size: 25px;
+  margin-left: 50px;
+}
+
+.link {
+  color: #fff;
+  padding: 10px 15px;
+  gap: 15px;
+  transition: all 0.5s;
+}
+
+.link:hover {
+  background: #4c5fad;
+  color: #000;
+  transition: all 0.5s;
+}
+
+.active {
+  background: #4c5fad;
+  color: #000;
+}
+
+.icon,
+.link_text {
+  font-size: 20px;
+}

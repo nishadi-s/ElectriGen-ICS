@@ -1,174 +1,233 @@
-import { useState } from "react";
-import { useSupplierOrderContext } from "../hooks/useSupplierOrderContext";
+import React, { useState, useEffect } from 'react';
+import { Form, Button, Row, Col } from 'react-bootstrap';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import NavbarNishadi from './SupplierOrderNavbar';
+import { useNavigate  } from 'react-router-dom';
 
 const SupplierOrderForm = () => {
-  const { dispatch } = useSupplierOrderContext();
-  const [Sup_Ord_id, setOrder_ID] = useState("");
-  const [Sup_ID, setSupplier_ID] = useState("");
-  const [items, setItems] = useState([]);
-  const [Sup_orded_date, setOrderedDate] = useState(new Date());
-  const [Sup_recpt_date, setReceiptDate] = useState(new Date());
-  const [Sup_Ord_sts, setOrderStatus] = useState("");
-  const [Sup_rating, setSupplierRating] = useState("");
-  const [error, setError] = useState(null);
-  const [emptyFields, setEmptyFields] = useState([]);
-  const [newItem, setNewItem] = useState({
-    Sup_Quant: "",
-    Sup_Cost: "",
-    Sup_matrial_code: "",
-  });
+  const navigate = useNavigate();
+  const [orderID, setOrderID] = useState("");
+  const [supID, setSupID] = useState("");
+  const [items, setItems] = useState([{ Sup_matrial_code: '', M_Name: '', Sup_Quant: '' }]);
+  const [orderDate, setOrderDate] = useState(new Date().toISOString().split('T')[0]);
+  const [recDate, setRecDate] = useState(new Date().toISOString().split('T')[0]);
+  const [orderStatus, setOrderStatus] = useState("");
+  const [rating, setRating] = useState("");
+  const [materials, setMaterials] = useState([]);
+
+  useEffect(() => {
+    fetchMaterials();
+  }, []);
+
+  const fetchMaterials = async () => {
+    try {
+      const response = await axios.get('http://localhost:4000/api/materials');
+      // Extracting only the code and name fields from the response data
+      const extractedMaterials = response.data.map(({ code, name }) => ({ Sup_matrial_code: code, M_Name: name }));
+      setMaterials(extractedMaterials);
+    } catch (error) {
+      console.error('Error fetching materials:', error);
+    }
+  };
+
+  const handleItemChange = async (index, field, value) => {
+    const updatedItems = [...items];
+    updatedItems[index][field] = value;
+    setItems(updatedItems);
+
+    if (field === 'Sup_matrial_code' && value) {
+      const selectedMaterial = materials.find((material) => material.Sup_matrial_code === value);
+      if (selectedMaterial) {
+        updatedItems[index].M_Name = selectedMaterial.M_Name;
+        setItems(updatedItems);
+      }
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const order = {
-      Sup_Ord_id,
-      Sup_ID,
+    // Validation
+    if (!validateOrder()) {
+      return;
+    }
+
+    const newSupplierOrder = {
+      Sup_Ord_id: orderID,
+      Sup_ID: supID,
       items,
-      Sup_orded_date,
-      Sup_recpt_date,
-      Sup_Ord_sts,
-      Sup_rating,
+      Sup_orded_date: orderDate,
+      Sup_recpt_date: recDate,
+      Sup_Ord_sts: orderStatus,
+      Sup_rating: rating
     };
 
-    // Send each item to the database
     try {
-      const response = await fetch("/api/supplier_order", {
-        method: "POST",
-        body: JSON.stringify(order),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const json = await response.json();
+      await axios.post(`http://localhost:4000/api/supplier_order/`, newSupplierOrder);
 
-      if (!response.ok) {
-        setError(json.error);
-        setEmptyFields(json.emptyFields);
-      } else {
-        setOrder_ID("");
-        setSupplier_ID("");
-        setItems([]);
-        setOrderedDate(new Date());
-        setReceiptDate(new Date());
-        setOrderStatus("");
-        setSupplierRating("");
-        setError(null);
-        setEmptyFields([]);
-        dispatch({ type: "CREATE_ORDER", payload: json });
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      setError("Failed to add order. Please try again.");
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Successfully Submitted!",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    } catch (err) {
+      console.error('Error submitting supplier order:', err);
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Error in Submitting!",
+        showConfirmButton: false,
+        timer: 1500
+      });
     }
   };
 
-  const addItem = () => {
-    if (newItem.Sup_Quant && newItem.Sup_Cost && newItem.Sup_matrial_code) {
-      setItems((prevItems) => [...prevItems, newItem]);
-      setNewItem({
-        Sup_matrial_code: "",
-        Sup_Cost: "",
-        Sup_Quant: "",
-      });
+  const validateOrder = () => {
+    if (!orderID.startsWith('OID')) {
+      setOrderID('OID' + orderID);
     }
+
+    if (!supID.match(/^[Ss]\d+/)) {
+      setSupID('S' + supID);
+    }
+
+    if (new Date(recDate) <= new Date(orderDate)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid Dates',
+        text: 'Received date should be after the ordered date'
+      });
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleRemoveItem = (index) => {
+    const updatedItems = [...items];
+    updatedItems.splice(index, 1);
+    setItems(updatedItems);
+  };
+
+  const handleAddItem = () => {
+    setItems([...items, { Sup_matrial_code: '', M_Name: '', Sup_Quant: '' }]);
   };
 
   return (
-    <form className="create" onSubmit={handleSubmit}>
-      <h3>Add a new Order</h3>
+    <NavbarNishadi>
+      <div>
+        <h1>Create Export Order</h1>
+        <Form onSubmit={handleSubmit}>
+          <Row className="mb-3">
+            <Form.Group as={Col} controlId="formSupplierOrderID">
+              <Form.Label>Export Order ID</Form.Label>
+              <Form.Control type="text" value={orderID} onChange={(e) => setOrderID(e.target.value)} />
+            </Form.Group>
 
-      <label>Order ID:</label>
-      <input
-        type="text"
-        onChange={(e) => setOrder_ID(e.target.value)}
-        value={Sup_Ord_id}
-        className={emptyFields.includes("Supplier Order ID") ? "error" : ""}
-      />
+            <Form.Group as={Col} controlId="formSupplierID">
+              <Form.Label>Supplier ID</Form.Label>
+              <Form.Control type="text" value={supID} onChange={(e) => setSupID(e.target.value)} />
+            </Form.Group>
+          </Row>
 
-      <label>Supplier ID:</label>
-      <input
-        type="text"
-        onChange={(e) => setSupplier_ID(e.target.value)}
-        value={Sup_ID}
-        className={emptyFields.includes("Supplier ID") ? "error" : ""}
-      />
+          {items.map((item, index) => (
+            <div key={index}>
+              <Row className="mb-3">
+                <Form.Group as={Col} controlId={`formItemNumber${index}`}>
+                  <Form.Label>Material Code</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={item.Sup_matrial_code}
+                    onChange={(e) => handleItemChange(index, 'Sup_matrial_code', e.target.value)}
+                  >
+                    <option value="">Select an item</option>
+                    {materials.map((material) => (
+                      <option key={material.Sup_matrial_code} value={material.Sup_matrial_code}>
+                        {material.Sup_matrial_code}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
 
-      <label>Quantity:</label>
-      <input
-        type="number"
-        onChange={(e) =>
-          setNewItem({ ...newItem, Sup_Quant: e.target.value })
-        }
-        value={newItem.Sup_Quant}
-        className={
-          emptyFields.includes("Supplier Order items") ? "error" : ""
-        }
-      />
+                <Form.Group as={Col} controlId={`formItemName${index}`}>
+                  <Form.Label>Item Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={item.M_Name}
+                    readOnly
+                  />
+                </Form.Group>
 
-      <label>Cost:</label>
-      <input
-        type="number"
-        onChange={(e) => setNewItem({ ...newItem, Sup_Cost: e.target.value })}
-        value={newItem.Sup_Cost}
-        className={emptyFields.includes("Supplier Order items") ? "error" : ""}
-      />
+                <Form.Group as={Col} controlId={`formQuantity${index}`}>
+                  <Form.Label>Quantity</Form.Label>
+                  <Form.Control
+                    type="number"
+                    value={item.Sup_Quant}
+                    onChange={(e) => handleItemChange(index, 'Sup_Quant', e.target.value)}
+                  />
+                </Form.Group>
 
-      <label>Material Code:</label>
-      <input
-        type="text"
-        onChange={(e) =>
-          setNewItem({ ...newItem, Sup_matrial_code: e.target.value })
-        }
-        value={newItem.Sup_matrial_code}
-        className={emptyFields.includes("Supplier Order items") ? "error" : ""}
-      />
-      <button type="button" onClick={addItem}>
-        Add Item
-      </button>
+                <Button variant="danger" size="sm" onClick={() => handleRemoveItem(index)}>
+                  Remove
+                </Button>
+              </Row>
+            </div>
+          ))}
 
-      <label>Ordered Date:</label>
-      <input
-        type="date"
-        onChange={(e) => setOrderedDate(e.target.value)}
-        value={Sup_orded_date}
-        className={
-          emptyFields.includes("Supplier Order Ordered Date") ? "error" : ""
-        }
-      />
+          <Row className="mb-3">
+            <Button variant="secondary" onClick={handleAddItem}>
+              Add New Item
+            </Button>
 
-      <label>Receipt Date:</label>
-      <input
-        type="date"
-        onChange={(e) => setReceiptDate(e.target.value)}
-        value={Sup_recpt_date}
-        className={
-          emptyFields.includes("Supplier Order Received Date") ? "error" : ""
-        }
-      />
+            <Form.Group as={Col} controlId="formOrderDate">
+              <Form.Label>Order Date</Form.Label>
+              <Form.Control
+                type="date"
+                value={orderDate}
+                onChange={(e) => setOrderDate(e.target.value)}
+              />
+            </Form.Group>
 
-      <label>Order Status:</label>
-      <input
-        type="text"
-        onChange={(e) => setOrderStatus(e.target.value)}
-        value={Sup_Ord_sts}
-        className={emptyFields.includes("Supplier Order Status") ? "error" : ""}
-      />
+            <Form.Group as={Col} controlId="formReceivedDate">
+              <Form.Label>Received Date</Form.Label>
+              <Form.Control
+                type="date"
+                value={recDate}
+                onChange={(e) => setRecDate(e.target.value)}
+              />
+            </Form.Group>
 
-      <label>Supplier Rating:</label>
-      <input
-        type="number"
-        onChange={(e) => setSupplierRating(e.target.value)}
-        value={Sup_rating}
-        className={
-          emptyFields.includes("Supplier Order Rating") ? "error" : ""
-        }
-      />
+            <Form.Group as={Col} controlId="formOrderStatus">
+              <Form.Label>Order Status</Form.Label>
+              <Form.Control
+                type="text"
+                value={orderStatus}
+                onChange={(e) => setOrderStatus(e.target.value)}
+              />
+            </Form.Group>
 
-      <button type="submit">Add order details</button>
+            <Form.Group as={Col} controlId="formRating">
+              <Form.Label>Rating</Form.Label>
+              <Form.Control
+                type="number"
+                value={rating}
+                onChange={(e) => setRating(e.target.value)}
+              />
+            </Form.Group>
+          </Row>
 
-      {error && <div className="error">{error}</div>}
-    </form>
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
+        </Form>
+      </div>
+    </NavbarNishadi>
   );
 };
 

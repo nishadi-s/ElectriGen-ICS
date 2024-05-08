@@ -1,10 +1,10 @@
 import React from 'react';
 import { FaSearch } from 'react-icons/fa';
 
-// Functional component SearchBar with a prop onChange
+// SearchBar with onChange
 const SearchBar = ({ onChange }) => {
   const handleSearch = (e) => {
-    onChange(e.target.value); // Pass the search query to the parent component
+    onChange(e.target.value); 
   };
 
   return (
@@ -14,7 +14,7 @@ const SearchBar = ({ onChange }) => {
         className="input-search"
         type="text"
         placeholder="Search Invoice"
-        onChange={handleSearch} // Call handleSearch when input changes
+        onChange={handleSearch} 
       />
     </div>
   );

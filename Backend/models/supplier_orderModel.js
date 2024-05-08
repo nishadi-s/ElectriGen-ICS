@@ -15,10 +15,12 @@ const supplier_orderSchema =  new Schema({
 
     items: [
         {
+            
+            Sup_matrial_code: String,
+            M_Name:String ,
+            Sup_Quant:Number
            
-            Sup_Quant:Number,
-            Sup_Cost:Number ,
-            Sup_matrial_code: String
+            
                 
             
         }
@@ -27,12 +29,12 @@ const supplier_orderSchema =  new Schema({
    
 
     Sup_orded_date:{
-        type:Date,
+        type:String,
         required:true
     },
 
     Sup_recpt_date:{
-        type:Date,
+        type:String,
         required:true
     },
 

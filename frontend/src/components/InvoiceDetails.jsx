@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useSalesContext } from '../hooks/useSalesContext';
 import Swal from 'sweetalert2';
-import { Link } from 'react-router-dom';
-import InvoiceUpdate from '../pages/InvoiceUpdate';
+import { Link } from 'react-router-dom'; // Import Link for routing
+
 
 const InvoiceDetails = ({ invoice }) => {
     const { dispatch } = useSalesContext();
@@ -10,40 +10,40 @@ const InvoiceDetails = ({ invoice }) => {
 
     const handleClick = async () => {
         Swal.fire({
-          title: "Are you sure?",
-          text: "You won't be able to revert this!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#233066",
-          cancelButtonColor: "#EC2026",
-          confirmButtonText: "Yes, delete it!",
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#233066",
+            cancelButtonColor: "#EC2026",
+            confirmButtonText: "Yes, delete it!",
         }).then(async (result) => {
-          // Use async to handle asynchronous deletion logic
-          if (result.isConfirmed) {
-            // Perform deletion logic
-            const response = await fetch(`http://localhost:4000/sales/delete/${invoice.billID}`, {
-              method: "DELETE",
-            });
-    
-            if (response.ok) {
-              const json = await response.json();
-              dispatch({ type: "DELETE_SALES", payload: json });
-              Swal.fire({
-                title: "Deleted!",
-                text: "Your file has been deleted.",
-                icon: "success",
-              });
-              setDeleted(true); // Update state to hide the component after deletion
-            } else {
-              Swal.fire({
-                title: "Error!",
-                text: "Failed to delete the product.",
-                icon: "error",
-              });
+            // Use async to handle asynchronous deletion logic
+            if (result.isConfirmed) {
+                // Perform deletion logic
+                const response = await fetch(`http://localhost:4000/sales/delete/${invoice.billID}`, {
+                    method: "DELETE",
+                });
+
+                if (response.ok) {
+                    const json = await response.json();
+                    dispatch({ type: "DELETE_SALES", payload: json });
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success",
+                    });
+                    setDeleted(true); // Update state to hide the component after deletion
+                } else {
+                    Swal.fire({
+                        title: "Error!",
+                        text: "Failed to delete the product.",
+                        icon: "error",
+                    });
+                }
             }
-          }
         });
-      };
+    };
     // Check if the invoice is deleted and return null to hide the component
     if (deleted) {
         return null;
@@ -65,9 +65,11 @@ const InvoiceDetails = ({ invoice }) => {
             </ul>
             <br />
             {/* Add onClick event with the handleClick function */}
-            <span onClick={handleClick}><button>Delete</button></span>
-            <Link to="/InvoiceUpdate">
-              <button type="button" className="btn btn-primary btn-lg mr-4">Update</button>
+            <button className="btn btn-danger" onClick={handleClick}>Delete</button>
+
+            {/* Link to the updating page with bill ID */}
+            <Link to={`/InvoiceUpdate/${invoice.billID}`}>
+                <button className="btn btn-primary">Update</button>
             </Link>
         </div>
     );

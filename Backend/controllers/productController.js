@@ -35,7 +35,8 @@ const getItemCodes = async (req, res) => {
   }
 };
 
-//ceate new product
+
+//create new product
 const createProduct = async (req, res) => {
   const { name, itemCode, unitPrice, quantity, color, category } = req.body;
 
@@ -191,6 +192,7 @@ const getProductByItemCode = async (req, res) => {
   }
 };
 
+
 module.exports = {
   getProduct,
   getProducts,
@@ -201,4 +203,5 @@ module.exports = {
   updateProductQuantity,
   getLowQuantityProducts,
   getProductByItemCode,
+
 };
