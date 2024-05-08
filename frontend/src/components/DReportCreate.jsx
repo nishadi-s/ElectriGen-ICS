@@ -4,6 +4,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { Table, Button, Dropdown } from 'react-bootstrap';
 import DonationNavbar from '../components/DonationNavbar';
+import "../donation.css";
 
 const ProjectReport = () => {
   const [projects, setProjects] = useState([]);
@@ -25,45 +26,61 @@ const ProjectReport = () => {
   };
 
   const handleDownloadPDF = () => {
-  const doc = new jsPDF();
-  const monthName = monthFilter ? getMonthName(monthFilter) : ''; // Get the month name if filter is applied
-
+    const doc = new jsPDF();
+    const monthName = monthFilter ? getMonthName(monthFilter) : ''; // Get the month name if filter is applied
   
-
-  const headerText = `Donation Project Report `;
-
-
-  // Add the heading to the PDF
-  doc.text(headerText, 10, 10);
-  doc.text('', 15, 25); // Empty line for spacing
-
-  // Generate the table
-  doc.autoTable({
-    head: [['Project ID', 'Description', 'Estimate Date', 'Total Amount', 'Items']], // Updated header
-    body: filteredProjects.map(project => [
-      project.project_id,
-      project.description,
-      formatDate(project.estimate_date),
-      project.total_amount,
-      // Combine items into a single string
-      project.items.map(item => `${item.item} - Qty: ${item.qty}, Unit Price: ${item.unitPrice}`).join('\n')
-    ]),
-    foot: [['Total', '', '', calculateTotalAmount(), '']], // Add total amount to the footer
-    styles: {
-      lineColor: [100, 100, 100],
-      lineWidth: 0.5,
-      cellPadding: 5,
-      cellBorder: 'bottom',
-    },
-    didDrawCell: (data) => {
-      // Adjust cell height for merged rows
-      if (data.row.raw[0] === '') {
-        data.cell.height = 0;
-      }
-    },
-  });
-  doc.save('ProjectReport.pdf');
-};
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getDate()}-${currentDate.getMonth() + 1}-${currentDate.getFullYear()}`;
+  
+    const headerText = `Delvolca Electricals Donation Project Report ${formattedDate}`;
+    const footerText = `Contact details: 0312245608 / 0776023782`;
+  
+    // Add header to the PDF
+    doc.setFontSize(16);
+    doc.text(headerText, 14, 15);
+  
+    // Add the empty line after header for spacing
+    doc.text('', 15, 30);
+  
+    // Generate the table
+    doc.autoTable({
+      head: [['Project ID', 'Description', 'Estimate Date', 'Total Amount', 'Items']], // Updated header
+      body: filteredProjects.map(project => [
+        project.project_id,
+        project.description,
+        formatDate(project.estimate_date),
+        project.total_amount,
+        // Combine items into a single string
+        project.items.map(item => `${item.item} - Qty: ${item.qty}, Unit Price: ${item.unitPrice}`).join('\n')
+      ]),
+      startY: 40, // Adjust the vertical position to start below the header
+      foot: [['Total', '', '', calculateTotalAmount(), '']], // Add total amount to the footer
+      styles: {
+        lineColor: [100, 100, 100],
+        lineWidth: 0.5,
+        cellPadding: 5,
+        cellBorder: 'bottom',
+      },
+      didDrawCell: (data) => {
+        // Adjust cell height for merged rows
+        if (data.row.raw[0] === '') {
+          data.cell.height = 0;
+        }
+      },
+    });
+  
+    // Add footer to the PDF
+    doc.setFontSize(10);
+    const pageHeight = doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
+    const pageWidth = doc.internal.pageSize.width || doc.internal.pageSize.getWidth();
+    const footerX = pageWidth / 2; // Center footer horizontally
+    const footerY = pageHeight - 10; // 10 mm from bottom
+    doc.text(footerText, footerX, footerY, { align: 'center' });
+  
+    doc.save('ProjectReport.pdf');
+  };
+  
+  
 
   
   const formatDate = (dateStr) => {
@@ -100,7 +117,7 @@ const ProjectReport = () => {
   return (
     <DonationNavbar>
     <div>
-      <h1 className="mb-4">Project Report Generator</h1>
+      <h1 h1 className="don-header">Project Report Generator</h1>
       <Dropdown className="mb-3">
         <Dropdown.Toggle variant="info" id="dropdown-month">
           {monthFilter ? `Filter by Month: ${getMonthName(monthFilter)}` : 'Select Month'}

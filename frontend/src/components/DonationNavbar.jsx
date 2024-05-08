@@ -56,7 +56,13 @@ const DonationNavbar = ({ children }) => {
 
     {
       path: "/DReportCreate",  
-      name: "Analytics and Report",
+      name: "Donation Report",
+      icon: <FaRegChartBar />,
+    },
+
+    {
+      path: "/Doner_Analytics",  
+      name: "Analytics ",
       icon: <FaRegChartBar />,
     },
 
