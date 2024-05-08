@@ -50,7 +50,6 @@ const DisMGraphs = () => {
 
   return (
     <div>
-      <h2>Monthly Order Analysis</h2>
       <div className="analysis-chart">
         <ResponsiveContainer width="100%" height={400}>
           <BarChart data={reportData}>

@@ -5,7 +5,6 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import '../DistributionFun.css';
@@ -80,10 +79,11 @@ const OrderDetails = ({ order }) => {
                                         <TableCell rowSpan={order.items.length}>{order.totalAmount}</TableCell>
                                         <TableCell rowSpan={order.items.length}>{format(new Date(order.createdAt), 'yyyy-MM-dd')}</TableCell>
                                         <TableCell rowSpan={order.items.length}>
-                                            {/* Action buttons */}
-                                            <div className="action-buttons">
-                                                <button onClick={handleEdit} className="btn-edit">Edit</button>
-                                            </div>
+                                        {order.orderStatus === "Placed" && ( 
+                                                <div className="action-buttons">
+                                                    <button onClick={handleEdit} className="btn-edit">Edit</button>
+                                                </div>
+                                            )}
                                         </TableCell>
                                     </>
                                 )}

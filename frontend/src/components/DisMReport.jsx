@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useOrdersContext } from '../hooks/useOrdersContext.jsx';
 import { format } from 'date-fns';
 import jsPDF from 'jspdf';
+import '../DistributionFun.css'
 
 const ReportGeneration = () => {
   const { orders } = useOrdersContext();
@@ -126,10 +127,9 @@ const ReportGeneration = () => {
 
   return (
     <div>
-      <h2>Monthly Order Report</h2>
       <div>
-        <label>Select Month:</label>
-        <select value={selectedMonth} onChange={handleMonthChange}>
+        <label>Select Month</label>
+        <select className="select-month" value={selectedMonth} onChange={handleMonthChange}>
   <option value="">All Months</option>
   {reportData.map((row, index) => {
     if (index === 0 || reportData[index - 1].month !== row.month) {

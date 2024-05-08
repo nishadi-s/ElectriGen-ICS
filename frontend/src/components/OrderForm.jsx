@@ -164,7 +164,7 @@ const OrderForm = () => {
         setEmptyFields([]);
         console.log("new order added", json);
         dispatch({ type: "CREATE_ORDER", payload: json });
-        
+
       // SweetAlert success pop-up
       Swal.fire({
         icon: 'success',
@@ -182,6 +182,7 @@ const OrderForm = () => {
   }
 };
 
+//form details
   return (
     <form className="create" onSubmit={handleSubmit}>
       <h3>Order Placement Form</h3>
