@@ -3,7 +3,7 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  /*background-image: url("../public/26235.png");*/
+  background-image: url("../public/26235.png");
   background-size: auto;
   background-position: center;
   background-repeat: repeat;
@@ -15,7 +15,6 @@ body {
   margin: -20px;
 }
 
-/* Add additional styling as needed */
 
 label,
 input {
@@ -201,4 +200,37 @@ thead tr {
 .button-1:hover,
 .button-1:focus {
   background-color: #0f1c52;
+
+
+.button-2 {
+  background-color: #ec2026;
+  border-radius: 8px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  line-height: 20px;
+  list-style: none;
+  margin: 5px;
+  outline: none;
+  padding: 10px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: color 100ms;
+  vertical-align: baseline;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-2:hover,
+.button-2:focus {
+  background-color: #a5171c;
 }
