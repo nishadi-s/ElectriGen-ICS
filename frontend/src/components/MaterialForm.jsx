@@ -38,7 +38,7 @@ const MaterialForm = () => {
       name,
       code,
       unitPrice,
-      quantity: `${quantity} ${unit}`, // Concatenate quantity and unit
+      quantity,
     };
 
     const response = await fetch("/api/materials", {
@@ -115,11 +115,6 @@ const MaterialForm = () => {
           value={quantity}
           className={emptyFields.includes("quantity") ? "error" : ""}
         />
-        <select value={unit} onChange={(e) => setUnit(e.target.value)}>
-          <option value="kg">kg</option>
-          <option value="m">m</option>
-          <option value="pcs">pcs</option>
-        </select>
       </div>
       <button className="button-5">Add Material</button>
     </form>

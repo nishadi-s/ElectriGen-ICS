@@ -19,7 +19,7 @@ const productionSchema = new Schema(
           required: true,
         },
         materialQuantity: {
-          type: String,
+          type: Number,
           required: true,
         },
       },

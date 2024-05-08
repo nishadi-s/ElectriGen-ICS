@@ -13,7 +13,6 @@ const EditMaterial = () => {
     code: "",
     unitPrice: "",
     quantity: "",
-    unit: "kg", // Default unit
   });
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
@@ -92,21 +91,14 @@ const EditMaterial = () => {
           value={material.unitPrice}
           className={emptyFields.includes("unitPrice") ? "error" : ""}
         />
-        <div className="quantity-input">
-          <label>Quantity:</label>
-          <input
-            type="string"
-            name="quantity"
-            onChange={handleChange}
-            value={material.quantity}
-            className={emptyFields.includes("quantity") ? "error" : ""}
-          />
-          <select value={material.unit} onChange={handleChange} name="unit">
-            <option value="kg">kg</option>
-            <option value="m">m</option>
-            <option value="pcs">pcs</option>
-          </select>
-        </div>
+        <label>Quantity:</label>
+        <input
+          type="string"
+          name="quantity"
+          onChange={handleChange}
+          value={material.quantity}
+          className={emptyFields.includes("quantity") ? "error" : ""}
+        />
         <button>Update Material</button>
         {error && <div className="error">{error}</div>}
       </form>

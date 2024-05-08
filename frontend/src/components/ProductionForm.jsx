@@ -1,312 +1,285 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Row, Col } from "react-bootstrap";
-import axios from "axios";
-import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import { useProductionContext } from "../hooks/useProductionContext";
 
-const ProductionForm = ({ uneditable }) => {
+const ProductionForm = () => {
+  const { dispatch } = useProductionContext();
+  const navigate = useNavigate();
+
   const [date, setDate] = useState("");
-  const [materials, setMaterials] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [productRecords, setProductRecords] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState("");
-  const [selectedMaterial, setSelectedMaterial] = useState("");
-  const [productQuantity, setProductQuantity] = useState("");
-  const [materialQuantity, setMaterialQuantity] = useState("");
-  const [selectedProductDetails, setSelectedProductDetails] = useState({});
-  const [selectedMaterialDetails, setSelectedMaterialDetails] = useState({});
-  const [error, setError] = useState(null);
+  const [materials, setMaterials] = useState([
+    { materialName: "", materialNo: "", materialQuantity: "" },
+  ]);
+  const [products, setProducts] = useState([
+    { name: "", itemCode: "", quantity: "" },
+  ]);
+  const [error, setError] = useState("");
+  const [emptyFields, setEmptyFields] = useState([]);
+  const [allMaterials, setAllMaterials] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
+  const [allProductNames, setAllProductNames] = useState([]);
 
   useEffect(() => {
+    const fetchMaterials = async () => {
+      try {
+        const response = await fetch("/api/materials");
+        if (response.ok) {
+          const data = await response.json();
+          setAllMaterials(data); // Store all materials with their details
+        } else {
+          setError("Failed to fetch materials");
+        }
+      } catch (error) {
+        setError("An error occurred while fetching materials");
+        console.error("Error fetching materials:", error);
+      }
+    };
+
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("/api/products");
+        if (response.ok) {
+          const data = await response.json();
+          setAllProducts(data); // Store all products with their details
+          const productNames = data.map((product) => product.name);
+          setAllProductNames(productNames);
+        } else {
+          setError("Failed to fetch products");
+        }
+      } catch (error) {
+        setError("An error occurred while fetching products");
+        console.error("Error fetching products:", error);
+      }
+    };
+
     fetchMaterials();
     fetchProducts();
-    setDate(new Date().toISOString().split("T")[0]);
   }, []);
 
-  const fetchMaterials = async () => {
-    try {
-      const response = await axios.get("http://localhost:4000/api/materials");
-      setMaterials(response.data);
-    } catch (error) {
-      console.error("Error fetching materials:", error);
-    }
+  const addNewMaterial = () => {
+    setMaterials([
+      ...materials,
+      { materialName: "", materialNo: "", materialQuantity: "" },
+    ]);
   };
 
-  const fetchProducts = async () => {
-    try {
-      const response = await axios.get("http://localhost:4000/api/products");
-      setProducts(response.data);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    }
+  const addNewProduct = () => {
+    setProducts([...products, { name: "", itemCode: "", quantity: "" }]);
   };
 
-  const handleProductSelect = async (productId) => {
-    setSelectedProduct(productId);
-    const selectedProduct = products.find(
-      (product) => product._id === productId
-    );
-    if (selectedProduct) {
-      setSelectedProductDetails(selectedProduct);
-    }
-  };
-
-  const handleMaterialSelect = async (materialId) => {
-    setSelectedMaterial(materialId);
-    const selectedMaterial = materials.find(
-      (material) => material._id === materialId
+  const handleMaterialNameChange = (index, selectedName) => {
+    // Find the material details corresponding to the selected name
+    const selectedMaterial = allMaterials.find(
+      (material) => material.name === selectedName
     );
     if (selectedMaterial) {
-      setSelectedMaterialDetails(selectedMaterial);
+      const updatedMaterials = [...materials];
+      updatedMaterials[index].materialName = selectedName;
+      updatedMaterials[index].materialNo = selectedMaterial.code;
+      setMaterials(updatedMaterials);
     }
   };
 
-  const handleAddProductRecord = () => {
-    if (selectedProduct && productQuantity) {
-      const newProductRecord = {
-        product: selectedProduct,
-        quantity: productQuantity, // productQuantity entered by the user
-        ...selectedProductDetails,
-      };
-      setProductRecords([...productRecords, newProductRecord]);
-      // Clear input fields after adding
-      setProductQuantity("");
-      setSelectedProductDetails({});
+  const handleProductNameChange = (index, selectedName) => {
+    // Find the product details corresponding to the selected name
+    const selectedProduct = allProducts.find(
+      (product) => product.name === selectedName
+    );
+    if (selectedProduct) {
+      const updatedProducts = [...products];
+      updatedProducts[index].name = selectedName;
+      updatedProducts[index].itemCode = selectedProduct.itemCode; // Assuming the property name is itemCode
+      setProducts(updatedProducts);
     }
-  };
-
-  const handleAddMaterialRecord = () => {
-    if (selectedMaterial && materialQuantity) {
-      const newMaterialRecord = {
-        material: selectedMaterial,
-        quantity: materialQuantity,
-        ...selectedMaterialDetails,
-      };
-      setProductRecords([...productRecords, newMaterialRecord]);
-      // Clear input fields after adding
-      setMaterialQuantity("");
-      setSelectedMaterialDetails({});
-    }
-  };
-
-  const handleRemoveProductRecord = (index) => {
-    const updatedProductRecords = [...productRecords];
-    updatedProductRecords.splice(index, 1);
-    setProductRecords(updatedProductRecords);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newProduction = {
-      date,
-      materials: [],
-      products: productRecords,
-    };
-
     try {
-      // Submit new production record using fetch
-      const response = await fetch("http://localhost:4000/api/productions", {
+      const production = {
+        date,
+        materials,
+        products,
+      };
+
+      const response = await fetch("/api/productions", {
         method: "POST",
+        body: JSON.stringify(production),
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newProduction),
       });
+      const json = await response.json();
 
       if (!response.ok) {
-        throw new Error("Failed to add production record");
+        setError(json.error);
+        setEmptyFields(json.emptyFields || []);
+      } else {
+        // Update material quantities
+        materials.forEach(async (material) => {
+          try {
+            const materialCode = material.materialNo; // Assuming materialNo is the material code
+            const quantity = parseInt(material.materialQuantity);
+
+            // Fetch current material details
+            const materialResponse = await fetch(
+              `/api/materials/code/${materialCode}`
+            );
+            if (!materialResponse.ok) {
+              throw new Error("Failed to fetch material details");
+            }
+            const materialData = await materialResponse.json();
+
+            // Update material quantity
+            const updatedQuantity = materialData.quantity + quantity;
+
+            // Perform the update using Fetch
+            const updateResponse = await fetch(
+              `/api/materials/${materialData._id}`,
+              {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ quantity: updatedQuantity }),
+              }
+            );
+
+            if (!updateResponse.ok) {
+              throw new Error("Failed to update material quantity");
+            }
+          } catch (error) {
+            console.error("Error updating material quantity:", error);
+            // Handle error updating material quantity
+          }
+        });
+
+        // Reset form fields and state
+        setDate("");
+        setMaterials([
+          { materialName: "", materialNo: "", materialQuantity: "" },
+        ]);
+        setProducts([{ name: "", itemCode: "", quantity: "" }]);
+        setError(null);
+        setEmptyFields([]);
+        console.log("new production added", json);
+        dispatch({ type: "CREATE_PRODUCTION", payload: json });
       }
-
-      // Update material/product quantities
-      productRecords.forEach(async (record) => {
-        const { product, material, quantity } = record;
-        if (product) {
-          // Update product quantity logic
-        } else if (material) {
-          // Update material quantity logic
-        }
-      });
-
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Successfully Added Production Record!",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      // Clear form fields
-      setDate("");
-      setProductRecords([]);
-    } catch (err) {
-      console.error("Error submitting production record:", err);
-      setError("Failed to add production record");
+    } catch (error) {
+      setError("An error occurred while submitting the production.");
+      console.error("Error submitting production:", error);
     }
+
+    navigate("/Production");
   };
 
   return (
-    <div>
-      <h1>Add Production Record</h1>
-      <Form onSubmit={handleSubmit}>
-        <Row className="mb-3">
-          <Form.Group as={Col} controlId="formDate">
-            <Form.Label>Date</Form.Label>
-            <Form.Control
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            />
-          </Form.Group>
-        </Row>
+    <form className="create" onSubmit={handleSubmit}>
+      <h3>Production Form</h3>
 
-        <Row className="mb-3">
-          <Form.Group as={Col} controlId="formMaterial">
-            <Form.Label>Material</Form.Label>
-            <Form.Control
-              as="select"
-              value={selectedMaterial}
-              onChange={(e) => handleMaterialSelect(e.target.value)}
+      <div className="input-group">
+        <label htmlFor="date">Date</label>
+        <input
+          type="date"
+          id="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          className={emptyFields.includes("date") ? "error" : ""}
+        />
+      </div>
+
+      <label className="material-label">Materials</label>
+      <div className="material-container">
+        {materials.map((material, index) => (
+          <div key={index} className="material-fields">
+            <label>Material({index + 1}) Name</label>
+            <select
+              value={material.materialName}
+              onChange={(e) => handleMaterialNameChange(index, e.target.value)}
             >
-              <option value="">Select a material</option>
-              {materials.map((material) => (
-                <option key={material._id} value={materials.name}>
+              <option value="">Select material name</option>
+              {allMaterials.map((material, idx) => (
+                <option key={idx} value={material.name}>
                   {material.name}
                 </option>
               ))}
-            </Form.Control>
-          </Form.Group>
-        </Row>
-
-        {selectedMaterialDetails && (
-          <div>
-            <Row className="mb-3">
-              <Form.Group as={Col} controlId="formMaterialDetails">
-                <Form.Label>Material Code</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={selectedMaterialDetails.code}
-                />
-              </Form.Group>
-            </Row>
-            <Row className="mb-3">
-              <Form.Group as={Col} controlId="formMaterialQuantity">
-                <Form.Label>Material Quantity</Form.Label>
-                <Form.Control
-                  type="number"
-                  value={materialQuantity}
-                  onChange={(e) => setMaterialQuantity(e.target.value)}
-                />
-              </Form.Group>
-            </Row>
+            </select>
+            <label>Material({index + 1}) Number</label>
+            <input
+              type="text"
+              value={material.materialNo}
+              onChange={(e) => {
+                const updatedMaterials = [...materials];
+                updatedMaterials[index].materialNo = e.target.value;
+                setMaterials(updatedMaterials);
+              }}
+            />
+            <label>Material({index + 1}) Quantity</label>
+            <input
+              type="number"
+              value={material.materialQuantity}
+              onChange={(e) => {
+                const updatedMaterials = [...materials];
+                updatedMaterials[index].materialQuantity = e.target.value;
+                setMaterials(updatedMaterials);
+              }}
+            />
           </div>
-        )}
+        ))}
+      </div>
 
-        <Row className="mb-3">
-          <Button variant="primary" onClick={handleAddMaterialRecord}>
-            Add Material
-          </Button>
-        </Row>
+      <button type="button" onClick={addNewMaterial}>
+        Add Material
+      </button>
 
-        {selectedProductDetails && (
-          <div>
-            <Row className="mb-3">
-              <Form.Group as={Col} controlId="formProduct">
-                <Form.Label>Product</Form.Label>
-                <Form.Control
-                  as="select"
-                  value={selectedProduct}
-                  onChange={(e) => handleProductSelect(e.target.value)}
-                >
-                  <option value="">Select a product</option>
-                  {products.map((product) => (
-                    <option key={product._id} value={product._id}>
-                      {product.name}
-                    </option>
-                  ))}
-                </Form.Control>
-              </Form.Group>
-              <Form.Group as={Col} controlId="formProductDetails">
-                <Form.Label>Product Code</Form.Label>
-                <Form.Control
-                  type="text"
-                  readOnly
-                  value={selectedProductDetails.itemCode}
-                />
-              </Form.Group>
-            </Row>
-            <Row className="mb-3">
-              <Form.Group as={Col} controlId="formProductDetails">
-                <Form.Label>Category</Form.Label>
-                <Form.Control
-                  type="text"
-                  readOnly
-                  value={selectedProductDetails.category}
-                />
-              </Form.Group>
-            </Row>
-            <Row className="mb-3">
-              <Form.Group as={Col} controlId="formProductDetails">
-                <Form.Label>Color</Form.Label>
-                <Form.Control
-                  type="text"
-                  readOnly
-                  value={selectedProductDetails.color}
-                />
-              </Form.Group>
-              <Row className="mb-3">
-                <Form.Group as={Col} controlId="formProductQuantity">
-                  <Form.Label>Product Quantity</Form.Label>
-                  <Form.Control
-                    type="number"
-                    value={productQuantity}
-                    onChange={(e) => setProductQuantity(e.target.value)}
-                  />
-                </Form.Group>
-              </Row>
-            </Row>
+      <label className="product-label">Products</label>
+      <div className="product-container">
+        {products.map((product, index) => (
+          <div key={index} className="product-fields">
+            <label>Product({index + 1}) Name</label>
+            <select
+              value={product.name}
+              onChange={(e) => handleProductNameChange(index, e.target.value)}
+            >
+              <option value="">Select product name</option>
+              {allProductNames.map((name, idx) => (
+                <option key={idx} value={name}>
+                  {name}
+                </option>
+              ))}
+            </select>
+            <label>Product({index + 1}) Item Code</label>
+            <input
+              type="text"
+              value={product.itemCode}
+              onChange={(e) => {
+                const updatedProducts = [...products];
+                updatedProducts[index].itemCode = e.target.value;
+                setProducts(updatedProducts);
+              }}
+            />
+            <label>Product({index + 1}) Quantity</label>
+            <input
+              type="number"
+              value={product.quantity}
+              onChange={(e) => {
+                const updatedProducts = [...products];
+                updatedProducts[index].quantity = e.target.value;
+                setProducts(updatedProducts);
+              }}
+            />
           </div>
-        )}
+        ))}
+      </div>
 
-        <Row className="mb-3">
-          <Button variant="primary" onClick={handleAddProductRecord}>
-            Add Product
-          </Button>
-        </Row>
+      <button type="button" onClick={addNewProduct}>
+        Add Product
+      </button>
 
-        <div>
-          <div>
-            {productRecords.map((record, index) => (
-              <div key={index}>
-                {record.product ? (
-                  <div>
-                    <p>Product Name: {record.name}</p>
-                    <p>Item Code: {record.itemCode}</p>
-                    <p>Quantity: {record.quantity}</p>
-                  </div>
-                ) : (
-                  <div>
-                    <p>Material Name: {record.name}</p>
-                    <p>Material Name: {record.code}</p>
-                    <p>Quantity: {record.quantity}</p>
-                  </div>
-                )}
-                <Button
-                  variant="danger"
-                  onClick={() => handleRemoveProductRecord(index)}
-                >
-                  Remove
-                </Button>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <Button variant="primary" type="submit">
-          Add Production Record
-        </Button>
-
-        {error && <div className="error">{error}</div>}
-      </Form>
-    </div>
+      <button type="submit">Submit</button>
+      {error && <div className="error">{error}</div>}
+    </form>
   );
 };
 
