@@ -197,7 +197,7 @@ thead tr {
 }
 
 .button-1:hover,
-.button-1:focus {
+button-1:focus {
   background-color: #0f1c52;
 }
 

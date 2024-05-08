@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSupplierContext } from "../hooks/useSupplierContext";
+import Swal from 'sweetalert2'; // Import SweetAlert2
+import '../SupplierOrder.css';
 
-
-
-const SupplierForm = ({ supplierToUpdate }) => { // Receive supplierToUpdate prop
+const SupplierForm = ({ supplierToUpdate }) => {
   const { dispatch } = useSupplierContext();
   const [Sup_ID, setSupplier_ID] = useState("");
   const [Sup_Name, setSupplier_name] = useState("");
@@ -16,7 +16,6 @@ const SupplierForm = ({ supplierToUpdate }) => { // Receive supplierToUpdate pro
 
   useEffect(() => {
     if (supplierToUpdate) {
-      // If in edit mode, pre-fill the fields with existing data
       setSupplier_ID(supplierToUpdate.Sup_ID || "");
       setSupplier_name(supplierToUpdate.Sup_Name || "");
       setEmail(supplierToUpdate.Sup_Email || "");
@@ -26,8 +25,35 @@ const SupplierForm = ({ supplierToUpdate }) => { // Receive supplierToUpdate pro
     }
   }, [supplierToUpdate]);
 
+  const validateEmail = (email) => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  };
+
+  const validateContact = (contact) => {
+    const contactPattern = /^\d+$/;
+    return contactPattern.test(contact);
+  };
+
+  const validateSupplierID = (supplierID) => {
+    return supplierID.startsWith("S") && supplierID.length > 1;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const isValidEmail = validateEmail(Sup_Email);
+    const isValidContact = validateContact(Sup_Contact);
+    const isValidSupplierID = validateSupplierID(Sup_ID);
+
+    if (!isValidEmail || !isValidContact || !isValidSupplierID) {
+      let errorMessage = "Invalid input. Please check your fields:";
+      if (!isValidEmail) errorMessage += " Email format is incorrect.";
+      if (!isValidContact) errorMessage += " Contact should contain only numbers.";
+      if (!isValidSupplierID) errorMessage += " Supplier ID should start with 'S'.";
+      setError(errorMessage);
+      return;
+    }
 
     const supplier = {
       Sup_ID,
@@ -41,19 +67,19 @@ const SupplierForm = ({ supplierToUpdate }) => { // Receive supplierToUpdate pro
     const apiUrl = supplierToUpdate ? `/api/supplier/${supplierToUpdate._id}` : "/api/supplier";
 
     const response = await fetch(apiUrl, {
-      method: supplierToUpdate ? "PUT" : "POST", // Use PUT method for update, POST for create
+      method: supplierToUpdate ? "PUT" : "POST",
       body: JSON.stringify(supplier),
       headers: {
         "Content-Type": "application/json",
       },
     });
+
     const json = await response.json();
 
     if (!response.ok) {
       setError(json.error);
       setEmptyFields(json.emptyFields);
-    }
-    if (response.ok) {
+    } else {
       setSupplier_ID("");
       setSupplier_name("");
       setEmail("");
@@ -63,6 +89,14 @@ const SupplierForm = ({ supplierToUpdate }) => { // Receive supplierToUpdate pro
       setError(null);
       setEmptyFields([]);
       dispatch({ type: supplierToUpdate ? "UPDATE_SUPPLIER" : "CREATE_SUPPLIER", payload: json });
+
+      // Display success message using SweetAlert2
+      Swal.fire({
+        icon: 'success',
+        title: 'Supplier details have been successfully added',
+        showConfirmButton: false,
+        timer: 2000 // Close after 2 seconds
+      });
     }
   };
 
@@ -77,14 +111,16 @@ const SupplierForm = ({ supplierToUpdate }) => { // Receive supplierToUpdate pro
         value={Sup_ID}
         className={emptyFields.includes("Supplier id") ? "error" : ""}
       />
+      {emptyFields.includes("Supplier id") && <div className="error">Please enter a valid Supplier ID starting with 'S'.</div>}
 
       <label>Supplier Name:</label>
       <input
         type="text"
         onChange={(e) => setSupplier_name(e.target.value)}
         value={Sup_Name}
-        className={emptyFields.includes("Suppplier Name") ? "error" : ""}
+        className={emptyFields.includes("Supplier Name") ? "error" : ""}
       />
+      {emptyFields.includes("Supplier Name") && <div className="error">Please enter a valid Supplier Name.</div>}
 
       <label>Supplier Email:</label>
       <input
@@ -93,6 +129,7 @@ const SupplierForm = ({ supplierToUpdate }) => { // Receive supplierToUpdate pro
         value={Sup_Email}
         className={emptyFields.includes("Supplier Email") ? "error" : ""}
       />
+      {emptyFields.includes("Supplier Email") && <div className="error">Please enter a valid email address.</div>}
 
       <label>Supplier Contact:</label>
       <input
@@ -101,6 +138,7 @@ const SupplierForm = ({ supplierToUpdate }) => { // Receive supplierToUpdate pro
         value={Sup_Contact}
         className={emptyFields.includes("Supplier Contact") ? "error" : ""}
       />
+      {emptyFields.includes("Supplier Contact") && <div className="error">Please enter a valid contact number.</div>}
 
       <label>Supplier Order ID:</label>
       <input
@@ -109,6 +147,7 @@ const SupplierForm = ({ supplierToUpdate }) => { // Receive supplierToUpdate pro
         value={Sup_Ord_id}
         className={emptyFields.includes("Supplier Order ID") ? "error" : ""}
       />
+      {emptyFields.includes("Supplier Order ID") && <div className="error">Please enter a valid Supplier Order ID.</div>}
 
       <label>Supplier Order Material Code:</label>
       <input
@@ -117,6 +156,7 @@ const SupplierForm = ({ supplierToUpdate }) => { // Receive supplierToUpdate pro
         value={Sup_matrial_code}
         className={emptyFields.includes("Supplier Order Ordered Date") ? "error" : ""}
       />
+      {emptyFields.includes("Supplier Order Ordered Date") && <div className="error">Please enter a valid Supplier Order Material Code.</div>}
 
       <button>{supplierToUpdate ? "Update Supplier" : "Add Supplier details"}</button>
       {error && <div className="error">{error}</div>}

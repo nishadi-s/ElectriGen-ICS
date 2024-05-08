@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import '../SupplierOrder.css';
 import { useSupplierContext } from "../hooks/useSupplierContext";
+import NavbarNishadi from '../components/SupplierOrderNavbar'
 
 // Components
 import SupplierDetails from '../components/SupplierDetails'
@@ -43,17 +44,18 @@ const Suppliers = () => {
   };
 
   return (
+    <NavbarNishadi>
     <div className="supplier_order">
       <div className="form_section">
         <SupplierForm />
       </div>
-
+<div>
       <div className="supplier_list_section">
         <h2>Suppliers List</h2>
         {/* Search input field */}
         <input
           type="text"
-          placeholder="Search Supplier Name"
+          placeholder="Search by Supplier Name"
           value={searchInput}
           onChange={handleSearchInputChange}
         />
@@ -70,7 +72,9 @@ const Suppliers = () => {
           ))
         )}
       </div>
+      </div>
     </div>
+    </NavbarNishadi>
   );
 };
 

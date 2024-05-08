@@ -13,9 +13,17 @@ const NavbarNishadi = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
+    
+    /*{
+      path: "/Home",
+      name: "Supplier Order Dashboard",
+      
+    },*/
+    
+    
     {
       path: "/SupplierOrderDashboard",
-      name: "DashboardN",
+      name: "Supplier Order Dashboard",
       icon: <FaTh />,
     },
 
@@ -31,7 +39,7 @@ const NavbarNishadi = ({ children }) => {
     },
    
     {
-      path: "/analytics",
+      path: "/analyticsN",
       name: "Analytics",
       icon: <FaRegChartBar />,
     },

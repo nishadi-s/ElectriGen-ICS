@@ -34,7 +34,7 @@ const Home = () => {
     },
     {
       id: 4,
-      text: "Expot Management",
+      text: "Export Management",
       password: "Se123",
       link: "/ExportsDashboard",
     },

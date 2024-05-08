@@ -1,125 +1,163 @@
 import React, { useState, useEffect } from "react";
-import { useSupplierContext } from "../hooks/useSupplierContext";
+import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert";
+import NavbarNishadi from '../components/SupplierOrderNavbar'
 
-const SupplierEdit = ({ supplierToUpdate }) => {
-  const { dispatch } = useSupplierContext();
-  const [supplierData, setSupplierData] = useState({
-    Sup_ID: "",
-    Sup_Name: "",
-    Sup_Email: "",
-    Sup_Contact: "",
-    Sup_Ord_id: "",
-    Sup_matrial_code: "",
-  });
+const EditSupplier = () => {
+  const { id } = useParams();
+  const [Sup_ID, setSupplier_ID] = useState("");
+  const [Sup_Name, setSupplier_name] = useState("");
+  const [Sup_Email, setEmail] = useState("");
+  const [Sup_Contact, setContact] = useState("");
+  const [Sup_Ord_id, setSup_Ord_id] = useState("");
+  const [Sup_matrial_code, setMaterial_code] = useState("");
+  const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
 
   useEffect(() => {
-    if (supplierToUpdate) {
-      setSupplierData({
-        Sup_ID: supplierToUpdate.Sup_ID || "",
-        Sup_Name: supplierToUpdate.Sup_Name || "",
-        Sup_Email: supplierToUpdate.Sup_Email || "",
-        Sup_Contact: supplierToUpdate.Sup_Contact || "",
-        Sup_Ord_id: supplierToUpdate.Sup_Ord_id || "",
-        Sup_matrial_code: supplierToUpdate.Sup_matrial_code || "",
-      });
-    }
-  }, [supplierToUpdate]);
+    const fetchSuppliers = async () => {
+      try {
+        const response = await fetch(`/api/supplier/${id}`);
+        const supplierData = await response.json();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+        setSupplier_ID(supplierData.Sup_ID);
+        setSupplier_name(supplierData.Sup_Name);
+        setEmail(supplierData.Sup_Email);
+        setContact(supplierData.Sup_Contact);
+        setSup_Ord_id(supplierData.Sup_Ord_id);
+        setMaterial_code(supplierData.Sup_matrial_code);
+      } catch (error) {
+        console.error('Error fetching suppliers');
+      }
+    };
+    fetchSuppliers();
+  }, [id]);
 
-    // Check if supplierToUpdate is defined and has _id property
-    if (!supplierToUpdate || !supplierToUpdate._id) {
-      setError("Supplier data is missing");
-      return;
-    }
-
-    const apiUrl = `/api/supplier/${supplierToUpdate._id}`;
-    const requestOptions = {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(supplierData),
+  const handleEditSupplier = async () => {
+    navigate(`/Suppliers/`);
+    const updatedSupplier = {
+      Sup_ID,
+      Sup_Name,
+      Sup_Email,
+      Sup_Contact,
+      Sup_Ord_id,
+      Sup_matrial_code
     };
 
     try {
-      const response = await fetch(apiUrl, requestOptions);
-      const data = await response.json();
+      const response = await fetch(`/api/supplier/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(updatedSupplier),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-      if (!response.ok) {
-        setError(data.error);
-        setEmptyFields(data.emptyFields);
+      if (response.ok) {
+        const updatedSupplierData = await response.json();
+        setSupplier_ID(updatedSupplierData.Sup_ID);
+        setSupplier_name(updatedSupplierData.Sup_Name);
+        setEmail(updatedSupplierData.Sup_Email);
+        setContact(updatedSupplierData.Sup_Contact);
+        setSup_Ord_id(updatedSupplierData.Sup_Ord_id);
+        setMaterial_code(updatedSupplierData.Sup_matrial_code);
+      
+        Swal({
+          title: "Success",
+          text: "Supplier updated successfully",
+          icon: "success",
+          button: "OK",
+        }).then(() => {
+          navigate('/Suppliers'); // Redirect to suppliers page 
+        });
       } else {
-        setError(null);
-        setEmptyFields([]);
-        // Dispatch an action to update the context state if needed
-        // dispatch({ type: "UPDATE_SUPPLIER", payload: data });
+        const errorData = await response.json();
+        setError(errorData.error ? errorData.error : "Error updating product");
+        setEmptyFields(errorData.emptyFields ? errorData.emptyFields : []);
       }
     } catch (error) {
-      console.error("Error:", error);
-      setError("An error occurred while processing your request.");
+      console.error("Error updating supplier:", error);
+      setError("Error updating supplier. Please try again.");
     }
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setSupplierData({ ...supplierData, [name]: value });
-  };
-
   return (
-    <form className="create" onSubmit={handleSubmit}>
-      {/* Input fields for Supplier ID, Name, Email, Contact, etc. */}
-      <input
-        type="text"
-        name="Sup_ID"
-        value={supplierData.Sup_ID}
-        onChange={handleChange}
-        placeholder="Supplier ID"
-      />
-      <input
-        type="text"
-        name="Sup_Name"
-        value={supplierData.Sup_Name}
-        onChange={handleChange}
-        placeholder="Supplier Name"
-      />
-      <input
-        type="email"
-        name="Sup_Email"
-        value={supplierData.Sup_Email}
-        onChange={handleChange}
-        placeholder="Supplier Email"
-      />
-      <input
-        type="text"
-        name="Sup_Contact"
-        value={supplierData.Sup_Contact}
-        onChange={handleChange}
-        placeholder="Supplier Contact"
-      />
-      <input
-        type="text"
-        name="Sup_Ord_id"
-        value={supplierData.Sup_Ord_id}
-        onChange={handleChange}
-        placeholder="Supplier Order ID"
-      />
-      <input
-        type="text"
-        name="Sup_matrial_code"
-        value={supplierData.Sup_matrial_code}
-        onChange={handleChange}
-        placeholder="Supplier Order Material Code"
-      />
-      {/* Add more input fields for other supplier data */}
-      
-      <button>Update Supplier</button>
-      {error && <div className="error">{error}</div>}
-    </form>
+    <NavbarNishadi>
+      <form className="update-supplier">
+        <h1 className="text-3xl my-4">Edit Supplier</h1>
+        <div className="flex flex-col border-2 border-sky-400 rounded-xl w-[600px] p-4 mx-auto">
+          {/* Supplier ID */}
+          <div className="my-4">
+            <label className='text-xl mr-4 text-gray-500'>Supplier ID:</label>
+            <input
+              type="text"
+              value={Sup_ID}
+              onChange={(e) => setSupplier_ID(e.target.value)}
+              className='border-2 border-gray-500 px-4 py-2 w-full'
+            />
+          </div>
+          {/* Supplier Name */}
+          <div className="my-4">
+            <label className='text-xl mr-4 text-gray-500'>Supplier Name:</label>
+            <input
+              type="text"
+              value={Sup_Name}
+              onChange={(e) => setSupplier_name(e.target.value)}
+              className='border-2 border-gray-500 px-4 py-2 w-full'
+            />
+          </div>
+          {/* Supplier Email */}
+          <div className="my-4">
+            <label className='text-xl mr-4 text-gray-500'>Supplier Email:</label>
+            <input
+              type="text"
+              value={Sup_Email}
+              onChange={(e) => setEmail(e.target.value)}
+              className='border-2 border-gray-500 px-4 py-2 w-full'
+            />
+          </div>
+          {/* Supplier Contact Numbers */}
+          <div className="my-4">
+            <label className='text-xl mr-4 text-gray-500'>Supplier Contact Numbers:</label>
+            <input
+              type="text"
+              value={Sup_Contact}
+              onChange={(e) => setContact(e.target.value)}
+              className='border-2 border-gray-500 px-4 py-2 w-full'
+            />
+          </div>
+          {/* Supplier Order ID */}
+          <div className="my-4">
+            <label className='text-xl mr-4 text-gray-500'>Supplier Order ID:</label>
+            <input
+              type="text"
+              value={Sup_Ord_id}
+              onChange={(e) => setSup_Ord_id(e.target.value)}
+              className='border-2 border-gray-500 px-4 py-2 w-full'
+            />
+          </div>
+          {/* Supplier Material Code */}
+          <div className="my-4">
+            <label className='text-xl mr-4 text-gray-500'>Supplier Material Code:</label>
+            <input
+              type="text"
+              value={Sup_matrial_code}
+              onChange={(e) => setMaterial_code(e.target.value)}
+              className='border-2 border-gray-500 px-4 py-2 w-full'
+            />
+          </div>
+          
+          {/* Save Button */}
+          <button className='p-2 bg-sky-300 m-8' onClick={handleEditSupplier}>
+            Save
+          </button>
+          {/* Error Message */}
+          {error && <div className="error">{error}</div>}
+        </div>
+      </form>
+    </NavbarNishadi>
   );
-};
+}
 
-export default SupplierEdit;
+export default EditSupplier;

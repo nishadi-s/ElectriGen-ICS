@@ -22,6 +22,6 @@ router.post('/',createExport)
 router.delete('/:id',deleteExport)
 
 //UPDATE a export
-router.patch('/:id',updateExport)
+router.put('/:id',updateExport)
 
 module.exports=router

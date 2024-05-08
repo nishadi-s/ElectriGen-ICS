@@ -94,6 +94,7 @@ const SingleProduct = () => {
                 addSuffix: true,
               })}
             </p>
+
             <button className="button-2" onClick={handleDelete}>
               <FaRegTrashAlt />
             </button>

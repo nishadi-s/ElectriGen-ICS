@@ -1,10 +1,14 @@
 import React from "react";
 
+import SalesNavbar from "../components/SalesNavbar";
+
 const MyProfile = () => {
   return (
-    <div>
-      <h1>My profile page</h1>
-    </div>
+    <SalesNavbar>
+      <div>
+        <h1>My profile page</h1>
+      </div>
+    </SalesNavbar>
   );
 };
 

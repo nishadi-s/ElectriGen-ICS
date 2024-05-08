@@ -35,12 +35,7 @@ mongoose
     console.log(error); // Log any errors that occur during database connection
   });
 
-//middleware-importer
-app.use(express.json());
-app.use((req, res, next) => {
-  console.log(req.path, req.method);
-  next();
-});
+
 
 const authRoutes = require("./routes/authRoutes");
 app.use("/auth", authRoutes);
@@ -54,9 +49,9 @@ const feedbackRouter = require("./routes/sfeedback");
 app.use("/sfeedback", feedbackRouter);
 
 //dulari
+const dFeedbackRouter = require("./routes/dFeedback.js");
 const projectRouter = require("./routes/DonationProjects.js");
 app.use("/DonationProject", projectRouter);
-const dFeedbackRouter = require("./routes/dFeedback.js");
 app.use("/dFeedback", dFeedbackRouter);
 
 //Dinithi
@@ -100,10 +95,10 @@ const userRoutes=require("./routes/userRoutes.js")
 app.use("/api/users",userRoutes)
 
 //Shanali
-const exportRoutes = require("./routes/export");
-const importerRoutes = require("./routes/importer");
-app.use("/api/export", exportRoutes);
-app.use("/api/importer", importerRoutes);
+const exportRoutes=require('./routes/export')
+const importerRoutes=require('./routes/importer')
+app.use('/api/export', exportRoutes)
+app.use('/api/importer', importerRoutes)
 
 //Nishadi
 const supplierChain_order = require("./routes/supplier_order"); //Nishadi

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import DonationNavbar from '../components/DonationNavbar';
 
 export default function Doner_Feedback() {
   const [name, setName] = useState("");
@@ -28,6 +29,7 @@ export default function Doner_Feedback() {
   }
 
   return (
+    <DonationNavbar>
     <div>
       <form className="feedback-form" onSubmit={sendData}>
         <div className="form-group">
@@ -73,5 +75,6 @@ export default function Doner_Feedback() {
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>
     </div>
+    </DonationNavbar>
   );
 }
