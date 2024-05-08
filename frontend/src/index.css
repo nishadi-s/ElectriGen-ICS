@@ -15,7 +15,7 @@ main {
 .sidebar {
   background: #233066;
   color: #fff;
-  height: device-height;
+  height: wrap;
   width: 200px;
   margin-left: -120px;
   transition: all 0.5s;

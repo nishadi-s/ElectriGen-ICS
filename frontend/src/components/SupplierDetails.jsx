@@ -72,10 +72,10 @@ const SupplierDetails = ({ supplier }) => {
           <td>{supplier.Sup_Ord_id}</td>
           <td>{supplier.Sup_matrial_code}</td>
           <td>
-            <button className='button1' onClick={handleEdit}>Edit</button>
+            <button className='Sup_button1' onClick={handleEdit}>Edit</button>
           </td>
           <td>
-            <button className='button2' onClick={handleDelete}>Delete</button>
+            <button className='Sup_button2' onClick={handleDelete}>Delete</button>
           </td>
         </tr>
       </tbody>

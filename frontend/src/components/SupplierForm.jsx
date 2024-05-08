@@ -25,6 +25,26 @@ const SupplierForm = ({ supplierToUpdate }) => {
     }
   }, [supplierToUpdate]);
 
+  useEffect(() => {
+    if (!supplierToUpdate) {
+      // Generate supplier ID when component mounts if it's not in update mode
+      const generatedSupplierID = generateID("S");
+      setSupplier_ID(generatedSupplierID);
+    }
+  }, [supplierToUpdate]);
+
+  useEffect(() => {
+    // Generate supplier order ID when component mounts
+    const generatedSupplierOrderID = generateID("SO");
+    setSup_Ord_id(generatedSupplierOrderID);
+  }, []);
+
+  const generateID = (prefix) => {
+    // Generate a unique ID using a prefix and timestamp
+    const timestamp = Date.now(); // Current timestamp
+    return prefix + timestamp; // Concatenate prefix and timestamp
+  };
+
   const validateEmail = (email) => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailPattern.test(email);
@@ -107,11 +127,9 @@ const SupplierForm = ({ supplierToUpdate }) => {
       <label>Supplier ID:</label>
       <input
         type="text"
-        onChange={(e) => setSupplier_ID(e.target.value)}
         value={Sup_ID}
-        className={emptyFields.includes("Supplier id") ? "error" : ""}
+        readOnly
       />
-      {emptyFields.includes("Supplier id") && <div className="error">Please enter a valid Supplier ID starting with 'S'.</div>}
 
       <label>Supplier Name:</label>
       <input
@@ -143,22 +161,20 @@ const SupplierForm = ({ supplierToUpdate }) => {
       <label>Supplier Order ID:</label>
       <input
         type="text"
-        onChange={(e) => setSup_Ord_id(e.target.value)}
         value={Sup_Ord_id}
-        className={emptyFields.includes("Supplier Order ID") ? "error" : ""}
+        readOnly
       />
-      {emptyFields.includes("Supplier Order ID") && <div className="error">Please enter a valid Supplier Order ID.</div>}
 
       <label>Supplier Order Material Code:</label>
       <input
         type="text"
         onChange={(e) => setMaterial_code(e.target.value)}
         value={Sup_matrial_code}
-        className={emptyFields.includes("Supplier Order Ordered Date") ? "error" : ""}
+        className={emptyFields.includes("Supplier Order Material Code") ? "error" : ""}
       />
-      {emptyFields.includes("Supplier Order Ordered Date") && <div className="error">Please enter a valid Supplier Order Material Code.</div>}
+      {emptyFields.includes("Supplier Order Material Code") && <div className="error">Please enter a valid Supplier Order Material Code.</div>}
 
-      <button>{supplierToUpdate ? "Update Supplier" : "Add Supplier details"}</button>
+      <button className="Sup_button">{supplierToUpdate ? "Update Supplier" : "Add Supplier details"}</button>
       {error && <div className="error">{error}</div>}
     </form>
   );

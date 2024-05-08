@@ -20,7 +20,7 @@ import SupplierOrderEdit from "./components/SupplierOrderEdit.jsx" //Import the 
 import Home from "./pages/Home.jsx";
 import SupplierOrderReport from "./components/SupplierOrderRepo.jsx";
 import Materials from "./pages/Materials.jsx";
-import SupplierEmail from "./components/SupplierEmail.jsx"//Importing supplier email component
+import SupplierEmail from "./pages/supplierEmail.jsx"//Importing supplier email component
 
 
 
