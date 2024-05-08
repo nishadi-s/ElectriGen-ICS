@@ -14,6 +14,7 @@ const InvoiceUpdate = () => {
     tot: 0,
     totqty: 0,
   });
+  const [oldQuantities, setOldQuantities] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,6 +25,8 @@ const InvoiceUpdate = () => {
         // Ensure that all fields are present in the fetched data
         if (data && data.billID && data.bdate && data.items && data.tot && data.totqty) {
           setInvoiceData(data);
+          const quantities = data.items.map((item) => parseFloat(item.qty));
+          setOldQuantities(quantities);
         } else {
           console.error('Incomplete data received from the API:', data);
         }
@@ -61,8 +64,37 @@ const InvoiceUpdate = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const newQuantities = invoiceData.items.map((item) => parseFloat(item.qty));
+      const quantityDiffs = newQuantities.map((newQty, index) => newQty - oldQuantities[index]);
+
+      // Iterate through updated items to update product quantities
+      for (let i = 0; i < invoiceData.items.length; i++) {
+        const item = invoiceData.items[i];
+        const quantityDiff = quantityDiffs[i];
+        try {
+          // Fetch product associated with the item code
+          const productResponse = await axios.get(`http://localhost:4000/api/products/itemCode/${item.ino}`);
+          const productData = productResponse.data; // Assuming response contains product data including quantity
+
+          // Update the product quantity based on the difference
+          const newQuantity = productData.quantity - quantityDiff;
+
+          // Ensure new quantity is not negative (to prevent understock)
+          if (newQuantity < 0) {
+            throw new Error("Insufficient product stock. Please adjust invoice quantity.");
+          }
+
+          // Update the product quantity in the database
+          await axios.put(`http://localhost:4000/api/products/${productData._id}`, { quantity: newQuantity });
+        } catch (error) {
+          console.error("Error updating product:", error);
+          // Handle error updating product quantity
+        }
+      }
+
+      // Proceed with updating the invoice data
       await axios.put(`http://localhost:4000/sales/update/${billID}`, invoiceData); // Sending updated data to API
-      
+
       Swal.fire({
         position: "top-end",
         icon: "success",
@@ -76,7 +108,7 @@ const InvoiceUpdate = () => {
 
     } catch (error) {
       console.error('Error updating invoice:', error);
-      
+
       Swal.fire({
         position: "top-end",
         icon: "error",

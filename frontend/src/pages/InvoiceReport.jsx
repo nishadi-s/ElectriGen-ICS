@@ -31,9 +31,22 @@ const InvoiceReport = () => {
     const doc = new jsPDF();
     const monthName = monthFilter ? getMonthName(monthFilter) : ''; // Get the month name if filter is applied
   
+    // Add header to the PDF
+    const headerText = 'Devolca Electricals Pvt(Ltd)';
+    const headerHeight = 15; // Adjust as needed
+    doc.setFontSize(16);
+    doc.text(headerText, 105, 15, { align: 'center' });
+  
+    // Add footer to the PDF
+    const footerText = 'All the data secure under the authorization of the showroom sales manager.';
+    const footerHeight = 20; // Adjust as needed
+    doc.setFontSize(10);
+    doc.text(footerText, 105, doc.internal.pageSize.height - 10, { align: 'center' });
+  
     // Add the heading to the PDF
-    doc.text(`Showroom Sales Report for ${monthName}`, 10, 10);
-    doc.text('', 15, 25); // Empty line for spacing
+    doc.setFontSize(12);
+    doc.text(`Showroom Sales Report for Month ${monthName}`, 105, headerHeight + 10, { align: 'center' });
+    doc.text('', 15, headerHeight + 25); // Empty line for spacing
   
     // Generate the table
     doc.autoTable({
@@ -50,6 +63,7 @@ const InvoiceReport = () => {
         ])
       ),
       foot: [['Total', '', '', '', totalItems, '', totalAmount]], // Add total items and total amount to the footer
+      startY: headerHeight + 30, // Start table below the header
       styles: {
         lineColor: [100, 100, 100],
         lineWidth: 0.5,
@@ -65,6 +79,7 @@ const InvoiceReport = () => {
     });
     doc.save('SalesReport.pdf');
   };
+  
   
   const formatDate = (dateStr) => {
     const date = new Date(dateStr);

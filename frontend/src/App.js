@@ -65,6 +65,8 @@ import InvoiceReport from "./pages/InvoiceReport.jsx";
 import SalesDashboard from "./pages/SalesDashboard.jsx";
 import SDFeedback from "./pages/SDFeedback";
 import SDView from "./pages/SDView.jsx";
+import SalesAna from "./pages/SalesAna.jsx";
+
 
 //Dinithi
 
@@ -217,27 +219,23 @@ const App = () => {
               />
               <Route path="/DReportCreate" element={<DReportCreate />} />
               {/* Primal */}
-              <Route path="/salesFeedback" element={<SalesFeedback />} />
-              <Route path="/invoiceCreate" element={<InvoiceCreate />} />
-              <Route path="/sfeedbackFetch" element={<SfeedbackFetch />} />
-              <Route path="/viewInvoice" element={<ViewInvoice />} />
-              <Route path="/PinVerification" element={<PinVerification />} />
-              <Route
-                path="/InvoiceUpdate/:billID"
-                element={<InvoiceUpdate />}
-              />
-              <Route path="/InvoiceReport" element={<InvoiceReport />} />
-              <Route path="/SalesDashboard" element={<SalesDashboard />} />
-              <Route path="/SDFeedback" element={<SDFeedback />} />
-              <Route path="/SDView" element={<SDView />} />
-              <Route
-                path="/InvoiceUpdate/:billID"
-                element={<InvoiceUpdate />}
-              />
-              <Route path="/InvoiceReport" element={<InvoiceReport />} />
-              <Route path="/SalesDashboard" element={<SalesDashboard />} />
-              <Route path="/SDFeedback" element={<SDFeedback />} />
-              <Route path="/SDView" element={<SDView />} />
+          <Route path="/salesFeedback" element={<SalesFeedback />} />
+          <Route path="/invoiceCreate" element={<InvoiceCreate />} />
+          <Route path="/sfeedbackFetch" element={<SfeedbackFetch />} />
+          <Route path="/viewInvoice" element={<ViewInvoice />} />
+          <Route path="/PinVerification" element={<PinVerification />} />
+          <Route path="/InvoiceUpdate/:billID" element={<InvoiceUpdate />} />
+          <Route path="/InvoiceReport" element={<InvoiceReport />} />
+          <Route path="/SalesDashboard" element={<SalesDashboard />} />
+          <Route path="/SDFeedback" element={<SDFeedback />} />
+          <Route path="/SDView" element={<SDView />} />
+          <Route path="/InvoiceUpdate/:billID" element={<InvoiceUpdate />} />
+          <Route path="/InvoiceReport" element={<InvoiceReport />} />
+          <Route path="/SalesDashboard" element={<SalesDashboard />} />
+          <Route path="/SDFeedback" element={<SDFeedback />} />
+          <Route path="/SDView" element={<SDView />} />
+          <Route path="/SalesAna" element={<SalesAna />} />
+
               {/* Dinithi */}
               <Route
                 path="/login"
