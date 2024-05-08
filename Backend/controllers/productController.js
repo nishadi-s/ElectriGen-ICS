@@ -46,6 +46,7 @@ const getItemCodes = async (req, res) => {
   }
 };
 
+
 //create new product
 const createProduct = async (req, res) => {
   const { name, itemCode, unitPrice, quantity, color, category } = req.body;
@@ -61,6 +62,8 @@ const createProduct = async (req, res) => {
   if (!unitPrice) {
     emptyFields.push("unitPrice");
   }
+  if (!category) {
+    emptyFields.push("category");
   if (!category) {
     emptyFields.push("category");
   }
@@ -83,6 +86,7 @@ const createProduct = async (req, res) => {
       name,
       itemCode,
       unitPrice,
+      quantity,
       quantity,
       color,
       category,
@@ -212,4 +216,5 @@ module.exports = {
   updateProductQuantity,
   getLowQuantityProducts,
   getProductByItemCode,
+
 };

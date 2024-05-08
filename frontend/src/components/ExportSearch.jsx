@@ -1,22 +1,19 @@
 import React, { useState, useMemo } from 'react';
 import { useExportsContext } from '../hooks/useExportsContext';
+import ExportDetails from './ExportDetails';
 
 const ExportSearch = () => {
-  const { exports } = useExportsContext(); // Get exports from context
+  const { exports } = useExportsContext();
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const [searchQuery, setSearchQuery] = useState(''); // State to store search query
-
-  // Memoized filtered exports
   const filteredExports = useMemo(() => {
-    if (!exports) return []; // Return empty array if exports is null or undefined
+    if (!exports) return [];
 
-    // Filter exports based on search query
     return exports.filter(exportt =>
       exportt.exportOrderID.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [exports, searchQuery]);
 
-  // Function to handle search
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
   };
@@ -35,21 +32,7 @@ const ExportSearch = () => {
       {filteredExports.length > 0 ? (
         <div>
           {filteredExports.map(filteredExport => (
-            <div key={filteredExport._id}>
-              <h4>Order ID: {filteredExport.exportOrderID}</h4>
-              <p>Dealer: {filteredExport.importer}</p>
-              <div>
-                {filteredExport.items.map((item, index) => (
-                  <div key={index}>
-                    <p>Product ID: {item.itemID}</p>
-                    <p>Quantity: {item.quantity}</p>
-                  </div>
-                ))}
-              </div>
-              <p>Total Cost: {filteredExport.totalCost}</p>
-              <p>Status: {filteredExport.status}</p>
-              {/* Add more details as needed */}
-            </div>
+            <ExportDetails key={filteredExport._id} exportt={filteredExport} />
           ))}
         </div>
       ) : (

@@ -3,6 +3,7 @@ import {
   FaTh,
   FaBars,
   FaUserAlt,
+  FaShapes,
   FaRegChartBar,
   FaDollyFlatbed,
   FaThList,
@@ -15,15 +16,19 @@ const ExportsNavBar = ({ children }) => {
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
     {
-      path: "/",
+      path: "/ExportsNewDashboard",
       name: "Dashboard",
       icon: <FaTh />,
     },
-
     {
-      path: "/Importer",
-      name: "Importer",
-      icon: <FaIdBadge />,
+      path: "/ExportsDashboard",
+      name: "Order Details",
+      icon: <FaShapes />,
+    },
+    {
+      path: "/ImporterDescription",
+      name: "Importer Details",
+      icon: <FaThList />,
     },
     {
       path: "/ExportOrders",
@@ -31,26 +36,33 @@ const ExportsNavBar = ({ children }) => {
       icon: <FaDollyFlatbed />,
     },
     {
-      path: "/ExportOrderDetails",
-      name: "Order Details",
-      icon: <FaThList />,
+      path: "/Importer",
+      name: "Importers",
+      icon: <FaIdBadge />,
     },
-    {
-      path: "/ExportAnalytics",
-      name: "Analytics",
-      icon: <FaRegChartBar />,
-    },
-    {
-      path: "/ExportsProfile",
-      name: "My Profile",
-      icon: <FaUserAlt />,
-    },
+    
+     {
+       path: "/ExportAnalytics",
+       name: "Analytics",
+       icon: <FaRegChartBar />,
+     },
+    //   {
+    //    path: "/ExportsEmail",
+    //    name: "Exports Email",
+    //    icon: <FaIdBadge />,
+    //  },
+     {
+       path: "/ExportsProfile",
+       name: "My Profile",
+       icon: <FaUserAlt />,
+     },
 
-    {
-      path: "/MyProfile",
-      name: "Logout",
-      icon: <FaUserAlt />,
-    },
+     {
+       path: "/MyProfile",
+       name: "Logout",
+       icon: <FaUserAlt />,
+     },
+     
   ];
 
   return (

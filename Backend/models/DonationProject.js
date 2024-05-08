@@ -2,9 +2,15 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
+const itemSchema = new Schema({
+    item: String,
+    qty: Number,
+    unitPrice: Number,
+});
+
 const projectSchema = new Schema({ 
     project_id: {
-        type: Number, // Use Number for integer values
+        type: Number,
         required: true
     },
     description: {
@@ -12,16 +18,16 @@ const projectSchema = new Schema({
         required: true
     },
     estimate_date: {
-        type: Date, // Use Date for date values
+        type: Date,
         required: true
     },
     total_amount: {
-        type: Number, // Use Number or Decimal for floating-point numbers
+        type: Number,
         required: true
-    }
-    
-})
+    },
+    items: [itemSchema], // Array of items
+});
 
-const Project = mongoose.model('Project', projectSchema); // Capitalize model name
+const Project = mongoose.model('Project', projectSchema);
 
 module.exports = Project;
