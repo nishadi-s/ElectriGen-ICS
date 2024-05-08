@@ -21,6 +21,6 @@ router.post('/', createSupplier);
 router.delete('/:id', deleteSupplier)
 
 // UPDATE a supplier 
-router.patch('/:id',updateSupplier)
+router.put('/:id',updateSupplier)
 
 module.exports = router;

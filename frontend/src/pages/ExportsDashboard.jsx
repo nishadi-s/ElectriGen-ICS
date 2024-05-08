@@ -2,15 +2,12 @@ import '../exports.css';
 import React from "react";
 import { useEffect } from "react";
 import { useExportsContext } from "../hooks/useExportsContext";
-import { useImportersContext } from "../hooks/useImportersContext";
-
-//components
-import ExportDetails from '../components/ExportDetails'
-import ImporterDetails from '../components/ImporterDetails'
+import ExportSearch from '../components/ExportSearch'; 
+import ExportsNavBar from "../components/ExportsNavBar.jsx";
+import { Link } from 'react-router-dom';
 
 const ExportsDashboard=()=>{
-  const {exports,dispatch:exportsDispatch} = useExportsContext()
-  const {importers,dispatch:importersDispatch} = useImportersContext()
+  const {dispatch:exportsDispatch} = useExportsContext()
 
   useEffect(()=>{
     const fetchExports=async()=>{
@@ -23,36 +20,29 @@ const ExportsDashboard=()=>{
 
     }
 
-    
-    const fetchImporters=async()=>{
-      const response=await fetch('/api/importer')
-      const json=await response.json()
-
-      if(response.ok){
-        importersDispatch({type: 'SET_IMPORTERS',payload:json})
-      }
-
-    }
-
     fetchExports()
-    fetchImporters()
-  }, [exportsDispatch, importersDispatch])
+    
+  }, [exportsDispatch])
 
-    return (
+  return (
+<div className="ex-dashboard with-background">
+    <ExportsNavBar>
       
-      <div className="ex-dashboard">
-        <div className="exports">
-        <h2>Export Orders</h2><br></br>
-          {exports && exports.map((exportt)=>(
-            <ExportDetails key={exportt._id} exportt={exportt}/>           
-          ))}
-        <h2>Importers</h2><br></br>
-          {importers && importers.map((importer)=>(
-            <ImporterDetails key={importer._id} importer={importer}/>           
-          ))}
-        </div>
-      </div>
-    );
+    <div className="ex-dashboard">      
+      <div className="exports">
+        <h1>Export Order Details</h1><br />
+
+        <ExportSearch />
+
+      </div>      
+    </div>
+    
+    { <Link to={`/ExportsReport`} className="report-button">
+         Generate Report
+      </Link> }
+    </ExportsNavBar>
+    </div>
+  );
 };
-      
+
 export default ExportsDashboard;

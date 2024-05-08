@@ -1,25 +1,31 @@
-import { useState } from "react"
-import '../exports.css';
+import React, { useState } from "react";
+import { TextField, Button, Typography, Grid, Paper } from "@mui/material"; // Import Material-UI components
 import { useImportersContext } from "../hooks/useImportersContext";
-import {  useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate hook from React Router
 import Swal from 'sweetalert2'; // Import SweetAlert
 
-const ImporterForm=()=>{
-    const {dispatch}=useImportersContext()
-    const [importerID,setimporterID] = useState('')
-    const [importerName,setimporterName] = useState('')
-    const [address,setaddress] = useState('')
-    const [contactNumber,setcontactNumber] = useState('')
-    const [email,setemail] = useState('')
-    const [error,setError]=useState(null)
-    const[emptyFields,setEmptyFields]=useState([])
-    const [successMessage, setSuccessMessage] = useState('');
+const ImporterForm = () => {
+    const { dispatch } = useImportersContext();
+    const navigate = useNavigate(); // Initialize the useNavigate hook
+    const [importerID, setImporterID] = useState('');
+    const [importerName, setImporterName] = useState('');
+    const [address, setAddress] = useState('');
+    const [contactNumber, setContactNumber] = useState('');
+    const [email, setEmail] = useState('');
+    const [error, setError] = useState(null);
+    const [emptyFields, setEmptyFields] = useState([]);
 
-     // Regular expression for importerID validation (starts with 'I' followed by 3 digits)
-     const importerIDPattern = /^I\d{3}$/;
+    // Regular expression for importerID validation (starts with 'I' followed by 3 digits)
+    const importerIDPattern = /^I\d{3}$/;
 
-    const handleSubmit=async(e)=>{
-        e.preventDefault()
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        // Check if any of the fields are empty
+        if (!importerID || !importerName || !address || !contactNumber || !email) {
+            setError('Please fill out all fields');
+            return;
+        }
 
         // Validate importerID format
         if (!importerIDPattern.test(importerID)) {
@@ -36,104 +42,124 @@ const ImporterForm=()=>{
             return; // Stop form submission if email is invalid
         }
 
-        const importer={importerID,importerName,address,contactNumber,email}
+        const importer = { importerID, importerName, address, contactNumber, email };
 
-        const response=await fetch('/api/importer',{
+        const response = await fetch('/api/importer', {
             method: 'POST',
             body: JSON.stringify(importer),
-            headers:{
-                'Content-Type':'application/json'
+            headers: {
+                'Content-Type': 'application/json'
             }
-        })
+        });
 
-        const json=await response.json()
+        const json = await response.json();
 
-        if(!response.ok){
-            setError(json.error)
-            setEmptyFields(json.emptyFields)
-        }
-        if(response.ok){
-            setimporterID('')
-            setimporterName('')
-            setaddress('')
-            setcontactNumber('')
-            setemail('')
-            setError('')
-            setError(null)
-            setEmptyFields([])
-            console.log('New importer added',json)
-            dispatch({type: 'CREATE_IMPORTER',payload:json})
-
+        if (!response.ok) {
+            setError(json.error);
+            setEmptyFields(json.emptyFields);
+        } else {
+            setImporterID('');
+            setImporterName('');
+            setAddress('');
+            setContactNumber('');
+            setEmail('');
+            setError('');
+            setEmptyFields([]);
+            dispatch({ type: 'CREATE_IMPORTER', payload: json });
+            
             // Display success message using SweetAlert
             Swal.fire({
                 icon: 'success',
                 title: 'Success!',
-                text: 'New importer order added successfully!'
+                text: 'New importer added successfully!'
             });
+            // Redirect to importer description page after successful submission
+            setTimeout(() => {
+                navigate(`/ImporterDescription`);
+                window.location.reload();
+              }, 500);
         }
     }
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setSuccessMessage('');
-        }, 3000); // Adjust the delay as needed (e.g., 3000 milliseconds = 3 seconds)
+    // Function to handle change in importer name field
+    const handleImporterNameChange = (e) => {
+        const value = e.target.value;
+        // Check if the input contains only letters
+        if (/^[a-zA-Z\s]*$/.test(value)) {
+            setImporterName(value);
+        }
+    };
 
-        return () => clearTimeout(timer);
-    }, [successMessage]);
+    return (
+        <Paper elevation={3} style={{ padding: '2rem', borderRadius: '10px' }}>
+            <Typography variant="h5" align="center" gutterBottom>Add a New Importer</Typography>
 
+            <form onSubmit={handleSubmit}>
+                <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                        <TextField
+                            label="Importer ID"
+                            variant="outlined"
+                            fullWidth
+                            value={importerID}
+                            onChange={(e) => setImporterID(e.target.value)}
+                            error={emptyFields.includes('importerID')}
+                            helperText={emptyFields.includes('importerID') ? 'Please enter Importer ID' : ''}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            label="Name"
+                            variant="outlined"
+                            fullWidth
+                            value={importerName}
+                            onChange={handleImporterNameChange} // Changed here
+                            error={emptyFields.includes('importerName')}
+                            helperText={emptyFields.includes('importerName') ? 'Please enter Name' : ''}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            label="Address"
+                            variant="outlined"
+                            fullWidth
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)}
+                            error={emptyFields.includes('address')}
+                            helperText={emptyFields.includes('address') ? 'Please enter Address' : ''}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            label="Contact Number"
+                            variant="outlined"
+                            fullWidth
+                            type="number"
+                            value={contactNumber}
+                            onChange={(e) => setContactNumber(e.target.value)}
+                            error={emptyFields.includes('contactNumber')}
+                            helperText={emptyFields.includes('contactNumber') ? 'Please enter Contact Number' : ''}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            label="Email"
+                            variant="outlined"
+                            fullWidth
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            error={emptyFields.includes('email')}
+                            helperText={emptyFields.includes('email') ? 'Please enter Email' : ''}
+                        />
+                    </Grid>
+                </Grid>
 
-    return(
-        <form className="importerCreate" onSubmit={handleSubmit}>
-        <h3>Add a new Importer</h3>
-
-        {successMessage && <div className="success-message">{successMessage}</div>}
-
-        <label>Dealer ID: </label><br></br>
-        <input
-            type="text"
-            onChange={(e)=>setimporterID(e.target.value)}
-            value={importerID}
-            className={emptyFields.includes('importerID')?'error':''}
-        /><br></br>
-
-        <label>Name: </label><br></br>
-        <input
-            type="text"
-            onChange={(e)=>setimporterName(e.target.value)}
-            value={importerName}
-            className={emptyFields.includes('importerName')?'error':''}
-        /><br></br>
-
-        <label>Address: </label><br></br>
-        <input
-            type="text"
-            onChange={(e)=>setaddress(e.target.value)}
-            value={address}
-            className={emptyFields.includes('address')?'error':''}
-        /><br></br>
-
-        <label>Contact Number: </label><br></br>
-        <input
-            type="number"
-            onChange={(e)=>setcontactNumber(e.target.value)}
-            value={contactNumber}
-            className={emptyFields.includes('contactNumber')?'error':''}
-        /><br></br>
-
-        <label>Email: </label><br></br>
-        <input
-            type="text"
-            onChange={(e)=>setemail(e.target.value)}
-            value={email}
-            className={emptyFields.includes('email')?'error':''}
-        /><br></br><br></br>
-
-        <button> Add </button>
-        {error && <div className="error">{error}</div>}
-
-        </form>
-
-    )
+                <Button variant="contained" color="primary" type="submit" style={{ marginTop: '2rem' }}>Add Importer</Button>
+                {error && <Typography variant="body2" color="error" style={{ marginTop: '1rem' }}>{error}</Typography>}
+            </form>
+        </Paper>
+    );
 }
 
-export default ImporterForm
+export default ImporterForm;

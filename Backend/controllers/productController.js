@@ -36,7 +36,6 @@ const getItemCodes = async (req, res) => {
 };
 
 
-
 // Get all item codes
 const getItemCodes = async (req, res) => {
   try {
@@ -46,6 +45,7 @@ const getItemCodes = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
 
 //create new product
 const createProduct = async (req, res) => {
@@ -216,4 +216,5 @@ module.exports = {
   updateProductQuantity,
   getLowQuantityProducts,
   getProductByItemCode,
+
 };

@@ -1,11 +1,15 @@
 import React from "react";
+import NavbarNishadi from '../components/SupplierOrderNavbar'
 
-const Profile = () => {
+const ProfileN = () => {
   return (
+    <NavbarNishadi>
+
     <div>
       <h1> Profile </h1>
     </div>
+    </NavbarNishadi>
   );
 };
 
-export default Profile;
+export default ProfileN;
