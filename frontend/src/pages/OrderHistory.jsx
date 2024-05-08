@@ -27,8 +27,10 @@ const OrderHistory = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    // Filter orders based on distributorLoginID
-    setFilteredOrders(orders.filter(order => order.distributorId === distributorLoginID));
+    // Filter orders based on distributorLoginID if orders is not null
+    if (orders) {
+      setFilteredOrders(orders.filter(order => order.distributorId === distributorLoginID));
+    }
   }, [orders, distributorLoginID]);
 
   const handleFilter = (e) => {

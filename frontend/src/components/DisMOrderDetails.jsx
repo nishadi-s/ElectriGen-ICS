@@ -5,7 +5,7 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import { format } from 'date-fns';
 import Swal from 'sweetalert2';
 import { useOrdersContext } from '../hooks/useOrdersContext.jsx';
 import { useNavigate } from 'react-router-dom';
@@ -47,6 +47,21 @@ const DisMOrderDetails = ({ order }) => {
         navigate(`/update-order/${order._id}`);
     };
 
+    const getStatusColor = (status) => {
+        switch (status) {
+            case "Placed":
+                return "blue";
+            case "Approved":
+                return "green";
+            case "Cancelled":
+                return "red";
+            case "Collectible":
+                return "orange";
+            default:
+                return "black"; 
+        }
+    };
+
     return (
         <div className="order-details">
             <Paper style={{ width: '100%' }}>
@@ -64,7 +79,7 @@ const DisMOrderDetails = ({ order }) => {
                             <TableCell>Quantity</TableCell>
                             <TableCell>Total Cost(lkr)</TableCell>
                             <TableCell>Total Amount to Pay(lkr)</TableCell>
-                            <TableCell>Created At</TableCell>
+                            <TableCell>Order Placed Date</TableCell>
                             <TableCell>Action</TableCell>
                         </TableRow>
                     </TableHead>
@@ -78,7 +93,8 @@ const DisMOrderDetails = ({ order }) => {
                                         <TableCell rowSpan={order.items.length}>{order._id}</TableCell>
                                         <TableCell rowSpan={order.items.length}>{order.distributorId}</TableCell>
                                         <TableCell rowSpan={order.items.length}>{order.distributorName}</TableCell>
-                                        <TableCell rowSpan={order.items.length}>{order.orderStatus}</TableCell>
+                                        <TableCell rowSpan={order.items.length}>
+                                        <span style={{ fontWeight: 'bold', color: getStatusColor(order.orderStatus) }}>{order.orderStatus}</span></TableCell>
                                     </>
                                 )}
                                 {/* Display item details */}
@@ -91,7 +107,7 @@ const DisMOrderDetails = ({ order }) => {
                                 {index === 0 && ( // Only display these once for the first item
                                     <>
                                         <TableCell rowSpan={order.items.length}>{order.totalAmount}</TableCell>
-                                        <TableCell rowSpan={order.items.length}>{formatDistanceToNow(new Date(order.createdAt), { addSuffix: true })}</TableCell>
+                                        <TableCell rowSpan={order.items.length}>{format(new Date(order.createdAt), 'yyyy-MM-dd')}</TableCell>
                                         <TableCell rowSpan={order.items.length}>
                                             {/* Action buttons */}
                                             <div className="action-buttons">

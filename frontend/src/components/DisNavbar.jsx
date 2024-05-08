@@ -27,11 +27,6 @@ const NavbarDini1 = ({ children }) => {
       icon: <FaShapes />,
     },
     {
-      path: "/DisMyProfile",
-      name: "My Profile",
-      icon: <FaUserAlt />,
-    },
-    {
       path: "/login", // Logout route
       name: "Logout",
       icon: <FaSignOutAlt />,

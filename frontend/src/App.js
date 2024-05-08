@@ -69,7 +69,6 @@ import SDView from "./pages/SDView.jsx";
 import DisSignup from "./pages/DisSignup.jsx";
 import DisLogin from "./pages/DisLogin.jsx";
 import DisDashboard from "./pages/DisDashboard.jsx";
-import DisMyProfile from "./pages/DisMyProfile.jsx";
 import DisAnalytics from "./pages/DisAnalytics";
 import OrderPlace from "./pages/OrderPlacement.jsx";
 import OrderHistory from "./pages/OrderHistory.jsx";
@@ -81,7 +80,7 @@ import DisMOrderHistory from "./pages/DisMOrderHistory.jsx";
 import DisMDashboard from "./pages/DisMDashboard.jsx";
 import DisMUpdateOrder from "./pages/DisMUpdate.jsx";
 import DisMAnalytics from "./pages/DisMAnalytics.jsx";
-//import DisMAnalytics2 from "./pages/DisMAnalytics2.jsx";
+import DisMAnalytics2 from "./pages/DisMAnalytics2.jsx";
 
 //Senith
 //import Materials from "./pages/Materials.jsx";
@@ -253,7 +252,6 @@ const App = () => {
                   distributor ? <DisDashboard /> : <Navigate to="/login" />
                 }
               />
-              <Route path="/DisMyProfile" element={<DisMyProfile />} />
               <Route path="/DisAnalytics" element={<DisAnalytics />} />
               <Route path="/OrderForm" element={<OrderPlace />} />
               <Route path="/OrderHistory" element={<OrderHistory />} />
@@ -264,7 +262,7 @@ const App = () => {
               <Route path="/DisMDashboard" element={<DisMDashboard />} />
               <Route path="update-order/:id" element={<DisMUpdateOrder />} />
               <Route path="/DisMAnalytics" element={<DisMAnalytics />} />
-              {/*<Route path="/DisMAnalytics2" element={<DisMAnalytics2 />} />*/}
+              <Route path="/DisMAnalytics2" element={<DisMAnalytics2 />} />
 
               {/*Senith*/}
               <Route path="/Products" element={<Products />} />

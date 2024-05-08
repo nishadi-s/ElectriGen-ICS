@@ -6,45 +6,30 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
-import Swal from 'sweetalert2';
-import { useOrdersContext } from '../hooks/useOrdersContext.jsx';
+import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import '../DistributionFun.css';
 
 const OrderDetails = ({ order }) => {
-    const { dispatch } = useOrdersContext();
     const navigate = useNavigate();
-
-    const handleClick = async () => {
-        const result = await Swal.fire({
-            title: "Do you want to delete this record?",
-            showCancelButton: true,
-            confirmButtonText: "Delete",
-            cancelButtonText: "Cancel",
-        });
-
-        if (result.isConfirmed) {
-            try {
-                const response = await fetch('/api/orders/' + order._id, {
-                    method: 'DELETE'
-                });
-                const json = await response.json();
-
-                if (response.ok) {
-                    dispatch({ type: 'DELETE_ORDER', payload: json });
-                    Swal.fire("Deleted", "", "success");
-                } else {
-                    throw new Error('Failed to delete order');
-                }
-            } catch (error) {
-                console.error(error);
-                Swal.fire("Error Occurred", "Failed to delete order. Please try again.", "error");
-            }
-        }
-    };
 
     const handleEdit = () => {
         navigate(`/update/${order._id}`);
+    };
+
+    const getStatusColor = (status) => {
+        switch (status) {
+            case "Placed":
+                return "blue";
+            case "Approved":
+                return "green";
+            case "Cancelled":
+                return "red";
+            case "Collectible":
+                return "orange";
+            default:
+                return "black"; // Default color for other statuses
+        }
     };
 
     return (
@@ -78,7 +63,9 @@ const OrderDetails = ({ order }) => {
                                         <TableCell rowSpan={order.items.length}>{order._id}</TableCell>
                                         <TableCell rowSpan={order.items.length}>{order.distributorId}</TableCell>
                                         <TableCell rowSpan={order.items.length}>{order.distributorName}</TableCell>
-                                        <TableCell rowSpan={order.items.length}>{order.orderStatus}</TableCell>
+                                        <TableCell rowSpan={order.items.length}>
+                                            <span style={{ fontWeight: 'bold', color: getStatusColor(order.orderStatus) }}>{order.orderStatus}</span>
+                                        </TableCell>
                                     </>
                                 )}
                                 {/* Display item details */}
@@ -91,17 +78,11 @@ const OrderDetails = ({ order }) => {
                                 {index === 0 && ( // Only display these once for the first item
                                     <>
                                         <TableCell rowSpan={order.items.length}>{order.totalAmount}</TableCell>
-                                        <TableCell rowSpan={order.items.length}>{formatDistanceToNow(new Date(order.createdAt), { addSuffix: true })}</TableCell>
+                                        <TableCell rowSpan={order.items.length}>{format(new Date(order.createdAt), 'yyyy-MM-dd')}</TableCell>
                                         <TableCell rowSpan={order.items.length}>
                                             {/* Action buttons */}
                                             <div className="action-buttons">
-                                                {/* Conditionally render buttons based on order status */}
-                                                {order.orderStatus !== "Approved" && (
-                                                    <>
-                                                        <button onClick={handleClick} className="btn-delete">Delete</button>
-                                                        <button onClick={handleEdit} className="btn-edit">Edit</button>
-                                                    </>
-                                                )}
+                                                <button onClick={handleEdit} className="btn-edit">Edit</button>
                                             </div>
                                         </TableCell>
                                     </>

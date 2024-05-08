@@ -893,7 +893,7 @@ a:hover {
 #orderStatus option[value="Pending"] {
   color: blue; /* Example color for Pending */
 }
-#orderStatus option[value="Processing"] {
+#orderStatus option[value="Collectible"] {
   color: orange; /* Example color for Processing */
 }
 

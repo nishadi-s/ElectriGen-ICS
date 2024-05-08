@@ -187,10 +187,10 @@ const DisMUpdateOrder = () => {
               }))
             }
           >
+            <option value="Pending">Pending</option>
             <option value="Approved">Approved</option>
             <option value="Cancelled">Cancelled</option>
-            <option value="Pending">Pending</option>
-            <option value="Processing">Processing</option>
+            <option value="Collectible">Collectible</option>
           </select>
         </div>
 
