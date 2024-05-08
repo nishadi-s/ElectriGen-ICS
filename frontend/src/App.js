@@ -58,7 +58,6 @@ import InvoiceReport from "./pages/InvoiceReport.jsx";
 import SalesDashboard from "./pages/SalesDashboard.jsx";
 import SDFeedback from "./pages/SDFeedback";
 import SDView from "./pages/SDView.jsx";
-import Home from "./pages/Home.jsx";
 import SalesAna from "./pages/SalesAna.jsx";
 
 //Dinithi
