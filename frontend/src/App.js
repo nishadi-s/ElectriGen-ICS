@@ -84,7 +84,7 @@ import EditMaterial from "./components/EditMaterial";
 import ProductionAnalytics from "./pages/ProductionAnalytics.jsx";
 import ProductionProfile from "./pages/ProductionProfile.jsx";
 import ProductForm from "./components/ProductForm";
-import ProductsView from "./pages/ProductView";
+import ProductsView from "./components/ProductsView";
 import MaterialsView from "./pages/MaterialsView";
 import AddMaterials from "./pages/AddMaterials";
 import Welcome from "./pages/welcome.jsx";

@@ -16,7 +16,6 @@ const EditProduct = () => {
   const [unitPrice, setUnitPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [error, setError] = useState(null);
-  const [emptyFields, setEmptyFields] = useState([]);
 
   // Fetch product data based on ID
   useEffect(() => {
@@ -42,6 +41,28 @@ const EditProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const emptyFieldNames = [];
+
+    // Check for empty fields
+    if (!name) emptyFieldNames.push("name");
+    if (!itemCode) emptyFieldNames.push("itemCode");
+    if (!category) emptyFieldNames.push("category");
+    if (!color) emptyFieldNames.push("color");
+    if (!unitPrice) emptyFieldNames.push("unitPrice");
+    if (!quantity) emptyFieldNames.push("quantity");
+
+    if (emptyFieldNames.length > 0) {
+      // Set empty fields to flicker
+      emptyFieldNames.forEach((fieldName) => {
+        const inputField = document.getElementById(fieldName);
+        inputField.classList.add("error-field");
+        setTimeout(() => {
+          inputField.classList.remove("error-field");
+        }, 100);
+      });
+      return;
+    }
 
     const updatedProduct = {
       name,
@@ -104,6 +125,20 @@ const EditProduct = () => {
     });
   };
 
+  const handleQuantityChange = (e) => {
+    const newQuantity = parseInt(e.target.value);
+    if (newQuantity >= 0) {
+      setQuantity(newQuantity);
+    }
+  };
+
+  const handleUnitPriceChange = (e) => {
+    const newUnitPrice = parseFloat(e.target.value);
+    if (newUnitPrice >= 0) {
+      setUnitPrice(newUnitPrice);
+    }
+  };
+
   return (
     <ProductionNavbar>
       <div className="production-header">
@@ -112,31 +147,35 @@ const EditProduct = () => {
       <form className="create" onSubmit={handleSubmit}>
         <label>Product name:</label>
         <input
+          id="name"
           type="text"
           onChange={(e) => setName(e.target.value)}
           value={name}
-          className={emptyFields.includes("name") ? "error" : ""}
+          className={error && !name ? "error-field" : ""}
         />
         <label>Product category:</label>
         <input
+          id="category"
           type="text"
           onChange={(e) => setCategory(e.target.value)} // Use setCategory
           value={category}
-          className={emptyFields.includes("category") ? "error" : ""}
+          className={error && !category ? "error-field" : ""}
         />
         <label>Product code:</label>
         <input
+          id="itemCode"
           type="text"
           onChange={(e) => setItemCode(e.target.value)} // Use setItemCode
           value={itemCode}
-          className={emptyFields.includes("itemCode") ? "error" : ""}
+          className={error && !itemCode ? "error-field" : ""}
         />
         <label>Color:</label>
         <select
+          id="color"
           type="text"
           onChange={(e) => setColor(e.target.value)} // Use setColor
           value={color}
-          className={emptyFields.includes("color") ? "error" : ""}
+          className={error && !color ? "error-field" : ""}
           style={{
             width: "100%",
             height: "45px",
@@ -158,17 +197,19 @@ const EditProduct = () => {
         </select>
         <label>Unit price(in Rs.):</label>
         <input
+          id="unitPrice"
           type="number"
-          onChange={(e) => setUnitPrice(e.target.value)} // Use setUnitPrice
+          onChange={handleUnitPriceChange}
           value={unitPrice}
-          className={emptyFields.includes("unitPrice") ? "error" : ""}
+          className={error && !unitPrice ? "error-field" : ""}
         />
         <label>Quantity:</label>
         <input
+          id="quantity"
           type="number"
-          onChange={(e) => setQuantity(e.target.value)} // Use setQuantity
+          onChange={handleQuantityChange}
           value={quantity}
-          className={emptyFields.includes("quantity") ? "error" : ""}
+          className={error && !quantity ? "error-field" : ""}
         />
 
         <button>Update Product</button>

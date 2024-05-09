@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useMaterialContext } from "../hooks/useMaterialsContext";
-import ProductionNavbar from "../components/ProductionNavbar";
+import NavbarNishadi from "../components/SupplierOrderNavbar";
 import MaterialSearch from "../components/MaterialSearch";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import "../senith.css";
@@ -38,7 +38,7 @@ const MaterialsView = () => {
   };
 
   return (
-    <ProductionNavbar>
+    <NavbarNishadi>
       <div className="home">
         <div className="production-header">
           <h1>Material Inventory</h1>
@@ -74,7 +74,11 @@ const MaterialsView = () => {
                     <td className="product-unit-price">
                       Rs. {material.unitPrice}
                     </td>
-                    <td className="product-quantity">{material.quantity}</td>
+                    <td
+                      className={material.quantity < 100 ? "low-quantity" : ""}
+                    >
+                      {material.quantity}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -82,7 +86,7 @@ const MaterialsView = () => {
           )}
         </div>
       </div>
-    </ProductionNavbar>
+    </NavbarNishadi>
   );
 };
 

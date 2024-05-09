@@ -75,11 +75,10 @@ const MaterialDetails = ({ material }) => {
     fetchData();
   }, [dispatch]);
 
-  // Apply CSS class to make the row appear red if quantity is less than 100
-  const rowClassName = material.quantity < 100 ? "low-quantity-row" : "";
+  const isLowStock = material.quantity < 100;
 
-  // Apply CSS class to make text appear red if material quantity is less than 100
-  const textClassName = material.quantity < 100 ? "low-quantity-text" : "";
+  const rowClassName = isLowStock ? "low-stock" : "";
+  const textClassName = "text";
 
   return (
     <tr className={`product-row ${rowClassName}`}>

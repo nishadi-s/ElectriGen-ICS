@@ -251,3 +251,19 @@ thead tr {
 .date-picker-wrapper {
   margin-right: 20px;
 }
+
+@keyframes flicker {
+  0% {
+    background-color: inherit;
+  }
+  50% {
+    background-color: red;
+  }
+  100% {
+    background-color: inherit;
+  }
+}
+
+.error-field {
+  animation: flicker 0.5s ease-in-out infinite;
+}

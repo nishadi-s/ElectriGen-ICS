@@ -92,3 +92,7 @@ main {
   border-radius: 50%;
   color: #333;
 }
+
+.low-stock {
+  color: red;
+}

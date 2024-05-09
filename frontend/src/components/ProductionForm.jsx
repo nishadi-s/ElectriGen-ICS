@@ -107,6 +107,35 @@ const ProductionForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Check for empty fields
+    const emptyFieldNames = [];
+    if (!date) emptyFieldNames.push("date");
+    materials.forEach((material, index) => {
+      if (!material.materialName || !material.materialQuantity) {
+        emptyFieldNames.push(
+          `materialName${index}`,
+          `materialQuantity${index}`
+        );
+      }
+    });
+    products.forEach((product, index) => {
+      if (!product.name || !product.quantity) {
+        emptyFieldNames.push(`productName${index}`, `productQuantity${index}`);
+      }
+    });
+
+    if (emptyFieldNames.length > 0) {
+      // Set empty fields to flicker
+      emptyFieldNames.forEach((fieldName) => {
+        const inputField = document.getElementsByName(fieldName)[0];
+        inputField.classList.add("error");
+        setTimeout(() => {
+          inputField.classList.remove("error");
+        }, 100);
+      });
+      return;
+    }
+
     try {
       const production = {
         date,
@@ -183,6 +212,10 @@ const ProductionForm = () => {
             <select
               value={material.materialName}
               onChange={(e) => handleMaterialNameChange(index, e.target.value)}
+              name={`materialName${index}`}
+              className={
+                emptyFields.includes(`materialName${index}`) ? "error" : ""
+              }
               style={{
                 width: "100%",
                 height: "45px",
@@ -219,6 +252,10 @@ const ProductionForm = () => {
                 updatedMaterials[index].materialQuantity = e.target.value;
                 setMaterials(updatedMaterials);
               }}
+              name={`materialQuantity${index}`}
+              className={
+                emptyFields.includes(`materialQuantity${index}`) ? "error" : ""
+              }
             />
           </div>
         ))}
@@ -236,6 +273,10 @@ const ProductionForm = () => {
             <select
               value={product.name}
               onChange={(e) => handleProductNameChange(index, e.target.value)}
+              name={`productName${index}`}
+              className={
+                emptyFields.includes(`productName${index}`) ? "error" : ""
+              }
               style={{
                 width: "100%",
                 height: "45px",
@@ -272,6 +313,10 @@ const ProductionForm = () => {
                 updatedProducts[index].quantity = e.target.value;
                 setProducts(updatedProducts);
               }}
+              name={`productQuantity${index}`}
+              className={
+                emptyFields.includes(`productQuantity${index}`) ? "error" : ""
+              }
             />
           </div>
         ))}

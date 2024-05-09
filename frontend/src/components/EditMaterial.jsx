@@ -40,6 +40,26 @@ const EditMaterial = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const emptyFieldNames = [];
+
+    // Check for empty fields
+    if (!material.name) emptyFieldNames.push("name");
+    if (!material.code) emptyFieldNames.push("code");
+    if (!material.unitPrice) emptyFieldNames.push("unitPrice");
+    if (!material.quantity) emptyFieldNames.push("quantity");
+
+    if (emptyFieldNames.length > 0) {
+      // Set empty fields to flicker
+      emptyFieldNames.forEach((fieldName) => {
+        const inputField = document.getElementsByName(fieldName)[0];
+        inputField.classList.add("error");
+        setTimeout(() => {
+          inputField.classList.remove("error");
+        }, 100);
+      });
+      return;
+    }
+
     // Show SweetAlert popup to confirm whether to save changes
     Swal.fire({
       title: "Do you want to save the changes?",

@@ -18,6 +18,7 @@ const ProductionDashboard = () => {
   const [outOfStockMaterials, setOutOfStockMaterials] = useState([]);
   const [productionRecord, setProductionRecord] = useState(null);
   const [currentMonthRecords, setCurrentMonthRecords] = useState([]);
+  const [todaysProduction, setTodaysProduction] = useState([]);
 
   useEffect(() => {
     const getGreeting = () => {
@@ -65,7 +66,9 @@ const ProductionDashboard = () => {
         if (response.ok) {
           const materials = await response.json();
           setLowQuantityMaterials(
-            materials.filter((material) => parseInt(material.quantity, 10) < 10)
+            materials.filter(
+              (material) => parseInt(material.quantity, 10) < 100
+            )
           );
           setOutOfStockMaterials(
             materials.filter(
@@ -96,6 +99,13 @@ const ProductionDashboard = () => {
               (record) => new Date(record.date).getMonth() === currentMonth
             )
           );
+
+          // Filter production records for today
+          const today = new Date().toISOString().slice(0, 10);
+          const todaysProduction = productionRecords.filter(
+            (record) => record.date === today
+          );
+          setTodaysProduction(todaysProduction);
         } else {
           console.error("Failed to fetch production records");
         }
@@ -206,8 +216,31 @@ const ProductionDashboard = () => {
         </div>
         <div>
           <h3>Today's Production</h3>
-          {productionRecord ? (
-            <p>{productionRecord}</p>
+          {todaysProduction.length > 0 ? (
+            <ul>
+              {todaysProduction.map((record) => (
+                <li key={record._id}>
+                  <p>Date: {record.date}</p>
+                  <p>Materials:</p>
+                  <ul>
+                    {record.materials.map((material, index) => (
+                      <li key={index}>
+                        {material.materialName} - Quantity:{" "}
+                        {material.materialQuantity}
+                      </li>
+                    ))}
+                  </ul>
+                  <p>Products:</p>
+                  <ul>
+                    {record.products.map((product, index) => (
+                      <li key={index}>
+                        {product.name} - Quantity: {product.quantity}
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
           ) : (
             <p>No production record found for today.</p>
           )}

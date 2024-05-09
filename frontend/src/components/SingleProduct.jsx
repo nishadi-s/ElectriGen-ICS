@@ -79,10 +79,21 @@ const SingleProduct = () => {
 
   return (
     <ProductionNavbar>
+      <div className="production-header">
+        <h1>Product Data</h1>
+      </div>
       <div className="product-details">
         {product ? (
-          <>
-            <h4>Product Name: {product.name}</h4>
+          <div
+            style={{
+              backgroundColor: "rgba(136, 132, 216, 0.5)",
+              padding: "20px",
+              borderRadius: "10px",
+              textAlign: "left",
+              boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            <h4>Name: {product.name}</h4>
             <p>
               <strong>Product Code: </strong>
               {product.itemCode}
@@ -93,7 +104,19 @@ const SingleProduct = () => {
             </p>
             <p>
               <strong>Color: </strong>
-              {product.color}
+              {product.color}{" "}
+              <span style={{ marginLeft: "5px" }}>
+                <div
+                  style={{
+                    display: "inline-block",
+                    width: "15px",
+                    height: "15px",
+                    backgroundColor: product.color,
+                    borderRadius: "50%",
+                    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+                  }}
+                ></div>
+              </span>
             </p>
             <p>
               <strong>Unit Price: </strong>
@@ -103,13 +126,13 @@ const SingleProduct = () => {
               <strong>Available Quantity: </strong>
               {product.quantity}
             </p>
-            <p>
+            <p style={{ opacity: 0.7, fontSize: "0.9rem" }}>
               <strong>Created: </strong>
               {formatDistanceToNow(new Date(product.createdAt), {
                 addSuffix: true,
               })}
             </p>
-            <p>
+            <p style={{ opacity: 0.7, fontSize: "0.9rem" }}>
               <strong>Last Updated: </strong>
               {formatDistanceToNow(new Date(product.updatedAt), {
                 addSuffix: true,
@@ -124,7 +147,7 @@ const SingleProduct = () => {
             >
               Edit
             </button>
-          </>
+          </div>
         ) : (
           <p>Loading product details...</p>
         )}
