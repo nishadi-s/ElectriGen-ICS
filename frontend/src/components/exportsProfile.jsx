@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Card, CardContent, Typography, Grid, Avatar } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"; // Import the profile icon
-import Navbar_Pay from "./Navbar-uvi";
+import ExportsNavBar from "./ExportsNavBar";
 
-function exportsProfile() {
+function ExportsProfile() {
   const [userProfile, setUserProfile] = useState(null);
   const userId = "6638e4ff59a712c2f8af5081"; // The user ID you want to fetch details for shanali
 
@@ -25,7 +25,7 @@ function exportsProfile() {
   }, [userId]);
 
   return (
-    <Navbar_Pay>
+    <ExportsNavBar>
       <div
         style={{
           display: "flex",
@@ -88,8 +88,8 @@ function exportsProfile() {
           </Typography>
         )}
       </div>
-    </Navbar_Pay>
+    </ExportsNavBar>
   );
 }
 
-export default exportsProfile;
+export default ExportsProfile;

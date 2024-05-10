@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-//import { useAuthStore } from "../store/useAuthStore";
+import { useAuthStore } from "../store/useAuthStore";
 import {
   FaTh,
   FaBars,
   FaUserAlt,
   FaRegChartBar,
-  FaShippingFast ,
+  FaShippingFast,
   FaPeopleArrows,
   FaSignOutAlt,
   FaEnvelope,
@@ -17,22 +17,20 @@ const NavbarNishadi = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   //logout logic
-  /*const navigate = useNavigate();
+  const navigate = useNavigate();
   const { isAuthenticated, logout } = useAuthStore();
   const handleLogout = () => {
     logout();
     navigate("/new-login");
-  }; */
+  };
 
   const menuItem = [
-    
     /*{
       path: "/Home",
       name: "Supplier Order Dashboard",
       
     },*/
-    
-    
+
     {
       path: "/SupplierOrderDashboard",
       name: "Supplier Order Dashboard",
@@ -49,7 +47,7 @@ const NavbarNishadi = ({ children }) => {
       name: "Orders",
       icon: <FaShippingFast />,
     },
-   
+
     {
       path: "/analyticsN",
       name: "Analytics",
@@ -61,12 +59,12 @@ const NavbarNishadi = ({ children }) => {
       icon: <FaEnvelope />,
     },
     {
-      path: "/MyProfileN",
+      path: "/supplierProfile",
       name: "My Profile",
       icon: <FaUserAlt />,
     },
-  
-   /* {
+
+    /* {
       path: "/LogoutProfile",
       name: "Logout",
       icon: <FaUserAlt />,
@@ -105,14 +103,16 @@ const NavbarNishadi = ({ children }) => {
             </div>
           </NavLink>
         ))}
-        {/* Add logout menu item if user is authenticated *
+        {/* Add logout menu item if user is authenticated */}
         {isAuthenticated && (
           <div
             className="link"
             onClick={handleLogout}
             style={{ cursor: "pointer" }}
           >
-            <div className="icon"><FaSignOutAlt /></div>
+            <div className="icon">
+              <FaSignOutAlt />
+            </div>
             <div
               style={{ display: isOpen ? "block" : "none" }}
               className="link_text"
@@ -120,7 +120,7 @@ const NavbarNishadi = ({ children }) => {
               Logout
             </div>
           </div>
-        )}*/}
+        )}
       </div>
       <main>{children}</main>{" "}
     </div>

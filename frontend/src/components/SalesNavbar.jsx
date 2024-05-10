@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/useAuthStore";
+
 import {
   FaTh,
   FaBars,
@@ -8,13 +11,20 @@ import {
   FaHandHoldingHeart,
   FaReplyAll,
   FaFileContract,
-  FaRegChartBar
+  FaRegChartBar,
+  FaSignOutAlt,
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
 const Navbar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const navigate = useNavigate();
+  const { isAuthenticated, logout } = useAuthStore();
+  const handleLogout = () => {
+    logout();
+    navigate("/new-login");
+  };
   const menuItem = [
     {
       path: "/SalesDashboard",
@@ -32,10 +42,10 @@ const Navbar = ({ children }) => {
       icon: <FaKey />,
     },
     {
-        path: "/SDFeedback",
-        name: "Sales Feadback",
-        icon: <FaHandHoldingHeart />,
-      },
+      path: "/SDFeedback",
+      name: "Sales Feadback",
+      icon: <FaHandHoldingHeart />,
+    },
     {
       path: "/InvoiceReport",
       name: "Report Handling",
@@ -47,15 +57,15 @@ const Navbar = ({ children }) => {
       icon: <FaRegChartBar />,
     },
     {
-      path: "/MyProfile",
+      path: "/salesProfile",
       name: "My Profile",
       icon: <FaUserAlt />,
     },
-    {
+    /* {
       path: "/Logout",
       name: "Logout",
       icon: <FaReplyAll />,
-    },
+    },*/
   ];
 
   return (
@@ -90,6 +100,24 @@ const Navbar = ({ children }) => {
             </div>
           </NavLink>
         ))}
+        {/* Add logout menu item if user is authenticated */}
+        {isAuthenticated && (
+          <div
+            className="link"
+            onClick={handleLogout}
+            style={{ cursor: "pointer" }}
+          >
+            <div className="icon">
+              <FaSignOutAlt />
+            </div>
+            <div
+              style={{ display: isOpen ? "block" : "none" }}
+              className="link_text"
+            >
+              Logout
+            </div>
+          </div>
+        )}
       </div>
       <main>{children}</main>{" "}
     </div>

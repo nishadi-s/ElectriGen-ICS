@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Table } from 'react-bootstrap';
-import DonationNavbar from '../components/DonationNavbar';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Table } from "react-bootstrap";
+import DonationNavbar from "../components/DonationNavbar";
 import "../donation.css";
 
 const DonationDashboard = () => {
   const [projects, setProjects] = useState([]);
-  const [greeting, setGreeting] = useState('');
+  const [greeting, setGreeting] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -15,31 +15,33 @@ const DonationDashboard = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/DonationProject/');
+      const response = await axios.get(
+        "http://localhost:4000/DonationProject/"
+      );
       setProjects(response.data);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   };
 
   const setGreetingMessage = () => {
     const currentHour = new Date().getHours();
     if (currentHour >= 6 && currentHour < 12) {
-      setGreeting('Good Morning! Have a nice day!');
+      setGreeting("Good Morning! Have a nice day!");
     } else if (currentHour >= 12 && currentHour < 18) {
-      setGreeting('Good Afternoon! Have a nice day!');
+      setGreeting("Good Afternoon! Have a nice day!");
     } else {
-      setGreeting('Good Evening! Have a nice day!');
+      setGreeting("Good Evening! Have a nice day!");
     }
   };
 
   return (
     <DonationNavbar>
       <div>
-        <h1 className='don-header'>Donation Dashboard</h1>
+        <h1 className="don-header">Donation Dashboard</h1>
 
         <div className="mt-5 mb-5">
-          <div className="card">
+          <div className="card" style={{ color: "black" }}>
             <div className="card-header">
               Welcome to the Donation Management of ElectriGen.
             </div>
@@ -51,7 +53,9 @@ const DonationDashboard = () => {
           </div>
         </div>
 
-        <Table striped bordered hover variant="primary"> {/* Change variant to "primary" for blue color */}
+        <Table striped bordered hover variant="primary">
+          {" "}
+          {/* Change variant to "primary" for blue color */}
           <thead>
             <tr>
               <th>Project ID</th>
@@ -72,7 +76,8 @@ const DonationDashboard = () => {
                   <ul>
                     {project.items.map((item, itemIndex) => (
                       <li key={itemIndex}>
-                        {item.item} - Qty: {item.qty}, Unit Price: {item.unitPrice}
+                        {item.item} - Qty: {item.qty}, Unit Price:{" "}
+                        {item.unitPrice}
                       </li>
                     ))}
                   </ul>

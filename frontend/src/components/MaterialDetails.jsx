@@ -12,35 +12,46 @@ const MaterialDetails = ({ material }) => {
 
   const handleDelete = async () => {
     Swal.fire({
-      title: "Do you want to delete this material?",
+      title: "Enter your password to confirm deletion",
+      input: "password",
+      inputAttributes: {
+        autocapitalize: "off",
+      },
       showCancelButton: true,
       confirmButtonText: "Delete",
       cancelButtonText: "Cancel",
       confirmButtonColor: "#dc3545",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        try {
-          const response = await fetch(`/api/materials/${material._id}`, {
-            method: "DELETE",
-          });
-
-          if (response.ok) {
-            dispatch({ type: "DELETE_MATERIAL", payload: material._id });
-            Swal.fire(
-              "Deleted!",
-              "Your material has been deleted.",
-              "success"
-            ).then(() => {
-              // Refresh the page or fetch the data again here
-              window.location.reload(); // Refresh the page
-              // OR fetchMaterialData(); // Call the function to fetch data again
+        const password = result.value;
+        // Check if the entered password is correct
+        if (password === "Sp123") {
+          try {
+            const response = await fetch(`/api/materials/${material._id}`, {
+              method: "DELETE",
             });
-          } else {
-            throw new Error("Failed to delete the material");
+
+            if (response.ok) {
+              dispatch({ type: "DELETE_MATERIAL", payload: material._id });
+              Swal.fire(
+                "Deleted!",
+                "Your material has been deleted.",
+                "success"
+              ).then(() => {
+                // Refresh the page or fetch the data again here
+                window.location.reload(); // Refresh the page
+                // OR fetchMaterialData(); // Call the function to fetch data again
+              });
+            } else {
+              throw new Error("Failed to delete the material");
+            }
+          } catch (error) {
+            console.error("Error deleting material:", error);
+            Swal.fire("Error!", "Failed to delete the material.", "error");
           }
-        } catch (error) {
-          console.error("Error deleting material:", error);
-          Swal.fire("Error!", "Failed to delete the material.", "error");
+        } else {
+          // Incorrect password
+          Swal.fire("Error!", "Incorrect password.", "error");
         }
       }
     });
@@ -64,14 +75,26 @@ const MaterialDetails = ({ material }) => {
     fetchData();
   }, [dispatch]);
 
+  const isLowStock = material.quantity < 100;
+
+  const rowClassName = isLowStock ? "low-stock" : "";
+  const textClassName = "text";
+
   return (
-    <tr className="product-row">
-      <td style={{ fontWeight: "bold" }} className="product-code">
+    <tr className={`product-row ${rowClassName}`}>
+      <td
+        style={{ fontWeight: "bold" }}
+        className={`product-code ${textClassName}`}
+      >
         {material.code}
       </td>
-      <td className="product-name">{material.name}</td>
-      <td className="product-unit-price">Rs. {material.unitPrice}</td>
-      <td className="product-quantity">{material.quantity}</td>
+      <td className={`product-name ${textClassName}`}>{material.name}</td>
+      <td className={`product-unit-price ${textClassName}`}>
+        Rs. {material.unitPrice}
+      </td>
+      <td className={`product-quantity ${textClassName}`}>
+        {material.quantity}
+      </td>
       <td>
         <Link to={`/edit-material/${material._id}`}>
           <button className="button-1">Edit</button>

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/useAuthStore";
 import {
   FaTh,
   FaBars,
@@ -16,6 +18,12 @@ import { NavLink } from "react-router-dom";
 const DonationNavbar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const navigate = useNavigate();
+  const { isAuthenticated, logout } = useAuthStore();
+  const handleLogout = () => {
+    logout();
+    navigate("/new-login");
+  };
   const menuItem = [
     {
       path: "/Donation_Dashboard",
@@ -23,17 +31,16 @@ const DonationNavbar = ({ children }) => {
       icon: <FaTh />,
     },
 
-
     {
-        path: "/New_Projects",
-        name: "New Projects",
-        icon: <FaDollyFlatbed />,
+      path: "/New_Projects",
+      name: "New Projects",
+      icon: <FaDollyFlatbed />,
     },
 
     {
-        path: "/Doner_Feedback",
-        name: "Doner Feedback",
-        icon: <FaSignLanguage />,
+      path: "/Doner_Feedback",
+      name: "Doner Feedback",
+      icon: <FaSignLanguage />,
     },
 
     //{
@@ -55,45 +62,39 @@ const DonationNavbar = ({ children }) => {
     //},
 
     {
-      path: "/DReportCreate",  
+      path: "/DReportCreate",
       name: "Donation Report",
       icon: <FaRegChartBar />,
     },
 
     {
-      path: "/Doner_Analytics",  
+      path: "/Doner_Analytics",
       name: "Analytics ",
       icon: <FaRegChartBar />,
     },
 
     {
-      path: "/DProjectDetails",  
+      path: "/DProjectDetails",
       name: "View Past Projects",
       icon: <FaBookOpen />,
     },
 
     {
-      path: "/dFeedbackFetch",  
+      path: "/dFeedbackFetch",
       name: "View Feedbacks",
       icon: <FaHandHoldingHeart />,
     },
     {
-      path: "/MyProfile",
+      path: "/donationProfile",
       name: "My Profile",
       icon: <FaUserAlt />,
     },
 
-    {
+    /*{
       path: "/",
       name: "Logout",
       icon: <FaSignOutAlt />,
-    },
-
-    
-
-
-
-
+    },*/
   ];
 
   return (
@@ -128,6 +129,24 @@ const DonationNavbar = ({ children }) => {
             </div>
           </NavLink>
         ))}
+        {/* Add logout menu item if user is authenticated */}
+        {isAuthenticated && (
+          <div
+            className="link"
+            onClick={handleLogout}
+            style={{ cursor: "pointer" }}
+          >
+            <div className="icon">
+              <FaSignOutAlt />
+            </div>
+            <div
+              style={{ display: isOpen ? "block" : "none" }}
+              className="link_text"
+            >
+              Logout
+            </div>
+          </div>
+        )}
       </div>
       <main>{children}</main>{" "}
     </div>

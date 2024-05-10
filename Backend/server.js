@@ -100,7 +100,7 @@ const productRoutes = require("./routes/products.js");
 const materialRoutes = require("./routes/materials.js");
 const productionRoutes = require("./routes/production.js");
 app.use("/api/products", productRoutes);
-app.use("/api/production", productionRoutes);
+app.use("/api/productions", productionRoutes);
 app.use("/api/materials", materialRoutes);
 const multer = require("multer");
 

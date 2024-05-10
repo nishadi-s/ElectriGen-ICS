@@ -1,17 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Button, Row, Col } from 'react-bootstrap';
-import axios from 'axios';
-import Swal from 'sweetalert2';
-import NavbarNishadi from './SupplierOrderNavbar';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Form, Button, Row, Col } from "react-bootstrap";
+import axios from "axios";
+import Swal from "sweetalert2";
+import NavbarNishadi from "./SupplierOrderNavbar";
+import { useNavigate } from "react-router-dom";
 
 const SupplierOrderForm = () => {
   const navigate = useNavigate();
   const [orderID, setOrderID] = useState("");
   const [supID, setSupID] = useState("");
-  const [items, setItems] = useState([{ Sup_matrial_code: '', M_Name: '', Sup_Quant: '' }]);
-  const [orderDate, setOrderDate] = useState(new Date().toISOString().split('T')[0]);
-  const [recDate, setRecDate] = useState(new Date().toISOString().split('T')[0]);
+  const [items, setItems] = useState([
+    { Sup_matrial_code: "", M_Name: "", Sup_Quant: "" },
+  ]);
+  const [orderDate, setOrderDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
+  const [recDate, setRecDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
   const [orderStatus, setOrderStatus] = useState("");
   const [rating, setRating] = useState("");
   const [materials, setMaterials] = useState([]);
@@ -23,12 +29,15 @@ const SupplierOrderForm = () => {
 
   const fetchMaterials = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/api/materials');
+      const response = await axios.get("http://localhost:4000/api/materials");
       // Extracting only the code and name fields from the response data
-      const extractedMaterials = response.data.map(({ code, name }) => ({ Sup_matrial_code: code, M_Name: name }));
+      const extractedMaterials = response.data.map(({ code, name }) => ({
+        Sup_matrial_code: code,
+        M_Name: name,
+      }));
       setMaterials(extractedMaterials);
     } catch (error) {
-      console.error('Error fetching materials:', error);
+      console.error("Error fetching materials:", error);
     }
   };
 
@@ -45,8 +54,10 @@ const SupplierOrderForm = () => {
     updatedItems[index][field] = value;
     setItems(updatedItems);
 
-    if (field === 'Sup_matrial_code' && value) {
-      const selectedMaterial = materials.find((material) => material.Sup_matrial_code === value);
+    if (field === "Sup_matrial_code" && value) {
+      const selectedMaterial = materials.find(
+        (material) => material.Sup_matrial_code === value
+      );
       if (selectedMaterial) {
         updatedItems[index].M_Name = selectedMaterial.M_Name;
         setItems(updatedItems);
@@ -69,21 +80,24 @@ const SupplierOrderForm = () => {
       Sup_orded_date: orderDate,
       Sup_recpt_date: recDate,
       Sup_Ord_sts: orderStatus,
-      Sup_rating: rating
+      Sup_rating: rating,
     };
 
     try {
       // Submit new supplier order
-      const orderResponse = await fetch(`http://localhost:4000/api/supplier_order/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newSupplierOrder)
-      });
+      const orderResponse = await fetch(
+        `http://localhost:4000/api/supplier_order/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newSupplierOrder),
+        }
+      );
 
       if (!orderResponse.ok) {
-        throw new Error('Failed to submit supplier order');
+        throw new Error("Failed to submit supplier order");
       }
 
       // Update material quantities
@@ -93,9 +107,11 @@ const SupplierOrderForm = () => {
           const quantity = parseInt(item.Sup_Quant);
 
           // Fetch current material details
-          const materialResponse = await fetch(`http://localhost:4000/api/materials/code/${materialCode}`);
+          const materialResponse = await fetch(
+            `http://localhost:4000/api/materials/code/${materialCode}`
+          );
           if (!materialResponse.ok) {
-            throw new Error('Failed to fetch material details');
+            throw new Error("Failed to fetch material details");
           }
           const material = await materialResponse.json();
 
@@ -103,43 +119,46 @@ const SupplierOrderForm = () => {
           const updatedQuantity = material.quantity + quantity;
 
           // Perform the update using Fetch
-          const updateResponse = await fetch(`http://localhost:4000/api/materials/${material._id}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ quantity: updatedQuantity })
-          });
+          const updateResponse = await fetch(
+            `http://localhost:4000/api/materials/${material._id}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ quantity: updatedQuantity }),
+            }
+          );
 
           if (!updateResponse.ok) {
-            throw new Error('Failed to update material quantity');
+            throw new Error("Failed to update material quantity");
           }
         } catch (error) {
-          console.error('Error updating material quantity:', error);
+          console.error("Error updating material quantity:", error);
           // Handle error updating material quantity
         }
       });
 
       // Show success message
       Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Successfully Submitted!',
+        position: "top-end",
+        icon: "success",
+        title: "Successfully Submitted!",
         showConfirmButton: false,
-        timer: 1500
+        timer: 1500,
       });
       setTimeout(() => {
         window.location.reload();
       }, 1500);
     } catch (err) {
-      console.error('Error submitting supplier order:', err);
+      console.error("Error submitting supplier order:", err);
       // Show error message
       Swal.fire({
-        position: 'top-end',
-        icon: 'error',
-        title: 'Error in Submitting!',
+        position: "top-end",
+        icon: "error",
+        title: "Error in Submitting!",
         showConfirmButton: false,
-        timer: 1500
+        timer: 1500,
       });
     }
   };
@@ -147,9 +166,9 @@ const SupplierOrderForm = () => {
   const validateOrder = () => {
     if (new Date(orderDate) >= new Date(recDate)) {
       Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Order date should be before receipt date!',
+        icon: "error",
+        title: "Oops...",
+        text: "Order date should be before receipt date!",
       });
       return false;
     }
@@ -163,14 +182,14 @@ const SupplierOrderForm = () => {
   };
 
   const handleAddItem = () => {
-    setItems([...items, { Sup_matrial_code: '', M_Name: '', Sup_Quant: '' }]);
+    setItems([...items, { Sup_matrial_code: "", M_Name: "", Sup_Quant: "" }]);
   };
 
   return (
     <NavbarNishadi>
       <div>
         <h1>Create Supplier Order</h1>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} className="create">
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formSupplierOrderID">
               <Form.Label>Supplier Order ID</Form.Label>
@@ -179,7 +198,11 @@ const SupplierOrderForm = () => {
 
             <Form.Group as={Col} controlId="formSupplierID">
               <Form.Label>Supplier ID</Form.Label>
-              <Form.Control type="text" value={supID} onChange={(e) => setSupID("S" + e.target.value)} />
+              <Form.Control
+                type="text"
+                value={supID}
+                onChange={(e) => setSupID("S" + e.target.value)}
+              />
             </Form.Group>
           </Row>
 
@@ -191,11 +214,20 @@ const SupplierOrderForm = () => {
                   <Form.Control
                     as="select"
                     value={item.Sup_matrial_code}
-                    onChange={(e) => handleItemChange(index, 'Sup_matrial_code', e.target.value)}
+                    onChange={(e) =>
+                      handleItemChange(
+                        index,
+                        "Sup_matrial_code",
+                        e.target.value
+                      )
+                    }
                   >
                     <option value="">Select an item</option>
                     {materials.map((material) => (
-                      <option key={material.Sup_matrial_code} value={material.Sup_matrial_code}>
+                      <option
+                        key={material.Sup_matrial_code}
+                        value={material.Sup_matrial_code}
+                      >
                         {material.Sup_matrial_code}
                       </option>
                     ))}
@@ -204,11 +236,7 @@ const SupplierOrderForm = () => {
 
                 <Form.Group as={Col} controlId={`formItemName${index}`}>
                   <Form.Label>Item Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={item.M_Name}
-                    readOnly
-                  />
+                  <Form.Control type="text" value={item.M_Name} readOnly />
                 </Form.Group>
 
                 <Form.Group as={Col} controlId={`formQuantity${index}`}>
@@ -216,11 +244,17 @@ const SupplierOrderForm = () => {
                   <Form.Control
                     type="number"
                     value={item.Sup_Quant}
-                    onChange={(e) => handleItemChange(index, 'Sup_Quant', e.target.value)}
+                    onChange={(e) =>
+                      handleItemChange(index, "Sup_Quant", e.target.value)
+                    }
                   />
                 </Form.Group>
 
-                <Button variant="danger" size="sm" onClick={() => handleRemoveItem(index)}>
+                <Button
+                  variant="danger"
+                  size="sm"
+                  onClick={() => handleRemoveItem(index)}
+                >
                   Remove
                 </Button>
               </Row>

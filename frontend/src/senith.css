@@ -12,7 +12,7 @@ body {
   min-height: 100vh;
 }
 body {
-  margin: -20px;
+  margin: 20px;
 }
 
 label,
@@ -64,6 +64,14 @@ input.error {
   text-decoration: none;
 }
 
+.product-row {
+  background-color: rgba(
+    197,
+    22,
+    22,
+    0.1
+  ); /* Adjust the alpha value (0.5) as needed */
+}
 .products-search {
   margin: 20px 0px;
 }
@@ -88,6 +96,7 @@ th {
 td:hover {
   background-color: #f1f1f1;
   color: #233066;
+  border-radius: 10px;
 }
 thead tr {
   background-color: #233066;
@@ -155,7 +164,7 @@ thead tr {
   font-size: 2.5rem;
   margin-bottom: 30px;
   margin-top: -20px;
-  margin-left: -20px;
+  margin-left: 0px;
   border-radius: 0px 10px 0px 10 px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -197,7 +206,7 @@ thead tr {
 }
 
 .button-1:hover,
-button-1:focus {
+.button-1:focus {
   background-color: #0f1c52;
 }
 
@@ -232,4 +241,29 @@ button-1:focus {
 .button-2:hover,
 .button-2:focus {
   background-color: #a5171c;
+}
+
+.date-picker-container {
+  display: flex;
+  align-items: center;
+}
+
+.date-picker-wrapper {
+  margin-right: 20px;
+}
+
+@keyframes flicker {
+  0% {
+    background-color: inherit;
+  }
+  50% {
+    background-color: red;
+  }
+  100% {
+    background-color: inherit;
+  }
+}
+
+.error-field {
+  animation: flicker 0.5s ease-in-out infinite;
 }

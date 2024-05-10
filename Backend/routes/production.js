@@ -1,36 +1,28 @@
 const express = require("express");
-const Product = require("../models/productModel");
+const Production = require("../models/productionModel");
 const {
-  createProduct,
-  getProduct,
-  getProducts,
-  updateProduct,
-  deleteProduct,
-  getLowQuantityProducts,
-  getProductByItemCode,
-} = require("../controllers/productController");
+  createProduction,
+  getProductions,
+  getProduction,
+  updateProduction,
+  deleteProduction,
+} = require("../controllers/productionController");
 
 const router = express.Router();
 
-// GET all products
-router.get("/", getProducts);
+//GET all production records
+router.get("/", getProductions);
 
-// GET a single product by ID
-router.get("/:id", getProduct);
+//GET a single production record
+router.get("/:id", getProduction);
 
-// GET a single product by item code
-router.get("/itemCode/:itemCode", getProductByItemCode);
+//POST a new production record
+router.post("/", createProduction);
 
-// POST a new product
-router.post("/", createProduct);
+//DELETE a production record
+router.delete("/:id", deleteProduction);
 
-// DELETE a product
-router.delete("/:id", deleteProduct);
-
-// UPDATE a product
-router.put("/:id", updateProduct);
-
-// GET products with quantity less than 100
-router.get("/lowquantity", getLowQuantityProducts);
+//UPDATE a production record
+router.put("/:id", updateProduction);
 
 module.exports = router;

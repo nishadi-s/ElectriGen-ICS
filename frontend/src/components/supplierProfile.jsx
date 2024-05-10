@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Card, CardContent, Typography, Grid, Avatar } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"; // Import the profile icon
-import Navbar_Pay from "./Navbar-uvi";
+import NavbarNishadi from "./SupplierOrderNavbar";
 
-function supplierProfile() {
+function SupplierProfile() {
   const [userProfile, setUserProfile] = useState(null);
   const userId = "6638e52059a712c2f8af5088"; // The user ID you want to fetch details for nishadi
 
@@ -25,7 +25,7 @@ function supplierProfile() {
   }, [userId]);
 
   return (
-    <Navbar_Pay>
+    <NavbarNishadi>
       <div
         style={{
           display: "flex",
@@ -88,8 +88,8 @@ function supplierProfile() {
           </Typography>
         )}
       </div>
-    </Navbar_Pay>
+    </NavbarNishadi>
   );
 }
 
-export default supplierProfile;
+export default SupplierProfile;

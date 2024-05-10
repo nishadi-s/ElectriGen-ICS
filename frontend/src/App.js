@@ -40,9 +40,8 @@ import SupplierEdit from "./components/SupplierEdit.jsx"; // Import the UpdateSu
 import SupplierOrderForm from "./components/SupplierOrderForm.jsx"; //Import supplier order form component
 import SupplierOrderEdit from "./components/SupplierOrderEdit.jsx"; //Import the Update supplier Order component
 import SupplierOrderReport from "./components/SupplierOrderRepo.jsx";
-import Materials from "./pages/Materials.jsx";
-import SupplierEmail from "./pages/supplierEmail.jsx"//Importing supplier email component
-
+import SupplierProfile from "./components/supplierProfile.jsx";
+import SupplierEmail from "./pages/supplierEmail.jsx"; //Importing supplier email component
 
 //Dulari_IT22121110
 import DonationNavbar from "./components/DonationNavbar.jsx";
@@ -54,11 +53,13 @@ import DFeedbackFetch from "./components/dFeedbackFetch.jsx";
 import DReportCreate from "./components/DReportCreate.jsx";
 import DProjectEdit from "./components/DProjectEdit.jsx";
 import DProjectDetails from "./components/DProjectDetails.jsx";
+import DonationProfile from "./components/donationProfile.jsx";
 
 //Primal
 import SalesFeedback from "./pages/salesFeedback.jsx";
 import InvoiceCreate from "./pages/invoiceCreate.jsx";
 import SfeedbackFetch from "./components/sfeedbackFetch.jsx";
+import SalesProfile from "./components/salesProfile.jsx";
 import ViewInvoice from "./pages/viewInvoice.jsx";
 import PinVerification from "./components/PinVerification.jsx";
 import { SalesContextProvider } from "./context/SalesContext.jsx";
@@ -68,7 +69,6 @@ import SalesDashboard from "./pages/SalesDashboard.jsx";
 import SDFeedback from "./pages/SDFeedback";
 import SDView from "./pages/SDView.jsx";
 import SalesAna from "./pages/SalesAna.jsx";
-
 
 //Dinithi
 import DisSignup from "./pages/DisSignup.jsx";
@@ -86,26 +86,29 @@ import DisMDashboard from "./pages/DisMDashboard.jsx";
 import DisMUpdateOrder from "./pages/DisMUpdate.jsx";
 import DisMAnalytics from "./pages/DisMAnalytics.jsx";
 import DisMAnalytics2 from "./pages/DisMAnalytics2.jsx";
+import DisMProfile from "./components/disMProfile.jsx";
 
 //Senith
-//import Materials from "./pages/Materials.jsx";
+import Materials from "./pages/Materials.jsx";
 import Production from "./pages/Production.jsx";
 import Products from "./pages/Products.jsx";
 import AddProducts from "./pages/AddProducts.jsx";
 import AddProduction from "./pages/AddProduction.jsx";
 import ProductionDashboard from "./pages/ProductionDashboard.jsx";
-import SingleProduct from "./components/SingleProduct"; // Import SingleProduct
-import ProductionProfile from "./components/productionProfile";
-import EditProduct from "./components/EditProduct"; // Import EditProduct
-import EditMaterial from "./components/EditMaterial"; // Import EditProduct
+import SingleProduct from "./components/SingleProduct";
+import EditProduct from "./components/EditProduct";
+import EditProduction from "./components/EditProduction";
+import EditMaterial from "./components/EditMaterial";
 import ProductionAnalytics from "./pages/ProductionAnalytics.jsx";
+import ProductionProfile from "./components/productionProfile.jsx";
 import ProductForm from "./components/ProductForm";
-import ProductsView from "./pages/ProductView";
+import ProductsView from "./components/ProductsView";
+import MaterialsView from "./pages/MaterialsView";
 import AddMaterials from "./pages/AddMaterials";
+import Welcome from "./pages/welcome.jsx";
 
 //Shanali
 import ExportsDashboard from "./pages/ExportsDashboard.jsx";
-import ExportsProfile from "./pages/ExportsProfile.jsx";
 import ExportsReport from "./pages/ExportsReport.jsx";
 import ImporterDescription from "./pages/ImporterDescription.jsx";
 import ExportOrders from "./pages/ExportOrders.jsx";
@@ -114,8 +117,8 @@ import ExportAnalytics from "./pages/ExportAnalytics.jsx";
 import UpdateExports from "./pages/UpdateExports.jsx";
 import ImporterUpdate from "./pages/ImporterUpdate.jsx";
 import ExportsNewDashboard from "./pages/ExportsNewDashboard.jsx";
-//import ExportsEmail from "./pages/ExportsEmail.jsx";
-
+import ExportsEmail from "./pages/ExportsEmail.jsx";
+import ExportsProfile from "./components/exportsProfile.jsx";
 
 // New Auth
 import NewLogin from "./pages/new-login/Login.jsx";
@@ -189,23 +192,29 @@ const App = () => {
                 element={<SupplierOrderReport />}
               />
               <Route path="/Materials" element={<Materials />} />
-              <Route path="/SupplierEmail" element={<SupplierEmail/>}/> 
-                
-            {/* Shanali */}
-            <Route path="/" element={<Home />} />
-            <Route path="/Home" element={<Home />} />            
-            <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
-            <Route path="/Importer" element={<Importer />} />
-            <Route path="/ExportOrders" element={<ExportOrders />} />
-            <Route path="/ImporterDescription" element={<ImporterDescription />}/>
-            <Route path="/ExportAnalytics" element={<ExportAnalytics />} />
-            <Route path="/ExportsProfile" element={<ExportsProfile />} />
-            <Route path="/UpdateExports/:id" element={<UpdateExports />} />
-            <Route path="/ImporterUpdate/:id" element={<ImporterUpdate />} />
-            <Route path="/ExportsReport" element={<ExportsReport />} />
-            <Route path="/ExportsNewDashboard" element={<ExportsNewDashboard />} />
-            {/* <Route path="/ExportsEmail" element={<ExportsEmail />} /> */}
-
+              <Route path="/supplierProfile" element={<SupplierProfile />} />
+              <Route path="/SupplierEmail" element={<SupplierEmail />} />
+              {/* Shanali */}
+              <Route path="/" element={<Home />} />
+              <Route path="/Home" element={<Home />} />
+              <Route path="/ExportsDashboard" element={<ExportsDashboard />} />
+              <Route path="/Importer" element={<Importer />} />
+              <Route path="/ExportOrders" element={<ExportOrders />} />
+              <Route
+                path="/ImporterDescription"
+                element={<ImporterDescription />}
+              />
+              <Route path="/ExportAnalytics" element={<ExportAnalytics />} />
+              <Route path="/ExportsProfile" element={<ExportsProfile />} />
+              <Route path="/UpdateExports/:id" element={<UpdateExports />} />
+              <Route path="/ImporterUpdate/:id" element={<ImporterUpdate />} />
+              <Route path="/ExportsReport" element={<ExportsReport />} />
+              <Route
+                path="/ExportsNewDashboard"
+                element={<ExportsNewDashboard />}
+              />
+              <Route path="/ExportsEmail" element={<ExportsEmail />} />
+              <Route path="/exportsProfile" element={<ExportsProfile />} />
               {/* Dulari */}
               <Route path="/New_Projects" element={<New_Projects />} />
               <Route path="/Doner_Feedback" element={<Doner_Feedback />} />
@@ -221,24 +230,31 @@ const App = () => {
                 element={<DProjectEdit />}
               />
               <Route path="/DReportCreate" element={<DReportCreate />} />
+              <Route path="/donationProfile" element={<DonationProfile />} />
               {/* Primal */}
-          <Route path="/salesFeedback" element={<SalesFeedback />} />
-          <Route path="/invoiceCreate" element={<InvoiceCreate />} />
-          <Route path="/sfeedbackFetch" element={<SfeedbackFetch />} />
-          <Route path="/viewInvoice" element={<ViewInvoice />} />
-          <Route path="/PinVerification" element={<PinVerification />} />
-          <Route path="/InvoiceUpdate/:billID" element={<InvoiceUpdate />} />
-          <Route path="/InvoiceReport" element={<InvoiceReport />} />
-          <Route path="/SalesDashboard" element={<SalesDashboard />} />
-          <Route path="/SDFeedback" element={<SDFeedback />} />
-          <Route path="/SDView" element={<SDView />} />
-          <Route path="/InvoiceUpdate/:billID" element={<InvoiceUpdate />} />
-          <Route path="/InvoiceReport" element={<InvoiceReport />} />
-          <Route path="/SalesDashboard" element={<SalesDashboard />} />
-          <Route path="/SDFeedback" element={<SDFeedback />} />
-          <Route path="/SDView" element={<SDView />} />
-          <Route path="/SalesAna" element={<SalesAna />} />
-
+              <Route path="/salesFeedback" element={<SalesFeedback />} />
+              <Route path="/invoiceCreate" element={<InvoiceCreate />} />
+              <Route path="/sfeedbackFetch" element={<SfeedbackFetch />} />
+              <Route path="/viewInvoice" element={<ViewInvoice />} />
+              <Route path="/PinVerification" element={<PinVerification />} />
+              <Route
+                path="/InvoiceUpdate/:billID"
+                element={<InvoiceUpdate />}
+              />
+              <Route path="/InvoiceReport" element={<InvoiceReport />} />
+              <Route path="/SalesDashboard" element={<SalesDashboard />} />
+              <Route path="/SDFeedback" element={<SDFeedback />} />
+              <Route path="/SDView" element={<SDView />} />
+              <Route
+                path="/InvoiceUpdate/:billID"
+                element={<InvoiceUpdate />}
+              />
+              <Route path="/InvoiceReport" element={<InvoiceReport />} />
+              <Route path="/SalesDashboard" element={<SalesDashboard />} />
+              <Route path="/SDFeedback" element={<SDFeedback />} />
+              <Route path="/SDView" element={<SDView />} />
+              <Route path="/SalesAna" element={<SalesAna />} />
+              <Route path="/salesProfile" element={<SalesProfile />} />
               {/* Dinithi */}
               <Route
                 path="/login"
@@ -268,10 +284,11 @@ const App = () => {
               <Route path="/DisMDashboard" element={<DisMDashboard />} />
               <Route path="update-order/:id" element={<DisMUpdateOrder />} />
               <Route path="/DisMAnalytics" element={<DisMAnalytics />} />
+              <Route path="/disMProfile" element={<DisMProfile />} />
               <Route path="/DisMAnalytics2" element={<DisMAnalytics2 />} />
-
               {/*Senith*/}
               <Route path="/Products" element={<Products />} />
+              <Route path="/Welcome" element={<Welcome />} />
               <Route path="/Production" element={<Production />} />
               <Route path="/Materials" element={<Materials />} />
               <Route path="/AddProducts" element={<AddProducts />} />
@@ -285,23 +302,23 @@ const App = () => {
                 path="/ProductionDashboard"
                 element={<ProductionDashboard />}
               />
-              <Route path="/" element={<Products />} />
-              <Route path="/product/:id" element={<SingleProduct />} />{" "}
-              {/* Define route for single product */}
-              <Route path="/edit-product/:id" element={<EditProduct />} />{" "}
-              {/* Add EditProduct route */}
-              <Route path="/EditProduct" element={<EditProduct />} />
               <Route
-                path="/edit-material/:id"
-                element={<EditMaterial />}
-              />{" "}
-              <Route path="/SingleProduct" element={<SingleProduct />} />
-              <Route path="/ProductsView" element={<ProductsView />} />
-              <Route path="/AddMaterials" element={<AddMaterials />} />
-              <Route
-                path="/ProductionProfile"
+                path="/productionProfile"
                 element={<ProductionProfile />}
               />
+              <Route path="/" element={<Products />} />
+              <Route path="/product/:id" element={<SingleProduct />} />
+              <Route path="/edit-product/:id" element={<EditProduct />} />
+              <Route
+                path="/update-production/:id"
+                element={<EditProduction />}
+              />
+              <Route path="/EditProduct" element={<EditProduct />} />
+              <Route path="/edit-material/:id" element={<EditMaterial />} />
+              <Route path="/SingleProduct" element={<SingleProduct />} />
+              <Route path="/ProductsView" element={<ProductsView />} />
+              <Route path="/MaterialsView" element={<MaterialsView />} />
+              <Route path="/AddMaterials" element={<AddMaterials />} />
             </Routes>
           </div>
         </SalesContextProvider>

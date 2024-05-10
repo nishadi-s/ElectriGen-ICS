@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
+
 import {
   FaTh,
   FaBars,
@@ -50,7 +51,7 @@ const ProductionNavbar = ({ children }) => {
     },
 
     {
-      path: "/ProductionProfile",
+      path: "/productionProfile",
       name: "Profile",
       icon: <FaUserAlt />,
     },

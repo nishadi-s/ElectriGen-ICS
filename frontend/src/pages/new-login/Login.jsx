@@ -4,9 +4,18 @@ import AuthAPI from "../../api/AuthAPI";
 import { useAuthStore } from "../../store/useAuthStore";
 import { errorMessage, successMessage } from "../../utils/Alert";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
-import { Button, Card, CardContent, TextField, Typography, Link, Grid, Paper } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardContent,
+  TextField,
+  Typography,
+  Link,
+  Grid,
+  Paper,
+} from "@mui/material";
 import Swal from "sweetalert2"; // Import SweetAlert
-import login_back from "../../pages/img/login_back.png" // Background image
+import login_back from "../../pages/img/login_back.png"; // Background image
 
 const Login = () => {
   const navigate = useNavigate();
@@ -146,9 +155,20 @@ const Login = () => {
               >
                 {isLoading ? "Loading..." : "Login"}
               </Button>
-              <Typography variant="body2" align="center" style={{ marginTop: "10px" }}>
+              <Typography
+                variant="body2"
+                align="center"
+                style={{ marginTop: "10px" }}
+              >
                 <RouterLink to="/forgot-password">Forgot Password?</RouterLink>
               </Typography>
+              <button
+                className="btn btn-outline-success my-2 my-sm-0"
+                type="submit"
+                onClick={() => (window.location.href = "/login")}
+              >
+                Login as a Distributor
+              </button>
             </form>
             {/* <Typography variant="body2" align="center" mt={2}>
               Don't have an account?{" "}

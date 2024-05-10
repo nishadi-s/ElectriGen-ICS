@@ -43,28 +43,29 @@ const SalesFeedback = () => {
     const newFeedback = {
       name,
       phone,
-      message
+      message,
     };
 
-    axios.post("http://localhost:4000/sfeedback/addf", newFeedback)
+    axios
+      .post("http://localhost:4000/sfeedback/addf", newFeedback)
       .then(() => {
         Swal.fire({
           position: "top-end",
           icon: "success",
           title: "Successfully Submitted!",
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         });
         window.location.reload();
       })
       .catch((err) => {
-        console.error('Error submitting invoice:', err);
+        console.error("Error submitting invoice:", err);
         Swal.fire({
           position: "top-end",
           icon: "error",
           title: "Error in Submitting!",
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         });
       });
   };
@@ -74,10 +75,16 @@ const SalesFeedback = () => {
       <div>
         <h1 className="sales-header">Sales Feedback</h1>
         <div className="scontainer p-4 shadow-lg rounded">
-          <form onSubmit={sendData}>
+          <form className="create" onSubmit={sendData}>
             <div className="mb-3">
-              <label htmlFor="name" className="form-label">Name</label>
-              <input type="text" className="form-control" id="name" placeholder="Fernando B A P" 
+              <label htmlFor="name" className="form-label">
+                Name
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="name"
+                placeholder="Fernando B A P"
                 value={name}
                 onChange={(e) => {
                   setName(e.target.value);
@@ -88,8 +95,14 @@ const SalesFeedback = () => {
               {nameError && <div className="text-danger">{nameError}</div>}
             </div>
             <div className="mb-3">
-              <label htmlFor="phone" className="form-label">Phone</label>
-              <input type="tel" className="form-control" id="phone" placeholder="07x xxxxxxx" 
+              <label htmlFor="phone" className="form-label">
+                Phone
+              </label>
+              <input
+                type="tel"
+                className="form-control"
+                id="phone"
+                placeholder="07x xxxxxxx"
                 value={phone}
                 onChange={(e) => {
                   setPhone(e.target.value);
@@ -100,13 +113,21 @@ const SalesFeedback = () => {
               {phoneError && <div className="text-danger">{phoneError}</div>}
             </div>
             <div className="mb-3">
-              <label htmlFor="description" className="form-label">Description</label>
-              <textarea className="form-control" id="description" rows="3" placeholder="Feedback message" 
+              <label htmlFor="description" className="form-label">
+                Description
+              </label>
+              <textarea
+                className="form-control"
+                id="description"
+                rows="3"
+                placeholder="Feedback message"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
               ></textarea>
             </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
+            <button type="submit" className="btn btn-primary">
+              Submit
+            </button>
           </form>
         </div>
       </div>

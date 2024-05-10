@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../senith.css";
 import ProductionNavbar from "../components/ProductionNavbar";
+import Swal from "sweetalert2";
 
 const EditMaterial = () => {
   const { id } = useParams();
@@ -13,7 +14,6 @@ const EditMaterial = () => {
     code: "",
     unitPrice: "",
     quantity: "",
-    unit: "kg", // Default unit
   });
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
@@ -40,6 +40,45 @@ const EditMaterial = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const emptyFieldNames = [];
+
+    // Check for empty fields
+    if (!material.name) emptyFieldNames.push("name");
+    if (!material.code) emptyFieldNames.push("code");
+    if (!material.unitPrice) emptyFieldNames.push("unitPrice");
+    if (!material.quantity) emptyFieldNames.push("quantity");
+
+    if (emptyFieldNames.length > 0) {
+      // Set empty fields to flicker
+      emptyFieldNames.forEach((fieldName) => {
+        const inputField = document.getElementsByName(fieldName)[0];
+        inputField.classList.add("error");
+        setTimeout(() => {
+          inputField.classList.remove("error");
+        }, 100);
+      });
+      return;
+    }
+
+    // Show SweetAlert popup to confirm whether to save changes
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // If confirmed, proceed with updating material
+        updateMaterial();
+      } else if (result.isDenied) {
+        // If denied, do nothing
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+  };
+
+  const updateMaterial = async () => {
     const response = await fetch(`/api/materials/${id}`, {
       method: "PUT",
       body: JSON.stringify(material),
@@ -49,7 +88,17 @@ const EditMaterial = () => {
     });
 
     if (response.ok) {
-      navigate(`/materials`);
+      // Show success popup
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Material details have been updated",
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(() => {
+        // Navigate to materials page after the timer runs out
+        navigate(`/materials`);
+      });
     } else {
       const errorData = await response.json();
       setError(errorData.error || "Error updating material");
@@ -67,7 +116,10 @@ const EditMaterial = () => {
 
   return (
     <ProductionNavbar>
-      <form className="update" onSubmit={handleSubmit}>
+      <div className="production-header">
+        <h1>Edit Material Details</h1>
+      </div>
+      <form className="create" onSubmit={handleSubmit}>
         <label>Material name:</label>
         <input
           type="text"
@@ -92,21 +144,14 @@ const EditMaterial = () => {
           value={material.unitPrice}
           className={emptyFields.includes("unitPrice") ? "error" : ""}
         />
-        <div className="quantity-input">
-          <label>Quantity:</label>
-          <input
-            type="string"
-            name="quantity"
-            onChange={handleChange}
-            value={material.quantity}
-            className={emptyFields.includes("quantity") ? "error" : ""}
-          />
-          <select value={material.unit} onChange={handleChange} name="unit">
-            <option value="kg">kg</option>
-            <option value="m">m</option>
-            <option value="pcs">pcs</option>
-          </select>
-        </div>
+        <label>Quantity:</label>
+        <input
+          type="string"
+          name="quantity"
+          onChange={handleChange}
+          value={material.quantity}
+          className={emptyFields.includes("quantity") ? "error" : ""}
+        />
         <button>Update Material</button>
         {error && <div className="error">{error}</div>}
       </form>

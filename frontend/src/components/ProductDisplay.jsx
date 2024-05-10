@@ -6,23 +6,38 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import "../senith.css";
 
-const ProductDisplay = ({ product }) => {
+const ProductDetails = ({ product }) => {
   const { dispatch } = useProductContext();
+
+  const rowStyle = {
+    backgroundColor: product.quantity < 100 ? "#f01313" : "inherit",
+  };
 
   return (
     <tr
       className="product-row"
+      style={rowStyle}
       onMouseEnter={(e) => e.target.parentNode.classList.add("hovered")}
       onMouseLeave={(e) => e.target.parentNode.classList.remove("hovered")}
     >
       <td>
-        <Link to={`/product/${product._id}`} className="product-link">
+        <Link
+          to={`/product/${product._id}`}
+          className="product-link"
+          style={{ fontWeight: "bold" }}
+        >
           {product.itemCode}
+        </Link>
+      </td>
+
+      <td>
+        <Link to={`/product/${product._id}`} className="product-link">
+          {product.name}
         </Link>
       </td>
       <td>
         <Link to={`/product/${product._id}`} className="product-link">
-          {product.name}
+          {product.color}
         </Link>
       </td>
       <td>
@@ -45,4 +60,4 @@ const ProductDisplay = ({ product }) => {
   );
 };
 
-export default ProductDisplay;
+export default ProductDetails;

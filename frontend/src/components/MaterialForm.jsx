@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useMaterialContext } from "../hooks/useMaterialsContext";
 import "../senith.css";
 import Swal from "sweetalert2";
@@ -9,7 +9,7 @@ const MaterialForm = () => {
   const [code, setCode] = useState("");
   const [unitPrice, setUnitPrice] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [unit, setUnit] = useState("kg"); // Default unit
+  const [unit, setUnit] = useState(" "); // Default unit
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
 
@@ -24,13 +24,28 @@ const MaterialForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!name || !code || !unitPrice || !quantity) {
-      setError("Please fill all the fields");
+    const emptyFieldNames = [];
+
+    // Check for empty fields
+    if (!name) emptyFieldNames.push("name");
+    if (!code) emptyFieldNames.push("code");
+    if (!unitPrice) emptyFieldNames.push("unitPrice");
+    if (!quantity) emptyFieldNames.push("quantity");
+
+    if (emptyFieldNames.length > 0) {
+      // Set empty fields to flicker
+      emptyFieldNames.forEach((fieldName) => {
+        const inputField = document.getElementById(fieldName);
+        inputField.classList.add("error-field");
+        setTimeout(() => {
+          inputField.classList.remove("error-field");
+        }, 100);
+      });
       return;
     }
 
     if (error) {
-      return;
+      return; // Prevent form submission if there is an error
     }
 
     // Concatenate quantity and unit
@@ -38,7 +53,7 @@ const MaterialForm = () => {
       name,
       code,
       unitPrice,
-      quantity: `${quantity} ${unit}`, // Concatenate quantity and unit
+      quantity,
     };
 
     const response = await fetch("/api/materials", {
@@ -81,8 +96,11 @@ const MaterialForm = () => {
   return (
     <form className="create" onSubmit={handleSubmit}>
       <h3>Add a new Material</h3>
+      {error && <div className="error">{error}</div>}
+
       <label>Material name:</label>
       <input
+        id="name"
         type="text"
         onChange={(e) => setName(e.target.value)}
         value={name}
@@ -90,16 +108,19 @@ const MaterialForm = () => {
       />
       <label>Material code:</label>
       <input
+        id="code"
         type="text"
         value={code}
         onChange={(e) => {
-          const userInput = e.target.value.replace(/[^\d]/g, "");
+          const userInput = e.target.value.replace(/[^\d]/g, "").slice(0, 3);
           setCode("DM" + userInput);
         }}
         className={error ? "error" : ""}
       />
+
       <label>Unit price (in Rs.):</label>
       <input
+        id="unitPrice"
         type="number"
         onChange={(e) => setUnitPrice(e.target.value)}
         value={unitPrice}
@@ -108,19 +129,14 @@ const MaterialForm = () => {
       <div className="quantity-input">
         <label>Quantity:</label>
         <input
+          id="quantity"
           type="number"
           onChange={(e) => setQuantity(e.target.value)}
           value={quantity}
           className={emptyFields.includes("quantity") ? "error" : ""}
         />
-        <select value={unit} onChange={(e) => setUnit(e.target.value)}>
-          <option value="kg">kg</option>
-          <option value="m">m</option>
-          <option value="pcs">pcs</option>
-        </select>
       </div>
       <button className="button-5">Add Material</button>
-      {error && <div className="error">{error}</div>}
     </form>
   );
 };

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Card, CardContent, Typography, Grid, Avatar } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"; // Import the profile icon
-import Navbar_Pay from "./Navbar-uvi";
+import NavbarDini2 from "./DisMNavbar";
 
-function disMProfile() {
+function DisMProfile() {
   const [userProfile, setUserProfile] = useState(null);
   const userId = "6638e55e59a712c2f8af508e"; // The user ID you want to fetch details for dinithi
 
@@ -25,7 +25,7 @@ function disMProfile() {
   }, [userId]);
 
   return (
-    <Navbar_Pay>
+    <NavbarDini2>
       <div
         style={{
           display: "flex",
@@ -88,8 +88,8 @@ function disMProfile() {
           </Typography>
         )}
       </div>
-    </Navbar_Pay>
+    </NavbarDini2>
   );
 }
 
-export default disMProfile;
+export default DisMProfile;

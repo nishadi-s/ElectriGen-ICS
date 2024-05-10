@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button } from 'react-bootstrap';
-import SalesNavbar from '../components/SalesNavbar';
-import axios from 'axios';
+import { Table, Button } from "react-bootstrap";
+import SalesNavbar from "../components/SalesNavbar";
+import axios from "axios";
 import PinVerification from "../components/PinVerification";
 import "../sales.css";
 
 const SDView = () => {
-  const correctPin = '1234'; // Your correct PIN number
-  const targetPage = '/viewInvoice'; // URL of the target page
+  const correctPin = "1234"; // Your correct PIN number
+  const targetPage = "/viewInvoice"; // URL of the target page
 
   const [data, setData] = useState([]);
   const [showPinVerification, setShowPinVerification] = useState(false);
@@ -18,10 +18,13 @@ const SDView = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/sales/display');
-      setData(response.data);
+      const response = await axios.get("http://localhost:4000/sales/display");
+      const sortedData = response.data.sort(
+        (a, b) => new Date(b.bdate) - new Date(a.bdate)
+      );
+      setData(sortedData);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   };
 
@@ -39,7 +42,9 @@ const SDView = () => {
     <SalesNavbar>
       <div>
         <h1 className="sales-header">Sales Records</h1>
-        <Button onClick={handleButtonClick} className="btn btn-primary mb-3">Do Modifications</Button>
+        <Button onClick={handleButtonClick} className="btn btn-primary mb-3">
+          Do Modifications
+        </Button>
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -53,11 +58,20 @@ const SDView = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map(item => (
+            {data.map((item) =>
               item.items.map((subItem, index) => (
-                <tr key={`${item.billID}-${index}`} className={index === 0 ? 'border-bottom' : ''}>
-                  {index === 0 ? <td rowSpan={item.items.length}>{item.billID}</td> : null}
-                  {index === 0 ? <td rowSpan={item.items.length}>{new Date(item.bdate).toLocaleDateString()}</td> : null}
+                <tr
+                  key={`${item.billID}-${index}`}
+                  className={index === 0 ? "border-bottom" : ""}
+                >
+                  {index === 0 ? (
+                    <td rowSpan={item.items.length}>{item.billID}</td>
+                  ) : null}
+                  {index === 0 ? (
+                    <td rowSpan={item.items.length}>
+                      {new Date(item.bdate).toLocaleDateString()}
+                    </td>
+                  ) : null}
                   <td>{subItem.ino}</td>
                   <td>{subItem.desc}</td>
                   <td>{subItem.qty}</td>
@@ -65,7 +79,7 @@ const SDView = () => {
                   <td>{subItem.iamount}</td>
                 </tr>
               ))
-            ))}
+            )}
           </tbody>
         </Table>
         {showPinVerification && (

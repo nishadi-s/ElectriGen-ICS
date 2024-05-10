@@ -2,207 +2,201 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap");
 
 /*layout*/
-:root{
-    --primary:#000204;
-    --error:#a20033;
+:root {
+  --primary: #000204;
+  --error: #a20033;
 }
-
+/*
 body {
   background: #b3d9ff;
   margin: 0;
   padding: 0;
   font-family: "Poppins";
   
+}*/
+
+header {
+  background: #fff;
 }
 
-
-
-header{
-    background: #fff;
+header .container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-header .container{
-    max-width: 1400px;
-    margin:0 auto;
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+header a {
+  color: #333;
+  text-decoration: none;
 }
 
-header a{
-    color: #333;
-    text-decoration: none;
+.SupplierOrder_Order {
+  max-width: 1000px;
+  padding: 20px;
+  margin: 0 auto;
 }
-
-.SupplierOrder_Order{
-    max-width: 1000px;
-    padding: 20px;
-    margin: 0 auto;
-}
-
 
 /*new Supplier Order Form*/
-label,input{
-    display: block;
+label,
+input {
+  display: block;
 }
 
-input{
-    padding: 10px;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    width: 100%;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
+input {
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
-form button{
-    background: var(--primary);
-    border: 0;
-    color: #fff;
-    padding: 10px;
-    font-family: "Poppins";
-    border-radius: 4px;
-    cursor: pointer;
+form button {
+  background: var(--primary);
+  border: 0;
+  color: #fff;
+  padding: 10px;
+  font-family: "Poppins";
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-div.error{
-    padding: 10px;
-    background: #ffefef;
-    border: 1px solid var (--error);
-    color: var (--error);
-    border-radius: 4px;
-    margin: 20px 0;
+div.error {
+  padding: 10px;
+  background: #ffefef;
+  border: 1px solid var (--error);
+  color: var (--error);
+  border-radius: 4px;
+  margin: 20px 0;
 }
 
-input.error{
-    border: 1px solid var (var(--error));
+input.error {
+  border: 1px solid var (var(--error));
 }
 
 /* Table */
 .table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  /* Table Header */
-  .table th {
-    background-color: #8bcbf6;
-    font-weight: bold;
-    text-align: left;
-    padding: 8px;
-  }
-  
-  /* Table Body */
-  .table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-  }
-  
-  /* Table Row Hover Effect */
-  .table tbody tr:hover {
-    background-color: #f5f5f5;
-  }
-  
-  /* Button Styles */
-  .Sup_button1 {
-    background-color: #0a32c0;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    cursor: pointer;
-    border-radius: 4px;
-  }
+  width: 100%;
+  border-collapse: collapse;
+}
 
-  .Sup_button2 {
-    background-color: #cd0c2c;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  
-  .Sup_button:hover {
-    background-color: #4577a0;
-  }
+/* Table Header */
+.table th {
+  background-color: #8bcbf6;
+  font-weight: bold;
+  text-align: left;
+  padding: 8px;
+}
 
-  .Sup_button1:hover {
-    background-color: #4577a0;
-  }
-  .button2:hover {
-    background-color: #fc2755;
-  }
-  
-  /* Align Buttons */
-  .table .button1 {
-    margin-right: 5px;
-  }
+/* Table Body */
+.table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
 
-  .table .button2 {
-    margin-right: 5px;
-  }
+/* Table Row Hover Effect */
+.table tbody tr:hover {
+  background-color: #f5f5f5;
+}
 
-  /*supplier Order Display*/
-  .Supplier-Order-Details {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .Supplier-Order-Details h6 {
-    margin-top: 0;
-  }
-  
-  .Supplier-Order-Details p {
-    margin: 5px 0;
-  }
-  
- 
-  
- 
- 
-  .order-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .order-table th,
-  .order-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-  }
-  
-  .order-table th {
-    background-color: #f2f2f2;
-    text-align: left;
-  }
-  
-  .order-table tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  .order-table tbody tr:hover {
-    background-color: #ddd;
-  }
-  
-  .order-table {
-    width: 100%; 
-    border-collapse: collapse;
-  }
-  
+/* Button Styles */
+.Sup_button1 {
+  background-color: #0a32c0;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.Sup_button2 {
+  background-color: #cd0c2c;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.Sup_button:hover {
+  background-color: #4577a0;
+}
+
+.Sup_button1:hover {
+  background-color: #4577a0;
+}
+.button2:hover {
+  background-color: #fc2755;
+}
+
+/* Align Buttons */
+.table .button1 {
+  margin-right: 5px;
+}
+
+.table .button2 {
+  margin-right: 5px;
+}
+
+/*supplier Order Display*/
+.Supplier-Order-Details {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.Supplier-Order-Details h6 {
+  margin-top: 0;
+}
+
+.Supplier-Order-Details p {
+  margin: 5px 0;
+}
+
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.order-table th,
+.order-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.order-table th {
+  background-color: #f2f2f2;
+  text-align: left;
+}
+
+.order-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.order-table tbody tr:hover {
+  background-color: #ddd;
+}
+
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
 /*supplier_order ORDER page button*/
-.Sup_button{
+.Sup_button {
   background: rgb(4, 4, 68);
   border: 0;
   color: #fff;
@@ -249,7 +243,8 @@ input.error{
   border-collapse: collapse;
 }
 
-.order-table th, .order-table td {
+.order-table th,
+.order-table td {
   border: 1px solid #ddd;
   padding: 8px;
 }
@@ -270,7 +265,7 @@ input.error{
 /*as place holder thing*/
 .prefix-input {
   position: relative;
-  padding-left: 30px; 
+  padding-left: 30px;
 }
 
 .prefix-text {
@@ -278,8 +273,8 @@ input.error{
   top: 50%;
   left: 10px;
   transform: translateY(-50%);
-  color: gray; 
-  font-weight: bold; 
+  color: gray;
+  font-weight: bold;
 }
 
 /*For the report page*/

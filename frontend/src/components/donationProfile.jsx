@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Card, CardContent, Typography, Grid, Avatar } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"; // Import the profile icon
-import Navbar_Pay from "./Navbar-uvi";
+import DonationNavbar from "./DonationNavbar";
 
-function donationProfile() {
+function DonationProfile() {
   const [userProfile, setUserProfile] = useState(null);
   const userId = "6638e5b559a712c2f8af509f"; // The user ID you want to fetch details for primal
 
@@ -25,7 +25,7 @@ function donationProfile() {
   }, [userId]);
 
   return (
-    <Navbar_Pay>
+    <DonationNavbar>
       <div
         style={{
           display: "flex",
@@ -88,8 +88,8 @@ function donationProfile() {
           </Typography>
         )}
       </div>
-    </Navbar_Pay>
+    </DonationNavbar>
   );
 }
 
-export default donationProfile;
+export default DonationProfile;

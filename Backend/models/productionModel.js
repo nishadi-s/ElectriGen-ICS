@@ -19,7 +19,7 @@ const productionSchema = new Schema(
           required: true,
         },
         materialQuantity: {
-          type: String,
+          type: Number,
           required: true,
         },
       },
@@ -31,18 +31,6 @@ const productionSchema = new Schema(
           required: true,
         },
         itemCode: {
-          type: String,
-          required: true,
-        },
-        unitPrice: {
-          type: Number,
-          required: true,
-        },
-        category: {
-          type: String,
-          required: true,
-        },
-        color: {
           type: String,
           required: true,
         },

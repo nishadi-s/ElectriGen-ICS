@@ -1,6 +1,6 @@
 /* google font */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap");
-
+/*
 * {
   margin: 0;
   padding: 0;
@@ -59,13 +59,7 @@ main {
   font-size: 20px;
 }
 
-
-
-
-
-
-
-/*primal*/
+primal*/
 
 .invoiceDetails {
   background: #fff;
@@ -73,7 +67,7 @@ main {
   margin: 20px auto;
   padding: 20px;
   position: relative;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
 }
 .invoiceDetails h4 {
   margin: 0 0 10px 0;
@@ -82,7 +76,7 @@ main {
 }
 .invoiceDetails h5 {
   margin: 0 0 10px 0;
-  font-size: 1.0em;
+  font-size: 1em;
   color: var(--primary);
 }
 .invoiceDetails p {
@@ -112,5 +106,5 @@ main {
   margin-top: -40px;
   margin-left: -20px;
   border-radius: 0px 10px 0px 10 px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0,  0,  0,  0.1);
 }
