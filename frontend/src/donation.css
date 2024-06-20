@@ -1,0 +1,39 @@
+.don-header {
+  text-align: left;
+  width: 100vw;
+  padding: 17px 20px;
+  background-color: #233066;
+  color: #fff;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  margin-top: -40px;
+  margin-left: -20px;
+  border-radius: 0px 10px 0px 10 px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.donation-project-details-container {
+  background-color: #e6f7ff; /* Light blue background color */
+  padding: 20px;
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+}
+
+.project-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.project-table th,
+.project-table td {
+  padding: 12px;
+  border: 1px solid #dddddd;
+}
+
+.project-table th {
+  background-color: #ccebff; /* Light blue background color for table header */
+}
+
+.project-table tr:hover {
+  background-color: #f2f2f2; /* Light grey background color on hover */
+}

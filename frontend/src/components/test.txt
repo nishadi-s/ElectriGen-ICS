@@ -1,0 +1,45 @@
+import React from 'react';
+import { useDispatch } from 'react-redux'; // Assuming you are using Redux for state management
+
+const InvoiceDetails = ({ invoice, onDelete }) => {
+    const dispatch = useDispatch(); // Get the dispatch function from Redux
+
+    const handleClick = async () => {
+        try {
+            const response = await fetch(`http://localhost:4000/sales/delete/${invoice.billID}`, {
+                method: 'DELETE'
+            });
+            const data = await response.json();
+
+            if (response.ok) {
+                dispatch({ type: 'DELETE_SALES', payload: data }); // Dispatch an action to update Redux state
+                onDelete(data); // Call the onDelete function passed as a prop
+            } else {
+                // Handle errors, show error message, etc.
+                console.error('Delete request failed');
+            }
+        } catch (error) {
+            console.error('Error deleting invoice:', error);
+        }
+    };
+
+    return (
+        <div className="invoiceDetails">
+            <h4>Bill ID: {invoice.billID}</h4>
+                        <h5>Total Amount: {invoice.tot}</h5>
+                        <h5>Total Quantity: {invoice.totqty}</h5>
+                        <p>Date: {new Date(invoice.bdate).toLocaleDateString()}</p>
+                        
+                        <ul>
+                            {invoice.items.map((item, index) => (
+                                <li key={index}>
+                                    Item {index + 1}: {item.desc}, Quantity: {item.qty}, Price: {item.price}
+                                </li>
+                            ))}
+                        </ul><br/>
+                        <span onClick={handleClick}>Delete</span>
+        </div>
+    );
+};
+
+export default InvoiceDetails;

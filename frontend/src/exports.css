@@ -1,0 +1,574 @@
+/* Import Google Fonts
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap");
+
+ .with-background {
+  background-image: url("../public/exxx.jpg");
+  background-size: cover;
+  background-position: center;
+  
+} 
+ */
+
+.form-container {
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.form-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 100%;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.form-control[readonly] {
+  background-color: #eee;
+}
+
+.total-cost {
+  font-weight: bold;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/*body {
+  font-family: "Poppins", sans-serif;
+  background-color: #f1f1f1;
+}*/
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.export-details-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.export-details-header {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.export-details-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.export-details-table th,
+.export-details-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.export-details-table th {
+  text-align: left;
+  color: #555;
+}
+
+.export-details-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.export-details-table tr:hover {
+  background-color: #f0f0f0;
+}
+
+.export-details-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.delete-button,
+.edit-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.delete-button {
+  background-color: #e7195a;
+  color: #fff;
+}
+
+.edit-button {
+  background-color: #1976d2;
+  color: #fff;
+  margin-right: 10px;
+}
+
+.delete-button:hover {
+  background-color: #c4124a;
+}
+
+.edit-button:hover {
+  background-color: #1565c0;
+}
+
+@media screen and (max-width: 768px) {
+  .export-details-container {
+    padding: 15px;
+  }
+
+  .export-details-header {
+    font-size: 20px;
+  }
+
+  .export-details-table th,
+  .export-details-table td {
+    padding: 8px;
+  }
+
+  .delete-button,
+  .edit-button {
+    padding: 8px 16px;
+  }
+}
+
+body {
+  background: #f1f1f1;
+  margin: 0;
+  font-family: "Poppins";
+}
+
+header {
+  background: #fff;
+}
+
+header .container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header a {
+  color: #333;
+  text-decoration: none;
+}
+
+.importer-details-container {
+  background-color: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.importer-details-header {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #333333;
+  font-size: 24px;
+}
+
+.importer-details-table {
+  width: 100%;
+}
+
+.importer-details-table th,
+.importer-details-table td {
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.importer-details-table th {
+  text-align: left;
+  font-weight: bold;
+  color: #555555;
+}
+
+.importer-details-table td {
+  color: #777777;
+}
+
+.importer-details-actions {
+  margin-top: 20px;
+}
+
+.edit-button {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-button:hover {
+  background-color: #0056b3;
+}
+
+/*layout*/
+:root {
+  --primary: #1aac83;
+  --error: #e7195a;
+}
+
+label,
+input {
+  display: block;
+}
+
+input {
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+div.error {
+  padding: 10px;
+  background: #ffefef;
+  border: 1px solid var(--error);
+  color: var(--error);
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+input.error {
+  border: 1px solid var(--error);
+}
+
+.delete-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin-right: 10px;
+  border-radius: 5px;
+  height: 30px;
+}
+
+.delete-button:hover {
+  background-color: #da190b;
+}
+
+.edit-button {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  border-radius: 5px;
+  height: 30px;
+}
+
+.edit-button:hover {
+  background-color: #0e5aa7;
+}
+
+.importer-form {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.error {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+
+button {
+  background-color: #1976d2;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.update-export-container {
+  margin: 0 auto;
+  max-width: 1500px;
+  padding: 10px;
+}
+
+.update-export-form {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.update-export-form h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.update-export-form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.update-export-form input[type="text"],
+.update-export-form input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.update-export-form button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.update-export-form button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.update-importer-container {
+  margin: 0 auto;
+  max-width: 1500px;
+  padding: 10px;
+}
+
+.update-importer-form {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.update-importer-form h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.update-importer-form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.update-importer-form input[type="text"],
+.update-importer-form input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.update-importer-form button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.update-importer-form button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.report-button {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 3px;
+  height: 35px;
+}
+
+.export-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.export-table th,
+.export-table td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.export-table th {
+  background-color: #f2f2f2;
+}
+
+.ex-new-dashboard.with-background {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh; /* Ensure the dashboard fills the entire viewport height */
+}
+
+.dashboard-content {
+  flex: 1; /* Make the content area flexible to fill available space */
+  padding: 20px; /* Add padding to the content area */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboard-card {
+  margin-bottom: 20px;
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.2
+  ); /* Semi-transparent white background */
+  color: #ffffff; /* Text color */
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  margin: 10px;
+  flex: 1 1 300px;
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.2
+  ); /* Semi-transparent white background */
+  color: #ffffff; /* Text color */
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); /* Shadow effect */
+}
+
+.card-content {
+  padding: 20px;
+}
+
+.card-title {
+  font-size: 1.5em;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.card-divider {
+  margin-top: 10px;
+}
+
+.card-text {
+  font-size: 1.2em;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.exports-email-container {
+  background-color: #f8f9fa; /* Light grey background */
+  padding: 50px 0; /* Add some padding */
+}
+
+.exports-email-container h1 {
+  text-align: center;
+  margin-bottom: 30px; /* Add spacing below the heading */
+}
+
+.exports-email-form {
+  background-color: #ffffff; /* White background for the form */
+  padding: 90px;
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Drop shadow for a professional look */
+}
+
+.exports-email-form form {
+  width: 100%;
+}
+
+.exports-email-form label {
+  font-weight: bold; /* Make labels bold */
+}
+
+.exports-email-form textarea {
+  width: 100%;
+  resize: vertical; /* Allow vertical resizing of the textarea */
+}
+
+.exports-email-form button {
+  width: 100%;
+  margin-top: 20px; /* Add spacing above the button */
+}
+
+.ex-email.with-background {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh; /* Ensure the dashboard fills the entire viewport height */
+
+  background-color: rgba(25, 118, 210, 0.8);
+}

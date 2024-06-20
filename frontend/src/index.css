@@ -1,0 +1,99 @@
+/* google font */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+.container {
+  display: flex;
+}
+main {
+  width: 100%;
+}
+.sidebar {
+  background: #233066;
+  color: #fff;
+  height: wrap;
+  width: 200px;
+  margin-left: -95px;
+  margin-top: -20px;
+  transition: all 0.5s;
+}
+
+.sidebar a {
+  text-decoration: none;
+}
+.top_section {
+  display: flex;
+  align-items: center;
+  padding: 20px 15px;
+}
+.logo {
+  font-size: 30px;
+}
+.bars {
+  display: flex;
+  font-size: 25px;
+  margin-left: 50px;
+}
+.link {
+  display: flex;
+  color: #fff;
+  padding: 10px 15px;
+  gap: 15px;
+  transition: all 0.5s;
+}
+.link:hover {
+  background: #4c5fad;
+  color: #000;
+  transition: all 0.5s;
+}
+.active {
+  background: #4c5fad;
+  color: #000;
+}
+.icon,
+.link_text {
+  font-size: 20px;
+}
+
+/*primal*/
+
+.invoiceDetails {
+  background: #fff;
+  border-radius: 4px;
+  margin: 20px auto;
+  padding: 20px;
+  position: relative;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+}
+.invoiceDetails h4 {
+  margin: 0 0 10px 0;
+  font-size: 1.2em;
+  color: var(--primary);
+}
+.invoiceDetails h5 {
+  margin: 0 0 10px 0;
+  font-size: 1em;
+  color: var(--primary);
+}
+.invoiceDetails p {
+  margin: 0;
+  font-size: 0.9em;
+  color: #555;
+}
+.invoiceDetails span {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  background: #f1f1f1;
+  padding: 6px;
+  border-radius: 50%;
+  color: #333;
+}
+
+.low-stock {
+  color: red;
+}
